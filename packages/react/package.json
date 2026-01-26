@@ -1,6 +1,6 @@
 {
     "name": "@typix/react",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "React adapter for Typix editor framework",
     "author": "Your Name",
     "license": "MIT",
