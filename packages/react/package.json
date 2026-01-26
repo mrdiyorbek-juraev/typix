@@ -2,7 +2,7 @@
     "name": "@typix-editor/react",
     "version": "0.0.1",
     "description": "React adapter for Typix editor framework",
-    "author": "Your Name",
+    "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
     "license": "MIT",
     "main": "src/index.ts",
     "files": [

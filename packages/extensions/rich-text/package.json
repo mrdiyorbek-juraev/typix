@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "Rich text extension for Typix",
     "keywords": [],
-    "author": "TYPIX <support@typix.com>",
+    "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
     "homepage": "https://typix.com",
     "license": "MIT",
     "main": "src/index.ts",
