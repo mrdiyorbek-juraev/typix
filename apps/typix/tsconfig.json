@@ -20,11 +20,11 @@
       "fumadocs-mdx:collections/*": [".source/*"],
       "@typix/*": ["../../packages/*"],
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    // "plugins": [
+    //   {
+    //     "name": "next"
+    //   }
+    // ]
   },
   "include": [
     "next-env.d.ts",
