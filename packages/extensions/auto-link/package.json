@@ -12,15 +12,16 @@
         "dist"
     ],
     "publishConfig": {
-        "access": "public"
+        "access": "public",
+        "registry": "https://npm.pkg.github.com"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/typix-team/typix.git",
+        "url": "git+https://github.com/mrdiyorbek-juraev/typix.git",
         "directory": "packages/extensions/auto-link"
     },
     "bugs": {
-        "url": "https://github.com/typix-team/typix/issues"
+        "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
     },
     "scripts": {
         "build": "tsup src --dts",
