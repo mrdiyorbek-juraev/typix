@@ -39,7 +39,7 @@
     "turbo": "^2.6.3",
     "typescript": "^5.9.3",
     "ultracite": "6.3.9",
-    "vitest": "^4.0.15",
+    "vitest": "^4.0.18",
     "husky": "^9.1.7",
     "npm-check-updates": "^16.10.18",
     "react": "18.3.0",
