@@ -5,12 +5,12 @@ import { $getSelection, $isRangeSelection, SELECTION_CHANGE_COMMAND, TextFormatT
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from "../../utils";
 
-interface EditorBubbleItemRenderProps {
+export interface EditorBubbleItemRenderProps {
     isActive: boolean;
     name: TextFormatType;
 }
 
-interface EditorBubbleItemProps {
+export interface EditorBubbleItemProps {
     readonly children: ReactNode | ((props: EditorBubbleItemRenderProps) => ReactNode);
     readonly onSelect?: (editor: LexicalEditor) => void;
     readonly name: TextFormatType;

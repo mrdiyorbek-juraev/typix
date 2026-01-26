@@ -1,18 +1,20 @@
+import { defineConfig, Options } from "tsup";
 
-import { defineConfig } from 'tsup';
-
-export default defineConfig({
-    entry: ['src/index.ts'],
-    format: ['esm'],
+export default defineConfig((options: Options) => ({
+    entry: ["src/index.ts"],
+    banner: {
+        js: "'use client'",
+    },
+    minify: true,
+    format: ["cjs", "esm"],
     dts: true,
-    sourcemap: true,
     clean: true,
-    target: 'es2022',
     external: [
         'react',
         'react-dom',
         'lexical',
-        /@lexical\/.*/,
-        '@typix/core',
+        /^@lexical\/.*/,
+        /^@typix\/.*/,
     ],
-});
+    ...options,
+}));

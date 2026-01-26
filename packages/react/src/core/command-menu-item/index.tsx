@@ -4,7 +4,7 @@ import { useEditorCommand } from "../../context/command";
 import { LexicalEditor } from "lexical";
 import { useEditor } from "../../hooks/useEditor";
 
-interface EditorCommandItemRenderProps {
+export interface EditorCommandItemRenderProps {
     isSelected: boolean;
     value: string;
 }

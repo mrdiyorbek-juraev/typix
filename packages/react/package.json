@@ -4,29 +4,15 @@
     "description": "React adapter for Typix editor framework",
     "author": "Your Name",
     "license": "MIT",
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        ".": {
-            "import": {
-                "types": "./dist/index.d.mts",
-                "default": "./dist/index.mjs"
-            },
-            "require": {
-                "types": "./dist/index.d.ts",
-                "default": "./dist/index.js"
-            }
-        }
-    },
+    "main": "src/index.ts",
     "files": [
-        "dist",
-        "README.md"
+        "dist"
     ],
     "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
-        "clean": "git clean -xdf .cache .turbo dist node_modules",
+        "build": "tsup src --dts",
+        "build:fast": "tsup src",
+        "dev": "pnpm build:fast --watch",
+        "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
         "typecheck": "tsc --noEmit --emitDeclarationOnly false"
     },
     "dependencies": {
@@ -82,6 +68,6 @@
     ],
     "sideEffects": false,
     "publishConfig": {
-        "access": "public" 
+        "access": "public"
     }
 }

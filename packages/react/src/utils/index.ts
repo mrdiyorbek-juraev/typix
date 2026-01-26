@@ -1,3 +1,4 @@
+import { findFirstFocusableDescendant, focusNearestDescendant, isKeyboardInput } from './focus-utils'
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -17,4 +18,9 @@ function cn(...inputs: ClassValue[]) {
 }
 
 
-export { cn };
+export {
+    cn,
+    findFirstFocusableDescendant,
+    focusNearestDescendant,
+    isKeyboardInput
+}

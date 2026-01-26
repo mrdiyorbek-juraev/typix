@@ -1,4 +1,14 @@
-export * from "./command";
-export * from "./editor-config";
-export * from "./prefix";
-export * from "./classnames";
+import { createCommand, CommandConfig } from "./command";
+import { CreateEditorConfigOptions, createEditorConfig } from "./editor-config";
+
+
+
+export {
+    createCommand,
+    createEditorConfig,
+}
+
+export type {
+    CommandConfig,
+    CreateEditorConfigOptions,
+}

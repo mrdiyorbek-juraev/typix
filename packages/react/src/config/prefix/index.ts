@@ -1,4 +1,4 @@
-import { PartialClassNames, TypixClassNames } from "../../types";
+import { PartialClassNames, TypixClassNames } from "../../types/classnames";
 
 /**
  * Default prefix for Typix components

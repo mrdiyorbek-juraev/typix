@@ -1,1 +1,1 @@
-export * from "./default-extensions";
+export { defaultExtensionNodes } from "./default-extensions";

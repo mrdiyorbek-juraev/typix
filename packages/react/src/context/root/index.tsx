@@ -2,9 +2,9 @@ import { BaseSelection } from 'lexical';
 import type { JSX } from 'react';
 import * as React from 'react';
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { DEFAULT_PREFIX, getDefaultClassNames, mergeClassNames, TypixConfig } from '../../config';
+import { TypixConfig } from '../../config/prefix';
 
-type RootContextShape = {
+export type RootContextShape = {
     floatingAnchorElem: HTMLElement | null;
     setFloatingAnchorElem: (elem: HTMLElement | null) => void;
     selection: BaseSelection | null;

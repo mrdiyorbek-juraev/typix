@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '../../utils';
 
-interface EditorCommandListProps {
+export interface EditorCommandListProps {
     children: ReactNode;
     className?: string;
 }

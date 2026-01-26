@@ -6,7 +6,7 @@ import { createEmptyHistoryState } from '@lexical/react/LexicalHistoryPlugin';
 import * as React from 'react';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 
-type ContextShape = {
+export type ContextShape = {
     historyState?: HistoryState;
 };
 

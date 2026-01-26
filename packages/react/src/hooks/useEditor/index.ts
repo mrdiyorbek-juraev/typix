@@ -1,6 +1,5 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getSelection, BaseSelection, type LexicalEditor } from 'lexical';
-import { useState } from 'react';
+import { type LexicalEditor } from 'lexical';
 
 /**
  * Hook to access the Lexical editor instance
