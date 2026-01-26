@@ -1,5 +1,6 @@
 "use client"
 import { $createHeadingNode, $createParagraphNode, $getSelection, $isRangeSelection, $setBlocksType, createCommand, createEditorConfig, defaultExtensionNodes, defaultTheme, EditorBubbleItem, EditorBubbleMenu, EditorCommand, EditorCommandEmpty, EditorCommandItem, EditorCommandList, EditorContent, EditorRoot, FORMAT_TEXT_COMMAND } from '@typix/react';
+import { AutoLinkExtension } from '@typix-editor/extension-auto-link';
 import { cn } from '@typix/react/src/utils';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -154,6 +155,11 @@ const HomePage = () => {
                                 ))}
                             </EditorCommandList>
                         </EditorCommand>
+
+
+
+                        {/* AutoLinkExtension */}
+                        <AutoLinkExtension />
                     </EditorContent>
                 </EditorRoot>
             </div>

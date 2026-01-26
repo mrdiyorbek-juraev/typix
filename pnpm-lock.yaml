@@ -81,7 +81,10 @@ importers:
 
   apps/typix:
     dependencies:
-      '@typix/react':
+      '@typix-editor/extension-auto-link':
+        specifier: workspace:*
+        version: link:../../packages/extensions/auto-link
+      '@typix-editor/react':
         specifier: workspace:*
         version: link:../../packages/react
       fumadocs-core:
@@ -137,9 +140,33 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/extensions/auto-link:
+    devDependencies:
+      '@lexical/react':
+        specifier: ^0.39.0
+        version: 0.39.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
+      lexical:
+        specifier: ^0.39.0
+        version: 0.39.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
   packages/extensions/rich-text:
     dependencies:
-      '@typix/react':
+      '@typix-editor/react':
         specifier: workspace:*
         version: link:../../react
     devDependencies:
@@ -192,7 +219,7 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.2.4
         version: 1.2.4(@types/react@19.2.8)(react@19.2.3)
-      '@typix/extension-rich-text':
+      '@typix-editor/extension-rich-text':
         specifier: workspace:*
         version: link:../extensions/rich-text
       clsx:

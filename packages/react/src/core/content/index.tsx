@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { useRootContext } from '../../context/root';
-import { RichTextExtension } from '@typix/extension-rich-text';
+import { RichTextExtension } from '@typix-editor/extension-rich-text';
 
 interface EditorContentProps {
     children?: React.ReactNode;

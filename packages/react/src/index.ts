@@ -4,7 +4,6 @@ import { useRange } from './hooks/useRange';
 import { defaultTheme } from "./theme";
 
 
-
 export {
     defaultTheme,
 }
