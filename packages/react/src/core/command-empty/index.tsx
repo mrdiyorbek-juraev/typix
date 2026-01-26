@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { cn } from '../../utils';
 import { useEditorCommand } from '../../context/command';
 
-interface EditorCommandEmptyProps {
+export interface EditorCommandEmptyProps {
     children: ReactNode;
     className?: string;
 }

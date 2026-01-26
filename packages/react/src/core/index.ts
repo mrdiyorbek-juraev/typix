@@ -3,6 +3,7 @@ import { EditorBubbleItem, type EditorBubbleItemProps } from "./bubble-menu-item
 
 import { EditorCommand, type EditorCommandProps } from "./command-menu";
 import { EditorCommandList, type EditorCommandListProps } from "./command-list";
+import { EditorCommandEmpty, type EditorCommandEmptyProps } from "./command-empty";
 
 
 import { EditorCommandItem, type EditorCommandItemBaseProps, type EditorCommandItemRenderProps } from "./command-menu-item"
@@ -22,6 +23,9 @@ export {
 
     EditorCommandList,
     type EditorCommandListProps,
+
+    EditorCommandEmpty,
+    type EditorCommandEmptyProps,
 
     EditorCommandItem,
     type EditorCommandItemBaseProps,
