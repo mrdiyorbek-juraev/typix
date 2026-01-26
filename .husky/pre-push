@@ -1,24 +1,16 @@
-# Create pre-push hook
 cat > .husky/pre-push << 'EOF'
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 echo "🚀 Running pre-push checks..."
 
-# Biome check (lint + format)
 echo "🔍 Checking code quality..."
 pnpm biome check .
 
-# Type check
 echo "📘 Type checking..."
 pnpm typecheck
 
-# Build
 echo "🏗️ Building packages..."
 pnpm build --no-ui
 
 echo "✅ Pre-push checks passed!"
 EOF
 
-# Make executable
 chmod +x .husky/pre-push
