@@ -1,5 +1,5 @@
 {
-    "name": "@typix/extension-rich-text",
+    "name": "@typix-editor/extension-rich-text",
     "version": "0.0.1",
     "description": "Rich text extension for Typix",
     "keywords": [],
