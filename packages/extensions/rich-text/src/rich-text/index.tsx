@@ -1,7 +1,7 @@
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-import { cn } from "@typix/react/src/utils";
+import { cn } from "@typix-editor/react/src/utils";
 import type { RefObject } from "react";
 
 /**
