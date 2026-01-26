@@ -8,7 +8,11 @@
   ],
   "commit": false,
   "fixed": [],
-  "linked": [],
+  "linked": [
+    [
+      "@typix/*"
+    ]
+  ],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
@@ -16,5 +20,8 @@
     "@typix/docs",
     "@typix/next-config",
     "@typix/typescript-config"
-  ]
+  ],
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  }
 }
