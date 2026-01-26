@@ -1,0 +1,15 @@
+# Create commit-msg hook
+cat > .husky/commit-msg << 'EOF'
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "📝 Validating commit message..."
+
+# Validate commit message format
+pnpm exec commitlint --edit $1
+
+echo "✅ Commit message is valid!"
+EOF
+
+# Make executable
+chmod +x .husky/commit-msg

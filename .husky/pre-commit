@@ -1,0 +1,15 @@
+# Create/update pre-commit hook
+cat > .husky/pre-commit << 'EOF'
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Run lint-staged (format and lint staged files)
+pnpm lint-staged
+
+echo "✅ Pre-commit checks passed!"
+EOF
+
+# Make executable
+chmod +x .husky/pre-commit
