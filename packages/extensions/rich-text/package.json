@@ -1,0 +1,45 @@
+{
+    "name": "@typix/extension-rich-text",
+    "version": "0.0.1",
+    "description": "Rich text extension for Typix",
+    "keywords": [],
+    "author": "TYPIX <support@typix.com>",
+    "homepage": "https://typix.com",
+    "license": "MIT",
+    "main": "src/index.ts",
+    "sideEffects": false,
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/typix-team/typix.git",
+        "directory": "packages/extensions/rich-text"
+    },
+    "bugs": {
+        "url": "https://github.com/typix-team/typix/issues"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "build:fast": "tsup src",
+        "dev": "pnpm build:fast --watch",
+        "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
+        "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    },
+    "peerDependencies": {
+        "@typix/react": "workspace:*",
+        "react": "^18.2.0 || ^19.0.0-0",
+        "react-dom": "^18.2.0 || ^19.0.0-0"
+    },
+    "devDependencies": {
+        "@lexical/react": "^0.39.0",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.1",
+        "lexical": "^0.39.0",
+        "react": "^18.2.0 || ^19.0.0-0",
+        "react-dom": "^18.2.0 || ^19.0.0-0"
+    }
+}
