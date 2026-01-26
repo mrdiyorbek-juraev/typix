@@ -61,7 +61,7 @@
         "@lexical/yjs": "^0.39.0",
         "@tailwindcss/postcss": "^4.1.17",
         "@tailwindcss/typography": "^0.5.19",
-        "@types/node": "^24.10.1",
+        "@types/node": "^25.0.10",
         "@types/react": "^19.2.7",
         "@types/react-dom": "^19.2.1",
         "lexical": "^0.39.0",
