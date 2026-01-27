@@ -1,14 +1,10 @@
-import { createCommand, CommandConfig } from "./command";
-import { CreateEditorConfigOptions, createEditorConfig } from "./editor-config";
-
-
 
 export {
     createCommand,
-    createEditorConfig,
-}
+    type CommandConfig,
+} from './command'
 
-export type {
-    CommandConfig,
-    CreateEditorConfigOptions,
-}
+export {
+    createEditorConfig,
+    type CreateEditorConfigOptions,
+} from "./editor-config"

@@ -1,4 +1,3 @@
-// validation-service.ts
 import { createHeadlessEditor } from '@lexical/headless';
 import { $isMarkNode, $unwrapMarkNode } from '@lexical/mark';
 import { InitialConfigType } from '@lexical/react/LexicalComposer';

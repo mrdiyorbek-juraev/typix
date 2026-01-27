@@ -1,5 +1,16 @@
 # @typix/react
 
+## 2.0.0
+
+### Major Changes
+
+- Initial stable release of Typix Editor Framework
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @typix-editor/extension-rich-text@2.0.0
+
 ## 1.0.0
 
 ### Major Changes

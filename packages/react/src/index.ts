@@ -1,18 +1,3 @@
-import { useEditor } from './hooks/useEditor'
-import { useMouseListener } from "./hooks/useMouseListener"
-import { useRange } from './hooks/useRange';
-import { defaultTheme } from "./theme";
-
-
-export {
-    defaultTheme,
-}
-
-export {
-    useEditor,
-    useMouseListener,
-    useRange,
-}
 
 
 export {
@@ -22,41 +7,46 @@ export {
     type CreateEditorConfigOptions,
 } from "./config";
 
+
 export {
+    type ContextShape,
+    type EditorCommandContextValue,
     EditorCommandProvider,
     useEditorCommand,
-    type EditorCommandContextValue,
+    RootContext,
+    useRootContext,
+    type RootContextShape,
+    SharedHistoryContext,
+    useSharedHistoryContext,
 } from "./context";
 
 export {
-    EditorBubbleMenu,
-    type EditorBubbleMenuProps,
-    EditorBubbleItem,
-    type EditorBubbleItemProps,
-
-    EditorCommand,
     type EditorCommandProps,
-
-    EditorCommandList,
-    type EditorCommandListProps,
-
-    // Command Empty
-    EditorCommandEmpty,
-    type EditorCommandEmptyProps,
-
-
-    EditorCommandItem,
     type EditorCommandItemBaseProps,
+    type CommandMenuItemConfig,
     type EditorCommandItemRenderProps,
-
-    EditorContent,
+    type CommandMenuOption,
+    type EditorCommandListProps,
+    type EditorCommandEmptyProps,
+    type EditorBubbleItemProps,
+    type EditorBubbleMenuProps,
     type EditorContentProps,
-
-    EditorRoot,
     type EditorRootProps,
+    EditorCommand,
+    EditorCommandEmpty,
+    EditorCommandItem,
+    EditorCommandList,
+    EditorBubbleItem,
+    EditorBubbleMenu,
+    EditorContent,
+    EditorRoot,
 } from "./core";
 
-
+export {
+    useEditor,
+    useMouseListener,
+    useRange,
+} from "./hooks";
 
 export {
     // LEXICAL COMMANDS
@@ -86,23 +76,27 @@ export {
     $isRangeSelection,
     $setBlocksType,
     $createHeadingNode,
-} from "./lib/editor"
 
 
-// LEXICAL CORE TYPES
-export type {
-    Klass,
-    LexicalNode,
-    LexicalNodeReplacement,
-} from "./lib/editor";
+    // LEXICAL CORE TYPES
+    type Klass,
+    type LexicalNode,
+    type LexicalNodeReplacement,
+} from "./lib";
 
 
 export {
-    cn,
+    defaultExtensionNodes
+} from "./shared";
+
+
+export {
+    defaultTheme,
+} from "./theme"
+
+export {
     findFirstFocusableDescendant,
     focusNearestDescendant,
     isKeyboardInput
-} from "./utils";
-
-export { defaultExtensionNodes } from "./shared";
+} from './utils'
 
