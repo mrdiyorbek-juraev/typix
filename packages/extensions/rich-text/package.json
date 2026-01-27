@@ -1,12 +1,15 @@
 {
     "name": "@typix-editor/extension-rich-text",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Rich text extension for Typix",
     "keywords": [],
     "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
     "homepage": "https://typix.com",
     "license": "MIT",
-    "main": "src/index.ts",
+    "type": "module",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
     "sideEffects": false,
     "files": [
         "dist"
@@ -22,8 +25,8 @@
         "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
     },
     "scripts": {
-        "build": "tsup src --dts",
-        "build:fast": "tsup src",
+        "build": "tsup",
+        "build:fast": "tsup",
         "dev": "pnpm build:fast --watch",
         "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
         "typecheck": "tsc --noEmit --emitDeclarationOnly false"

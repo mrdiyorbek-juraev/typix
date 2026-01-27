@@ -1,5 +1,5 @@
 {
-  "name": "@typix/next-config",
+  "name": "@typix-editor/next-config",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "devDependencies": {
-    "@typix/typescript-config": "workspace:*",
+    "@typix-editor/typescript-config": "workspace:*",
     "next": "16.0.10"
   },
   "dependencies": {

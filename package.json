@@ -44,7 +44,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^18.0.1",
     "@types/react-dom": "^18.0.0",
-    "@typix/typescript-config": "workspace:*",
+    "@typix-editor/typescript-config": "workspace:*",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "npm-check-updates": "^16.10.18",

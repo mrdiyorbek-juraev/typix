@@ -1,15 +1,15 @@
 "use client";
 import {
-    InitialConfigType,
+    type InitialConfigType,
     LexicalComposer,
 } from "@lexical/react/LexicalComposer";
 import { defaultTheme } from "../../theme";
-import { EditorState, SerializedEditorState } from "lexical";
+import { type EditorState, type SerializedEditorState } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { SharedHistoryContext } from "../../context/history";
 import { RootContext } from "../../context/root";
 import { defaultExtensionNodes } from "../../shared";
-import { createEditorConfig, CreateEditorConfigOptions } from "../../config";
+import { createEditorConfig } from "../../config";
 
 /**
  * Props for the TypixEditorRoot component.

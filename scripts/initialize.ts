@@ -78,7 +78,7 @@ const setupOrm = async (packageManager: string) => {
     "run",
     "build",
     filterCommand,
-    "@typix/database",
+    "@typix-editor/database",
   ].join(" ");
 
   await exec(command, execSyncOpts);

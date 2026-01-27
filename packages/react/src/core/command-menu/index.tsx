@@ -3,8 +3,8 @@ import {
     MenuOption,
     useBasicTypeaheadTriggerMatch,
 } from '@lexical/react/LexicalTypeaheadMenuPlugin';
-import { LexicalEditor, TextNode } from 'lexical';
-import { JSX, ReactNode, useCallback, useMemo, useState } from 'react';
+import { type LexicalEditor, TextNode } from 'lexical';
+import { type JSX, type ReactNode, useCallback, useMemo, useState } from 'react';
 import { useEditor } from '../../hooks/useEditor';
 import { EditorCommandProvider } from '../../context/command';
 import { createPortal } from 'react-dom';
