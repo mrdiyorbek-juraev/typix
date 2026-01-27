@@ -2,7 +2,6 @@ import { BaseSelection } from 'lexical';
 import type { JSX } from 'react';
 import * as React from 'react';
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { TypixConfig } from '../../config/prefix';
 
 export type RootContextShape = {
     floatingAnchorElem: HTMLElement | null;
@@ -24,10 +23,8 @@ const Context: React.Context<RootContextShape> = createContext<RootContextShape>
 
 export const RootContext = ({
     children,
-    config = {},
 }: {
     children: ReactNode;
-    config?: TypixConfig;
 }): JSX.Element => {
     const [floatingAnchorElem, setFloatingAnchorElem] =
         useState<HTMLElement | null>(null);
@@ -39,7 +36,6 @@ export const RootContext = ({
         setFloatingAnchorElem,
         selection,
         setSelection,
-        config,
     };
     return (
         <Context.Provider value={contextValue}>

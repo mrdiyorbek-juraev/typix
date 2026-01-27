@@ -1,17 +1,27 @@
 {
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "baseUrl": ".",
-        "plugins": [
-            {
-                "name": "next"
-            }
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "React Library", 
+    "compilerOptions": { 
+        "declaration": true,
+        "declarationMap": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "incremental": false,
+        "isolatedModules": true,
+        "lib": [
+            "es2022",
+            "DOM",
+            "DOM.Iterable"
         ],
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "allowJs": true,
-        "jsx": "preserve",
-        "noEmit": true
+        "jsx": "react-jsx",
+        "module": "NodeNext",
+        "moduleDetection": "force",
+        "moduleResolution": "NodeNext",
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ES2022",
+        "strictNullChecks": true
     },
     "include": [
         "**/*.ts",
