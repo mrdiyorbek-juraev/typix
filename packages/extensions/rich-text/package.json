@@ -12,13 +12,11 @@
         "dist"
     ],
     "publishConfig": {
-        "access": "public",
-        "registry": "https://npm.pkg.github.com"
+        "access": "public"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/mrdiyorbek-juraev/typix.git",
-        "directory": "packages/extensions/rich-text"
+        "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
     },
     "bugs": {
         "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
