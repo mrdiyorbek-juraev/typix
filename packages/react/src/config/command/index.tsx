@@ -1,4 +1,4 @@
-import { CommandMenuOption } from '@typix/react/src/core/command-menu';
+import { CommandMenuOption } from '../../core/command-menu';
 import type { LexicalEditor } from 'lexical';
 import type { JSX } from 'react';
 

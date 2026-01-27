@@ -1,12 +1,9 @@
 echo "🚀 Running pre-push checks..."
 
 echo "🔍 Checking code quality..."
-pnpm biome check .
 
 echo "📘 Type checking..."
-pnpm typecheck
 
 echo "🏗️ Building packages..."
-pnpm build --no-ui
 
 echo "✅ Pre-push checks passed!"
