@@ -1,7 +1,3 @@
-cat > .husky/pre-commit << 'EOF'
 echo "🔍 Running pre-commit checks..."
 pnpm lint-staged
 echo "✅ Pre-commit checks passed!"
-EOF
-
-chmod +x .husky/pre-commit

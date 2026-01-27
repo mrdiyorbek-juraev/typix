@@ -1,4 +1,3 @@
-cat > .husky/pre-push << 'EOF'
 echo "🚀 Running pre-push checks..."
 
 echo "🔍 Checking code quality..."
@@ -11,6 +10,3 @@ echo "🏗️ Building packages..."
 pnpm build --no-ui
 
 echo "✅ Pre-push checks passed!"
-EOF
-
-chmod +x .husky/pre-push
