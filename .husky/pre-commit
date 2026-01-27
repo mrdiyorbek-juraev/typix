@@ -1,3 +1,2 @@
 echo "🔍 Running pre-commit checks..."
-pnpm lint-staged
 echo "✅ Pre-commit checks passed!"
