@@ -1,7 +1,7 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ElementType, type ReactNode } from "react";
 import { cn } from "../../utils";
 import { useEditorCommand } from "../../context/command";
-import { LexicalEditor } from "lexical";
+import { type LexicalEditor } from "lexical";
 import { useEditor } from "../../hooks/useEditor";
 
 export interface EditorCommandItemRenderProps {
@@ -63,7 +63,7 @@ const EditorCommandItemInner = forwardRef<HTMLElement, EditorCommandItemProps>((
             onClick={() => {
                 onSelect?.(value, editor);
                 const item = filteredItems[index];
-                selectOptionAndCleanUp(item);
+                selectOptionAndCleanUp(item!);
             }}
             {...rest}
         >

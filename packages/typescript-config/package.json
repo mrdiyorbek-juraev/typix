@@ -1,5 +1,5 @@
 {
-  "name": "@typix/typescript-config",
+  "name": "@typix-editor/typescript-config",
   "version": "0.0.0",
   "private": true,
   "scripts": {

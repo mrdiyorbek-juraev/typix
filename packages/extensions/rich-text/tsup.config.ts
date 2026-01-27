@@ -1,4 +1,4 @@
-import { defineConfig, Options } from "tsup";
+import { defineConfig, type Options } from "tsup";
 
 export default defineConfig((options: Options) => ({
     entry: ["src/index.ts"],
@@ -14,7 +14,7 @@ export default defineConfig((options: Options) => ({
         'react-dom',
         'lexical',
         /^@lexical\/.*/,
-        /^@typix\/.*/,
+        /^@typix-editor\/.*/,
     ],
     ...options,
 }));

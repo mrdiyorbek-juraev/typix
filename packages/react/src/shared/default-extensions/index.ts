@@ -7,9 +7,9 @@ import { OverflowNode } from "@lexical/overflow";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import {
-    Klass,
-    LexicalNode,
-    LexicalNodeReplacement,
+    type Klass,
+    type LexicalNode,
+    type LexicalNodeReplacement,
     ParagraphNode,
     TextNode,
 } from "lexical";

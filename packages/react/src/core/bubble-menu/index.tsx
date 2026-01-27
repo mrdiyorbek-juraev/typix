@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { useEditor } from '../../hooks/useEditor';
 import { useRootContext } from '../../context/root';
 import { createPortal } from 'react-dom';

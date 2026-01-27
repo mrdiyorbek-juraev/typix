@@ -10,16 +10,16 @@
   "fixed": [],
   "linked": [
     [
-      "@typix/*"
+      "@typix-editor/*"
     ]
   ],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@typix/docs",
-    "@typix/next-config",
-    "@typix/typescript-config"
+    "@typix-editor/docs",
+    "@typix-editor/next-config",
+    "@typix-editor/typescript-config"
   ],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true

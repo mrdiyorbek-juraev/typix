@@ -3,8 +3,8 @@ import {
     $getSelection,
     $isRangeSelection,
     $isTextNode,
-    LexicalEditor,
-    LexicalNode,
+    type LexicalEditor,
+    type LexicalNode,
 } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 

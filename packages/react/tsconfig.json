@@ -1,33 +1,40 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "React Library", 
-    "compilerOptions": { 
+    "display": "React Library",
+    "compilerOptions": {
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "alwaysStrict": false,
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "resolveJsonModule": true,
+        "lib": [
+            "DOM"
+        ],
+        "noEmit": true,
         "declaration": true,
-        "declarationMap": true,
+        "declarationMap": false,
+        "verbatimModuleSyntax": true,
+        "moduleDetection": "force",
+        "downlevelIteration": true,
+        "allowJs": true,
+        "isolatedModules": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "incremental": false,
-        "isolatedModules": true,
-        "lib": [
-            "es2022",
-            "DOM",
-            "DOM.Iterable"
-        ],
-        "jsx": "react-jsx",
-        "module": "NodeNext",
-        "moduleDetection": "force",
-        "moduleResolution": "NodeNext",
-        "resolveJsonModule": true,
         "skipLibCheck": true,
-        "strict": true,
-        "target": "ES2022",
-        "strictNullChecks": true
+        "skipDefaultLibCheck": true,
+        "incremental": true,
+        "tsBuildInfoFile": ".tsbuildinfo",
+        "target": "ESNext",
+        "jsx": "react-jsx",
+        "outDir": "dist"
     },
     "include": [
-        "**/*.ts",
-        "**/*.tsx"
+        "./src/**/*"
     ],
     "exclude": [
+        "dist",
+        "build",
         "node_modules"
     ]
 }

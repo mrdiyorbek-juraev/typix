@@ -11,7 +11,7 @@
     "noEmit": true,
     "paths": {
       "@/*": ["./*"],
-      "@typix/*": ["../../packages/*"]
+      "@typix-editor/*": ["../../packages/*"]
     }
   },
   "exclude": ["node_modules"]

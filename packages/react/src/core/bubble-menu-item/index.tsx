@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from "react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { useEditor } from "../../hooks/useEditor";
-import { $getSelection, $isRangeSelection, SELECTION_CHANGE_COMMAND, TextFormatType, type LexicalEditor } from "lexical";
+import { $getSelection, $isRangeSelection, SELECTION_CHANGE_COMMAND, type TextFormatType, type LexicalEditor } from "lexical";
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from "../../utils";
 

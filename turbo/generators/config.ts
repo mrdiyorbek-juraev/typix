@@ -8,7 +8,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: "input",
         name: "name",
         message:
-          "What is the name of the package? (You can skip the `@typix/` prefix)",
+          "What is the name of the package? (You can skip the `@typix-editor/` prefix)",
       },
     ],
     actions: [
@@ -16,9 +16,9 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         if (
           "name" in answers &&
           typeof answers.name === "string" &&
-          answers.name.startsWith("@typix/")
+          answers.name.startsWith("@typix-editor/")
         ) {
-          answers.name = answers.name.replace("@typix/", "");
+          answers.name = answers.name.replace("@typix-editor/", "");
         }
         return "Config sanitized";
       },

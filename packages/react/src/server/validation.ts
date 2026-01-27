@@ -1,7 +1,7 @@
 import { createHeadlessEditor } from '@lexical/headless';
 import { $isMarkNode, $unwrapMarkNode } from '@lexical/mark';
-import { InitialConfigType } from '@lexical/react/LexicalComposer';
-import { $getRoot, $isElementNode, LexicalNode } from 'lexical';
+import type { InitialConfigType } from '@lexical/react/LexicalComposer';
+import { $getRoot, $isElementNode, type LexicalNode } from 'lexical';
 
 const documentStates = new Map<string, {
     editorState: string;
