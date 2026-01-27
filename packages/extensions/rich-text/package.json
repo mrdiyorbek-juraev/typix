@@ -1,6 +1,6 @@
 {
     "name": "@typix-editor/extension-rich-text",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Rich text extension for Typix",
     "keywords": [],
     "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
