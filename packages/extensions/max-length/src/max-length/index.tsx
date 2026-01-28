@@ -52,9 +52,8 @@ export interface MaxLengthExtensionProps {
      * Strategy when limit is exceeded
      * @default 'prevent' - Prevents further input
      * @alternative 'trim' - Trims oldest content
-     * @alternative 'truncate' - Truncates from cursor position
      */
-    strategy?: 'prevent' | 'trim' | 'truncate';
+    strategy?: 'prevent' | 'trim';
 
     /**
      * Whether to count whitespace
@@ -331,7 +330,6 @@ export function MaxLengthExtension({
 
                     switch (props.strategy) {
                         case 'prevent':
-                            // Restore previous state if it was at the limit
                             if (
                                 prevLength === props.maxLength &&
                                 lastRestoredEditorStateRef.current !== prevEditorState
@@ -340,7 +338,6 @@ export function MaxLengthExtension({
                                 lastRestoredEditorStateRef.current = prevEditorState;
                                 $restoreEditorState(editor, prevEditorState);
                             } else {
-                                // Trim from cursor position
                                 log('Trimming from cursor', { amount: exceeded });
                                 $trimTextContentFromAnchor(editor, anchor, exceeded);
                             }
@@ -350,30 +347,6 @@ export function MaxLengthExtension({
                             // Always trim from cursor
                             log('Trimming from cursor', { amount: exceeded });
                             $trimTextContentFromAnchor(editor, anchor, exceeded);
-                            break;
-
-                        case 'truncate':
-                            // Truncate from the end
-                            log('Truncating from end', { amount: exceeded });
-                            editor.update(() => {
-                                const newContent = textContent.slice(0, props.maxLength);
-                                rootNode.clear();
-                                rootNode.append(
-                                    editor
-                                        .parseEditorState(JSON.stringify({
-                                            root: {
-                                                children: [{
-                                                    type: 'paragraph',
-                                                    children: [{
-                                                        type: 'text',
-                                                        text: newContent,
-                                                    }],
-                                                }],
-                                            },
-                                        }))
-                                        .read(() => rootNode)
-                                );
-                            });
                             break;
                     }
                 }

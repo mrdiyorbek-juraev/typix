@@ -1,6 +1,6 @@
 {
     "name": "@typix-editor/extension-max-length",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Max length extension for Typix",
     "keywords": [],
     "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
