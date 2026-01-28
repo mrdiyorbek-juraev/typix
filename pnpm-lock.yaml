@@ -93,6 +93,9 @@ importers:
       '@typix-editor/extension-auto-link':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-link
+      '@typix-editor/extension-max-length':
+        specifier: workspace:*
+        version: link:../../packages/extensions/max-length
       '@typix-editor/extension-rich-text':
         specifier: workspace:*
         version: link:../../packages/extensions/rich-text

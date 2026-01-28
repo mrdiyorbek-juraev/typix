@@ -1,6 +1,7 @@
 "use client"
 import { $createHeadingNode, $createParagraphNode, $getSelection, $isRangeSelection, $setBlocksType, createCommand, createEditorConfig, defaultExtensionNodes, defaultTheme, EditorBubbleItem, EditorBubbleMenu, EditorCommand, EditorCommandEmpty, EditorCommandItem, EditorCommandList, EditorContent, EditorRoot, FORMAT_TEXT_COMMAND } from '@typix-editor/react';
 import { AutoLinkExtension } from '@typix-editor/extension-auto-link';
+import { MaxLengthExtension } from '@typix-editor/extension-max-length';
 import Link from 'next/link';
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
@@ -160,6 +161,16 @@ const HomePage = () => {
 
                         {/* AutoLinkExtension */}
                         <AutoLinkExtension />
+
+                        {/* MaxLengthExtension */}
+                        <MaxLengthExtension
+                            maxLength={50}
+                            strategy="trim"
+                            debug={true}
+                            onLimitReached={(current, max, exceeded) => {
+                                console.log(`Trimmed ${exceeded} characters`);
+                            }}
+                        />
                     </EditorContent>
                 </EditorRoot>
             </div>
