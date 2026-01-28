@@ -1,0 +1,1 @@
+export { MaxLengthExtension, type MaxLengthExtensionProps } from './max-length';
