@@ -17,6 +17,7 @@
     "@typix-editor/extension-auto-link": "workspace:*",
     "@typix-editor/extension-rich-text": "workspace:*",
     "@typix-editor/extension-max-length": "workspace:*",
+    "@typix-editor/extension-auto-complete": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "fumadocs-core": "16.4.7",
     "fumadocs-mdx": "14.2.5",

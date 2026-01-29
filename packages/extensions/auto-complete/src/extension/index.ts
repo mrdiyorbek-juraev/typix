@@ -155,7 +155,7 @@ export function AutocompleteExtension(): JSX.Element | null {
                     uuid,
                 )
                     .setFormat(prevNodeFormat)
-                    .setStyle(`font-size: ${20}px`);
+                    .setStyle(`font-size: ${14}px`);
                 autocompleteNodeKey = node.getKey();
                 selection.insertNodes([node]);
                 $setSelection(selectionCopy);
@@ -217,7 +217,7 @@ export function AutocompleteExtension(): JSX.Element | null {
 
             const textNode = $createTextNode(lastSuggestion)
                 // TODO:  this part should be dynamic
-                .setStyle(`font-size: ${20}`);
+                .setStyle(`font-size: ${14}`);
             autocompleteNode.replace(textNode);
             textNode.selectNext();
             $clearSuggestion();
@@ -282,7 +282,6 @@ export function AutocompleteExtension(): JSX.Element | null {
 }
 
 
-// ✅ Improved server with caching
 class AutocompleteServer {
     DATABASE = DICTIONARY;
     LATENCY = QUERY_LATENCY_MS;
