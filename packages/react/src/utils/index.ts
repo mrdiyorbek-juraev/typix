@@ -1,4 +1,5 @@
-import { findFirstFocusableDescendant, focusNearestDescendant, isKeyboardInput } from './focus-utils'
+import { findFirstFocusableDescendant, focusNearestDescendant, isKeyboardInput } from './focus-utils';
+import { addSwipeRightListener } from './swipe';
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -22,5 +23,6 @@ export {
     cn,
     findFirstFocusableDescendant,
     focusNearestDescendant,
-    isKeyboardInput
+    isKeyboardInput,
+    addSwipeRightListener, 
 }
