@@ -5,6 +5,7 @@ import { MaxLengthExtension } from '@typix-editor/extension-max-length';
 import Link from 'next/link';
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
+import { AutocompleteExtension, AutocompleteNode } from '@typix-editor/extension-auto-complete';
 
 export const initialValue = {
     root: {
@@ -79,7 +80,7 @@ const HomePage = () => {
 
     const config = createEditorConfig({
         namespace: "typix-editor",
-        extension_nodes: defaultExtensionNodes,
+        extension_nodes: [...defaultExtensionNodes, AutocompleteNode],
         editable: true,
         editorState: null,
         initialState: initialValue,
@@ -171,6 +172,8 @@ const HomePage = () => {
                                 console.log(`Trimmed ${exceeded} characters`);
                             }}
                         />
+
+                        <AutocompleteExtension />
                     </EditorContent>
                 </EditorRoot>
             </div>

@@ -90,6 +90,9 @@ importers:
 
   apps/typix:
     dependencies:
+      '@typix-editor/extension-auto-complete':
+        specifier: workspace:*
+        version: link:../../packages/extensions/auto-complete
       '@typix-editor/extension-auto-link':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-link
