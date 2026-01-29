@@ -156,10 +156,6 @@ importers:
         version: 5.9.3
 
   packages/extensions/auto-complete:
-    dependencies:
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
     devDependencies:
       '@lexical/react':
         specifier: ^0.39.0
@@ -176,6 +172,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.1
         version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
       lexical:
         specifier: ^0.39.0
         version: 0.39.0
