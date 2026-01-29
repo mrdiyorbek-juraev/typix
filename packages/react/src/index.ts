@@ -97,6 +97,7 @@ export {
 export {
     findFirstFocusableDescendant,
     focusNearestDescendant,
-    isKeyboardInput
+    isKeyboardInput,
+    addSwipeRightListener,
 } from './utils'
 
