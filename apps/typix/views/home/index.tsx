@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
 import { AutocompleteExtension, AutocompleteNode } from '@typix-editor/extension-auto-complete';
+import { KeywordNode, KeywordsExtension } from '@typix-editor/extension-keywords';
 
 export const initialValue = {
     root: {
@@ -43,7 +44,6 @@ const ParagraphPicker = createCommand({
     keywords: ["text", "p", "paragraph"],
     description: "Just start writing with plain text",
     onSelect: (_, editor) => {
-
         editor.update(() => {
             const selection = $getSelection()
             if ($isRangeSelection(selection)) {
@@ -75,12 +75,18 @@ const commands = [
     HeadingPicker
 ]
 
+const extensions = [
+    ...defaultExtensionNodes,
+    AutocompleteNode,
+    KeywordNode,
+]
+
 const HomePage = () => {
     const [editorState, setEditorState] = useState<any | null>(initialValue);
 
     const config = createEditorConfig({
         namespace: "typix-editor",
-        extension_nodes: [...defaultExtensionNodes, AutocompleteNode],
+        extension_nodes: extensions,
         editable: true,
         editorState: null,
         initialState: initialValue,
@@ -162,6 +168,9 @@ const HomePage = () => {
 
                         {/* AutoLinkExtension */}
                         <AutoLinkExtension />
+
+                        {/* KeywordsExtension */}
+                        <KeywordsExtension />
 
                         {/* MaxLengthExtension */}
                         <MaxLengthExtension

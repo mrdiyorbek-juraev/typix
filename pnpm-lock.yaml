@@ -96,6 +96,9 @@ importers:
       '@typix-editor/extension-auto-link':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-link
+      '@typix-editor/extension-keywords':
+        specifier: workspace:*
+        version: link:../../packages/extensions/keywords
       '@typix-editor/extension-max-length':
         specifier: workspace:*
         version: link:../../packages/extensions/max-length
@@ -233,6 +236,30 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.1
         version: 19.2.3(@types/react@19.2.8)
+      lexical:
+        specifier: ^0.39.0
+        version: 0.39.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
+  packages/extensions/keywords:
+    devDependencies:
+      '@lexical/react':
+        specifier: ^0.39.0
+        version: 0.39.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
       lexical:
         specifier: ^0.39.0
         version: 0.39.0
