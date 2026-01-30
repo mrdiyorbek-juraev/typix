@@ -1,0 +1,1 @@
+export { CodeHighlightPrismExtension } from './extension';

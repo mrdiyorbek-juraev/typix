@@ -1,0 +1,1 @@
+export { CodeHighlightShikiExtension } from './extension';
