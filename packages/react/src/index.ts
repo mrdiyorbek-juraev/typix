@@ -99,5 +99,7 @@ export {
     focusNearestDescendant,
     isKeyboardInput,
     addSwipeRightListener,
+    validateUrl,
+    sanitizeUrl,
 } from './utils'
 

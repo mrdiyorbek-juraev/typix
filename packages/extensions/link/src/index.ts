@@ -1,0 +1,1 @@
+export { LinkExtension, type LinkExtensionProps } from './extension';
