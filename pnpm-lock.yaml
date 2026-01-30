@@ -99,6 +99,9 @@ importers:
       '@typix-editor/extension-keywords':
         specifier: workspace:*
         version: link:../../packages/extensions/keywords
+      '@typix-editor/extension-link':
+        specifier: workspace:*
+        version: link:../../packages/extensions/link
       '@typix-editor/extension-max-length':
         specifier: workspace:*
         version: link:../../packages/extensions/max-length
@@ -277,6 +280,37 @@ importers:
         specifier: ^18.2.0 || ^19.0.0-0
         version: 19.2.3(react@19.2.3)
 
+  packages/extensions/collapsible:
+    dependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+    devDependencies:
+      '@lexical/react':
+        specifier: ^0.39.0
+        version: 0.39.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@lexical/utils':
+        specifier: ^0.39.0
+        version: 0.39.0
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
+      lexical:
+        specifier: ^0.39.0
+        version: 0.39.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
   packages/extensions/drag-drop-paste:
     dependencies:
       '@typix-editor/react':
@@ -309,6 +343,34 @@ importers:
         version: 19.2.3(react@19.2.3)
 
   packages/extensions/keywords:
+    devDependencies:
+      '@lexical/react':
+        specifier: ^0.39.0
+        version: 0.39.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
+      lexical:
+        specifier: ^0.39.0
+        version: 0.39.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
+  packages/extensions/link:
+    dependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
     devDependencies:
       '@lexical/react':
         specifier: ^0.39.0
@@ -408,7 +470,7 @@ importers:
         version: link:../typescript-config
       next:
         specifier: 16.0.10
-        version: 16.0.10(react-dom@19.2.3(react@18.3.0))(react@18.3.0)
+        version: 16.0.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   packages/react:
     dependencies:
@@ -10834,15 +10896,15 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  next@16.0.10(react-dom@19.2.3(react@18.3.0))(react@18.3.0):
+  next@16.0.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       '@next/env': 16.0.10
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001764
       postcss: 8.4.31
-      react: 18.3.0
-      react-dom: 19.2.3(react@18.3.0)
-      styled-jsx: 5.1.6(react@18.3.0)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      styled-jsx: 5.1.6(react@19.2.3)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.0.10
       '@next/swc-darwin-x64': 16.0.10
@@ -11424,11 +11486,6 @@ snapshots:
       ini: 1.3.8
       minimist: 1.2.8
       strip-json-comments: 2.0.1
-
-  react-dom@19.2.3(react@18.3.0):
-    dependencies:
-      react: 18.3.0
-      scheduler: 0.27.0
 
   react-dom@19.2.3(react@19.2.3):
     dependencies:
@@ -12087,11 +12144,6 @@ snapshots:
   style-to-object@1.0.14:
     dependencies:
       inline-style-parser: 0.2.7
-
-  styled-jsx@5.1.6(react@18.3.0):
-    dependencies:
-      client-only: 0.0.1
-      react: 18.3.0
 
   styled-jsx@5.1.6(react@19.2.3):
     dependencies:
