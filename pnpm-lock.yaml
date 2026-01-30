@@ -96,6 +96,9 @@ importers:
       '@typix-editor/extension-auto-link':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-link
+      '@typix-editor/extension-collapsible':
+        specifier: workspace:*
+        version: link:../../packages/extensions/collapsible
       '@typix-editor/extension-keywords':
         specifier: workspace:*
         version: link:../../packages/extensions/keywords
