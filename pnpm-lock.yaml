@@ -108,6 +108,9 @@ importers:
       '@typix-editor/extension-max-length':
         specifier: workspace:*
         version: link:../../packages/extensions/max-length
+      '@typix-editor/extension-mention':
+        specifier: workspace:*
+        version: link:../../packages/extensions/mention
       '@typix-editor/extension-rich-text':
         specifier: workspace:*
         version: link:../../packages/extensions/rich-text
@@ -427,6 +430,49 @@ importers:
       react-dom:
         specifier: ^18.2.0 || ^19.0.0-0
         version: 19.2.3(react@19.2.3)
+
+  packages/extensions/mention:
+    dependencies:
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@lexical/react':
+        specifier: ^0.39.0
+        version: 0.39.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@lexical/selection':
+        specifier: ^0.39.0
+        version: 0.39.0
+      '@lexical/text':
+        specifier: ^0.39.0
+        version: 0.39.0
+      '@lexical/utils':
+        specifier: ^0.39.0
+        version: 0.39.0
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.19.7
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
+      lexical:
+        specifier: ^0.39.0
+        version: 0.39.0
+      tsup:
+        specifier: ^8.4.0
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
 
   packages/extensions/rich-text:
     dependencies:
@@ -2391,6 +2437,9 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
+
+  '@types/node@22.19.7':
+    resolution: {integrity: sha512-MciR4AKGHWl7xwxkBa6xUGxQJ4VBOmPTF7sL+iGzuahOFaO0jHCsuEfS80pan1ef4gWId1oWOweIhrDEYLuaOw==}
 
   '@types/node@24.10.1':
     resolution: {integrity: sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==}
@@ -5958,6 +6007,9 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
+  undici-types@6.21.0:
+    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
@@ -8196,6 +8248,10 @@ snapshots:
   '@types/ms@2.1.0': {}
 
   '@types/node@12.20.55': {}
+
+  '@types/node@22.19.7':
+    dependencies:
+      undici-types: 6.21.0
 
   '@types/node@24.10.1':
     dependencies:
@@ -12443,6 +12499,8 @@ snapshots:
       has-bigints: 1.1.0
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
+
+  undici-types@6.21.0: {}
 
   undici-types@7.16.0: {}
 
