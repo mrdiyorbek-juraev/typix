@@ -1,2 +1,2 @@
-echo "🔍 Running pre-commit checks..."
-echo "✅ Pre-commit checks passed!"
+echo "Running lint-staged..."
+pnpm exec lint-staged

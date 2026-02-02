@@ -1,9 +1,7 @@
-echo "🚀 Running pre-push checks..."
+echo "Running type check..."
+pnpm run typecheck
 
-echo "🔍 Checking code quality..."
+echo "Building packages..."
+pnpm run build
 
-echo "📘 Type checking..."
-
-echo "🏗️ Building packages..."
-
-echo "✅ Pre-push checks passed!"
+echo "Pre-push checks passed!"
