@@ -1,6 +1,6 @@
 {
     "name": "@typix-editor/extension-drag-drop-paste",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "description": "Drag drop paste extension for Typix",
     "keywords": [],
     "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
