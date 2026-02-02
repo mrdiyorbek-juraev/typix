@@ -1,49 +1,49 @@
 import { useEffect, useRef, useState } from "react";
 import {
-    $getSelection,
-    $isRangeSelection,
-    $isTextNode,
-    type LexicalEditor,
-    type LexicalNode,
+  $getSelection,
+  $isRangeSelection,
+  $isTextNode,
+  type LexicalEditor,
+  type LexicalNode,
 } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 // Return the current selection range
 export function useRange() {
-    const [editor] = useLexicalComposerContext();
-    const [range, setRange] = useState<Range | null>(null);
-    const rangeRef = useRef<Range | null>(null);
+  const [editor] = useLexicalComposerContext();
+  const [range, setRange] = useState<Range | null>(null);
+  const rangeRef = useRef<Range | null>(null);
 
-    useEffect(() => {
-        editor.registerUpdateListener(({ tags }) => {
-            return editor.getEditorState().read(() => {
-                // Ignore selection updates related to collaboration
-                if (tags.has("collaboration")) return;
+  useEffect(() => {
+    editor.registerUpdateListener(({ tags }) => {
+      return editor.getEditorState().read(() => {
+        // Ignore selection updates related to collaboration
+        if (tags.has("collaboration")) return;
 
-                const selection = $getSelection();
-                if (!$isRangeSelection(selection) || selection.isCollapsed()) {
-                    setRange(null);
-                    rangeRef.current = null;
-                    return;
-                }
+        const selection = $getSelection();
+        if (!$isRangeSelection(selection) || selection.isCollapsed()) {
+          setRange(null);
+          rangeRef.current = null;
+          return;
+        }
 
-                const { anchor, focus } = selection;
+        const { anchor, focus } = selection;
 
-                const range = createDOMRange(
-                    editor,
-                    anchor.getNode(),
-                    anchor.offset,
-                    focus.getNode(),
-                    focus.offset
-                );
+        const range = createDOMRange(
+          editor,
+          anchor.getNode(),
+          anchor.offset,
+          focus.getNode(),
+          focus.offset
+        );
 
-                setRange(range);
-                rangeRef.current = range;
-            });
-        });
-    }, [editor]);
+        setRange(range);
+        rangeRef.current = range;
+      });
+    });
+  }, [editor]);
 
-    return { range, rangeRef };
+  return { range, rangeRef };
 }
 
 /**
@@ -70,27 +70,27 @@ export function useRange() {
  */
 
 function getDOMTextNode(element: Node | null): Text | null {
-    let node = element;
+  let node = element;
 
-    while (node !== null) {
-        if (node.nodeType === Node.TEXT_NODE) {
-            return node as Text;
-        }
-
-        node = node.firstChild;
+  while (node !== null) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node as Text;
     }
 
-    return null;
+    node = node.firstChild;
+  }
+
+  return null;
 }
 
 function getDOMIndexWithinParent(node: ChildNode): [ParentNode, number] {
-    const parent = node.parentNode;
+  const parent = node.parentNode;
 
-    if (parent === null) {
-        throw new Error("Should never happen");
-    }
+  if (parent === null) {
+    throw new Error("Should never happen");
+  }
 
-    return [parent, Array.from(parent.childNodes).indexOf(node)];
+  return [parent, Array.from(parent.childNodes).indexOf(node)];
 }
 
 /**
@@ -103,72 +103,72 @@ function getDOMIndexWithinParent(node: ChildNode): [ParentNode, number] {
  * @returns The range of selection for the DOM that was created.
  */
 function createDOMRange(
-    editor: LexicalEditor,
-    anchorNode: LexicalNode,
-    _anchorOffset: number,
-    focusNode: LexicalNode,
-    _focusOffset: number
+  editor: LexicalEditor,
+  anchorNode: LexicalNode,
+  _anchorOffset: number,
+  focusNode: LexicalNode,
+  _focusOffset: number
 ): Range | null {
-    const anchorKey = anchorNode.getKey();
-    const focusKey = focusNode.getKey();
-    const range = document.createRange();
-    let anchorDOM: Node | Text | null = editor.getElementByKey(anchorKey);
-    let focusDOM: Node | Text | null = editor.getElementByKey(focusKey);
-    let anchorOffset = _anchorOffset;
-    let focusOffset = _focusOffset;
+  const anchorKey = anchorNode.getKey();
+  const focusKey = focusNode.getKey();
+  const range = document.createRange();
+  let anchorDOM: Node | Text | null = editor.getElementByKey(anchorKey);
+  let focusDOM: Node | Text | null = editor.getElementByKey(focusKey);
+  let anchorOffset = _anchorOffset;
+  let focusOffset = _focusOffset;
 
-    if ($isTextNode(anchorNode)) {
-        anchorDOM = getDOMTextNode(anchorDOM);
-    }
+  if ($isTextNode(anchorNode)) {
+    anchorDOM = getDOMTextNode(anchorDOM);
+  }
 
-    if ($isTextNode(focusNode)) {
-        focusDOM = getDOMTextNode(focusDOM);
-    }
+  if ($isTextNode(focusNode)) {
+    focusDOM = getDOMTextNode(focusDOM);
+  }
 
-    if (
-        anchorNode === undefined ||
-        focusNode === undefined ||
-        anchorDOM === null ||
-        focusDOM === null
-    ) {
-        return null;
-    }
+  if (
+    anchorNode === undefined ||
+    focusNode === undefined ||
+    anchorDOM === null ||
+    focusDOM === null
+  ) {
+    return null;
+  }
 
-    if (anchorDOM.nodeName === "BR") {
-        [anchorDOM, anchorOffset] = getDOMIndexWithinParent(anchorDOM as ChildNode);
-    }
+  if (anchorDOM.nodeName === "BR") {
+    [anchorDOM, anchorOffset] = getDOMIndexWithinParent(anchorDOM as ChildNode);
+  }
 
-    if (focusDOM.nodeName === "BR") {
-        [focusDOM, focusOffset] = getDOMIndexWithinParent(focusDOM as ChildNode);
-    }
+  if (focusDOM.nodeName === "BR") {
+    [focusDOM, focusOffset] = getDOMIndexWithinParent(focusDOM as ChildNode);
+  }
 
-    const firstChild = anchorDOM.firstChild;
+  const firstChild = anchorDOM.firstChild;
 
-    if (
-        anchorDOM === focusDOM &&
-        firstChild !== null &&
-        firstChild.nodeName === "BR" &&
-        anchorOffset === 0 &&
-        focusOffset === 0
-    ) {
-        focusOffset = 1;
-    }
+  if (
+    anchorDOM === focusDOM &&
+    firstChild !== null &&
+    firstChild.nodeName === "BR" &&
+    anchorOffset === 0 &&
+    focusOffset === 0
+  ) {
+    focusOffset = 1;
+  }
 
-    try {
-        range.setStart(anchorDOM, anchorOffset);
-        range.setEnd(focusDOM, focusOffset);
-    } catch (e) {
-        return null;
-    }
+  try {
+    range.setStart(anchorDOM, anchorOffset);
+    range.setEnd(focusDOM, focusOffset);
+  } catch (e) {
+    return null;
+  }
 
-    if (
-        range.collapsed &&
-        (anchorOffset !== focusOffset || anchorKey !== focusKey)
-    ) {
-        // Range is backwards, we need to reverse it
-        range.setStart(focusDOM, focusOffset);
-        range.setEnd(anchorDOM, anchorOffset);
-    }
+  if (
+    range.collapsed &&
+    (anchorOffset !== focusOffset || anchorKey !== focusKey)
+  ) {
+    // Range is backwards, we need to reverse it
+    range.setStart(focusDOM, focusOffset);
+    range.setEnd(anchorDOM, anchorOffset);
+  }
 
-    return range;
+  return range;
 }

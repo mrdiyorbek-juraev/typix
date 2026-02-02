@@ -7,902 +7,949 @@
  *
  */
 
-@import 'https://fonts.googleapis.com/css?family=Reenie+Beanie';
+@import "https://fonts.googleapis.com/css?family=Reenie+Beanie";
 
 .typix-editor-scroller {
-    min-height: 150px;
-    max-width: 100%;
-    border: 0;
-    display: flex;
-    position: relative;
-    outline: 0;
-    z-index: 0;
-    resize: vertical;
+  min-height: 150px;
+  max-width: 100%;
+  border: 0;
+  display: flex;
+  position: relative;
+  outline: 0;
+  z-index: 0;
+  resize: vertical;
 }
 
-.typix-editor{
-    flex: auto;
-    max-width: 100%;
-    position: relative;
-    resize: vertical;
-    z-index: -1;
+.typix-editor {
+  flex: auto;
+  max-width: 100%;
+  position: relative;
+  resize: vertical;
+  z-index: -1;
 }
 
 .typix-editor-contenteditable {
-    min-height: 150px;
-    resize: none;
-    font-size: 15px;
-    caret-color: rgb(5, 5, 5);
-    position: relative;
-    tab-size: 1;
-    outline: 0;
-    padding: 15px 10px;
-    caret-color: #444;
+  min-height: 150px;
+  resize: none;
+  font-size: 15px;
+  caret-color: rgb(5, 5, 5);
+  position: relative;
+  tab-size: 1;
+  outline: 0;
+  padding: 15px 10px;
+  caret-color: #444;
+  padding-right: 25px;
+  padding-left: 25px;
 }
 
 .typix-editor-placeholder {
-    color: #999;
-    overflow: hidden;
-    position: absolute;
-    text-overflow: ellipsis;
-    top: 15px;
-    left: 10px;
-    font-size: 15px;
-    user-select: none;
-    display: inline-block;
-    pointer-events: none;
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 15px;
+  left: 25px;
+  font-size: 15px;
+  user-select: none;
+  display: inline-block;
+  pointer-events: none;
 }
 
 .TypixEditorTheme__paragraph {
-    margin: 0;
-    position: relative;
+  margin: 0;
+  position: relative;
 }
 
 .TypixEditorTheme__quote {
-    margin: 0;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    font-size: 15px;
-    color: rgb(101, 103, 107);
-    border-left-color: rgb(206, 208, 212);
-    border-left-width: 4px;
-    border-left-style: solid;
-    padding-left: 16px;
+  margin: 0;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: rgb(101, 103, 107);
+  border-left-color: rgb(206, 208, 212);
+  border-left-width: 4px;
+  border-left-style: solid;
+  padding-left: 16px;
 }
 
 .TypixEditorTheme__h1 {
-    font-size: 24px;
-    color: rgb(5, 5, 5);
-    font-weight: 400;
-    margin: 0;
+  font-size: 24px;
+  color: rgb(5, 5, 5);
+  font-weight: 400;
+  margin: 0;
 }
 
 .TypixEditorTheme__h2 {
-    font-size: 15px;
-    color: rgb(101, 103, 107);
-    font-weight: 700;
-    margin: 0;
-    text-transform: uppercase;
+  font-size: 15px;
+  color: rgb(101, 103, 107);
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .TypixEditorTheme__h3 {
-    font-size: 12px;
-    margin: 0;
-    text-transform: uppercase;
+  font-size: 12px;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .TypixEditorTheme__indent {
-    --lexical-indent-base-value: 40px;
+  --lexical-indent-base-value: 40px;
 }
 
 .TypixEditorTheme__textBold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .TypixEditorTheme__paragraph mark {
-    background-color: unset;
+  background-color: unset;
 }
 
 .TypixEditorTheme__textHighlight {
-    background: rgba(255, 212, 0, 0.14);
-    border-bottom: 2px solid rgba(255, 212, 0, 0.3);
+  background: rgba(255, 212, 0, 0.14);
+  border-bottom: 2px solid rgba(255, 212, 0, 0.3);
 }
 
 .TypixEditorTheme__textItalic {
-    font-style: italic;
+  font-style: italic;
 }
 
 .TypixEditorTheme__textUnderline {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .TypixEditorTheme__textStrikethrough {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .TypixEditorTheme__textUnderlineStrikethrough {
-    text-decoration: underline line-through;
+  text-decoration: underline line-through;
 }
 
 .TypixEditorTheme__tabNode {
-    position: relative;
-    text-decoration: none;
+  position: relative;
+  text-decoration: none;
 }
 
 .TypixEditorTheme__tabNode.TypixEditorTheme__textUnderline::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0.15em;
-    border-bottom: 0.1em solid currentColor;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.15em;
+  border-bottom: 0.1em solid currentColor;
 }
 
 .TypixEditorTheme__tabNode.TypixEditorTheme__textStrikethrough::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0.69em;
-    border-top: 0.1em solid currentColor;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.69em;
+  border-top: 0.1em solid currentColor;
 }
 
 .TypixEditorTheme__tabNode.TypixEditorTheme__textUnderlineStrikethrough::before,
 .TypixEditorTheme__tabNode.TypixEditorTheme__textUnderlineStrikethrough::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
 .TypixEditorTheme__tabNode.TypixEditorTheme__textUnderlineStrikethrough::before {
-    top: 0.69em;
-    border-top: 0.1em solid currentColor;
+  top: 0.69em;
+  border-top: 0.1em solid currentColor;
 }
 
 .TypixEditorTheme__tabNode.TypixEditorTheme__textUnderlineStrikethrough::after {
-    bottom: 0.05em;
-    border-bottom: 0.1em solid currentColor;
+  bottom: 0.05em;
+  border-bottom: 0.1em solid currentColor;
 }
 
 .TypixEditorTheme__textSubscript {
-    font-size: 0.8em;
-    vertical-align: sub !important;
+  font-size: 0.8em;
+  vertical-align: sub !important;
 }
 
 .TypixEditorTheme__textSuperscript {
-    font-size: 0.8em;
-    vertical-align: super;
+  font-size: 0.8em;
+  vertical-align: super;
 }
 
 .TypixEditorTheme__textCode {
-    background-color: rgb(240, 242, 245);
-    padding: 1px 0.25rem;
-    font-family: Menlo, Consolas, Monaco, monospace;
-    font-size: 94%;
+  background-color: rgb(240, 242, 245);
+  padding: 1px 0.25rem;
+  font-family: Menlo, Consolas, Monaco, monospace;
+  font-size: 94%;
 }
 
 .TypixEditorTheme__textLowercase {
-    text-transform: lowercase;
+  text-transform: lowercase;
 }
 
 .TypixEditorTheme__textUppercase {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .TypixEditorTheme__textCapitalize {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .TypixEditorTheme__hashtag {
-    background-color: rgba(88, 144, 255, 0.15);
-    border-bottom: 1px solid rgba(88, 144, 255, 0.3);
+  background-color: rgba(88, 144, 255, 0.15);
+  border-bottom: 1px solid rgba(88, 144, 255, 0.3);
 }
 
 .TypixEditorTheme__link {
-    color: rgb(33, 111, 219);
-    text-decoration: none;
+  color: rgb(33, 111, 219);
+  text-decoration: none;
 }
 
 .TypixEditorTheme__link:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .TypixEditorTheme__blockCursor {
-    display: block;
-    pointer-events: none;
-    position: absolute;
+  display: block;
+  pointer-events: none;
+  position: absolute;
 }
 
 .TypixEditorTheme__blockCursor:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -2px;
-    width: 20px;
-    border-top: 1px solid black;
-    animation: CursorBlink 1.1s steps(2, start) infinite;
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  width: 20px;
+  border-top: 1px solid black;
+  animation: CursorBlink 1.1s steps(2, start) infinite;
 }
 
 @keyframes CursorBlink {
-    to {
-        visibility: hidden;
-    }
+  to {
+    visibility: hidden;
+  }
 }
 
 .TypixEditorTheme__code {
-    background-color: rgb(240, 242, 245);
-    font-family: Menlo, Consolas, Monaco, monospace;
-    display: block;
-    line-height: 1.53;
-    font-size: 13px;
-    padding-top: 8px;
-    margin: 0;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    overflow-x: auto;
-    position: relative;
-    tab-size: 2;
-    white-space: pre;
-    max-width: 100%;
-    box-sizing: border-box;
+  background-color: rgb(240, 242, 245);
+  font-family: Menlo, Consolas, Monaco, monospace;
+  display: block;
+  line-height: 1.53;
+  font-size: 13px;
+  padding-top: 8px;
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  position: relative;
+  tab-size: 2;
+  white-space: pre;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .TypixEditorTheme__code:before {
-    content: attr(data-gutter);
-    position: sticky;
-    background-color: #eee;
-    left: 0;
-    float: left;
-    top: 0;
-    z-index: 3;
-    min-height: 100%;
-    border-right: 1px solid #ccc;
-    padding: 8px;
-    color: #777;
-    white-space: pre-wrap;
-    text-align: right;
-    min-width: 25px;
-    margin-right: 10px;
-    margin-top: -8px;
-    padding: 8px;
+  content: attr(data-gutter);
+  position: sticky;
+  background-color: #eee;
+  left: 0;
+  float: left;
+  top: 0;
+  z-index: 3;
+  min-height: 100%;
+  border-right: 1px solid #ccc;
+  padding: 8px;
+  color: #777;
+  white-space: pre-wrap;
+  text-align: right;
+  min-width: 25px;
+  margin-right: 10px;
+  margin-top: -8px;
+  padding: 8px;
 }
 
 .TypixEditorTheme__tableScrollableWrapper {
-    overflow-x: auto;
-    margin: 0px 25px 30px 0px;
+  overflow-x: auto;
+  margin: 0px 25px 30px 0px;
 }
 
 .TypixEditorTheme__tableScrollRight {
-    box-shadow: inset -10px 0 10px rgba(0, 0, 0, 0.15);
+  box-shadow: inset -10px 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .TypixEditorTheme__tableScrollLeft {
-    box-shadow: inset 10px 0 10px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 10px 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .TypixEditorTheme__tableScrollMiddle {
-    box-shadow:
-        inset 10px 0 10px rgba(0, 0, 0, 0.15),
-        inset -10px 0 10px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    inset 10px 0 10px rgba(0, 0, 0, 0.15),
+    inset -10px 0 10px rgba(0, 0, 0, 0.15);
 }
 
-.TypixEditorTheme__tableScrollableWrapper>.TypixEditorTheme__table {
-    /* Remove the table's vertical margin and put it on the wrapper */
-    margin-top: 0;
-    margin-bottom: 0;
+.TypixEditorTheme__tableScrollableWrapper > .TypixEditorTheme__table {
+  /* Remove the table's vertical margin and put it on the wrapper */
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .TypixEditorTheme__tableAlignmentCenter {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .TypixEditorTheme__tableAlignmentRight {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .TypixEditorTheme__table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    overflow-y: scroll;
-    overflow-x: scroll;
-    table-layout: fixed;
-    width: fit-content;
-    margin-top: 25px;
-    margin-bottom: 30px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  table-layout: fixed;
+  width: fit-content;
+  margin-top: 25px;
+  margin-bottom: 30px;
 }
 
 .TypixEditorTheme__tableScrollableWrapper.TypixEditorTheme__tableFrozenRow {
-    /* position:sticky needs overflow:clip or visible
+  /* position:sticky needs overflow:clip or visible
      https://github.com/w3c/csswg-drafts/issues/865#issuecomment-350585274 */
-    overflow-x: clip;
+  overflow-x: clip;
 }
 
-.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1)>td {
-    overflow: clip;
-    background-color: #ffffff;
-    position: sticky;
-    z-index: 2;
-    top: 44px;
+.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1) > td {
+  overflow: clip;
+  background-color: #ffffff;
+  position: sticky;
+  z-index: 2;
+  top: 44px;
 }
 
-.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1)>th {
-    overflow: clip;
-    background-color: #f2f3f5;
-    position: sticky;
-    z-index: 2;
-    top: 44px;
+.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1) > th {
+  overflow: clip;
+  background-color: #f2f3f5;
+  position: sticky;
+  z-index: 2;
+  top: 44px;
 }
 
-.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1)>th:after,
-.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1)>td:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    border-bottom: 1px solid #bbb;
+.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1) > th:after,
+.TypixEditorTheme__tableFrozenRow tr:nth-of-type(1) > td:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 1px solid #bbb;
 }
 
-.TypixEditorTheme__tableFrozenColumn tr>td:first-child {
-    background-color: #ffffff;
-    position: sticky;
-    z-index: 2;
-    left: 0;
+.TypixEditorTheme__tableFrozenColumn tr > td:first-child {
+  background-color: #ffffff;
+  position: sticky;
+  z-index: 2;
+  left: 0;
 }
 
-.TypixEditorTheme__tableFrozenColumn tr>th:first-child {
-    background-color: #f2f3f5;
-    position: sticky;
-    z-index: 2;
-    left: 0;
+.TypixEditorTheme__tableFrozenColumn tr > th:first-child {
+  background-color: #f2f3f5;
+  position: sticky;
+  z-index: 2;
+  left: 0;
 }
 
-.TypixEditorTheme__tableFrozenColumn tr> :first-child::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    height: 100%;
-    border-right: 1px solid #bbb;
+.TypixEditorTheme__tableFrozenColumn tr > :first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-right: 1px solid #bbb;
 }
 
 .TypixEditorTheme__tableRowStriping tr:nth-child(even),
-.TypixEditorTheme__tableFrozenColumn .TypixEditorTheme__table.TypixEditorTheme__tableRowStriping tr:nth-child(even)>td:first-child {
-    background-color: #f2f5fb;
+.TypixEditorTheme__tableFrozenColumn
+  .TypixEditorTheme__table.TypixEditorTheme__tableRowStriping
+  tr:nth-child(even)
+  > td:first-child {
+  background-color: #f2f5fb;
 }
 
 .TypixEditorTheme__tableSelection *::selection {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .TypixEditorTheme__tableSelected {
-    outline: 2px solid rgb(60, 132, 244);
+  outline: 2px solid rgb(60, 132, 244);
 }
 
 .TypixEditorTheme__tableCell {
-    border: 1px solid #bbb;
-    width: 75px;
-    vertical-align: top;
-    text-align: start;
-    padding: 6px 8px;
-    position: relative;
-    outline: none;
-    overflow: auto;
+  border: 1px solid #bbb;
+  width: 75px;
+  vertical-align: top;
+  text-align: start;
+  padding: 6px 8px;
+  position: relative;
+  outline: none;
+  overflow: auto;
 }
 
 /*
   A firefox workaround to allow scrolling of overflowing table cell
   ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1904159
 */
-.TypixEditorTheme__tableCell>* {
-    overflow: inherit;
+.TypixEditorTheme__tableCell > * {
+  overflow: inherit;
 }
 
 .TypixEditorTheme__tableCellResizer {
-    position: absolute;
-    right: -4px;
-    height: 100%;
-    width: 8px;
-    cursor: ew-resize;
-    z-index: 10;
-    top: 0;
+  position: absolute;
+  right: -4px;
+  height: 100%;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 10;
+  top: 0;
 }
 
 .TypixEditorTheme__tableCellHeader {
-    background-color: #f2f3f5;
-    text-align: start;
+  background-color: #f2f3f5;
+  text-align: start;
 }
 
 .TypixEditorTheme__tableCellSelected {
-    caret-color: transparent;
+  caret-color: transparent;
 }
 
 .TypixEditorTheme__tableCellSelected::after {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    background-color: highlight;
-    mix-blend-mode: multiply;
-    content: '';
-    pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: highlight;
+  mix-blend-mode: multiply;
+  content: "";
+  pointer-events: none;
 }
 
 .TypixEditorTheme__tableAddColumns {
-    position: absolute;
-    background-color: #eee;
-    height: 100%;
-    animation: table-controls 0.2s ease;
-    border: 0;
-    cursor: pointer;
+  position: absolute;
+  background-color: #eee;
+  height: 100%;
+  animation: table-controls 0.2s ease;
+  border: 0;
+  cursor: pointer;
 }
 
 .TypixEditorTheme__tableAddColumns:after {
-    /* background-image: url(../images/icons/plus.svg); */
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: block;
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.4;
+  /* background-image: url(../images/icons/plus.svg); */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
 }
 
 .TypixEditorTheme__tableAddColumns:hover,
 .TypixEditorTheme__tableAddRows:hover {
-    background-color: #c9dbf0;
+  background-color: #c9dbf0;
 }
 
 .TypixEditorTheme__tableAddRows {
-    position: absolute;
-    width: calc(100% - 25px);
-    background-color: #eee;
-    animation: table-controls 0.2s ease;
-    border: 0;
-    cursor: pointer;
+  position: absolute;
+  width: calc(100% - 25px);
+  background-color: #eee;
+  animation: table-controls 0.2s ease;
+  border: 0;
+  cursor: pointer;
 }
 
 .TypixEditorTheme__tableAddRows:after {
-    /* background-image: url(../images/icons/plus.svg); */
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: block;
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.4;
+  /* background-image: url(../images/icons/plus.svg); */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
 }
 
 @keyframes table-controls {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 .TypixEditorTheme__tableCellResizeRuler {
-    display: block;
-    position: absolute;
-    width: 1px;
-    background-color: rgb(60, 132, 244);
-    height: 100%;
-    top: 0;
+  display: block;
+  position: absolute;
+  width: 1px;
+  background-color: rgb(60, 132, 244);
+  height: 100%;
+  top: 0;
 }
 
 .TypixEditorTheme__tableCellActionButtonContainer {
-    display: block;
-    right: 5px;
-    top: 6px;
-    position: absolute;
-    z-index: 4;
-    width: 20px;
-    height: 20px;
+  display: block;
+  right: 5px;
+  top: 6px;
+  position: absolute;
+  z-index: 4;
+  width: 20px;
+  height: 20px;
 }
 
 .TypixEditorTheme__tableCellActionButton {
-    background-color: #eee;
-    display: block;
-    border: 0;
-    border-radius: 20px;
-    width: 20px;
-    height: 20px;
-    color: #222;
-    cursor: pointer;
+  background-color: #eee;
+  display: block;
+  border: 0;
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  color: #222;
+  cursor: pointer;
 }
 
 .TypixEditorTheme__tableCellActionButton:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 .TypixEditorTheme__characterLimit {
-    display: inline;
-    background-color: #ffbbbb !important;
+  display: inline;
+  background-color: #ffbbbb !important;
 }
 
 .TypixEditorTheme__ol1 {
-    padding: 0;
-    margin: 0;
-    list-style-position: outside;
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
 }
 
 .TypixEditorTheme__ol2 {
-    padding: 0;
-    margin: 0;
-    list-style-type: upper-alpha;
-    list-style-position: outside;
+  padding: 0;
+  margin: 0;
+  list-style-type: upper-alpha;
+  list-style-position: outside;
 }
 
 .TypixEditorTheme__ol3 {
-    padding: 0;
-    margin: 0;
-    list-style-type: lower-alpha;
-    list-style-position: outside;
+  padding: 0;
+  margin: 0;
+  list-style-type: lower-alpha;
+  list-style-position: outside;
 }
 
 .TypixEditorTheme__ol4 {
-    padding: 0;
-    margin: 0;
-    list-style-type: upper-roman;
-    list-style-position: outside;
+  padding: 0;
+  margin: 0;
+  list-style-type: upper-roman;
+  list-style-position: outside;
 }
 
 .TypixEditorTheme__ol5 {
-    padding: 0;
-    margin: 0;
-    list-style-type: lower-roman;
-    list-style-position: outside;
+  padding: 0;
+  margin: 0;
+  list-style-type: lower-roman;
+  list-style-position: outside;
 }
 
 .TypixEditorTheme__ul {
-    padding: 0;
-    margin: 0;
-    list-style-position: outside;
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
 }
 
 .TypixEditorTheme__listItem {
-    margin: 0 32px;
-    font-family: var(--listitem-marker-font-family);
-    font-size: var(--listitem-marker-font-size);
-    background-color: var(--listitem-marker-background-color);
+  margin: 0 32px;
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
+  background-color: var(--listitem-marker-background-color);
 }
 
 .TypixEditorTheme__listItem::marker {
-    color: var(--listitem-marker-color);
-    background-color: var(--listitem-marker-background-color);
-    font-family: var(--listitem-marker-font-family);
-    font-size: var(--listitem-marker-font-size);
+  color: var(--listitem-marker-color);
+  background-color: var(--listitem-marker-background-color);
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
 }
 
 .TypixEditorTheme__listItemChecked,
 .TypixEditorTheme__listItemUnchecked {
-    position: relative;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    list-style-type: none;
-    outline: none;
-    display: block;
-    min-height: 1.5em;
+  position: relative;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  list-style-type: none;
+  outline: none;
+  display: block;
+  min-height: 1.5em;
 }
 
-.TypixEditorTheme__listItemChecked>*,
-.TypixEditorTheme__listItemUnchecked>* {
-    margin-left: 0.01em;
+.TypixEditorTheme__listItemChecked > *,
+.TypixEditorTheme__listItemUnchecked > * {
+  margin-left: 0.01em;
 }
 
 .TypixEditorTheme__listItemUnchecked:before,
 .TypixEditorTheme__listItemChecked:before {
-    content: '\200B';
-    width: 0.9em;
-    height: 0.9em;
-    top: 50%;
-    left: 0;
-    cursor: pointer;
-    display: block;
-    background-size: cover;
-    position: absolute;
-    transform: translateY(-50%);
+  content: "\200B";
+  width: 0.9em;
+  height: 0.9em;
+  top: 50%;
+  left: 0;
+  cursor: pointer;
+  display: block;
+  background-size: cover;
+  position: absolute;
+  transform: translateY(-50%);
 }
 
 .TypixEditorTheme__listItemChecked {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .TypixEditorTheme__listItemUnchecked:focus:before,
 .TypixEditorTheme__listItemChecked:focus:before {
-    box-shadow: 0 0 0 2px #a6cdfe;
-    border-radius: 2px;
+  box-shadow: 0 0 0 2px #a6cdfe;
+  border-radius: 2px;
 }
 
 .TypixEditorTheme__listItemUnchecked:before {
-    border: 1px solid #999;
-    border-radius: 2px;
+  border: 1px solid #999;
+  border-radius: 2px;
 }
 
 .TypixEditorTheme__listItemChecked:before {
-    border: 1px solid rgb(61, 135, 245);
-    border-radius: 2px;
-    background-color: #3d87f5;
-    background-repeat: no-repeat;
+  border: 1px solid rgb(61, 135, 245);
+  border-radius: 2px;
+  background-color: #3d87f5;
+  background-repeat: no-repeat;
 }
 
 .TypixEditorTheme__listItemChecked:after {
-    content: '';
-    cursor: pointer;
-    border-color: #fff;
-    border-style: solid;
-    position: absolute;
-    display: block;
-    top: 45%;
-    width: 0.2em;
-    left: 0.35em;
-    height: 0.4em;
-    transform: translateY(-50%) rotate(45deg);
-    border-width: 0 0.1em 0.1em 0;
+  content: "";
+  cursor: pointer;
+  border-color: #fff;
+  border-style: solid;
+  position: absolute;
+  display: block;
+  top: 45%;
+  width: 0.2em;
+  left: 0.35em;
+  height: 0.4em;
+  transform: translateY(-50%) rotate(45deg);
+  border-width: 0 0.1em 0.1em 0;
 }
 
 .TypixEditorTheme__nestedListItem {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .TypixEditorTheme__nestedListItem:before,
 .TypixEditorTheme__nestedListItem:after {
-    display: none;
+  display: none;
 }
 
 .TypixEditorTheme__tokenComment {
-    color: slategray;
+  color: slategray;
 }
 
 .TypixEditorTheme__tokenDeleted {
-    border-image: linear-gradient(to right, #ffcecb 50%, #ffebe9 50%) fill 0/0/0 100vw;
+  border-image:
+    linear-gradient(to right, #ffcecb 50%, #ffebe9 50%) fill 0 / 0 / 0 100vw;
 }
 
 .TypixEditorTheme__tokenInserted {
-    border-image: linear-gradient(to right, #aceebb 50%, #dafbe1 50%) fill 0/0/0 100vw;
+  border-image:
+    linear-gradient(to right, #aceebb 50%, #dafbe1 50%) fill 0 / 0 / 0 100vw;
 }
 
 .TypixEditorTheme__tokenUnchanged {
-    border-image: linear-gradient(to right, #ddd 50%, #f0f2f5 50%) fill 0/0/0 100vw;
+  border-image:
+    linear-gradient(to right, #ddd 50%, #f0f2f5 50%) fill 0 / 0 / 0 100vw;
 }
 
 .TypixEditorTheme__tokenPunctuation {
-    color: #999;
+  color: #999;
 }
 
 .TypixEditorTheme__tokenProperty {
-    color: #905;
+  color: #905;
 }
 
 .TypixEditorTheme__tokenSelector {
-    color: #690;
+  color: #690;
 }
 
 .TypixEditorTheme__tokenOperator {
-    color: #9a6e3a;
+  color: #9a6e3a;
 }
 
 .TypixEditorTheme__tokenAttr {
-    color: #07a;
+  color: #07a;
 }
 
 .TypixEditorTheme__tokenVariable {
-    color: #e90;
+  color: #e90;
 }
 
 .TypixEditorTheme__tokenFunction {
-    color: #dd4a68;
+  color: #dd4a68;
 }
 
 .TypixEditorTheme__mark {
-    background: rgba(255, 212, 0, 0.14);
-    border-bottom: 2px solid rgba(255, 212, 0, 0.3);
-    padding-bottom: 2px;
+  background: rgba(255, 212, 0, 0.14);
+  border-bottom: 2px solid rgba(255, 212, 0, 0.3);
+  padding-bottom: 2px;
 }
 
 .TypixEditorTheme__markOverlap {
-    background: rgba(255, 212, 0, 0.3);
-    border-bottom: 2px solid rgba(255, 212, 0, 0.7);
+  background: rgba(255, 212, 0, 0.3);
+  border-bottom: 2px solid rgba(255, 212, 0, 0.7);
 }
 
 .TypixEditorTheme__mark.selected {
-    background: rgba(255, 212, 0, 0.5);
-    border-bottom: 2px solid rgba(255, 212, 0, 1);
+  background: rgba(255, 212, 0, 0.5);
+  border-bottom: 2px solid rgba(255, 212, 0, 1);
 }
 
 .TypixEditorTheme__markOverlap.selected {
-    background: rgba(255, 212, 0, 0.7);
-    border-bottom: 2px solid rgba(255, 212, 0, 0.7);
+  background: rgba(255, 212, 0, 0.7);
+  border-bottom: 2px solid rgba(255, 212, 0, 0.7);
 }
 
 .TypixEditorTheme__embedBlock {
-    user-select: none;
+  user-select: none;
 }
 
 .TypixEditorTheme__embedBlockFocus {
-    outline: 2px solid rgb(60, 132, 244);
+  outline: 2px solid rgb(60, 132, 244);
 }
 
 .TypixEditorTheme__layoutContainer {
-    display: grid;
-    gap: 10px;
-    margin: 10px 0;
+  display: grid;
+  gap: 10px;
+  margin: 10px 0;
 }
 
 .TypixEditorTheme__layoutItem {
-    border: 1px dashed #ddd;
-    padding: 8px 16px;
-    min-width: 0;
-    max-width: 100%;
+  border: 1px dashed #ddd;
+  padding: 8px 16px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .TypixEditorTheme__autocomplete {
-    color: #ccc;
+  color: #ccc;
 }
 
 .TypixEditorTheme__hr {
-    padding: 2px 2px;
-    border: none;
-    margin: 1em 0;
-    cursor: pointer;
+  padding: 2px 2px;
+  border: none;
+  margin: 1em 0;
+  cursor: pointer;
 }
 
 .TypixEditorTheme__hr:after {
-    content: '';
-    display: block;
-    height: 2px;
-    background-color: #ccc;
-    line-height: 2px;
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: #ccc;
+  line-height: 2px;
 }
 
 .TypixEditorTheme__hr.TypixEditorTheme__hrSelected {
-    outline: 2px solid rgb(60, 132, 244);
-    user-select: none;
+  outline: 2px solid rgb(60, 132, 244);
+  user-select: none;
 }
 
 .TypixEditorTheme__specialText {
-    background-color: yellow;
-    font-weight: bold;
+  background-color: yellow;
+  font-weight: bold;
 }
 
 .TypixEditorTheme__contextMenu {
-    outline: 0;
-    background: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+  outline: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
 }
 
 .TypixEditorTheme__contextMenu button:first-child {
-    border-radius: 8px 8px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
 }
 
 .TypixEditorTheme__contextMenu button:last-child {
-    border-radius: 0px 0px 8px 8px;
+  border-radius: 0px 0px 8px 8px;
 }
 
 .TypixEditorTheme__contextMenuItem {
-    width: 100%;
-    display: block;
+  width: 100%;
+  display: block;
 }
 
 .TypixEditorTheme__contextMenuItem {
-    display: flex;
-    justify-content: left;
-    width: 100%;
-    background-color: #fff;
-    color: #050505;
-    border: 0;
-    border-radius: 0px;
-    font-size: 15px;
-    text-align: left;
-    line-height: 20px;
-    padding: 8px;
-    padding-right: 14px;
-    outline: 0;
-    cursor: pointer;
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  background-color: #fff;
+  color: #050505;
+  border: 0;
+  border-radius: 0px;
+  font-size: 15px;
+  text-align: left;
+  line-height: 20px;
+  padding: 8px;
+  padding-right: 14px;
+  outline: 0;
+  cursor: pointer;
 }
 
 .TypixEditorTheme__contextMenuItem.open {
-    background: #ddd;
+  background: #ddd;
 }
 
 .TypixEditorTheme__contextMenuItem:focus,
 .TypixEditorTheme__contextMenuItem:not([disabled]):active {
-    background: #eee;
+  background: #eee;
 }
 
 .TypixEditorTheme__contextMenuItem:disabled {
-    background: #fff;
-    color: #aaa;
-    cursor: not-allowed;
+  background: #fff;
+  color: #aaa;
+  cursor: not-allowed;
 }
 
 .TypixEditorTheme__contextMenuItemIcon {
-    width: 20px;
-    margin-right: 8px;
-    background-repeat: no-repeat;
-    background-size: contain;
+  width: 20px;
+  margin-right: 8px;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-
 .typix-mention-menu {
-    position: absolute;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    max-height: 300px;
-    overflow-y: auto;
-    z-index: 1000;
+  position: absolute;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
 /* Menu list */
 .typix-mention-menu-list {
-    list-style: none;
-    margin: 0;
-    padding: 4px 0;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
 }
 
 /* Menu item */
 .typix-mention-menu-item {
-    padding: 8px 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .typix-mention-menu-item:hover,
 .typix-mention-menu-item--selected {
-    background: #f0f0f0;
+  background: #f0f0f0;
 }
 
 /* Item name */
 .typix-mention-menu-item-name {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 /* Loading state */
 .typix-mention-menu-loading {
-    padding: 12px;
-    color: #666;
-    text-align: center;
+  padding: 12px;
+  color: #666;
+  text-align: center;
 }
 
 /* Empty state */
 .typix-mention-menu-empty {
-    padding: 12px;
-    color: #999;
-    text-align: center;
+  padding: 12px;
+  color: #999;
+  text-align: center;
 }
 
 /* Mention node in editor */
 .typix-mention {
-    background-color: rgba(24, 119, 232, 0.15);
-    border-radius: 4px;
-    padding: 2px 4px;
-    color: #1877e8;
-    cursor: pointer;
+  background-color: rgba(24, 119, 232, 0.15);
+  border-radius: 4px;
+  padding: 2px 4px;
+  color: #1877e8;
+  cursor: pointer;
 }
 
 .typix-mention:hover {
-    background-color: rgba(24, 119, 232, 0.25);
+  background-color: rgba(24, 119, 232, 0.25);
+}
+
+/* Draggable Block */
+.draggable-block-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: grab;
+  border-radius: 4px;
+  padding: 2px 1px;
+  opacity: 0;
+  will-change: transform;
+  transition: background-color 0.15s ease;
+}
+
+.draggable-block-menu:hover {
+  background-color: var(--typix-draggable-menu-hover-bg, rgba(0, 0, 0, 0.08));
+}
+
+.draggable-block-menu:active {
+  cursor: grabbing;
+}
+
+.draggable-block-menu-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.3;
+  color: var(--typix-draggable-icon-color, currentColor);
+}
+
+.draggable-block-target-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  background-color: var(--typix-draggable-target-line-bg, #5742b3);
+  border-radius: 2px;
 }
