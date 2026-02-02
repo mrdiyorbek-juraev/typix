@@ -3,8 +3,8 @@
 **A modern, extensible rich-text editor framework built on Lexical.**
 
 <div>
-  <img src="https://img.shields.io/npm/v/typix" alt="" />
-  <img src="https://img.shields.io/npm/dm/typix" alt="" />
+  <img src="https://img.shields.io/npm/v/typix-editor/react" alt="" />
+  <img src="https://img.shields.io/npm/dm/typix-editor/react" alt="" />
   <img src="https://img.shields.io/github/license/mrdiyorbek-juraev/typix" alt="" />
 </div>
 
