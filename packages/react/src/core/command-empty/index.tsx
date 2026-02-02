@@ -1,16 +1,23 @@
-import { type ReactNode } from 'react';
-import { cn } from '../../utils';
-import { useEditorCommand } from '../../context/command';
+import { type ReactNode } from "react";
+import { cn } from "../../utils";
+import { useEditorCommand } from "../../context/command";
 
 export interface EditorCommandEmptyProps {
-    children: ReactNode;
-    className?: string;
+  children: ReactNode;
+  className?: string;
 }
 
-export function EditorCommandEmpty({ children, className }: EditorCommandEmptyProps) {
-    const { filteredItems } = useEditorCommand();
+export function EditorCommandEmpty({
+  children,
+  className,
+}: EditorCommandEmptyProps) {
+  const { filteredItems } = useEditorCommand();
 
-    if (filteredItems?.length > 0) return null;
+  if (filteredItems?.length > 0) return null;
 
-    return <div className={cn("typix-editor-command-empty", className)}>{children}</div>;
+  return (
+    <div className={cn("typix-editor-command-empty", className)}>
+      {children}
+    </div>
+  );
 }

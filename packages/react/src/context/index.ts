@@ -1,17 +1,17 @@
 export {
-    EditorCommandProvider,
-    useEditorCommand,
-    type EditorCommandContextValue
+  EditorCommandProvider,
+  useEditorCommand,
+  type EditorCommandContextValue,
 } from "./command";
 
 export {
-    SharedHistoryContext,
-    useSharedHistoryContext,
-    type ContextShape
+  SharedHistoryContext,
+  useSharedHistoryContext,
+  type ContextShape,
 } from "./history";
 
 export {
-    RootContext,
-    useRootContext,
-    type RootContextShape
+  RootContext,
+  useRootContext,
+  type RootContextShape,
 } from "./root";

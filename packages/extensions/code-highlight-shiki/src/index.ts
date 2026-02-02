@@ -1,1 +1,1 @@
-export { CodeHighlightShikiExtension } from './extension';
+export { CodeHighlightShikiExtension } from "./extension";

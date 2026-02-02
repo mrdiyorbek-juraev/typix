@@ -1,1 +1,1 @@
-export { CodeHighlightPrismExtension } from './extension';
+export { CodeHighlightPrismExtension } from "./extension";

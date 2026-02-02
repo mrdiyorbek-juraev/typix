@@ -1,7 +1,7 @@
 "use client";
 import {
-    type InitialConfigType,
-    LexicalComposer,
+  type InitialConfigType,
+  LexicalComposer,
 } from "@lexical/react/LexicalComposer";
 import { defaultTheme } from "../../theme";
 import { type EditorState, type SerializedEditorState } from "lexical";
@@ -13,7 +13,7 @@ import { createEditorConfig } from "../../config";
 
 /**
  * Props for the TypixEditorRoot component.
- * 
+ *
  * @example
  * ```tsx
  * <TypixEditorRoot
@@ -26,82 +26,77 @@ import { createEditorConfig } from "../../config";
  * ```
  */
 
-
 interface EditorRootProps {
-    /**
-     * Child components (typically Lexical plugins like RichTextPlugin, HistoryPlugin, etc.)
-     */
-    children: React.ReactNode;
+  /**
+   * Child components (typically Lexical plugins like RichTextPlugin, HistoryPlugin, etc.)
+   */
+  children: React.ReactNode;
 
-    config?: InitialConfigType;
+  config?: InitialConfigType;
 
-    /**
-     * Initial content to load into the editor
-     */
-    content?: SerializedEditorState | null;
+  /**
+   * Initial content to load into the editor
+   */
+  content?: SerializedEditorState | null;
 
+  /**
+   * Called when editor content changes (raw EditorState)
+   * Use for advanced state manipulation
+   */
+  onChange?: (editorState: EditorState) => void;
 
-
-    /**
-     * Called when editor content changes (raw EditorState)
-     * Use for advanced state manipulation
-     */
-    onChange?: (editorState: EditorState) => void;
-
-    /**
-     * Called when editor content changes (serialized JSON)
-     * Use for saving to database or localStorage
-     * 
-     * @example
-     * ```tsx
-     * onContentChange={(json) => {
-     *   localStorage.setItem('draft', JSON.stringify(json));
-     * }}
-     * ```
-     */
-    onContentChange?: (content: SerializedEditorState) => void;
-
+  /**
+   * Called when editor content changes (serialized JSON)
+   * Use for saving to database or localStorage
+   *
+   * @example
+   * ```tsx
+   * onContentChange={(json) => {
+   *   localStorage.setItem('draft', JSON.stringify(json));
+   * }}
+   * ```
+   */
+  onContentChange?: (content: SerializedEditorState) => void;
 }
 
 const EditorRoot = ({
-    children,
-    config,
-    content = null,
-    onChange,
-    onContentChange,
+  children,
+  config,
+  content = null,
+  onChange,
+  onContentChange,
 }: EditorRootProps) => {
-
-    const defaultConfig = config || createEditorConfig({
-        namespace: "typix-editor",
-        extension_nodes: defaultExtensionNodes,
-        editable: true,
-        editorState: null,
-        initialState: content!,
-        theme: defaultTheme,
+  const defaultConfig =
+    config ||
+    createEditorConfig({
+      namespace: "typix-editor",
+      extension_nodes: defaultExtensionNodes,
+      editable: true,
+      editorState: null,
+      initialState: content!,
+      theme: defaultTheme,
     });
 
-    return (
-        <LexicalComposer
-            initialConfig={defaultConfig}
-        >
-            <RootContext>
-                <SharedHistoryContext>
-                    {(onChange || onContentChange) && (
-                        <OnChangePlugin
-                            ignoreSelectionChange={true}
-                            onChange={(editorState) => {
-                                onChange?.(editorState);
-                                onContentChange?.(editorState.toJSON());
-                            }}
-                        />
-                    )}
-                    {children}
-                </SharedHistoryContext>
-            </RootContext>
-        </LexicalComposer>
-    );
+  return (
+    <LexicalComposer initialConfig={defaultConfig}>
+      <RootContext>
+        <SharedHistoryContext>
+          {(onChange || onContentChange) && (
+            <OnChangePlugin
+              ignoreSelectionChange={true}
+              onChange={(editorState) => {
+                onChange?.(editorState);
+                onContentChange?.(editorState.toJSON());
+              }}
+            />
+          )}
+          {children}
+        </SharedHistoryContext>
+      </RootContext>
+    </LexicalComposer>
+  );
 };
 
-EditorRoot.displayName = 'Typix.EditorRoot';
+EditorRoot.displayName = "Typix.EditorRoot";
 
 export { EditorRoot, type EditorRootProps };

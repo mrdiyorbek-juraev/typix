@@ -99,6 +99,9 @@ importers:
       '@typix-editor/extension-collapsible':
         specifier: workspace:*
         version: link:../../packages/extensions/collapsible
+      '@typix-editor/extension-draggable-block':
+        specifier: workspace:*
+        version: link:../../packages/extensions/draggable-block
       '@typix-editor/extension-keywords':
         specifier: workspace:*
         version: link:../../packages/extensions/keywords
@@ -338,6 +341,36 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.1
         version: 19.2.3(@types/react@19.2.8)
+      lexical:
+        specifier: ^0.39.0
+        version: 0.39.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
+  packages/extensions/draggable-block:
+    devDependencies:
+      '@lexical/react':
+        specifier: ^0.39.0
+        version: 0.39.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@lexical/rich-text':
+        specifier: ^0.39.0
+        version: 0.39.0
+      '@lexical/utils':
+        specifier: ^0.39.0
+        version: 0.39.0
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
       lexical:
         specifier: ^0.39.0
         version: 0.39.0

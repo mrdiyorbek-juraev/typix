@@ -1,40 +1,32 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "React Library",
-    "compilerOptions": {
-        "strict": true,
-        "noUncheckedIndexedAccess": true,
-        "alwaysStrict": false,
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "resolveJsonModule": true,
-        "lib": [
-            "DOM"
-        ],
-        "noEmit": true,
-        "declaration": true,
-        "declarationMap": false,
-        "verbatimModuleSyntax": true,
-        "moduleDetection": "force",
-        "downlevelIteration": true,
-        "allowJs": true,
-        "isolatedModules": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
-        "skipDefaultLibCheck": true,
-        "incremental": true,
-        "tsBuildInfoFile": ".tsbuildinfo",
-        "target": "ESNext",
-        "jsx": "react-jsx",
-        "outDir": "dist"
-    },
-    "include": [
-        "./src/**/*"
-    ],
-    "exclude": [
-        "dist",
-        "build",
-        "node_modules"
-    ]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "React Library",
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "alwaysStrict": false,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "lib": ["DOM"],
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": false,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "downlevelIteration": true,
+    "allowJs": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "outDir": "dist"
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["dist", "build", "node_modules"]
 }
