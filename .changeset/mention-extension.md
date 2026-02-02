@@ -1,11 +1,11 @@
 ---
-"@typix-editor/mention": minor
+"@typix-editor/extension-mention": minor
 "@typix-editor/react": patch
 ---
 
 Add flexible mention extension with typeahead support
 
-**@typix-editor/mention (new package)**
+**@typix-editor/extension-mention (new package)**
 - MentionNode with configurable display options (trigger, className, style)
 - MentionExtension with customizable search, rendering, and trigger configuration
 - Support for async/sync search with built-in debouncing
