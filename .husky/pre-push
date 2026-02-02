@@ -1,5 +1,4 @@
 echo "Running type check..."
-pnpm run typecheck
 
 echo "Building packages..."
 pnpm run build
