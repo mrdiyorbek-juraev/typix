@@ -1,5 +1,5 @@
 "use client"
-import { $createHeadingNode, $createParagraphNode, $getSelection, $isRangeSelection, $setBlocksType, createCommand, createEditorConfig, defaultExtensionNodes, defaultTheme, EditorBubbleItem, EditorBubbleMenu, EditorCommand, EditorCommandEmpty, EditorCommandItem, EditorCommandList, EditorContent, EditorRoot, FORMAT_TEXT_COMMAND } from '@typix-editor/react';
+import { $createHeadingNode, $createParagraphNode, $getSelection, $isRangeSelection, $setBlocksType, createCommand, createEditorConfig, defaultExtensionNodes, defaultTheme, EditorBubbleItem, EditorBubbleMenu, EditorCommand, EditorCommandEmpty, EditorCommandItem, EditorCommandList, EditorContent, EditorRoot, FORMAT_TEXT_COMMAND, useEditor } from '@typix-editor/react';
 import { AutoLinkExtension } from '@typix-editor/extension-auto-link';
 import { MaxLengthExtension } from '@typix-editor/extension-max-length';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/cn';
 import { AutocompleteExtension, AutocompleteNode } from '@typix-editor/extension-auto-complete';
 import { KeywordNode, KeywordsExtension } from '@typix-editor/extension-keywords';
+import { MentionExtension, MentionNode } from '@typix-editor/extension-mention';
 
 export const initialValue = {
     root: {
@@ -79,11 +80,30 @@ const extensions = [
     ...defaultExtensionNodes,
     AutocompleteNode,
     KeywordNode,
-]
+    MentionNode,
+];
+
+
+const TestIsEmpty = () => {
+    const { isEmpty } = useEditor();
+    console.log(isEmpty);
+    return null;
+}
+
+
+const users = [
+    { id: '1', name: 'John Doe' },
+    { id: '2', name: 'Jane Smith' },
+    { id: '3', name: 'Bob Johnson' },
+];
 
 const HomePage = () => {
     const [editorState, setEditorState] = useState<any | null>(initialValue);
-
+    const handleSearch = (query: string) => {
+        return users.filter(user =>
+            user.name.toLowerCase().includes(query.toLowerCase())
+        );
+    };
     const config = createEditorConfig({
         namespace: "typix-editor",
         extension_nodes: extensions,
@@ -171,6 +191,18 @@ const HomePage = () => {
 
                         {/* KeywordsExtension */}
                         <KeywordsExtension />
+                        {/* MentionExtension */}
+                        <MentionExtension
+                            onSearch={handleSearch}
+                            onSelect={(mention) => {
+                                console.log(mention);
+                            }}
+                            nodeConfig={{
+                                includeTrigger: false
+                            }}
+                            triggerConfig={{ trigger: '@', }}
+
+                        />
 
                         {/* MaxLengthExtension */}
                         <MaxLengthExtension
@@ -183,6 +215,8 @@ const HomePage = () => {
                         />
 
                         <AutocompleteExtension />
+
+                        <TestIsEmpty />
                     </EditorContent>
                 </EditorRoot>
             </div>
