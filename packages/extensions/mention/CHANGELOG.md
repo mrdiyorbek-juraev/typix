@@ -1,8 +1,8 @@
-# @typix/react
+# @typix-editor/extension-mention
 
 ## 3.0.0
 
-### Patch Changes
+### Minor Changes
 
 - [#29](https://github.com/mrdiyorbek-juraev/typix/pull/29) [`fe1abfc`](https://github.com/mrdiyorbek-juraev/typix/commit/fe1abfc70b1b6f626e40c47b2cdafcc2f62c6a2f) Thanks [@mrdiyorbek-juraev](https://github.com/mrdiyorbek-juraev)! - Add flexible mention extension with typeahead support
 
@@ -18,35 +18,7 @@
 
   - Add `isEmpty` state to `useEditor` hook for detecting empty editor content
 
-## 2.0.0
-
-### Major Changes
-
-- Initial stable release of Typix Editor Framework
-
 ### Patch Changes
 
-- Updated dependencies []:
-  - @typix-editor/extension-rich-text@2.0.0
-
-## 1.0.0
-
-### Major Changes
-
-- 🎉 Launch v1.0.0 - Typix Editor Framework
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @typix-editor/extension-rich-text@1.0.0
-
-## 1.0.0
-
-### Major Changes
-
-- [`7f39884`](https://github.com/mrdiyorbek-juraev/typix/commit/7f398846df6e1370171b377198e84c31c5cf9cfb) Thanks [@diyorbekjuraev-nordra](https://github.com/diyorbekjuraev-nordra)! - Initial public release of Typix React bindings and rich-text extension
-
-### Patch Changes
-
-- Updated dependencies [[`7f39884`](https://github.com/mrdiyorbek-juraev/typix/commit/7f398846df6e1370171b377198e84c31c5cf9cfb)]:
-  - @typix/extension-rich-text@1.0.0
+- Updated dependencies [[`fe1abfc`](https://github.com/mrdiyorbek-juraev/typix/commit/fe1abfc70b1b6f626e40c47b2cdafcc2f62c6a2f)]:
+  - @typix-editor/react@3.0.0
