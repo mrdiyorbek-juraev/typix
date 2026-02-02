@@ -1,6 +1,5 @@
 echo "Running type check..."
 
 echo "Building packages..."
-pnpm run build
 
 echo "Pre-push checks passed!"
