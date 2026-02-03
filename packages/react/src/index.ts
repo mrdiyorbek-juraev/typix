@@ -76,6 +76,11 @@ export {
   type LexicalNodeReplacement,
 } from "./lib";
 
+export type {
+  TypixEditor
+} from './types'
+
+
 export { defaultExtensionNodes } from "./shared";
 
 export { defaultTheme } from "./theme";

@@ -35,6 +35,7 @@ import {
 } from "@typix-editor/extension-keywords";
 import { MentionExtension, MentionNode } from "@typix-editor/extension-mention";
 import { DraggableBlockExtension } from "@typix-editor/extension-draggable-block";
+import { ContextMenuExtension } from "@typix-editor/extension-context-menu";
 
 export const initialValue = {
   root: {
@@ -241,6 +242,19 @@ const HomePage = () => {
             <AutocompleteExtension />
 
             <DraggableBlockExtension />
+
+            <ContextMenuExtension
+              options={[
+                {
+                  type: 'item',
+                  key: 'test',
+                  label: 'Test',
+                  onSelect: (editor) => {
+                    console.log('Test', editor);
+                  },
+                },
+              ]}
+            />
 
             <TestIsEmpty />
           </EditorContent>
