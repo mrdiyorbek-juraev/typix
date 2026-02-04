@@ -3,11 +3,13 @@ import {
   type InitialConfigType,
   LexicalComposer,
 } from "@lexical/react/LexicalComposer";
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { defaultTheme } from "../../theme";
 import { type EditorState, type SerializedEditorState } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-import { SharedHistoryContext } from "../../context/history";
+import { History, SharedHistoryContext } from "../../context/history";
 import { RootContext } from "../../context/root";
+import { TypixEditorProvider } from "../../context/editor";
 import { defaultExtensionNodes } from "../../shared";
 import { createEditorConfig } from "../../config";
 
@@ -79,20 +81,24 @@ const EditorRoot = ({
 
   return (
     <LexicalComposer initialConfig={defaultConfig}>
-      <RootContext>
-        <SharedHistoryContext>
-          {(onChange || onContentChange) && (
-            <OnChangePlugin
-              ignoreSelectionChange={true}
-              onChange={(editorState) => {
-                onChange?.(editorState);
-                onContentChange?.(editorState.toJSON());
-              }}
-            />
-          )}
-          {children}
-        </SharedHistoryContext>
-      </RootContext>
+      <TypixEditorProvider>
+        <RootContext>
+          <SharedHistoryContext>
+            {(onChange || onContentChange) && (
+              <OnChangePlugin
+                ignoreSelectionChange={true}
+                onChange={(editorState) => {
+                  onChange?.(editorState);
+                  onContentChange?.(editorState.toJSON());
+                }}
+              />
+            )}
+            {children}
+            <History />
+            <ListPlugin />
+          </SharedHistoryContext>
+        </RootContext>
+      </TypixEditorProvider>
     </LexicalComposer>
   );
 };

@@ -34,11 +34,16 @@ type UseEditorReturn = {
 
 export function useEditor(): UseEditorReturn {
   const [editor] = useLexicalComposerContext();
+
+
+
   const [isEmpty, setIsEmpty] = useState(() =>
     editor
       .getEditorState()
       .read(() => $isRootTextContentEmpty(editor.isComposing(), true))
   );
+
+  
 
   useEffect(() => {
     return editor.registerUpdateListener(({ editorState }) => {

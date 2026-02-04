@@ -1,3 +1,7 @@
-import type { LexicalEditor } from "lexical";
+import type { LexicalEditor, TextFormatType } from "lexical";
 
-export type TypixEditor = LexicalEditor
+/**
+ * Re-export LexicalEditor type for direct access to the underlying editor.
+ * Use editor.lexical to access this from a TypixEditor instance.
+ */
+export type { LexicalEditor, TextFormatType };

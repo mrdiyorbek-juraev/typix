@@ -10,6 +10,10 @@ export {
   type EditorCommandContextValue,
   EditorCommandProvider,
   useEditorCommand,
+  TypixEditorProvider,
+  useTypixEditor,
+  TypixEditorContext,
+  type TypixEditorContextValue,
   RootContext,
   useRootContext,
   type RootContextShape,
@@ -40,6 +44,14 @@ export {
 } from "./core";
 
 export {
+  TypixEditor,
+  TEXT_FORMAT_TYPES,
+  type HeadingLevel,
+  type BlockType,
+} from "./editor";
+
+export {
+  useActiveFormats,
   useEditor,
   useMouseListener,
   useRange,
@@ -76,9 +88,8 @@ export {
   type LexicalNodeReplacement,
 } from "./lib";
 
-export type {
-  TypixEditor
-} from './types'
+// Re-export types for direct access
+export type { LexicalEditor, TextFormatType } from "./types";
 
 
 export { defaultExtensionNodes } from "./shared";

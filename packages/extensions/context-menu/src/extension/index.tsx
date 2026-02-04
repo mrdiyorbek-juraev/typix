@@ -5,7 +5,7 @@ import {
   NodeContextMenuSeparator,
 } from '@lexical/react/LexicalNodeContextMenuPlugin';
 import { useMemo } from 'react';
-import { useEditor, type TypixEditor, type LexicalNode } from "@typix-editor/react"
+import { useTypixEditor, type TypixEditor, type LexicalNode } from "@typix-editor/react"
 
 
 export type TypixContextMenuItem =
@@ -30,7 +30,7 @@ type ContextMenuExtensionProps = {
 };
 
 export function ContextMenuExtension({ options }: ContextMenuExtensionProps) {
-  const { editor } = useEditor();
+  const editor = useTypixEditor();
 
   const menu_options = useMemo(() => {
     return options.map((item) => {

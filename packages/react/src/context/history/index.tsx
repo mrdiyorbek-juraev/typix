@@ -1,7 +1,7 @@
 import type { HistoryState } from "@lexical/react/LexicalHistoryPlugin";
 import type { JSX } from "react";
 
-import { createEmptyHistoryState } from "@lexical/react/LexicalHistoryPlugin";
+import { createEmptyHistoryState, HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import * as React from "react";
 import { createContext, type ReactNode, useContext, useMemo } from "react";
 
@@ -25,4 +25,10 @@ export const SharedHistoryContext = ({
 
 export const useSharedHistoryContext = (): ContextShape => {
   return useContext(Context);
+};
+
+
+export const History = () => {
+  const { historyState } = useSharedHistoryContext();
+  return <HistoryPlugin externalHistoryState={historyState} />;
 };
