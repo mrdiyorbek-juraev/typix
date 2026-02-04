@@ -5,6 +5,13 @@ export {
 } from "./command";
 
 export {
+  TypixEditorProvider,
+  useTypixEditor,
+  TypixEditorContext,
+  type TypixEditorContextValue,
+} from "./editor";
+
+export {
   SharedHistoryContext,
   useSharedHistoryContext,
   type ContextShape,
