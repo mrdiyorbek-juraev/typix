@@ -1,6 +1,6 @@
 {
     "name": "@typix-editor/extension-auto-complete",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "description": "Auto complete extension for Typix",
     "keywords": [],
     "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
