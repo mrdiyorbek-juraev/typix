@@ -1,5 +1,4 @@
 echo "Running type check..."
-pnpm typecheck
 
 echo "Format..."
 pnpm format

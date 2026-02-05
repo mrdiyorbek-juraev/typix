@@ -1,57 +1,57 @@
 {
-    "name": "@typix-editor/extension-draggable-block",
-    "version": "4.0.0",
-    "description": "Draggable block extension for Typix - enables drag and drop reordering of editor blocks",
-    "keywords": [
-        "typix",
-        "lexical",
-        "draggable",
-        "drag-drop",
-        "block",
-        "editor"
-    ],
-    "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
-    "homepage": "https://typix.com",
-    "license": "MIT",
-    "type": "module",
-    "main": "dist/index.cjs",
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "sideEffects": false,
-    "files": [
-        "dist"
-    ],
-    "publishConfig": {
-        "access": "public"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
-    },
-    "bugs": {
-        "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
-    },
-    "scripts": {
-        "build": "tsup",
-        "build:fast": "tsup",
-        "dev": "pnpm build:fast --watch",
-        "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
-        "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-    },
-    "peerDependencies": {
-        "@typix-editor/react": "workspace:*",
-        "react": "^18.2.0 || ^19.0.0-0",
-        "react-dom": "^18.2.0 || ^19.0.0-0"
-    },
-    "devDependencies": {
-        "@lexical/react": "^0.39.0",
-        "@lexical/utils": "^0.39.0",
-        "@lexical/rich-text": "^0.39.0",
-        "@types/react": "^19.2.7",
-        "@typix-editor/react": "workspace:*",
-        "@types/react-dom": "^19.2.1",
-        "lexical": "^0.39.0",
-        "react": "^18.2.0 || ^19.0.0-0",
-        "react-dom": "^18.2.0 || ^19.0.0-0"
-    }
+  "name": "@typix-editor/extension-draggable-block",
+  "version": "4.0.0",
+  "description": "Draggable block extension for Typix - enables drag and drop reordering of editor blocks",
+  "keywords": [
+    "typix",
+    "lexical",
+    "draggable",
+    "drag-drop",
+    "block",
+    "editor"
+  ],
+  "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
+  "homepage": "https://typix.com",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:fast": "tsup",
+    "dev": "pnpm build:fast --watch",
+    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "peerDependencies": {
+    "@typix-editor/react": "workspace:*",
+    "react": "^18.2.0 || ^19.0.0-0",
+    "react-dom": "^18.2.0 || ^19.0.0-0"
+  },
+  "devDependencies": {
+    "@lexical/react": "^0.39.0",
+    "@lexical/utils": "^0.39.0",
+    "@lexical/rich-text": "^0.39.0",
+    "@types/react": "^19.2.7",
+    "@typix-editor/react": "workspace:*",
+    "@types/react-dom": "^19.2.1",
+    "lexical": "^0.39.0",
+    "react": "^18.2.0 || ^19.0.0-0",
+    "react-dom": "^18.2.0 || ^19.0.0-0"
+  }
 }
