@@ -21,11 +21,11 @@ function getKeywordMatch(text: string): { start: number; end: number } | null {
 describe("keywords regex", () => {
   describe("English keywords", () => {
     it("matches 'congratulations'", () => {
-      const result = getKeywordMatch("congratulations"); 
+      const result = getKeywordMatch("congratulations");
       expect(result).not.toBeNull();
       expect(result?.start).toBe(0);
       expect(result?.end).toBe(15);
-    }); 
+    });
 
     it("matches 'congrats'", () => {
       const result = getKeywordMatch("congrats");

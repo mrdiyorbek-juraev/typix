@@ -231,10 +231,7 @@ export function Toolbar() {
 
         <ToolbarLabel>Align</ToolbarLabel>
         <div className="flex items-center gap-1">
-          <ToolbarButton
-            onClick={() => editor.alignLeft()}
-            title="Align Left"
-          >
+          <ToolbarButton onClick={() => editor.alignLeft()} title="Align Left">
             <svg
               fill="none"
               height="14"
@@ -288,10 +285,7 @@ export function Toolbar() {
               <line x1="21" x2="7" y1="18" y2="18" />
             </svg>
           </ToolbarButton>
-          <ToolbarButton
-            onClick={() => editor.alignJustify()}
-            title="Justify"
-          >
+          <ToolbarButton onClick={() => editor.alignJustify()} title="Justify">
             <svg
               fill="none"
               height="14"

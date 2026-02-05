@@ -34,9 +34,7 @@ export function getFontSize(editor: LexicalEditor): number {
 
     const style = anchor.getStyle() ?? "";
     const fontSize = style.match(/font-size:\s*(\d+)px/);
-    return fontSize?.[1]
-      ? Number.parseInt(fontSize[1], 10)
-      : DEFAULT_FONT_SIZE;
+    return fontSize?.[1] ? Number.parseInt(fontSize[1], 10) : DEFAULT_FONT_SIZE;
   });
 }
 

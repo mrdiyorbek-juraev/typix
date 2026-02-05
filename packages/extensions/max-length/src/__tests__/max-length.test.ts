@@ -16,7 +16,7 @@ function countCharacters(
       return processedText
         .trim()
         .split(/\s+/)
-        .filter((word) => word.length > 0).length; 
+        .filter((word) => word.length > 0).length;
 
     case "bytes":
       return new Blob([processedText]).size;

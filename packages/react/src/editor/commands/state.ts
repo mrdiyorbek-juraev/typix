@@ -13,7 +13,10 @@ import { type BlockType, TEXT_FORMAT_TYPES } from "../constants";
 /**
  * Check if a format is currently active on the selection.
  */
-export function isActive(editor: LexicalEditor, format: TextFormatType): boolean {
+export function isActive(
+  editor: LexicalEditor,
+  format: TextFormatType
+): boolean {
   return editor.getEditorState().read(() => {
     const selection = $getSelection();
     if (!$isRangeSelection(selection)) {
@@ -48,7 +51,10 @@ export function getActiveFormats(editor: LexicalEditor): Set<TextFormatType> {
 /**
  * Check if a block type is currently active.
  */
-export function isBlockActive(editor: LexicalEditor, blockType: BlockType): boolean {
+export function isBlockActive(
+  editor: LexicalEditor,
+  blockType: BlockType
+): boolean {
   return editor.getEditorState().read(() => {
     const selection = $getSelection();
     if (!$isRangeSelection(selection)) return false;

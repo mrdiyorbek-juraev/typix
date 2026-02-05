@@ -144,7 +144,10 @@ export function toggleQuote(editor: LexicalEditor): void {
 /**
  * Toggle code block.
  */
-export function toggleCodeBlock(editor: LexicalEditor, language?: string): void {
+export function toggleCodeBlock(
+  editor: LexicalEditor,
+  language?: string
+): void {
   editor.update(() => {
     const selection = $getSelection();
     if (!$isRangeSelection(selection)) return;

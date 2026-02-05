@@ -72,7 +72,9 @@ describe("auto-complete", () => {
           "microsoft",
         ];
 
-        const foundTerms = techTerms.filter((term) => DICTIONARY.includes(term));
+        const foundTerms = techTerms.filter((term) =>
+          DICTIONARY.includes(term)
+        );
         expect(foundTerms.length).toBeGreaterThan(3);
       });
 
@@ -85,7 +87,9 @@ describe("auto-complete", () => {
           "philadelphia",
         ];
 
-        const foundLocations = locations.filter((loc) => DICTIONARY.includes(loc));
+        const foundLocations = locations.filter((loc) =>
+          DICTIONARY.includes(loc)
+        );
         expect(foundLocations.length).toBeGreaterThan(2);
       });
 

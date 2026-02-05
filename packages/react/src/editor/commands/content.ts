@@ -57,7 +57,10 @@ export function getText(editor: LexicalEditor): string {
 /**
  * Set the editor content from serialized JSON.
  */
-export function setJSON(editor: LexicalEditor, json: SerializedEditorState): void {
+export function setJSON(
+  editor: LexicalEditor,
+  json: SerializedEditorState
+): void {
   const editorState = editor.parseEditorState(json);
   editor.setEditorState(editorState);
   editor.focus();
@@ -89,7 +92,7 @@ export function setMarkdown(editor: LexicalEditor, markdown: string): void {
     root.clear();
     $convertFromMarkdownString(markdown, TRANSFORMERS);
     editor.focus();
-  }); 
+  });
 }
 
 /**
@@ -101,6 +104,6 @@ export function clearContent(editor: LexicalEditor): void {
     root.clear();
     const paragraph = $createParagraphNode();
     root.append(paragraph);
-    paragraph.select(); 
+    paragraph.select();
   });
 }

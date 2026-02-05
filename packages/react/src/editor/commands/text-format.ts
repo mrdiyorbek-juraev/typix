@@ -11,7 +11,10 @@ import { TEXT_FORMAT_TYPES } from "../constants";
 /**
  * Toggle a text format on the current selection.
  */
-export function toggleFormat(editor: LexicalEditor, format: TextFormatType): void {
+export function toggleFormat(
+  editor: LexicalEditor,
+  format: TextFormatType
+): void {
   editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
 }
 

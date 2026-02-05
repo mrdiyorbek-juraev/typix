@@ -1,4 +1,8 @@
-import type { LexicalEditor, SerializedEditorState, TextFormatType } from "lexical";
+import type {
+  LexicalEditor,
+  SerializedEditorState,
+  TextFormatType,
+} from "lexical";
 import * as commands from "./commands";
 import type { BlockType, ElementAlignment, HeadingLevel } from "./constants";
 

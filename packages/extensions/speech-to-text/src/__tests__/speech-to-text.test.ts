@@ -111,8 +111,8 @@ describe("speech-to-text utilities", () => {
     it("supports command handlers", () => {
       const mockCommands = {
         "new line": () => {},
-        "undo": () => {},
-        "redo": () => {},
+        undo: () => {},
+        redo: () => {},
         "bold text": () => {},
       };
 
