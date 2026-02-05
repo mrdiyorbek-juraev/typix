@@ -49,7 +49,9 @@ describe("setFloatingElemPosition", () => {
     it("hides the floating element", () => {
       const anchorElem = createMockElement(createMockRect(0, 0, 800, 600));
       const scrollerElem = createMockElement(createMockRect(0, 0, 800, 600));
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(null, floatingElem, anchorElem);
 
@@ -90,7 +92,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -107,7 +111,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem, false, 20);
 
@@ -123,9 +129,18 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
-      setFloatingElemPosition(targetRect, floatingElem, anchorElem, false, 10, 15);
+      setFloatingElemPosition(
+        targetRect,
+        floatingElem,
+        anchorElem,
+        false,
+        10,
+        15
+      );
 
       // top = 200 - 40 - 10 - 0 = 150
       // left = 100 - 15 - 0 = 85
@@ -141,7 +156,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -157,7 +174,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem, true); // isLink = true
 
@@ -175,7 +194,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -192,7 +213,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -203,7 +226,10 @@ describe("setFloatingElemPosition", () => {
   });
 
   describe("text alignment handling", () => {
-    const mockSelection = (textAlign: string, nodeType: number = Node.TEXT_NODE) => {
+    const mockSelection = (
+      textAlign: string,
+      nodeType: number = Node.TEXT_NODE
+    ) => {
       const parentElement = document.createElement("div");
       const mockRange = {
         startContainer:
@@ -231,7 +257,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -248,7 +276,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -264,7 +294,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -281,7 +313,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -297,7 +331,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 
@@ -316,7 +352,9 @@ describe("setFloatingElemPosition", () => {
 
       const anchorElem = createMockElement(anchorRect);
       const scrollerElem = createMockElement(scrollerRect);
-      Object.defineProperty(anchorElem, "parentElement", { value: scrollerElem });
+      Object.defineProperty(anchorElem, "parentElement", {
+        value: scrollerElem,
+      });
 
       setFloatingElemPosition(targetRect, floatingElem, anchorElem);
 

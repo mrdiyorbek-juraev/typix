@@ -62,7 +62,11 @@ describe("validation", () => {
   describe("validateEditorState", () => {
     it("returns true for valid initial editor state", async () => {
       const editorState = createValidEditorState();
-      const result = await validateEditorState("test-doc", editorState, testNodes);
+      const result = await validateEditorState(
+        "test-doc",
+        editorState,
+        testNodes
+      );
       expect(result).toBe(true);
     });
 
@@ -70,11 +74,14 @@ describe("validation", () => {
       const editorState = createValidEditorState();
 
       await validateEditorState("test-doc", editorState, testNodes);
-      const result = await validateEditorState("test-doc", editorState, testNodes);
+      const result = await validateEditorState(
+        "test-doc",
+        editorState,
+        testNodes
+      );
 
       expect(result).toBe(true);
     });
-
 
     it("caches editor instance per document", async () => {
       const editorState = createValidEditorState();
@@ -83,8 +90,16 @@ describe("validation", () => {
       await validateEditorState("test-doc-2", editorState, testNodes);
 
       // Both should succeed with their own cached editors
-      const result1 = await validateEditorState("test-doc-1", editorState, testNodes);
-      const result2 = await validateEditorState("test-doc-2", editorState, testNodes);
+      const result1 = await validateEditorState(
+        "test-doc-1",
+        editorState,
+        testNodes
+      );
+      const result2 = await validateEditorState(
+        "test-doc-2",
+        editorState,
+        testNodes
+      );
 
       expect(result1).toBe(true);
       expect(result2).toBe(true);
@@ -125,7 +140,11 @@ describe("validation", () => {
       const stateWithMark = JSON.stringify(editor.getEditorState().toJSON());
 
       // First validation initializes the state (mark gets sanitized)
-      const result = await validateEditorState("test-doc", stateWithMark, nodesWithMark);
+      const result = await validateEditorState(
+        "test-doc",
+        stateWithMark,
+        nodesWithMark
+      );
       expect(result).toBe(true);
     });
   });
@@ -137,7 +156,11 @@ describe("validation", () => {
       await initializeDocumentState("test-doc", editorState, testNodes);
 
       // Subsequent validation with same state should return true
-      const result = await validateEditorState("test-doc", editorState, testNodes);
+      const result = await validateEditorState(
+        "test-doc",
+        editorState,
+        testNodes
+      );
       expect(result).toBe(true);
     });
 
