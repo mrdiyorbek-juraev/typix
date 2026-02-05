@@ -1,20 +1,17 @@
-import type { JSX } from "react";
-
 import {
   AutoLinkPlugin,
-  ChangeHandler,
+  type ChangeHandler,
   createLinkMatcherWithRegExp,
-  LinkMatcher,
+  type LinkMatcher,
 } from "@lexical/react/LexicalAutoLinkPlugin";
+import type { JSX } from "react";
 import { EMAIL_REGEX, URL_REGEX } from "../lib";
 
 const MATCHERS = [
-  createLinkMatcherWithRegExp(URL_REGEX, (text) => {
-    return text.startsWith("http") ? text : `https://${text}`;
-  }),
-  createLinkMatcherWithRegExp(EMAIL_REGEX, (text) => {
-    return `mailto:${text}`;
-  }),
+  createLinkMatcherWithRegExp(URL_REGEX, (text) =>
+    text.startsWith("http") ? text : `https://${text}`
+  ),
+  createLinkMatcherWithRegExp(EMAIL_REGEX, (text) => `mailto:${text}`),
 ];
 
 export function AutoLinkExtension({

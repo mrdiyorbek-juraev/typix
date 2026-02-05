@@ -1,15 +1,15 @@
-import { getPageImage, source } from "@/lib/source";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
 } from "fumadocs-ui/layouts/docs/page";
-import { notFound } from "next/navigation";
-import { getMDXComponents } from "@/mdx-components";
-import type { Metadata } from "next";
 import { createRelativeLink } from "fumadocs-ui/mdx";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { LLMCopyButton, ViewOptions } from "@/components/ai/page-actions";
+import { getPageImage, source } from "@/lib/source";
+import { getMDXComponents } from "@/mdx-components";
 
 export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
@@ -24,24 +24,24 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   };
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage full={page.data.full} toc={page.data.toc}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}
       </DocsDescription>
-      <div className="flex flex-row gap-2 items-center border-b pb-6">
+      <div className="flex flex-row items-center gap-2 border-b pb-6">
         <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
         <ViewOptions
-          markdownUrl={`${page.url}.mdx`}
-          // update it to match your repo
           githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/docs/content/docs/${page.path}`}
+          // update it to match your repo
+          markdownUrl={`${page.url}.mdx`}
         />
       </div>
       <DocsBody>
         <MDX
           components={getMDXComponents({
             // this allows you to link to other pages with relative file paths
-            // @ts-ignore
+            // @ts-expect-error
             a: createRelativeLink(source, page),
           })}
         />

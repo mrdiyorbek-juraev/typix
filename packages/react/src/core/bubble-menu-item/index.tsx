@@ -1,14 +1,14 @@
-import { forwardRef, useEffect, useState } from "react";
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { useEditor } from "../../hooks/useEditor";
+import { Slot } from "@radix-ui/react-slot";
 import {
   $getSelection,
   $isRangeSelection,
+  type LexicalEditor,
   SELECTION_CHANGE_COMMAND,
   type TextFormatType,
-  type LexicalEditor,
 } from "lexical";
-import { Slot } from "@radix-ui/react-slot";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { forwardRef, useEffect, useState } from "react";
+import { useEditor } from "../../hooks/useEditor";
 import { cn } from "../../utils";
 
 export interface EditorBubbleItemRenderProps {
@@ -68,11 +68,11 @@ export const EditorBubbleItem = forwardRef<
 
   return (
     <Comp
-      ref={ref}
+      className={cn("typix-editor-bubble-item", className)}
       onClick={() => {
         onSelect?.(editor);
       }}
-      className={cn("typix-editor-bubble-item", className)}
+      ref={ref}
       {...rest}
     >
       {content}

@@ -1,31 +1,31 @@
+import { $createCodeNode, $isCodeNode } from "@lexical/code";
 import {
-  type LexicalEditor,
-  $getSelection,
-  $isRangeSelection,
-  $createParagraphNode,
-  $isTextNode,
-  FORMAT_TEXT_COMMAND,
-  UNDO_COMMAND,
-  REDO_COMMAND,
-  type TextFormatType,
-} from "lexical";
-import { $patchStyleText, $setBlocksType } from "@lexical/selection";
+  $isListNode,
+  INSERT_CHECK_LIST_COMMAND,
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  ListNode,
+  REMOVE_LIST_COMMAND,
+} from "@lexical/list";
 import {
   $createHeadingNode,
   $createQuoteNode,
   $isQuoteNode,
   type HeadingTagType,
 } from "@lexical/rich-text";
-import {
-  INSERT_CHECK_LIST_COMMAND,
-  INSERT_ORDERED_LIST_COMMAND,
-  INSERT_UNORDERED_LIST_COMMAND,
-  REMOVE_LIST_COMMAND,
-  $isListNode,
-  ListNode,
-} from "@lexical/list";
-import { $createCodeNode, $isCodeNode } from "@lexical/code";
+import { $patchStyleText, $setBlocksType } from "@lexical/selection";
 import { $getNearestNodeOfType } from "@lexical/utils";
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+  $isTextNode,
+  FORMAT_TEXT_COMMAND,
+  type LexicalEditor,
+  REDO_COMMAND,
+  type TextFormatType,
+  UNDO_COMMAND,
+} from "lexical";
 
 /**
  * All available text format types
@@ -40,7 +40,7 @@ export const TEXT_FORMAT_TYPES: TextFormatType[] = [
   "superscript",
   "highlight",
   "lowercase",
-  "uppercase"
+  "uppercase",
 ];
 
 /**
@@ -366,7 +366,7 @@ export class TypixEditor {
       const element = anchorNode.getTopLevelElementOrThrow();
       const listNode = $getNearestNodeOfType(element, ListNode);
 
-      if (!listNode || !$isListNode(listNode)) return false;
+      if (!(listNode && $isListNode(listNode))) return false;
 
       const listTagType = listNode.getListType();
       if (listType === "bullet") return listTagType === "bullet";
@@ -497,9 +497,13 @@ export class TypixEditor {
       const elementType = element.getType();
 
       // Check for list types
-      if (blockType === "bullet" || blockType === "number" || blockType === "check") {
+      if (
+        blockType === "bullet" ||
+        blockType === "number" ||
+        blockType === "check"
+      ) {
         const listNode = $getNearestNodeOfType(element, ListNode);
-        if (!listNode || !$isListNode(listNode)) return false;
+        if (!(listNode && $isListNode(listNode))) return false;
         const listTagType = listNode.getListType();
         if (blockType === "bullet") return listTagType === "bullet";
         if (blockType === "number") return listTagType === "number";
@@ -635,7 +639,9 @@ export class TypixEditor {
 
       const style = anchor.getStyle() ?? "";
       const fontSize = style.match(/font-size:\s*(\d+)px/);
-      return fontSize?.[1] ? parseInt(fontSize[1], 10) : DEFAULT_FONT_SIZE;
+      return fontSize?.[1]
+        ? Number.parseInt(fontSize[1], 10)
+        : DEFAULT_FONT_SIZE;
     });
   }
 

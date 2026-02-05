@@ -25,6 +25,8 @@
     "@typix-editor/extension-draggable-block": "workspace:*",
     "@typix-editor/extension-context-menu": "workspace:*",
     "@typix-editor/extension-short-cuts": "workspace:*",
+    "@typix-editor/extension-tab-focus": "workspace:*",
+    "@typix-editor/extension-speech-to-text": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "fumadocs-core": "16.4.7",
     "fumadocs-mdx": "14.2.5",

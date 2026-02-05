@@ -1,8 +1,8 @@
-import type { BaseSelection, NodeKey, TextNode } from "lexical";
-import { useCallback, useEffect, useRef, type JSX } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $isAtNodeEnd } from "@lexical/selection";
 import { mergeRegister } from "@lexical/utils";
+import { addSwipeRightListener } from "@typix-editor/react";
+import type { BaseSelection, NodeKey, TextNode } from "lexical";
 import {
   $addUpdateTag,
   $createTextNode,
@@ -16,12 +16,11 @@ import {
   KEY_ARROW_RIGHT_COMMAND,
   KEY_TAB_COMMAND,
 } from "lexical";
-
-import { $createAutocompleteNode, AutocompleteNode } from "../node";
+import { type JSX, useCallback, useEffect, useRef } from "react";
 
 import DICTIONARY from "../dictionary";
 import { uuid } from "../lib";
-import { addSwipeRightListener } from "@typix-editor/react";
+import { $createAutocompleteNode, AutocompleteNode } from "../node";
 
 const HISTORY_MERGE = { tag: HISTORY_MERGE_TAG };
 const MIN_SEARCH_LENGTH = 4;
@@ -44,12 +43,12 @@ type SearchPromise = {
 
 // TODO lookup should be custom
 function $search(selection: null | BaseSelection): [boolean, string] {
-  if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
+  if (!($isRangeSelection(selection) && selection.isCollapsed())) {
     return [false, ""];
   }
   const node = selection.getNodes()[0];
 
-  if (!$isTextNode(node) || !node.isSimpleText()) {
+  if (!($isTextNode(node) && node.isSimpleText())) {
     return [false, ""];
   }
 
@@ -80,9 +79,10 @@ function $search(selection: null | BaseSelection): [boolean, string] {
 function useQuery(): (searchText: string) => SearchPromise {
   const serverRef = useRef(new AutocompleteServer());
 
-  return useCallback((searchText: string) => {
-    return serverRef.current.query(searchText);
-  }, []);
+  return useCallback(
+    (searchText: string) => serverRef.current.query(searchText),
+    []
+  );
 }
 
 function formatSuggestionText(suggestion: string): string {
@@ -104,7 +104,7 @@ export function AutocompleteExtension(): JSX.Element | null {
     let lastMatch: null | string = null;
     let lastSuggestion: null | string = null;
     let searchPromise: null | SearchPromise = null;
-    let prevNodeFormat: number = 0;
+    let prevNodeFormat = 0;
 
     function $clearSuggestion() {
       const autocompleteNode =

@@ -3,12 +3,12 @@ import {
   $createParagraphNode,
   $isElementNode,
   buildImportMap,
-  DOMConversionOutput,
-  EditorConfig,
+  type DOMConversionOutput,
+  type EditorConfig,
   ElementNode,
-  LexicalEditor,
-  LexicalNode,
-  RangeSelection,
+  type LexicalEditor,
+  type LexicalNode,
+  type RangeSelection,
 } from "lexical";
 import { $isCollapsibleContainerNode } from "../container";
 import { $isCollapsibleContentNode } from "../content";
@@ -85,16 +85,14 @@ export class CollapsibleTitleNode extends ElementNode {
       const firstChild = contentNode.getFirstChild();
       if ($isElementNode(firstChild)) {
         return firstChild;
-      } else {
-        const paragraph = $createParagraphNode();
-        contentNode.append(paragraph);
-        return paragraph;
       }
-    } else {
       const paragraph = $createParagraphNode();
-      containerNode.insertAfter(paragraph, restoreSelection);
+      contentNode.append(paragraph);
       return paragraph;
     }
+    const paragraph = $createParagraphNode();
+    containerNode.insertAfter(paragraph, restoreSelection);
+    return paragraph;
   }
 }
 

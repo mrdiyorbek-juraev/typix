@@ -73,25 +73,24 @@ export const validateEditorState = async (
 
     if (currentState) {
       const success = sanitizedJSON === currentState.editorState;
-      if (!success) {
-        console.log(`Editor state rejected for document ${documentId}`);
-        editor.setEditorState(prevEditorState);
-      } else {
+      if (success) {
         // Update the last updated time
         documentStates.set(documentId, {
           editorState: sanitizedJSON,
           lastUpdated: Date.now(),
         });
+      } else {
+        console.log(`Editor state rejected for document ${documentId}`);
+        editor.setEditorState(prevEditorState);
       }
       return success;
-    } else {
-      console.log(`Initial state set for document ${documentId}`);
-      documentStates.set(documentId, {
-        editorState: sanitizedJSON,
-        lastUpdated: Date.now(),
-      });
-      return true;
     }
+    console.log(`Initial state set for document ${documentId}`);
+    documentStates.set(documentId, {
+      editorState: sanitizedJSON,
+      lastUpdated: Date.now(),
+    });
+    return true;
   } catch (error) {
     console.error(`Validation error for document ${documentId}:`, error);
     editor.setEditorState(prevEditorState);

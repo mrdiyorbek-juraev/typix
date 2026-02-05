@@ -1,6 +1,6 @@
 import type { BaseSelection } from "lexical";
+import type * as React from "react";
 import type { JSX } from "react";
-import * as React from "react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 
 export type RootContextShape = {

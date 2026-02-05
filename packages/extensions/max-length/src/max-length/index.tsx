@@ -5,8 +5,8 @@ import {
   $getSelection,
   $isRangeSelection,
   type EditorState,
-  RootNode as RootNodeClass,
   type RootNode,
+  RootNode as RootNodeClass,
 } from "lexical";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -105,7 +105,7 @@ function countCharacters(
       // Check if Segmenter is available
       if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
         try {
-          // @ts-ignore - Segmenter exists but TypeScript doesn't know
+          // @ts-expect-error - Segmenter exists but TypeScript doesn't know
           const segmenter = new Intl.Segmenter();
           return [...segmenter.segment(text)].length;
         } catch (e) {
@@ -267,7 +267,7 @@ export function MaxLengthExtension({
         const selection = $getSelection();
 
         // Only process when selection is collapsed (cursor position)
-        if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
+        if (!($isRangeSelection(selection) && selection.isCollapsed())) {
           return;
         }
 

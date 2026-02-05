@@ -1,6 +1,6 @@
+import { RichTextExtension } from "@typix-editor/extension-rich-text";
 import { forwardRef } from "react";
 import { useRootContext } from "../../context/root";
-import { RichTextExtension } from "@typix-editor/extension-rich-text";
 
 interface EditorContentProps {
   children?: React.ReactNode;
@@ -45,12 +45,12 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
       }
     };
     return (
-      <div ref={ref} className={className}>
+      <div className={className} ref={ref}>
         {children}
         <RichTextExtension
+          classNames={classnames}
           editorRef={onRef}
           placeholder={placeholder}
-          classNames={classnames}
         />
       </div>
     );

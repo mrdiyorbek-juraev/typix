@@ -1,6 +1,6 @@
-import { type ReactNode } from "react";
-import { cn } from "../../utils";
+import type { ReactNode } from "react";
 import { useEditorCommand } from "../../context/command";
+import { cn } from "../../utils";
 
 export interface EditorCommandEmptyProps {
   children: ReactNode;

@@ -1,12 +1,12 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import {
   findFirstFocusableDescendant,
   focusNearestDescendant,
   isKeyboardInput,
 } from "./focus-utils";
 import { addSwipeRightListener } from "./swipe";
-import { validateUrl, sanitizeUrl } from "./url";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { sanitizeUrl, validateUrl } from "./url";
 
 /**
  * Utility function to merge Tailwind classes safely

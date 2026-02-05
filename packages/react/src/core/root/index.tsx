@@ -1,17 +1,18 @@
 "use client";
+import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import {
   type InitialConfigType,
   LexicalComposer,
 } from "@lexical/react/LexicalComposer";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { defaultTheme } from "../../theme";
-import { type EditorState, type SerializedEditorState } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import type { EditorState, SerializedEditorState } from "lexical";
+import { createEditorConfig } from "../../config";
+import { TypixEditorProvider } from "../../context/editor";
 import { History, SharedHistoryContext } from "../../context/history";
 import { RootContext } from "../../context/root";
-import { TypixEditorProvider } from "../../context/editor";
 import { defaultExtensionNodes } from "../../shared";
-import { createEditorConfig } from "../../config";
+import { defaultTheme } from "../../theme";
 
 /**
  * Props for the TypixEditorRoot component.
@@ -96,6 +97,7 @@ const EditorRoot = ({
             {children}
             <History />
             <ListPlugin />
+            <AutoFocusPlugin />
           </SharedHistoryContext>
         </RootContext>
       </TypixEditorProvider>

@@ -1,24 +1,23 @@
-import {
-  $createParagraphNode,
-  $getSelection,
-  $isRangeSelection,
-  FORMAT_TEXT_COMMAND,
-  ParagraphNode,
-  TextNode,
-  // LEXICAL CORE TYPES
-  type Klass,
-  type LexicalNode,
-  type LexicalNodeReplacement,
-} from "lexical";
-import { $setBlocksType } from "@lexical/selection";
-import { $createHeadingNode } from "@lexical/rich-text";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { HashtagNode } from "@lexical/hashtag";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { OverflowNode } from "@lexical/overflow";
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { $createHeadingNode, HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { $setBlocksType } from "@lexical/selection";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+  FORMAT_TEXT_COMMAND,
+  // LEXICAL CORE TYPES
+  type Klass,
+  type LexicalNode,
+  type LexicalNodeReplacement,
+  ParagraphNode,
+  TextNode,
+} from "lexical";
 
 export {
   // LEXICAL COMMANDS

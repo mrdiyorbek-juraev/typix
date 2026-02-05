@@ -1,0 +1,1 @@
+export { TabFocusExtension } from "./extension";

@@ -11,7 +11,7 @@ export function EditorCommandList({
   className,
 }: EditorCommandListProps) {
   return (
-    <ul role="listbox" className={cn("typix-editor-command-list", className)}>
+    <ul className={cn("typix-editor-command-list", className)} role="listbox">
       {children}
     </ul>
   );

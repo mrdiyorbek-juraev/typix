@@ -1,2 +1,6 @@
-export { ContextMenuExtension } from './extension';
-export { NodeContextMenuOption, NodeContextMenuSeparator, type ContextMenuExtensionProps } from './extension'
+export {
+  ContextMenuExtension,
+  type ContextMenuExtensionProps,
+  NodeContextMenuOption,
+  NodeContextMenuSeparator,
+} from "./extension";

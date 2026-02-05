@@ -16,34 +16,19 @@ const features = [
   },
   {
     title: "Block Types",
-    items: [
-      "Paragraph",
-      "Headings (H1-H6)",
-      "Blockquote",
-      "Code Block",
-    ],
+    items: ["Paragraph", "Headings (H1-H6)", "Blockquote", "Code Block"],
   },
   {
     title: "Lists",
-    items: [
-      "Bullet List",
-      "Numbered List",
-      "Check List (Todo)",
-    ],
+    items: ["Bullet List", "Numbered List", "Check List (Todo)"],
   },
   {
     title: "Font Controls",
-    items: [
-      "Font Size (8-144px)",
-      "Increment / Decrement",
-    ],
+    items: ["Font Size (8-144px)", "Increment / Decrement"],
   },
   {
     title: "History",
-    items: [
-      "Undo (Ctrl+Z)",
-      "Redo (Ctrl+Y)",
-    ],
+    items: ["Undo (Ctrl+Z)", "Redo (Ctrl+Y)"],
   },
   {
     title: "Extensions",
@@ -63,21 +48,21 @@ const features = [
 
 export function FeaturesList() {
   return (
-    <div className="p-6 border border-border rounded-lg bg-card">
-      <h2 className="text-lg font-semibold mb-4">Implemented Features</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+    <div className="rounded-lg border border-border bg-card p-6">
+      <h2 className="mb-4 font-semibold text-lg">Implemented Features</h2>
+      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
         {features.map((category) => (
           <div key={category.title}>
-            <h3 className="text-sm font-medium mb-2 text-foreground">
+            <h3 className="mb-2 font-medium text-foreground text-sm">
               {category.title}
             </h3>
             <ul className="space-y-1">
               {category.items.map((item) => (
                 <li
+                  className="flex items-center gap-1.5 text-muted-foreground text-xs"
                   key={item}
-                  className="text-xs text-muted-foreground flex items-center gap-1.5"
                 >
-                  <span className="w-1 h-1 rounded-full bg-primary" />
+                  <span className="h-1 w-1 rounded-full bg-primary" />
                   {item}
                 </li>
               ))}

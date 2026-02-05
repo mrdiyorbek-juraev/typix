@@ -37,7 +37,7 @@ export class KeywordNode extends TextNode {
   }
 }
 
-export function $createKeywordNode(keyword: string = ""): KeywordNode {
+export function $createKeywordNode(keyword = ""): KeywordNode {
   return $applyNodeReplacement(new KeywordNode(keyword));
 }
 

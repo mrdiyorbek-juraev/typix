@@ -8,12 +8,12 @@ import type {
 
 import type {
   EditorThemeClasses,
-  Klass,
-  LexicalNode,
-  LexicalEditor,
   HTMLConfig,
-  SerializedEditorState,
+  Klass,
+  LexicalEditor,
+  LexicalNode,
   LexicalNodeReplacement,
+  SerializedEditorState,
 } from "lexical";
 
 /**

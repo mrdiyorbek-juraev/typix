@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useContext, useMemo, type ReactNode } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { createContext, type ReactNode, useContext, useMemo } from "react";
 import { TypixEditor } from "../../editor";
 
 /**
@@ -23,10 +23,7 @@ export function TypixEditorProvider({ children }: { children: ReactNode }) {
   const [lexicalEditor] = useLexicalComposerContext();
 
   // Create TypixEditor instance once and memoize it
-  const editor = useMemo(
-    () => new TypixEditor(lexicalEditor),
-    [lexicalEditor]
-  );
+  const editor = useMemo(() => new TypixEditor(lexicalEditor), [lexicalEditor]);
 
   const value = useMemo(() => ({ editor }), [editor]);
 

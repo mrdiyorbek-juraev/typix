@@ -15,10 +15,8 @@ type BubbleButtonProps = {
 const BubbleButton = ({ isActive, children }: BubbleButtonProps) => (
   <button
     className={cn(
-      "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
-      isActive
-        ? "bg-primary text-primary-foreground"
-        : "hover:bg-accent"
+      "rounded-md px-3 py-1.5 font-medium text-sm transition-colors",
+      isActive ? "bg-primary text-primary-foreground" : "hover:bg-accent"
     )}
   >
     {children}
@@ -27,7 +25,7 @@ const BubbleButton = ({ isActive, children }: BubbleButtonProps) => (
 
 export function BubbleMenu() {
   return (
-    <EditorBubbleMenu className="flex items-center gap-1 p-1 bg-popover border border-border rounded-lg shadow-lg">
+    <EditorBubbleMenu className="flex items-center gap-1 rounded-lg border border-border bg-popover p-1 shadow-lg">
       <EditorBubbleItem
         name="bold"
         onSelect={(editor) => {
@@ -87,9 +85,7 @@ export function BubbleMenu() {
         }}
       >
         {({ isActive }) => (
-          <BubbleButton isActive={isActive}>
-            {"</>"}
-          </BubbleButton>
+          <BubbleButton isActive={isActive}>{"</>"}</BubbleButton>
         )}
       </EditorBubbleItem>
     </EditorBubbleMenu>

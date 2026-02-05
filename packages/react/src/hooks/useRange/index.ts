@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   $getSelection,
   $isRangeSelection,
@@ -6,7 +6,7 @@ import {
   type LexicalEditor,
   type LexicalNode,
 } from "lexical";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useEffect, useRef, useState } from "react";
 
 // Return the current selection range
 export function useRange() {

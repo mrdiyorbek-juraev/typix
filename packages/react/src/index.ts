@@ -1,53 +1,53 @@
 export {
-  createCommand,
-  createEditorConfig,
   type CommandConfig,
   type CreateEditorConfigOptions,
+  createCommand,
+  createEditorConfig,
 } from "./config";
 
 export {
   type ContextShape,
   type EditorCommandContextValue,
   EditorCommandProvider,
-  useEditorCommand,
-  TypixEditorProvider,
-  useTypixEditor,
-  TypixEditorContext,
-  type TypixEditorContextValue,
   RootContext,
-  useRootContext,
   type RootContextShape,
   SharedHistoryContext,
+  TypixEditorContext,
+  type TypixEditorContextValue,
+  TypixEditorProvider,
+  useEditorCommand,
+  useRootContext,
   useSharedHistoryContext,
+  useTypixEditor,
 } from "./context";
 
 export {
-  type EditorCommandProps,
-  type EditorCommandItemBaseProps,
   type CommandMenuItemConfig,
-  type EditorCommandItemRenderProps,
   type CommandMenuOption,
-  type EditorCommandListProps,
-  type EditorCommandEmptyProps,
+  EditorBubbleItem,
   type EditorBubbleItemProps,
+  EditorBubbleMenu,
   type EditorBubbleMenuProps,
-  type EditorContentProps,
-  type EditorRootProps,
   EditorCommand,
   EditorCommandEmpty,
+  type EditorCommandEmptyProps,
   EditorCommandItem,
+  type EditorCommandItemBaseProps,
+  type EditorCommandItemRenderProps,
   EditorCommandList,
-  EditorBubbleItem,
-  EditorBubbleMenu,
+  type EditorCommandListProps,
+  type EditorCommandProps,
   EditorContent,
+  type EditorContentProps,
   EditorRoot,
+  type EditorRootProps,
 } from "./core";
 
 export {
-  TypixEditor,
-  TEXT_FORMAT_TYPES,
-  type HeadingLevel,
   type BlockType,
+  type HeadingLevel,
+  TEXT_FORMAT_TYPES,
+  TypixEditor,
 } from "./editor";
 
 export {
@@ -58,49 +58,45 @@ export {
 } from "./hooks";
 
 export {
-  // LEXICAL COMMANDS
-  FORMAT_TEXT_COMMAND,
-  // LEXICAL DEFAULT NODES
-  HeadingNode,
-  ParagraphNode,
-  TextNode,
-  QuoteNode,
-  ListNode,
-  ListItemNode,
-  LinkNode,
-  OverflowNode,
-  HashtagNode,
-  TableNode,
-  TableCellNode,
-  TableRowNode,
-  CodeNode,
-  CodeHighlightNode,
-  AutoLinkNode,
+  $createHeadingNode,
   // LEXICAL UTILS
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
   $setBlocksType,
-  $createHeadingNode,
+  AutoLinkNode,
+  CodeHighlightNode,
+  CodeNode,
+  // LEXICAL COMMANDS
+  FORMAT_TEXT_COMMAND,
+  HashtagNode,
+  // LEXICAL DEFAULT NODES
+  HeadingNode,
   // LEXICAL CORE TYPES
   type Klass,
   type LexicalNode,
   type LexicalNodeReplacement,
+  LinkNode,
+  ListItemNode,
+  ListNode,
+  OverflowNode,
+  ParagraphNode,
+  QuoteNode,
+  TableCellNode,
+  TableNode,
+  TableRowNode,
+  TextNode,
 } from "./lib";
-
+export { defaultExtensionNodes } from "./shared";
+export { defaultTheme } from "./theme";
 // Re-export types for direct access
 export type { LexicalEditor, TextFormatType } from "./types";
 
-
-export { defaultExtensionNodes } from "./shared";
-
-export { defaultTheme } from "./theme";
-
 export {
+  addSwipeRightListener,
   findFirstFocusableDescendant,
   focusNearestDescendant,
   isKeyboardInput,
-  addSwipeRightListener,
-  validateUrl,
   sanitizeUrl,
+  validateUrl,
 } from "./utils";

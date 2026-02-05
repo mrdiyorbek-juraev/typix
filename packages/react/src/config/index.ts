@@ -1,9 +1,9 @@
 export {
-  createCommand,
   type CommandConfig,
+  createCommand,
 } from "./command";
 
 export {
-  createEditorConfig,
   type CreateEditorConfigOptions,
+  createEditorConfig,
 } from "./editor-config";
