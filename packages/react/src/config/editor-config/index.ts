@@ -76,7 +76,7 @@ interface CreateEditorConfigOptions {
 
 function createEditorConfig(
   options: CreateEditorConfigOptions = {}
-): InitialConfigType & { prefix?: string } {
+): InitialConfigType {
   const {
     namespace = "typix-editor",
     theme,
