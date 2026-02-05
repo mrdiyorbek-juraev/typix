@@ -197,7 +197,7 @@ export function Toolbar() {
         </div>
       </div>
 
-      {/* Row 3: Lists & Font Size */}
+      {/* Row 3: Lists & Alignment */}
       <div className="flex flex-wrap items-center gap-2">
         <ToolbarLabel>Lists</ToolbarLabel>
         <div className="flex items-center gap-1">
@@ -224,6 +224,88 @@ export function Toolbar() {
             variant="list"
           >
             Checklist
+          </ToolbarButton>
+        </div>
+
+        <ToolbarDivider />
+
+        <ToolbarLabel>Align</ToolbarLabel>
+        <div className="flex items-center gap-1">
+          <ToolbarButton
+            onClick={() => editor.alignLeft()}
+            title="Align Left"
+          >
+            <svg
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="14"
+            >
+              <line x1="21" x2="3" y1="6" y2="6" />
+              <line x1="15" x2="3" y1="12" y2="12" />
+              <line x1="17" x2="3" y1="18" y2="18" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.alignCenter()}
+            title="Align Center"
+          >
+            <svg
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="14"
+            >
+              <line x1="21" x2="3" y1="6" y2="6" />
+              <line x1="17" x2="7" y1="12" y2="12" />
+              <line x1="19" x2="5" y1="18" y2="18" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.alignRight()}
+            title="Align Right"
+          >
+            <svg
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="14"
+            >
+              <line x1="21" x2="3" y1="6" y2="6" />
+              <line x1="21" x2="9" y1="12" y2="12" />
+              <line x1="21" x2="7" y1="18" y2="18" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.alignJustify()}
+            title="Justify"
+          >
+            <svg
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="14"
+            >
+              <line x1="21" x2="3" y1="6" y2="6" />
+              <line x1="21" x2="3" y1="12" y2="12" />
+              <line x1="21" x2="3" y1="18" y2="18" />
+            </svg>
           </ToolbarButton>
         </div>
 
@@ -292,6 +374,96 @@ export function Toolbar() {
         )}
       </div>
 
+      {/* Row 4: Content Export/Import */}
+      <div className="flex flex-wrap items-center gap-2">
+        <ToolbarLabel>Export</ToolbarLabel>
+        <div className="flex items-center gap-1">
+          <ToolbarButton
+            onClick={() => {
+              const json = editor.getJSON();
+              console.log("JSON:", json);
+              navigator.clipboard.writeText(JSON.stringify(json, null, 2));
+              alert("JSON copied to clipboard! (also logged to console)");
+            }}
+            title="Export as JSON"
+          >
+            JSON
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => {
+              const html = editor.getHTML();
+              console.log("HTML:", html);
+              navigator.clipboard.writeText(html);
+              alert("HTML copied to clipboard! (also logged to console)");
+            }}
+            title="Export as HTML"
+          >
+            HTML
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => {
+              const markdown = editor.getMarkdown();
+              console.log("Markdown:", markdown);
+              navigator.clipboard.writeText(markdown);
+              alert("Markdown copied to clipboard! (also logged to console)");
+            }}
+            title="Export as Markdown"
+          >
+            Markdown
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => {
+              const text = editor.getText();
+              console.log("Plain Text:", text);
+              navigator.clipboard.writeText(text);
+              alert("Plain text copied to clipboard! (also logged to console)");
+            }}
+            title="Export as Plain Text"
+          >
+            Text
+          </ToolbarButton>
+        </div>
+
+        <ToolbarDivider />
+
+        <ToolbarLabel>Import</ToolbarLabel>
+        <div className="flex items-center gap-1">
+          <ToolbarButton
+            onClick={() => {
+              const html = prompt("Paste HTML content:");
+              if (html) {
+                editor.setHTML(html);
+              }
+            }}
+            title="Import from HTML"
+          >
+            HTML
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => {
+              const markdown = prompt("Paste Markdown content:");
+              if (markdown) {
+                editor.setMarkdown(markdown);
+              }
+            }}
+            title="Import from Markdown"
+          >
+            Markdown
+          </ToolbarButton>
+        </div>
+
+        <ToolbarDivider />
+
+        <ToolbarButton
+          onClick={() => {
+            editor.clearContent();
+          }}
+          title="Clear Content"
+        >
+          Clear All
+        </ToolbarButton>
+      </div>
+
       {/* Status Bar */}
       <div className="flex items-center gap-4 border-border border-t pt-2 text-xs">
         <div className="flex items-center gap-2">
@@ -311,6 +483,12 @@ export function Toolbar() {
             )}
           >
             {editor.isEditable() ? "Yes" : "No"}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-muted-foreground">Characters:</span>
+          <span className="rounded bg-muted px-2 py-0.5 font-medium">
+            {editor.getText().length}
           </span>
         </div>
       </div>

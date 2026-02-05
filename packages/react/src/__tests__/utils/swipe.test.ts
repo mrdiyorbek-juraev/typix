@@ -6,7 +6,11 @@ import {
   addSwipeUpListener,
 } from "../../utils/swipe";
 
-const createTouchEvent = (type: string, clientX: number, clientY: number): TouchEvent => {
+const createTouchEvent = (
+  type: string,
+  clientX: number,
+  clientY: number
+): TouchEvent => {
   return {
     type,
     changedTouches: [{ clientX, clientY }],
@@ -30,13 +34,15 @@ describe("swipe utilities", () => {
     touchEndHandler = null;
 
     element = {
-      addEventListener: vi.fn((event: string, handler: (e: TouchEvent) => void) => {
-        if (event === "touchstart") {
-          touchStartHandler = handler;
-        } else if (event === "touchend") {
-          touchEndHandler = handler;
+      addEventListener: vi.fn(
+        (event: string, handler: (e: TouchEvent) => void) => {
+          if (event === "touchstart") {
+            touchStartHandler = handler;
+          } else if (event === "touchend") {
+            touchEndHandler = handler;
+          }
         }
-      }),
+      ),
       removeEventListener: vi.fn(),
     } as unknown as HTMLElement;
   });
@@ -45,7 +51,12 @@ describe("swipe utilities", () => {
     vi.clearAllMocks();
   });
 
-  const simulateSwipe = (startX: number, startY: number, endX: number, endY: number) => {
+  const simulateSwipe = (
+    startX: number,
+    startY: number,
+    endX: number,
+    endY: number
+  ) => {
     const touchStart = createTouchEvent("touchstart", startX, startY);
     const touchEnd = createTouchEvent("touchend", endX, endY);
 
@@ -59,8 +70,14 @@ describe("swipe utilities", () => {
     it("registers touch event listeners on element", () => {
       addSwipeLeftListener(element, vi.fn());
 
-      expect(element.addEventListener).toHaveBeenCalledWith("touchstart", expect.any(Function));
-      expect(element.addEventListener).toHaveBeenCalledWith("touchend", expect.any(Function));
+      expect(element.addEventListener).toHaveBeenCalledWith(
+        "touchstart",
+        expect.any(Function)
+      );
+      expect(element.addEventListener).toHaveBeenCalledWith(
+        "touchend",
+        expect.any(Function)
+      );
     });
 
     it("calls callback for left swipe (negative x, |x| > |y|)", () => {
@@ -96,8 +113,14 @@ describe("swipe utilities", () => {
 
       unsubscribe();
 
-      expect(element.removeEventListener).toHaveBeenCalledWith("touchstart", expect.any(Function));
-      expect(element.removeEventListener).toHaveBeenCalledWith("touchend", expect.any(Function));
+      expect(element.removeEventListener).toHaveBeenCalledWith(
+        "touchstart",
+        expect.any(Function)
+      );
+      expect(element.removeEventListener).toHaveBeenCalledWith(
+        "touchend",
+        expect.any(Function)
+      );
     });
   });
 
@@ -226,8 +249,14 @@ describe("swipe utilities", () => {
       unsubscribe1();
       unsubscribe2();
 
-      expect(element.removeEventListener).toHaveBeenCalledWith("touchstart", expect.any(Function));
-      expect(element.removeEventListener).toHaveBeenCalledWith("touchend", expect.any(Function));
+      expect(element.removeEventListener).toHaveBeenCalledWith(
+        "touchstart",
+        expect.any(Function)
+      );
+      expect(element.removeEventListener).toHaveBeenCalledWith(
+        "touchend",
+        expect.any(Function)
+      );
     });
   });
 

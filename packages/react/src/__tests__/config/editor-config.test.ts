@@ -1,4 +1,10 @@
-import type { LexicalEditor, LexicalNode, Klass, HTMLConfig, SerializedEditorState } from "lexical";
+import type {
+  LexicalEditor,
+  LexicalNode,
+  Klass,
+  HTMLConfig,
+  SerializedEditorState,
+} from "lexical";
 import { describe, expect, it, vi } from "vitest";
 import { createEditorConfig } from "../../config/editor-config";
 
@@ -8,7 +14,7 @@ describe("createEditorConfig", () => {
       const config = createEditorConfig();
       expect(config.namespace).toBe("typix-editor");
     });
- 
+
     it("returns editable as true by default", () => {
       const config = createEditorConfig();
       expect(config.editable).toBe(true);
@@ -20,7 +26,9 @@ describe("createEditorConfig", () => {
     });
 
     it("returns default onError that logs to console", () => {
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
       const config = createEditorConfig();
       const testError = new Error("Test error");
 
