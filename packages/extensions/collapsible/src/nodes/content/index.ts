@@ -1,17 +1,16 @@
 import { IS_CHROME } from "@lexical/utils";
 import {
-  DOMConversionMap,
-  DOMConversionOutput,
-  DOMExportOutput,
-  EditorConfig,
+  type DOMConversionMap,
+  type DOMConversionOutput,
+  type DOMExportOutput,
+  type EditorConfig,
   ElementNode,
-  LexicalEditor,
-  LexicalNode,
-  SerializedElementNode,
+  type LexicalEditor,
+  type LexicalNode,
+  type SerializedElementNode,
 } from "lexical";
-
-import { $isCollapsibleContainerNode } from "../container";
 import { domOnBeforeMatch, setDomHiddenUntilFound } from "../../utils";
+import { $isCollapsibleContainerNode } from "../container";
 
 type SerializedCollapsibleContentNode = SerializedElementNode;
 

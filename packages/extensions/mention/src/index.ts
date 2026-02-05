@@ -1,29 +1,29 @@
 // Extension
-export { MentionExtension } from "./extension";
-export type { MentionExtensionProps } from "./extension";
 
+export type { MentionExtensionProps } from "./extension";
+export { MentionExtension } from "./extension";
+export type {
+  CreateMentionNodeParams,
+  MentionNodeOptions,
+  SerializedMentionNode,
+} from "./node";
 // Node
 export {
-  MentionNode,
   $createMentionNode,
   $isMentionNode,
   configureMentionNode,
+  MentionNode,
   resetMentionNodeConfig,
-} from "./node";
-export type {
-  SerializedMentionNode,
-  MentionNodeOptions,
-  CreateMentionNodeParams,
 } from "./node";
 
 // Types
 export type {
   MentionItem,
+  MentionMatch,
   MentionMenuItemProps,
   MentionMenuProps,
-  MentionTriggerConfig,
   MentionNodeConfig,
   MentionSearchFn,
-  MentionMatch,
+  MentionTriggerConfig,
   UseMentionSearchResult,
 } from "./types";

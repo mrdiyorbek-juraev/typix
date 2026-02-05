@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
 import { $getSelection, $isRangeSelection, type TextFormatType } from "lexical";
+import { useCallback, useEffect, useState } from "react";
 import { useTypixEditor } from "../../context/editor";
 import { TEXT_FORMAT_TYPES } from "../../editor";
 

@@ -4,7 +4,6 @@ import { isMimeType, mediaFileReader } from "@lexical/utils";
 import {
   COMMAND_PRIORITY_LOW,
   type CommandListenerPriority,
-  type LexicalCommand,
   createCommand,
 } from "lexical";
 import { useEffect } from "react";

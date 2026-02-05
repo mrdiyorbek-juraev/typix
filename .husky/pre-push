@@ -1,5 +1,6 @@
 echo "Running type check..."
 
-echo "Building packages..."
+echo "Format..."
+pnpm format
 
 echo "Pre-push checks passed!"

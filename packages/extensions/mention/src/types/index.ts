@@ -1,5 +1,4 @@
 import type { MenuTextMatch } from "@lexical/react/LexicalTypeaheadMenuPlugin";
-import type { TextNode } from "lexical";
 import type { JSX, ReactNode } from "react";
 
 /**

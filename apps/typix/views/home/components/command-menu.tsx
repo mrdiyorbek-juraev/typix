@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  type CommandMenuOption,
   EditorCommand,
   EditorCommandEmpty,
   EditorCommandItem,
   EditorCommandList,
-  type CommandMenuOption,
 } from "@typix-editor/react";
 import { cn } from "@/lib/cn";
 
@@ -15,41 +15,37 @@ type CommandMenuProps = {
 
 export function CommandMenu({ commands }: CommandMenuProps) {
   return (
-    <EditorCommand
-      items={commands}
-      trigger="/"
-      className="z-50"
-    >
-      <EditorCommandEmpty className="px-4 py-3 text-sm text-muted-foreground">
+    <EditorCommand className="z-50" items={commands} trigger="/">
+      <EditorCommandEmpty className="px-4 py-3 text-muted-foreground text-sm">
         No commands found
       </EditorCommandEmpty>
       <EditorCommandList className="max-h-[300px] overflow-y-auto">
         {commands.map((item) => (
           <EditorCommandItem
             key={item.title}
-            value={item.title}
             keywords={item.keywords}
             onSelect={item.onSelect}
+            value={item.title}
           >
             {({ isSelected }) => (
               <div
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer",
+                  "flex cursor-pointer items-center gap-3 rounded-md px-3 py-2",
                   "transition-colors",
                   isSelected ? "bg-accent" : "hover:bg-accent/50"
                 )}
               >
-                <div className="w-9 h-9 flex items-center justify-center rounded-md border bg-background">
+                <div className="flex h-9 w-9 items-center justify-center rounded-md border bg-background">
                   {item.icon}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{item.title}</p>
-                  <p className="text-xs text-muted-foreground truncate">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-medium text-sm">{item.title}</p>
+                  <p className="truncate text-muted-foreground text-xs">
                     {item.shortDescription}
                   </p>
                 </div>
                 {item.keyboardShortcut && (
-                  <kbd className="text-[10px] px-1.5 py-0.5 rounded bg-muted font-mono">
+                  <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">
                     {item.keyboardShortcut}
                   </kbd>
                 )}

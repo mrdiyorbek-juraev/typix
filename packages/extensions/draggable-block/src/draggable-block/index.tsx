@@ -1,7 +1,7 @@
 "use client";
-import { type JSX, useRef } from "react";
 import { DraggableBlockPlugin_EXPERIMENTAL } from "@lexical/react/LexicalDraggableBlockPlugin";
 import { useRootContext } from "@typix-editor/react";
+import { type JSX, useRef } from "react";
 
 // ========== Types ==========
 
@@ -60,15 +60,15 @@ function DefaultGripIcon({ className }: { className?: string }): JSX.Element {
   return (
     <svg
       className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
       fill="none"
+      height="16"
       stroke="currentColor"
-      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="9" cy="5" r="1" />
       <circle cx="9" cy="12" r="1" />
@@ -133,19 +133,19 @@ export function DraggableBlockExtension({
   return (
     <DraggableBlockPlugin_EXPERIMENTAL
       anchorElem={floatingAnchorElem}
-      menuRef={menuRef as React.RefObject<HTMLDivElement>}
-      targetLineRef={targetLineRef as React.RefObject<HTMLDivElement>}
+      isOnMenu={isOnMenu}
       menuComponent={
-        <div ref={menuRef} className={mergedClassNames.menu}>
+        <div className={mergedClassNames.menu} ref={menuRef}>
           {dragHandleIcon ?? (
             <DefaultGripIcon className={mergedClassNames.icon} />
           )}
         </div>
       }
+      menuRef={menuRef as React.RefObject<HTMLDivElement>}
       targetLineComponent={
-        <div ref={targetLineRef} className={mergedClassNames.targetLine} />
+        <div className={mergedClassNames.targetLine} ref={targetLineRef} />
       }
-      isOnMenu={isOnMenu}
+      targetLineRef={targetLineRef as React.RefObject<HTMLDivElement>}
     />
   );
 }

@@ -7,23 +7,21 @@ export {
   EditorBubbleItem,
   type EditorBubbleItemProps,
 } from "./bubble-menu-item";
-
 export {
-  EditorCommand,
-  type EditorCommandProps,
-  type CommandMenuItemConfig,
-  type CommandMenuOption,
-} from "./command-menu";
+  EditorCommandEmpty,
+  type EditorCommandEmptyProps,
+} from "./command-empty";
 
 export {
   EditorCommandList,
   type EditorCommandListProps,
 } from "./command-list";
-
 export {
-  EditorCommandEmpty,
-  type EditorCommandEmptyProps,
-} from "./command-empty";
+  type CommandMenuItemConfig,
+  type CommandMenuOption,
+  EditorCommand,
+  type EditorCommandProps,
+} from "./command-menu";
 
 export {
   EditorCommandItem,

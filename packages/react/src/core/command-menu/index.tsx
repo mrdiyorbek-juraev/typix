@@ -3,7 +3,7 @@ import {
   MenuOption,
   useBasicTypeaheadTriggerMatch,
 } from "@lexical/react/LexicalTypeaheadMenuPlugin";
-import { type LexicalEditor, TextNode } from "lexical";
+import type { LexicalEditor, TextNode } from "lexical";
 import {
   type JSX,
   type ReactNode,
@@ -11,9 +11,9 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useEditor } from "../../hooks/useEditor";
-import { EditorCommandProvider } from "../../context/command";
 import { createPortal } from "react-dom";
+import { EditorCommandProvider } from "../../context/command";
+import { useEditor } from "../../hooks/useEditor";
 import { cn } from "../../utils";
 
 export type CommandMenuItemConfig = {
@@ -72,9 +72,9 @@ export function EditorCommand({
   const [queryString, setQueryString] = useState<string | null>(null);
 
   const checkForTriggerMatch = useBasicTypeaheadTriggerMatch(trigger, {
-    allowWhitespace: allowWhitespace,
-    minLength: minLength,
-    maxLength: maxLength,
+    allowWhitespace,
+    minLength,
+    maxLength,
   });
 
   // Filter items based on query
@@ -107,15 +107,11 @@ export function EditorCommand({
 
   return (
     <LexicalTypeaheadMenuPlugin
-      onQueryChange={setQueryString}
-      onSelectOption={onSelectOption}
-      triggerFn={checkForTriggerMatch}
-      options={filteredItems}
       menuRenderFn={(
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }
       ) =>
-        Boolean(anchorElementRef.current)
+        anchorElementRef.current
           ? createPortal(
               <EditorCommandProvider
                 value={{
@@ -134,6 +130,10 @@ export function EditorCommand({
             )
           : null
       }
+      onQueryChange={setQueryString}
+      onSelectOption={onSelectOption}
+      options={filteredItems}
+      triggerFn={checkForTriggerMatch}
     />
   );
 }

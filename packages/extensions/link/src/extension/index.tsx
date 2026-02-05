@@ -1,6 +1,6 @@
-import type { JSX } from "react";
 import { LinkPlugin as LexicalLinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { validateUrl } from "@typix-editor/react";
+import type { JSX } from "react";
 
 export interface LinkExtensionProps {
   /**
@@ -55,7 +55,7 @@ export function LinkExtension({
     : customAttributes;
 
   return (
-    <LexicalLinkPlugin validateUrl={urlValidator} attributes={linkAttributes} />
+    <LexicalLinkPlugin attributes={linkAttributes} validateUrl={urlValidator} />
   );
 }
 

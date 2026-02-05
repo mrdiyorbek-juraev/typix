@@ -1,6 +1,6 @@
-import { createContext, useContext } from "react";
 import type { LexicalEditor } from "lexical";
-import { CommandMenuOption } from "../../core/command-menu";
+import { createContext, useContext } from "react";
+import type { CommandMenuOption } from "../../core/command-menu";
 
 export interface EditorCommandContextValue {
   editor: LexicalEditor;

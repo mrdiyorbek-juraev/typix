@@ -1,10 +1,3 @@
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister } from "@lexical/utils";
 import {
@@ -14,11 +7,12 @@ import {
   getDOMSelection,
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRootContext } from "../../context/root";
+import { cn } from "../../utils";
 import { getDOMRangeRect } from "../../utils/dom-range-rect";
 import { setFloatingElemPosition } from "../../utils/floating-element-position";
-import { cn } from "../../utils";
 
 interface EditorBubbleMenuProps {
   children?: React.ReactNode;
@@ -133,24 +127,27 @@ const EditorBubbleMenu = forwardRef<HTMLDivElement, EditorBubbleMenuProps>(
       if (!popupElem) return;
 
       function mouseMoveListener(e: MouseEvent) {
-        if (popupRef.current && (e.buttons === 1 || e.buttons === 3)) {
-          if (popupRef.current.style.pointerEvents !== "none") {
-            const x = e.clientX;
-            const y = e.clientY;
-            const elementUnderMouse = document.elementFromPoint(x, y);
+        if (
+          popupRef.current &&
+          (e.buttons === 1 || e.buttons === 3) &&
+          popupRef.current.style.pointerEvents !== "none"
+        ) {
+          const x = e.clientX;
+          const y = e.clientY;
+          const elementUnderMouse = document.elementFromPoint(x, y);
 
-            if (!popupRef.current.contains(elementUnderMouse)) {
-              popupRef.current.style.pointerEvents = "none";
-            }
+          if (!popupRef.current.contains(elementUnderMouse)) {
+            popupRef.current.style.pointerEvents = "none";
           }
         }
       }
 
       function mouseUpListener() {
-        if (popupRef.current) {
-          if (popupRef.current.style.pointerEvents !== "auto") {
-            popupRef.current.style.pointerEvents = "auto";
-          }
+        if (
+          popupRef.current &&
+          popupRef.current.style.pointerEvents !== "auto"
+        ) {
+          popupRef.current.style.pointerEvents = "auto";
         }
       }
 
@@ -194,18 +191,20 @@ const EditorBubbleMenu = forwardRef<HTMLDivElement, EditorBubbleMenuProps>(
       };
     }, [updateVisibility]);
 
-    useEffect(() => {
-      return mergeRegister(
-        editor.registerUpdateListener(() => {
-          updateVisibility();
-        }),
-        editor.registerRootListener(() => {
-          if (editor.getRootElement() === null) {
-            setIsVisible(false);
-          }
-        })
-      );
-    }, [editor, updateVisibility]);
+    useEffect(
+      () =>
+        mergeRegister(
+          editor.registerUpdateListener(() => {
+            updateVisibility();
+          }),
+          editor.registerRootListener(() => {
+            if (editor.getRootElement() === null) {
+              setIsVisible(false);
+            }
+          })
+        ),
+      [editor, updateVisibility]
+    );
 
     // Update position when visible
     useEffect(() => {
@@ -216,23 +215,25 @@ const EditorBubbleMenu = forwardRef<HTMLDivElement, EditorBubbleMenuProps>(
       }
     }, [isVisible, editor, updatePosition]);
 
-    useEffect(() => {
-      return mergeRegister(
-        editor.registerUpdateListener(({ editorState }) => {
-          editorState.read(() => {
-            updatePosition();
-          });
-        }),
-        editor.registerCommand(
-          SELECTION_CHANGE_COMMAND,
-          () => {
-            updatePosition();
-            return false;
-          },
-          COMMAND_PRIORITY_LOW
-        )
-      );
-    }, [editor, updatePosition]);
+    useEffect(
+      () =>
+        mergeRegister(
+          editor.registerUpdateListener(({ editorState }) => {
+            editorState.read(() => {
+              updatePosition();
+            });
+          }),
+          editor.registerCommand(
+            SELECTION_CHANGE_COMMAND,
+            () => {
+              updatePosition();
+              return false;
+            },
+            COMMAND_PRIORITY_LOW
+          )
+        ),
+      [editor, updatePosition]
+    );
 
     const setRefs = useCallback(
       (node: HTMLDivElement | null) => {
@@ -243,12 +244,13 @@ const EditorBubbleMenu = forwardRef<HTMLDivElement, EditorBubbleMenuProps>(
       [ref]
     );
 
-    if (!floatingAnchorElem || !isVisible || !editor.isEditable()) {
+    if (!(floatingAnchorElem && isVisible && editor.isEditable())) {
       return null;
     }
 
     return createPortal(
       <div
+        className={cn("typix-editor-bubble-menu", className)}
         ref={setRefs}
         style={{
           position: "absolute",
@@ -257,7 +259,6 @@ const EditorBubbleMenu = forwardRef<HTMLDivElement, EditorBubbleMenuProps>(
           opacity: 0,
           willChange: "transform",
         }}
-        className={cn("typix-editor-bubble-menu", className)}
       >
         {children}
       </div>,

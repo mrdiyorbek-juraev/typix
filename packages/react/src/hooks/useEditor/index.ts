@@ -1,6 +1,6 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $isRootTextContentEmpty } from "@lexical/text";
-import { type LexicalEditor } from "lexical";
+import type { LexicalEditor } from "lexical";
 import { useEffect, useState } from "react";
 
 /**
@@ -35,24 +35,22 @@ type UseEditorReturn = {
 export function useEditor(): UseEditorReturn {
   const [editor] = useLexicalComposerContext();
 
-
-
   const [isEmpty, setIsEmpty] = useState(() =>
     editor
       .getEditorState()
       .read(() => $isRootTextContentEmpty(editor.isComposing(), true))
   );
 
-  
-
-  useEffect(() => {
-    return editor.registerUpdateListener(({ editorState }) => {
-      const currentlyEmpty = editorState.read(() =>
-        $isRootTextContentEmpty(editor.isComposing(), true)
-      );
-      setIsEmpty(currentlyEmpty);
-    });
-  }, [editor]);
+  useEffect(
+    () =>
+      editor.registerUpdateListener(({ editorState }) => {
+        const currentlyEmpty = editorState.read(() =>
+          $isRootTextContentEmpty(editor.isComposing(), true)
+        );
+        setIsEmpty(currentlyEmpty);
+      }),
+    [editor]
+  );
 
   return {
     editor,

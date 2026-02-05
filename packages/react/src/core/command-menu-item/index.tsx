@@ -1,13 +1,13 @@
+import type { LexicalEditor } from "lexical";
 import {
-  forwardRef,
   type ComponentPropsWithoutRef,
   type ElementType,
+  forwardRef,
   type ReactNode,
 } from "react";
-import { cn } from "../../utils";
 import { useEditorCommand } from "../../context/command";
-import { type LexicalEditor } from "lexical";
 import { useEditor } from "../../hooks/useEditor";
+import { cn } from "../../utils";
 
 export interface EditorCommandItemRenderProps {
   isSelected: boolean;
@@ -63,21 +63,21 @@ const EditorCommandItemInner = forwardRef<HTMLElement, EditorCommandItemProps>(
 
     return (
       <Comp
-        ref={ref}
-        role="option"
         aria-selected={isSelected}
-        tabIndex={-1}
         className={cn(
           "typix-editor-command-item",
           isSelected && "typix-editor-command-item-selected",
           className
         )}
-        onMouseEnter={() => setHighlightedIndex(index)}
         onClick={() => {
           onSelect?.(value, editor);
           const item = filteredItems[index];
           selectOptionAndCleanUp(item!);
         }}
+        onMouseEnter={() => setHighlightedIndex(index)}
+        ref={ref}
+        role="option"
+        tabIndex={-1}
         {...rest}
       >
         {content}

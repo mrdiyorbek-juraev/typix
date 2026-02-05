@@ -1,3 +1,4 @@
+"use strict";
 // commitlint.config.js (root)
 module.exports = {
   extends: ["@commitlint/config-conventional"],

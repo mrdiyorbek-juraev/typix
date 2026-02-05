@@ -2,8 +2,8 @@ import DraggableBlockExtension from "./draggable-block";
 
 // Export Types
 export type {
-  DraggableBlockExtensionProps,
   DraggableBlockClassNames,
+  DraggableBlockExtensionProps,
 } from "./draggable-block";
 
 // Export Component

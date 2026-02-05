@@ -1,3 +1,6 @@
+import { AutocompleteNode } from "@typix-editor/extension-auto-complete";
+import { KeywordNode } from "@typix-editor/extension-keywords";
+import { MentionNode } from "@typix-editor/extension-mention";
 import {
   $createHeadingNode,
   $createParagraphNode,
@@ -7,13 +10,6 @@ import {
   createCommand,
   defaultExtensionNodes,
 } from "@typix-editor/react";
-import {
-  AutocompleteNode,
-} from "@typix-editor/extension-auto-complete";
-import {
-  KeywordNode,
-} from "@typix-editor/extension-keywords";
-import { MentionNode } from "@typix-editor/extension-mention";
 
 // Initial editor state
 export const initialValue = {

@@ -1,5 +1,3 @@
-import type { JSX } from "react";
-
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   LexicalTypeaheadMenuPlugin,
@@ -7,6 +5,7 @@ import {
   type MenuTextMatch,
 } from "@lexical/react/LexicalTypeaheadMenuPlugin";
 import type { TextNode } from "lexical";
+import type { JSX } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as ReactDOM from "react-dom";
 
@@ -108,15 +107,15 @@ function DefaultMenuItem({
 }: MentionMenuItemProps): JSX.Element {
   return (
     <li
-      key={item.id}
-      tabIndex={-1}
+      aria-selected={isSelected}
       className={`typix-mention-menu-item ${isSelected ? "typix-mention-menu-item--selected" : ""}`}
+      id={`typix-mention-item-${index}`}
+      key={item.id}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
       ref={setRefElement}
       role="option"
-      aria-selected={isSelected}
-      id={`typix-mention-item-${index}`}
-      onMouseEnter={onMouseEnter}
-      onClick={onClick}
+      tabIndex={-1}
     >
       <span className="typix-mention-menu-item-name">{item.name}</span>
     </li>
@@ -154,10 +153,10 @@ function DefaultMenu({
         <ul className="typix-mention-menu-list" role="listbox">
           {items.map((item, index) => (
             <ItemRenderer
-              key={item.id}
-              item={item}
               index={index}
               isSelected={selectedIndex === index}
+              item={item}
+              key={item.id}
               onClick={() => onSelectItem(index)}
               onMouseEnter={() => onHighlightItem(index)}
               setRefElement={() => {}}
@@ -371,10 +370,6 @@ export function MentionExtension({
 
   return (
     <LexicalTypeaheadMenuPlugin<MentionMenuOption>
-      onQueryChange={setQueryString}
-      onSelectOption={onSelectOption}
-      triggerFn={checkForTriggerMatch}
-      options={options}
       menuRenderFn={(
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }
@@ -433,9 +428,9 @@ export function MentionExtension({
                   if (renderMenuItem) {
                     return (
                       <li
+                        aria-selected={selectedIndex === index}
                         key={option.item.id}
                         role="option"
-                        aria-selected={selectedIndex === index}
                       >
                         {renderMenuItem(itemProps)}
                       </li>
@@ -452,6 +447,10 @@ export function MentionExtension({
           anchorElement
         );
       }}
+      onQueryChange={setQueryString}
+      onSelectOption={onSelectOption}
+      options={options}
+      triggerFn={checkForTriggerMatch}
     />
   );
 }

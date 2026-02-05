@@ -3,18 +3,18 @@ import {
   $getSiblingCaret,
   $isElementNode,
   $rewindSiblingCaret,
-  DOMConversionMap,
-  DOMConversionOutput,
-  DOMExportOutput,
-  EditorConfig,
+  type DOMConversionMap,
+  type DOMConversionOutput,
+  type DOMExportOutput,
+  type EditorConfig,
   ElementNode,
   isHTMLElement,
-  LexicalEditor,
-  LexicalNode,
-  NodeKey,
-  RangeSelection,
-  SerializedElementNode,
-  Spread,
+  type LexicalEditor,
+  type LexicalNode,
+  type NodeKey,
+  type RangeSelection,
+  type SerializedElementNode,
+  type Spread,
 } from "lexical";
 import { setDomHiddenUntilFound } from "../../utils";
 
@@ -123,12 +123,10 @@ export class CollapsibleContainerNode extends ElementNode {
 
   static importDOM(): DOMConversionMap<HTMLDetailsElement> | null {
     return {
-      details: (domNode: HTMLDetailsElement) => {
-        return {
-          conversion: $convertDetailsElement,
-          priority: 1,
-        };
-      },
+      details: (domNode: HTMLDetailsElement) => ({
+        conversion: $convertDetailsElement,
+        priority: 1,
+      }),
     };
   }
 

@@ -1,6 +1,6 @@
-import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { cn } from "@typix-editor/react/src/utils";
 import type { RefObject } from "react";
 
@@ -132,39 +132,37 @@ const RichTextExtension = ({
   placeholder = "",
   editorRef,
   classNames,
-}: RichTextExtensionProps) => {
-  return (
-    <RichTextPlugin
-      contentEditable={
-        <div className={cn("typix-editor-scroller", classNames?.scroller)}>
-          <div
-            className={cn("typix-editor", classNames?.container)}
-            ref={editorRef}
-          >
-            <ContentEditable
-              className={cn(
-                "typix-editor-contenteditable",
-                classNames?.contentEditable
-              )}
-              aria-placeholder={placeholder}
-              placeholder={
-                <div
-                  className={cn(
-                    "typix-editor-placeholder",
-                    classNames?.placeholder
-                  )}
-                >
-                  {placeholder}
-                </div>
-              }
-            />
-          </div>
+}: RichTextExtensionProps) => (
+  <RichTextPlugin
+    contentEditable={
+      <div className={cn("typix-editor-scroller", classNames?.scroller)}>
+        <div
+          className={cn("typix-editor", classNames?.container)}
+          ref={editorRef}
+        >
+          <ContentEditable
+            aria-placeholder={placeholder}
+            className={cn(
+              "typix-editor-contenteditable",
+              classNames?.contentEditable
+            )}
+            placeholder={
+              <div
+                className={cn(
+                  "typix-editor-placeholder",
+                  classNames?.placeholder
+                )}
+              >
+                {placeholder}
+              </div>
+            }
+          />
         </div>
-      }
-      ErrorBoundary={LexicalErrorBoundary}
-    />
-  );
-};
+      </div>
+    }
+    ErrorBoundary={LexicalErrorBoundary}
+  />
+);
 
 RichTextExtension.displayName = "Typix.RichTextExtension";
 

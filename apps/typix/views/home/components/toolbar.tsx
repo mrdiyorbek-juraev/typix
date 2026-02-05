@@ -1,14 +1,13 @@
 "use client";
 
-import { useTypixEditor, useActiveFormats } from "@typix-editor/react";
+import { useSpeechToText } from "@typix-editor/extension-speech-to-text";
+import { useActiveFormats, useTypixEditor } from "@typix-editor/react";
 import { cn } from "@/lib/cn";
 
-const ToolbarDivider = () => (
-  <div className="w-px h-6 bg-border mx-1" />
-);
+const ToolbarDivider = () => <div className="mx-1 h-6 w-px bg-border" />;
 
 const ToolbarLabel = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+  <span className="font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
     {children}
   </span>
 );
@@ -26,7 +25,7 @@ const ToolbarButton = ({
   active,
   title,
   children,
-  variant = "default"
+  variant = "default",
 }: ToolbarButtonProps) => {
   const activeColors = {
     default: "bg-accent",
@@ -37,15 +36,15 @@ const ToolbarButton = ({
 
   return (
     <button
-      type="button"
-      title={title}
-      onClick={onClick}
       className={cn(
-        "px-2.5 py-1.5 text-xs font-medium rounded-md transition-all",
+        "rounded-md px-2.5 py-1.5 font-medium text-xs transition-all",
         "hover:bg-accent/80 active:scale-95",
         "border border-transparent",
         active ? activeColors[variant] : "bg-background hover:border-border"
       )}
+      onClick={onClick}
+      title={title}
+      type="button"
     >
       {children}
     </button>
@@ -55,9 +54,10 @@ const ToolbarButton = ({
 export function Toolbar() {
   const editor = useTypixEditor();
   const { isActive } = useActiveFormats();
+  const { isListening, isSupported, toggle } = useSpeechToText();
 
   return (
-    <div className="flex flex-col gap-3 p-4 border border-border rounded-lg bg-card shadow-sm">
+    <div className="flex flex-col gap-3 rounded-lg border border-border bg-card p-4 shadow-sm">
       {/* Row 1: History & Text Formatting */}
       <div className="flex flex-wrap items-center gap-2">
         <ToolbarLabel>History</ToolbarLabel>
@@ -75,64 +75,64 @@ export function Toolbar() {
         <ToolbarLabel>Format</ToolbarLabel>
         <div className="flex items-center gap-1">
           <ToolbarButton
-            onClick={() => editor.toggleBold()}
             active={isActive("bold")}
+            onClick={() => editor.toggleBold()}
             title="Bold (Ctrl+B)"
             variant="format"
           >
             <strong>B</strong>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleItalic()}
             active={isActive("italic")}
+            onClick={() => editor.toggleItalic()}
             title="Italic (Ctrl+I)"
             variant="format"
           >
             <em>I</em>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleUnderline()}
             active={isActive("underline")}
+            onClick={() => editor.toggleUnderline()}
             title="Underline (Ctrl+U)"
             variant="format"
           >
             <u>U</u>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleStrikethrough()}
             active={isActive("strikethrough")}
+            onClick={() => editor.toggleStrikethrough()}
             title="Strikethrough"
             variant="format"
           >
             <s>S</s>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleCode()}
             active={isActive("code")}
+            onClick={() => editor.toggleCode()}
             title="Inline Code"
             variant="format"
           >
             {"</>"}
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleSubscript()}
             active={isActive("subscript")}
+            onClick={() => editor.toggleSubscript()}
             title="Subscript"
             variant="format"
           >
             X<sub>2</sub>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleSuperscript()}
             active={isActive("superscript")}
+            onClick={() => editor.toggleSuperscript()}
             title="Superscript"
             variant="format"
           >
             X<sup>2</sup>
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleHighlight()}
             active={isActive("highlight")}
+            onClick={() => editor.toggleHighlight()}
             title="Highlight"
             variant="format"
           >
@@ -155,8 +155,8 @@ export function Toolbar() {
         <ToolbarLabel>Blocks</ToolbarLabel>
         <div className="flex items-center gap-1">
           <ToolbarButton
-            onClick={() => editor.setParagraph()}
             active={editor.isBlockActive("paragraph")}
+            onClick={() => editor.setParagraph()}
             title="Paragraph"
             variant="block"
           >
@@ -164,9 +164,9 @@ export function Toolbar() {
           </ToolbarButton>
           {([1, 2, 3, 4, 5, 6] as const).map((level) => (
             <ToolbarButton
+              active={editor.isBlockActive(`h${level}`)}
               key={level}
               onClick={() => editor.toggleHeading({ level })}
-              active={editor.isBlockActive(`h${level}`)}
               title={`Heading ${level}`}
               variant="block"
             >
@@ -179,16 +179,16 @@ export function Toolbar() {
 
         <div className="flex items-center gap-1">
           <ToolbarButton
-            onClick={() => editor.toggleQuote()}
             active={editor.isBlockActive("quote")}
+            onClick={() => editor.toggleQuote()}
             title="Blockquote"
             variant="block"
           >
             Quote
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleCodeBlock()}
             active={editor.isBlockActive("code")}
+            onClick={() => editor.toggleCodeBlock()}
             title="Code Block"
             variant="block"
           >
@@ -202,24 +202,24 @@ export function Toolbar() {
         <ToolbarLabel>Lists</ToolbarLabel>
         <div className="flex items-center gap-1">
           <ToolbarButton
-            onClick={() => editor.toggleBulletList()}
             active={editor.isBlockActive("bullet")}
+            onClick={() => editor.toggleBulletList()}
             title="Bullet List"
             variant="list"
           >
             Bullet
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleOrderedList()}
             active={editor.isBlockActive("number")}
+            onClick={() => editor.toggleOrderedList()}
             title="Numbered List"
             variant="list"
           >
             Numbered
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.toggleCheckList()}
             active={editor.isBlockActive("check")}
+            onClick={() => editor.toggleCheckList()}
             title="Check List"
             variant="list"
           >
@@ -237,7 +237,7 @@ export function Toolbar() {
           >
             A-
           </ToolbarButton>
-          <span className="px-2 py-1 text-xs font-mono bg-muted rounded min-w-[45px] text-center">
+          <span className="min-w-[45px] rounded bg-muted px-2 py-1 text-center font-mono text-xs">
             {editor.getFontSize()}px
           </span>
           <ToolbarButton
@@ -253,22 +253,63 @@ export function Toolbar() {
         <ToolbarButton onClick={() => editor.focus()} title="Focus Editor">
           Focus
         </ToolbarButton>
+
+        {isSupported && (
+          <>
+            <ToolbarDivider />
+            <ToolbarLabel>Voice</ToolbarLabel>
+            <button
+              className={cn(
+                "rounded-md px-2.5 py-1.5 font-medium text-xs transition-all",
+                "hover:bg-accent/80 active:scale-95",
+                "flex items-center gap-1.5 border border-transparent",
+                isListening
+                  ? "bg-red-500 text-white hover:bg-red-600"
+                  : "bg-background hover:border-border"
+              )}
+              onClick={toggle}
+              title={isListening ? "Stop listening" : "Start speech-to-text"}
+              type="button"
+            >
+              <svg
+                fill="none"
+                height="14"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="14"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" x2="12" y1="19" y2="22" />
+              </svg>
+              {isListening ? "Stop" : "Mic"}
+            </button>
+          </>
+        )}
       </div>
 
       {/* Status Bar */}
-      <div className="flex items-center gap-4 pt-2 border-t border-border text-xs">
+      <div className="flex items-center gap-4 border-border border-t pt-2 text-xs">
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground">Block:</span>
-          <span className="font-medium px-2 py-0.5 bg-muted rounded">
+          <span className="rounded bg-muted px-2 py-0.5 font-medium">
             {editor.getBlockType() || "none"}
           </span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground">Editable:</span>
-          <span className={cn(
-            "font-medium px-2 py-0.5 rounded",
-            editor.isEditable() ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-          )}>
+          <span
+            className={cn(
+              "rounded px-2 py-0.5 font-medium",
+              editor.isEditable()
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            )}
+          >
             {editor.isEditable() ? "Yes" : "No"}
           </span>
         </div>
