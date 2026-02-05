@@ -105,7 +105,6 @@ function countCharacters(
       // Check if Segmenter is available
       if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
         try {
-          // @ts-expect-error - Segmenter exists but TypeScript doesn't know
           const segmenter = new Intl.Segmenter();
           return [...segmenter.segment(text)].length;
         } catch (e) {
