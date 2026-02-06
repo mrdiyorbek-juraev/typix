@@ -154,7 +154,12 @@ export function Hero() {
               </h1>
               <p className="max-w-lg text-base text-muted-foreground leading-relaxed sm:text-lg">
                 An extensible, headless rich-text editor built on{" "}
-                <a className="relative inline-block font-semibold text-foreground hover:text-violet-500 transition-colors" href="https://lexical.dev" target="_blank" rel="noopener noreferrer">
+                <a
+                  className="relative inline-block font-semibold text-foreground hover:text-violet-500 transition-colors"
+                  href="https://lexical.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Lexical
                   <svg
                     className="-bottom-1 absolute left-0 w-full"

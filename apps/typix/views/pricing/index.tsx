@@ -187,11 +187,7 @@ export default function PricingPage() {
                   </div>
 
                   <div className="mt-8">
-                    <Button
-                      className="w-full"
-                      size="lg"
-                      variant="outline"
-                    >
+                    <Button className="w-full" size="lg" variant="outline">
                       <Sparkles className="size-4" />
                       Notify Me
                     </Button>

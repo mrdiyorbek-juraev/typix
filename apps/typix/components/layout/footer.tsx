@@ -35,9 +35,7 @@ export function Footer() {
                 Typix
               </span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Build your editor.
-            </p>
+            <p className="text-sm text-muted-foreground">Build your editor.</p>
           </div>
 
           {/* Link groups */}

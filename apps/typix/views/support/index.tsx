@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  BookOpen,
-  Bug,
-  Github,
-  HelpCircle,
-  MessageCircle,
-} from "lucide-react";
+import { BookOpen, Bug, Github, HelpCircle, MessageCircle } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { Footer } from "@/components/layout/footer";
@@ -127,7 +121,8 @@ export default function SupportPage() {
               <motion.div
                 key={r.title}
                 // @ts-ignore
-                variants={cardVariants}>
+                variants={cardVariants}
+              >
                 <Link
                   className="group flex h-full flex-col rounded-xl border border-border/60 bg-card p-6 transition-all duration-200 hover:border-border hover:shadow-lg hover:shadow-violet-500/5"
                   href={r.href}
@@ -138,9 +133,7 @@ export default function SupportPage() {
                   <div className="flex size-10 items-center justify-center rounded-lg border border-border/60 bg-muted/40 transition-colors group-hover:border-violet-500/30 group-hover:bg-violet-500/10">
                     <r.icon className="size-5 text-muted-foreground transition-colors group-hover:text-violet-500" />
                   </div>
-                  <h3 className="mt-4 font-semibold text-base">
-                    {r.title}
-                  </h3>
+                  <h3 className="mt-4 font-semibold text-base">{r.title}</h3>
                   <p className="mt-1.5 flex-1 text-sm text-muted-foreground leading-relaxed">
                     {r.description}
                   </p>

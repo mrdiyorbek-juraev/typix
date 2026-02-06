@@ -98,7 +98,9 @@ function InstallBlock() {
             <span className="text-foreground/80">
               {pm.command.split(" ").slice(0, -1).join(" ")}{" "}
             </span>
-            <span className="text-emerald-600 dark:text-emerald-400">@typix-editor/react</span>
+            <span className="text-emerald-600 dark:text-emerald-400">
+              @typix-editor/react
+            </span>
           </code>
           <CopyButton text={pm.command} />
         </div>
@@ -184,21 +186,27 @@ function StructureCode() {
       {/* <EditorRoot> */}
       <div>
         <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorRoot</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorRoot
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
       {/* <EditorContent> */}
       <div className="pl-5">
         <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorContent</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorContent
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
       {/* <EditorCommand> */}
       <div className="pl-10">
         <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorCommand</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorCommand
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
@@ -206,22 +214,31 @@ function StructureCode() {
       {[0, 1, 2].map((i) => (
         <div className="pl-[3.75rem]" key={i}>
           <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-          <span className="text-emerald-600 dark:text-emerald-400">EditorCommandItem</span>
-          <span className="text-neutral-600 dark:text-neutral-300"> /{">"}</span>
+          <span className="text-emerald-600 dark:text-emerald-400">
+            EditorCommandItem
+          </span>
+          <span className="text-neutral-600 dark:text-neutral-300">
+            {" "}
+            /{">"}
+          </span>
         </div>
       ))}
 
       {/* </EditorCommand> */}
       <div className="pl-10">
         <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorCommand</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorCommand
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
       {/* <EditorBubble> */}
       <div className="pl-10">
         <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorBubble</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorBubble
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
@@ -229,29 +246,40 @@ function StructureCode() {
       {[0, 1, 2].map((i) => (
         <div className="pl-[3.75rem]" key={i}>
           <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-          <span className="text-emerald-600 dark:text-emerald-400">EditorBubbleItem</span>
-          <span className="text-neutral-600 dark:text-neutral-300"> /{">"}</span>
+          <span className="text-emerald-600 dark:text-emerald-400">
+            EditorBubbleItem
+          </span>
+          <span className="text-neutral-600 dark:text-neutral-300">
+            {" "}
+            /{">"}
+          </span>
         </div>
       ))}
 
       {/* </EditorBubble> */}
       <div className="pl-10">
         <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorBubble</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorBubble
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
       {/* </EditorContent> */}
       <div className="pl-5">
         <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorContent</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorContent
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
       {/* </EditorRoot> */}
       <div>
         <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorRoot</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorRoot
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
     </CodeBlock>
@@ -294,18 +322,24 @@ function SetupCode() {
         <span className="text-neutral-600 dark:text-neutral-300"> {"{"}</span>
       </div>
       <div className="pl-5">
-        <span className="text-emerald-600 dark:text-emerald-400">EditorRoot</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorRoot
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">,</span>
       </div>
       <div className="pl-5">
-        <span className="text-emerald-600 dark:text-emerald-400">EditorContent</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorContent
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">,</span>
       </div>
       <div>
         <span className="text-neutral-600 dark:text-neutral-300">{"}"} </span>
         <span className="text-violet-600 dark:text-violet-400">from</span>
         <span className="text-neutral-600 dark:text-neutral-300"> </span>
-        <span className="text-amber-600 dark:text-amber-300">"@typix-editor/react"</span>
+        <span className="text-amber-600 dark:text-amber-300">
+          "@typix-editor/react"
+        </span>
       </div>
 
       {/* blank line */}
@@ -313,7 +347,9 @@ function SetupCode() {
 
       {/* export function MyEditor() { */}
       <div>
-        <span className="text-violet-600 dark:text-violet-400">export function</span>
+        <span className="text-violet-600 dark:text-violet-400">
+          export function
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300"> </span>
         <span className="text-emerald-600 dark:text-emerald-400">MyEditor</span>
         <span className="text-neutral-600 dark:text-neutral-300">() {"{"}</span>
@@ -328,21 +364,27 @@ function SetupCode() {
       {/* <EditorRoot> */}
       <div className="pl-10">
         <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorRoot</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorRoot
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
       {/* <EditorContent */}
       <div className="pl-[3.75rem]">
         <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorContent</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorContent
+        </span>
       </div>
 
       {/* placeholder */}
       <div className="pl-20">
         <span className="text-sky-600 dark:text-sky-300">placeholder</span>
         <span className="text-neutral-600 dark:text-neutral-300">=</span>
-        <span className="text-amber-600 dark:text-amber-300">"Start typing..."</span>
+        <span className="text-amber-600 dark:text-amber-300">
+          "Start typing..."
+        </span>
       </div>
 
       {/* onContentChange */}
@@ -360,7 +402,9 @@ function SetupCode() {
 
       {/* comment */}
       <div className="pl-[6.25rem]">
-        <span className="text-neutral-400 dark:text-neutral-500">{"// save to your backend"}</span>
+        <span className="text-neutral-400 dark:text-neutral-500">
+          {"// save to your backend"}
+        </span>
       </div>
 
       {/* console.log */}
@@ -383,7 +427,9 @@ function SetupCode() {
       {/* </EditorRoot> */}
       <div className="pl-10">
         <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">EditorRoot</span>
+        <span className="text-emerald-600 dark:text-emerald-400">
+          EditorRoot
+        </span>
         <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
       </div>
 
