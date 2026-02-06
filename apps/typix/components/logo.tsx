@@ -32,7 +32,7 @@ export function TypixLogo({ className }: { className?: string }) {
         strokeWidth="3"
       />
       {/* Small accent dot */}
-      <circle className="fill-violet-500" cx="27" cy="8" r="2" />
+      <circle className="fill-emerald-500" cx="27" cy="8" r="2" />
       <defs>
         <linearGradient
           gradientUnits="userSpaceOnUse"
@@ -42,8 +42,8 @@ export function TypixLogo({ className }: { className?: string }) {
           y1="12"
           y2="24"
         >
-          <stop stopColor="#8b5cf6" />
-          <stop offset="1" stopColor="#ec4899" />
+          <stop stopColor="#34d399" />
+          <stop offset="1" stopColor="#14b8a6" />
         </linearGradient>
       </defs>
     </svg>

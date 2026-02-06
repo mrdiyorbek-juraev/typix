@@ -30,10 +30,10 @@ export default function ArticlesPage() {
             whileInView={{ opacity: 1, y: 0 }}
           >
             <div className="mb-4 flex size-12 items-center justify-center rounded-xl border border-border/60 bg-card">
-              <FileText className="size-6 text-violet-500" />
+              <FileText className="size-6 text-emerald-500" />
             </div>
             <h1 className="font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
-              <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent">
                 Articles
               </span>{" "}
               & Notes
@@ -60,7 +60,7 @@ export default function ArticlesPage() {
               on extensions, architecture, and more.
             </p>
             <Badge
-              className="mt-4 border-violet-500/30 text-xs text-violet-500"
+              className="mt-4 border-emerald-500/30 text-xs text-emerald-500"
               variant="outline"
             >
               Coming Soon

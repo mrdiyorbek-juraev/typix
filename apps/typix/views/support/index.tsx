@@ -95,11 +95,11 @@ export default function SupportPage() {
             whileInView={{ opacity: 1, y: 0 }}
           >
             <div className="mb-4 flex size-12 items-center justify-center rounded-xl border border-border/60 bg-card">
-              <HelpCircle className="size-6 text-violet-500" />
+              <HelpCircle className="size-6 text-emerald-500" />
             </div>
             <h1 className="font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
               How can we{" "}
-              <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent">
                 help
               </span>
               ?
@@ -124,20 +124,20 @@ export default function SupportPage() {
                 variants={cardVariants}
               >
                 <Link
-                  className="group flex h-full flex-col rounded-xl border border-border/60 bg-card p-6 transition-all duration-200 hover:border-border hover:shadow-lg hover:shadow-violet-500/5"
+                  className="group flex h-full flex-col rounded-xl border border-border/60 bg-card p-6 transition-all duration-200 hover:border-border hover:shadow-lg hover:shadow-emerald-500/5"
                   href={r.href}
                   {...(r.external
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
                 >
-                  <div className="flex size-10 items-center justify-center rounded-lg border border-border/60 bg-muted/40 transition-colors group-hover:border-violet-500/30 group-hover:bg-violet-500/10">
-                    <r.icon className="size-5 text-muted-foreground transition-colors group-hover:text-violet-500" />
+                  <div className="flex size-10 items-center justify-center rounded-lg border border-border/60 bg-muted/40 transition-colors group-hover:border-emerald-500/30 group-hover:bg-emerald-500/10">
+                    <r.icon className="size-5 text-muted-foreground transition-colors group-hover:text-emerald-500" />
                   </div>
                   <h3 className="mt-4 font-semibold text-base">{r.title}</h3>
                   <p className="mt-1.5 flex-1 text-sm text-muted-foreground leading-relaxed">
                     {r.description}
                   </p>
-                  <span className="mt-4 text-sm font-medium text-violet-500">
+                  <span className="mt-4 text-sm font-medium text-emerald-500">
                     {r.linkLabel} &rarr;
                   </span>
                 </Link>

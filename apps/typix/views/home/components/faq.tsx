@@ -99,7 +99,7 @@ export function Faq() {
         >
           <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
             Frequently Asked{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent">
               Questions
             </span>
           </h2>

@@ -166,7 +166,7 @@ function AiFloatingBar() {
       initial={{ opacity: 0, y: 6 }}
       transition={{ duration: 0.5, delay: 1.2 }}
     >
-      <div className="flex size-5 items-center justify-center rounded bg-gradient-to-br from-violet-500 to-fuchsia-500">
+      <div className="flex size-5 items-center justify-center rounded bg-gradient-to-br from-violet-500 to-purple-500">
         <Sparkles className="size-3 text-white" />
       </div>
       <span className="font-medium text-[10px] text-muted-foreground sm:text-[11px]">
@@ -200,9 +200,9 @@ function ToolbarBtn({
 }) {
   return (
     <div
-      className={`flex size-6 cursor-default items-center justify-center rounded-md transition-colors sm:size-7 ${active ? "bg-accent text-accent-foreground" : "text-muted-foreground/70 hover:bg-accent/60 hover:text-muted-foreground"} ${className ?? ""}`}
+      className={`flex size-7 cursor-default items-center justify-center rounded-lg transition-all duration-150 sm:size-8 ${active ? "bg-emerald-500/10 text-emerald-600 shadow-sm shadow-emerald-500/5 dark:text-emerald-400" : "text-muted-foreground/60 hover:bg-accent hover:text-foreground"} ${className ?? ""}`}
     >
-      <Icon className="size-3 sm:size-3.5" />
+      <Icon className="size-3.5 sm:size-4" />
     </div>
   );
 }
@@ -221,7 +221,7 @@ export function EditorPreview() {
       whileInView={{ opacity: 1, x: 0 }}
     >
       {/* Glow */}
-      <div className="-inset-4 sm:-inset-6 absolute rounded-3xl bg-gradient-to-br from-violet-500/15 via-fuchsia-500/10 to-pink-500/15 blur-2xl sm:blur-3xl" />
+      <div className="-inset-4 sm:-inset-6 absolute rounded-3xl bg-gradient-to-br from-emerald-500/15 via-green-500/10 to-teal-500/15 blur-2xl sm:blur-3xl" />
 
       {/* Browser frame */}
       <div className="relative overflow-hidden rounded-xl border border-border/60 bg-card shadow-2xl ring-1 ring-white/5 sm:rounded-2xl">
@@ -255,67 +255,57 @@ export function EditorPreview() {
           </div>
         </div>
 
-        {/* Toolbar — scrollable on small screens */}
-        <div className="scrollbar-none flex items-center gap-0.5 overflow-x-auto border-border/60 border-b bg-muted/20 px-2 py-1 sm:px-3 sm:py-1.5">
-          <div className="flex shrink-0 items-center gap-0.5">
+        {/* Toolbar */}
+        <div className="scrollbar-none flex items-center gap-1 overflow-x-auto bg-muted/30 px-3 py-2 sm:px-4 sm:py-2.5">
+          {/* Undo/Redo */}
+          <div className="flex shrink-0 items-center gap-0.5 rounded-lg bg-background/60 p-0.5 shadow-sm ring-1 ring-border/40">
             <ToolbarBtn icon={Undo} />
             <ToolbarBtn icon={Redo} />
           </div>
-          <Separator
-            className="!h-4 mx-1 shrink-0 sm:mx-1.5"
-            orientation="vertical"
-          />
 
-          <div className="flex h-7 shrink-0 cursor-default items-center gap-1 rounded-md px-2 text-muted-foreground text-xs hover:bg-accent/60">
+          <Separator className="!h-5 mx-1.5 shrink-0 sm:mx-2" orientation="vertical" />
+
+          {/* Block type */}
+          <div className="flex h-8 shrink-0 cursor-default items-center gap-1.5 rounded-lg bg-background/60 px-2.5 text-muted-foreground text-xs shadow-sm ring-1 ring-border/40 hover:text-foreground">
             <AlignLeft className="size-3.5" />
             <span className="hidden min-[480px]:inline">Paragraph</span>
-            <ChevronDown className="size-3 opacity-50" />
+            <ChevronDown className="size-3 opacity-40" />
           </div>
-          <Separator
-            className="!h-4 mx-1 shrink-0 sm:mx-1.5"
-            orientation="vertical"
-          />
 
-          <div className="flex shrink-0 items-center gap-0.5">
+          <Separator className="!h-5 mx-1.5 shrink-0 sm:mx-2" orientation="vertical" />
+
+          {/* Text formatting */}
+          <div className="flex shrink-0 items-center gap-0.5 rounded-lg bg-background/60 p-0.5 shadow-sm ring-1 ring-border/40">
             <ToolbarBtn active icon={Bold} />
             <ToolbarBtn icon={Italic} />
             <ToolbarBtn icon={Underline} />
             <ToolbarBtn className="hidden sm:flex" icon={Strikethrough} />
             <ToolbarBtn className="hidden sm:flex" icon={CodeXml} />
           </div>
-          <Separator
-            className="!h-4 mx-1 shrink-0 sm:mx-1.5"
-            orientation="vertical"
-          />
 
-          <div className="flex shrink-0 items-center gap-0.5">
+          <Separator className="!h-5 mx-1.5 hidden shrink-0 sm:mx-2 sm:block" orientation="vertical" />
+
+          {/* Insert */}
+          <div className="hidden shrink-0 items-center gap-0.5 rounded-lg bg-background/60 p-0.5 shadow-sm ring-1 ring-border/40 sm:flex">
             <ToolbarBtn icon={Link2} />
-            <ToolbarBtn className="hidden sm:flex" icon={ImageIcon} />
-          </div>
-          <Separator
-            className="!h-4 mx-1 hidden shrink-0 sm:mx-1.5 sm:block"
-            orientation="vertical"
-          />
-
-          <div className="hidden shrink-0 items-center gap-0.5 sm:flex">
+            <ToolbarBtn icon={ImageIcon} />
             <ToolbarBtn icon={List} />
             <ToolbarBtn icon={ListOrdered} />
             <ToolbarBtn icon={Quote} />
           </div>
 
-          {/* AI button in toolbar */}
-          <Separator
-            className="!h-4 mx-1 shrink-0 sm:mx-1.5"
-            orientation="vertical"
-          />
-          <div className="flex shrink-0 cursor-default items-center gap-1 rounded-md px-1.5 py-0.5 font-medium text-[10px] text-violet-400 transition-colors hover:bg-violet-500/10 sm:px-2 sm:text-xs">
-            <Sparkles className="size-3 sm:size-3.5" />
+          {/* AI button */}
+          <div className="ml-auto flex shrink-0 cursor-default items-center gap-1.5 rounded-lg border border-violet-500/20 bg-violet-500/5 px-2.5 py-1.5 font-medium text-[10px] text-violet-400 shadow-sm transition-colors hover:bg-violet-500/10 sm:text-xs">
+            <Sparkles className="size-3.5" />
             <span className="hidden sm:inline">AI</span>
           </div>
         </div>
 
+        {/* Toolbar divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+
         {/* Editor content */}
-        <div className="relative min-h-[240px] space-y-3 p-3 sm:min-h-[280px] sm:space-y-4 sm:p-5">
+        <div className="relative min-h-[240px] space-y-3.5 p-4 sm:min-h-[280px] sm:space-y-4 sm:p-6">
           {/* Collaborative cursors */}
           {collaborators.map((c, i) => (
             <CollabCursor
@@ -333,7 +323,7 @@ export function EditorPreview() {
 
           {/* Heading */}
           <div className="flex items-center gap-2">
-            <span className="font-medium text-[10px] text-violet-400/60 sm:text-xs">
+            <span className="font-medium text-[10px] text-emerald-400/60 sm:text-xs">
               H2
             </span>
             <h2 className="font-bold text-base tracking-tight sm:text-lg">
@@ -345,11 +335,11 @@ export function EditorPreview() {
           <p className="text-muted-foreground text-xs leading-relaxed sm:text-[13px]">
             A <span className="font-bold text-foreground">headless</span>,
             extensible editor framework that gives you{" "}
-            <span className="rounded bg-violet-500/10 px-1 py-0.5 text-violet-400">
+            <span className="rounded bg-emerald-500/10 px-1 py-0.5 text-emerald-400">
               full control
             </span>{" "}
             over your{" "}
-            <span className="underline decoration-fuchsia-400/50 decoration-wavy underline-offset-4">
+            <span className="underline decoration-green-400/50 decoration-wavy underline-offset-4">
               editing experience
             </span>
             <AiSuggestion />
@@ -364,14 +354,14 @@ export function EditorPreview() {
               <span className="text-[10px] text-muted-foreground/30">copy</span>
             </div>
             <div className="scrollbar-none overflow-x-auto px-2.5 py-2 font-mono text-[10px] leading-relaxed sm:px-3 sm:py-3 sm:text-xs">
-              <span className="text-violet-400">import</span>
-              <span className="text-neutral-300">{" { "}</span>
-              <span className="text-emerald-400">EditorRoot</span>
-              <span className="text-neutral-300">{", "}</span>
-              <span className="text-emerald-400">EditorContent</span>
-              <span className="text-neutral-300">{" } "}</span>
-              <span className="text-violet-400">from</span>
-              <span className="text-amber-300">{" '@typix-editor/react'"}</span>
+              <span className="text-purple-400">import</span>
+              <span className="text-neutral-400">{" { "}</span>
+              <span className="text-sky-400">EditorRoot</span>
+              <span className="text-neutral-400">{", "}</span>
+              <span className="text-sky-400">EditorContent</span>
+              <span className="text-neutral-400">{" } "}</span>
+              <span className="text-purple-400">from</span>
+              <span className="text-green-400">{" '@typix-editor/react'"}</span>
             </div>
           </div>
 
@@ -383,7 +373,7 @@ export function EditorPreview() {
               "Built on Meta's Lexical engine",
             ].map((line) => (
               <div className="flex items-start gap-2" key={line}>
-                <div className="mt-[6px] size-1.5 shrink-0 rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-400 sm:mt-[7px]" />
+                <div className="mt-[6px] size-1.5 shrink-0 rounded-full bg-gradient-to-br from-emerald-400 to-green-400 sm:mt-[7px]" />
                 <span className="text-muted-foreground text-xs sm:text-[13px]">
                   {line}
                 </span>

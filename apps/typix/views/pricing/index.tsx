@@ -76,7 +76,7 @@ export default function PricingPage() {
             </Badge>
             <h1 className="font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
               Free &{" "}
-              <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent">
                 Open Source
               </span>
             </h1>
@@ -95,8 +95,8 @@ export default function PricingPage() {
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0 }}
             >
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-border/60 bg-card p-8 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-violet-500/5">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/[0.03] via-transparent to-fuchsia-500/[0.03] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="group relative h-full overflow-hidden rounded-2xl border border-border/60 bg-card p-8 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-emerald-500/5">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/[0.03] via-transparent to-green-500/[0.03] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 <div className="relative">
                   <div className="text-center">
@@ -161,23 +161,23 @@ export default function PricingPage() {
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0 }}
             >
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-violet-500/30 bg-card p-8 transition-all duration-300 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/10">
+              <div className="group relative h-full overflow-hidden rounded-2xl border border-emerald-500/30 bg-card p-8 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10">
                 {/* Gradient border glow */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/[0.05] via-transparent to-fuchsia-500/[0.05] opacity-100 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/[0.05] via-transparent to-green-500/[0.05] opacity-100 transition-opacity duration-300 group-hover:opacity-100" />
 
                 <div className="relative">
                   <div className="text-center">
                     <div className="flex items-center justify-center gap-2">
                       <h2 className="font-bold text-xl sm:text-2xl">Pro</h2>
                       <Badge
-                        className="border-violet-500/30 text-[10px] text-violet-500 sm:text-xs"
+                        className="border-emerald-500/30 text-[10px] text-emerald-500 sm:text-xs"
                         variant="outline"
                       >
                         Coming Soon
                       </Badge>
                     </div>
                     <div className="mt-4 flex items-baseline justify-center gap-1">
-                      <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text font-bold text-5xl tracking-tight text-transparent">
+                      <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text font-bold text-5xl tracking-tight text-transparent">
                         TBD
                       </span>
                     </div>
@@ -206,8 +206,8 @@ export default function PricingPage() {
                         key={feature}
                         variants={itemVariants}
                       >
-                        <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-violet-500/10">
-                          <Check className="size-3 text-violet-500" />
+                        <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10">
+                          <Check className="size-3 text-emerald-500" />
                         </div>
                         {feature}
                       </motion.li>
@@ -228,7 +228,7 @@ export default function PricingPage() {
           >
             Need enterprise support or custom features?{" "}
             <Link
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-violet-500"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-emerald-500"
               href="https://github.com/mrdiyorbek-juraev/typix/issues"
               rel="noopener noreferrer"
               target="_blank"

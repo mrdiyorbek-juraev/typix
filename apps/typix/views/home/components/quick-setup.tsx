@@ -66,8 +66,8 @@ function InstallBlock() {
       // @ts-expect-error
       variants={itemVariants}
     >
-      <div className="group relative overflow-hidden rounded-2xl border border-border/60 bg-neutral-100 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-violet-500/5 dark:border-white/[0.08] dark:bg-neutral-950 dark:hover:border-white/[0.15]">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/[0.04] via-transparent to-fuchsia-500/[0.04] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="group relative overflow-hidden rounded-2xl border border-border/60 bg-neutral-100 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-emerald-500/5 dark:border-white/[0.08] dark:bg-neutral-950 dark:hover:border-white/[0.15]">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/[0.04] via-transparent to-green-500/[0.04] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         {/* Package manager tabs */}
         <div className="relative flex items-center gap-1 border-border/60 border-b px-4 pt-3 pb-0 dark:border-white/[0.06]">
@@ -81,7 +81,7 @@ function InstallBlock() {
               {pm.label}
               {i === active && (
                 <motion.div
-                  className="absolute inset-x-0 -bottom-px h-px bg-violet-500"
+                  className="absolute inset-x-0 -bottom-px h-px bg-emerald-500"
                   layoutId="pm-tab"
                   transition={{ duration: 0.2 }}
                 />
@@ -92,7 +92,7 @@ function InstallBlock() {
 
         {/* Command */}
         <div className="relative flex items-center gap-3 px-5 py-4">
-          <Terminal className="size-4 shrink-0 text-violet-500" />
+          <Terminal className="size-4 shrink-0 text-emerald-500" />
           <code className="scrollbar-none flex-1 overflow-x-auto font-mono text-sm sm:text-base">
             <span className="text-muted-foreground">$ </span>
             <span className="text-foreground/80">
@@ -124,11 +124,11 @@ function CodeBlock({
 }) {
   return (
     <motion.div
-      className="group relative overflow-hidden rounded-2xl border border-border/60 bg-neutral-100 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-violet-500/5 dark:border-white/[0.08] dark:bg-neutral-950 dark:hover:border-white/[0.15]"
+      className="group relative overflow-hidden rounded-2xl border border-border/60 bg-neutral-100 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-emerald-500/5 dark:border-white/[0.08] dark:bg-neutral-950 dark:hover:border-white/[0.15]"
       // @ts-expect-error
       variants={itemVariants}
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/[0.04] via-transparent to-fuchsia-500/[0.04] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/[0.04] via-transparent to-green-500/[0.04] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       {/* Header */}
       <div className="relative flex items-center border-border/60 border-b px-4 py-3 dark:border-white/[0.06]">
@@ -181,107 +181,33 @@ const structureText = `<EditorRoot>
 </EditorRoot>`;
 
 function StructureCode() {
+  const tag = "text-sky-600 dark:text-sky-400";
+  const punc = "text-neutral-500 dark:text-neutral-400";
+
+  const Tag = ({ name, indent = 0, selfClosing = false, closing = false }: { name: string; indent?: number; selfClosing?: boolean; closing?: boolean }) => (
+    <div style={{ paddingLeft: indent }}>
+      <span className={punc}>{closing ? "</" : "<"}</span>
+      <span className={tag}>{name}</span>
+      <span className={punc}>{selfClosing ? " />" : ">"}</span>
+    </div>
+  );
+
   return (
     <CodeBlock copyText={structureText} label="Structure">
-      {/* <EditorRoot> */}
-      <div>
-        <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorRoot
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
-
-      {/* <EditorContent> */}
-      <div className="pl-5">
-        <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorContent
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
-
-      {/* <EditorCommand> */}
-      <div className="pl-10">
-        <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorCommand
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
-
-      {/* <EditorCommandItem /> x3 */}
+      <Tag name="EditorRoot" />
+      <Tag indent={20} name="EditorContent" />
+      <Tag indent={40} name="EditorCommand" />
       {[0, 1, 2].map((i) => (
-        <div className="pl-[3.75rem]" key={i}>
-          <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-          <span className="text-emerald-600 dark:text-emerald-400">
-            EditorCommandItem
-          </span>
-          <span className="text-neutral-600 dark:text-neutral-300">
-            {" "}
-            /{">"}
-          </span>
-        </div>
+        <Tag indent={60} key={i} name="EditorCommandItem" selfClosing />
       ))}
-
-      {/* </EditorCommand> */}
-      <div className="pl-10">
-        <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorCommand
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
-
-      {/* <EditorBubble> */}
-      <div className="pl-10">
-        <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorBubble
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
-
-      {/* <EditorBubbleItem /> x3 */}
+      <Tag closing indent={40} name="EditorCommand" />
+      <Tag indent={40} name="EditorBubble" />
       {[0, 1, 2].map((i) => (
-        <div className="pl-[3.75rem]" key={i}>
-          <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-          <span className="text-emerald-600 dark:text-emerald-400">
-            EditorBubbleItem
-          </span>
-          <span className="text-neutral-600 dark:text-neutral-300">
-            {" "}
-            /{">"}
-          </span>
-        </div>
+        <Tag indent={60} key={i} name="EditorBubbleItem" selfClosing />
       ))}
-
-      {/* </EditorBubble> */}
-      <div className="pl-10">
-        <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorBubble
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
-
-      {/* </EditorContent> */}
-      <div className="pl-5">
-        <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorContent
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
-
-      {/* </EditorRoot> */}
-      <div>
-        <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorRoot
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
-      </div>
+      <Tag closing indent={40} name="EditorBubble" />
+      <Tag closing indent={20} name="EditorContent" />
+      <Tag closing name="EditorRoot" />
     </CodeBlock>
   );
 }
@@ -314,133 +240,122 @@ export function MyEditor() {
 }`;
 
 function SetupCode() {
+  const kw = "text-purple-600 dark:text-purple-400";
+  const tag = "text-sky-600 dark:text-sky-400";
+  const str = "text-green-600 dark:text-green-400";
+  const attr = "text-orange-600 dark:text-orange-300";
+  const punc = "text-neutral-500 dark:text-neutral-400";
+  const comment = "text-neutral-400 dark:text-neutral-500";
+  const fn = "text-blue-600 dark:text-blue-400";
+  const param = "text-amber-600 dark:text-amber-300";
+
   return (
     <CodeBlock copyText={setupText} label="Minimal Setup">
-      {/* import { */}
+      {/* import { EditorRoot, EditorContent } from "..." */}
       <div>
-        <span className="text-violet-600 dark:text-violet-400">import</span>
-        <span className="text-neutral-600 dark:text-neutral-300"> {"{"}</span>
+        <span className={kw}>import</span>
+        <span className={punc}>{" {"}</span>
       </div>
       <div className="pl-5">
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorRoot
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">,</span>
+        <span className={tag}>EditorRoot</span>
+        <span className={punc}>,</span>
       </div>
       <div className="pl-5">
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorContent
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">,</span>
+        <span className={tag}>EditorContent</span>
+        <span className={punc}>,</span>
       </div>
       <div>
-        <span className="text-neutral-600 dark:text-neutral-300">{"}"} </span>
-        <span className="text-violet-600 dark:text-violet-400">from</span>
-        <span className="text-neutral-600 dark:text-neutral-300"> </span>
-        <span className="text-amber-600 dark:text-amber-300">
-          "@typix-editor/react"
-        </span>
+        <span className={punc}>{"} "}</span>
+        <span className={kw}>from</span>
+        <span className={punc}> </span>
+        <span className={str}>"@typix-editor/react"</span>
       </div>
 
-      {/* blank line */}
       <div className="h-4" />
 
       {/* export function MyEditor() { */}
       <div>
-        <span className="text-violet-600 dark:text-violet-400">
-          export function
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300"> </span>
-        <span className="text-emerald-600 dark:text-emerald-400">MyEditor</span>
-        <span className="text-neutral-600 dark:text-neutral-300">() {"{"}</span>
+        <span className={kw}>export function</span>
+        <span className={punc}> </span>
+        <span className={fn}>MyEditor</span>
+        <span className={punc}>() {"{"}</span>
       </div>
 
       {/* return ( */}
       <div className="pl-5">
-        <span className="text-violet-600 dark:text-violet-400">return</span>
-        <span className="text-neutral-600 dark:text-neutral-300"> (</span>
+        <span className={kw}>return</span>
+        <span className={punc}> (</span>
       </div>
 
       {/* <EditorRoot> */}
       <div className="pl-10">
-        <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorRoot
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
+        <span className={punc}>{"<"}</span>
+        <span className={tag}>EditorRoot</span>
+        <span className={punc}>{">"}</span>
       </div>
 
       {/* <EditorContent */}
       <div className="pl-[3.75rem]">
-        <span className="text-neutral-600 dark:text-neutral-300">{"<"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorContent
-        </span>
+        <span className={punc}>{"<"}</span>
+        <span className={tag}>EditorContent</span>
       </div>
 
-      {/* placeholder */}
+      {/* placeholder="Start typing..." */}
       <div className="pl-20">
-        <span className="text-sky-600 dark:text-sky-300">placeholder</span>
-        <span className="text-neutral-600 dark:text-neutral-300">=</span>
-        <span className="text-amber-600 dark:text-amber-300">
-          "Start typing..."
-        </span>
+        <span className={attr}>placeholder</span>
+        <span className={punc}>=</span>
+        <span className={str}>"Start typing..."</span>
       </div>
 
-      {/* onContentChange */}
+      {/* onContentChange={(state) => { */}
       <div className="pl-20">
-        <span className="text-sky-600 dark:text-sky-300">onContentChange</span>
-        <span className="text-neutral-600 dark:text-neutral-300">
-          ={"{"}
-          <span className="text-neutral-600 dark:text-neutral-300">(</span>
-          <span className="text-sky-600 dark:text-sky-300">state</span>
-          <span className="text-neutral-600 dark:text-neutral-300">)</span>
-          <span className="text-violet-600 dark:text-violet-400"> =&gt;</span>
-          {"{"}
-        </span>
+        <span className={attr}>onContentChange</span>
+        <span className={punc}>={"{"}(</span>
+        <span className={param}>state</span>
+        <span className={punc}>)</span>
+        <span className={kw}> =&gt;</span>
+        <span className={punc}> {"{"}</span>
       </div>
 
-      {/* comment */}
+      {/* // save to your backend */}
       <div className="pl-[6.25rem]">
-        <span className="text-neutral-400 dark:text-neutral-500">
-          {"// save to your backend"}
-        </span>
+        <span className={comment}>{"// save to your backend"}</span>
       </div>
 
-      {/* console.log */}
+      {/* console.log(state) */}
       <div className="pl-[6.25rem]">
-        <span className="text-neutral-600 dark:text-neutral-300">console.</span>
-        <span className="text-emerald-600 dark:text-emerald-400">log</span>
-        <span className="text-neutral-600 dark:text-neutral-300">(state)</span>
+        <span className={punc}>console.</span>
+        <span className={fn}>log</span>
+        <span className={punc}>(</span>
+        <span className={param}>state</span>
+        <span className={punc}>)</span>
       </div>
 
-      {/* closing braces */}
+      {/* }} */}
       <div className="pl-20">
-        <span className="text-neutral-600 dark:text-neutral-300">{"}}"}</span>
+        <span className={punc}>{"}}"}</span>
       </div>
 
       {/* /> */}
       <div className="pl-[3.75rem]">
-        <span className="text-neutral-600 dark:text-neutral-300">/{">"}</span>
+        <span className={punc}>/{">"}</span>
       </div>
 
       {/* </EditorRoot> */}
       <div className="pl-10">
-        <span className="text-neutral-600 dark:text-neutral-300">{"</"}</span>
-        <span className="text-emerald-600 dark:text-emerald-400">
-          EditorRoot
-        </span>
-        <span className="text-neutral-600 dark:text-neutral-300">{">"}</span>
+        <span className={punc}>{"</"}</span>
+        <span className={tag}>EditorRoot</span>
+        <span className={punc}>{">"}</span>
       </div>
 
       {/* ) */}
       <div className="pl-5">
-        <span className="text-neutral-600 dark:text-neutral-300">)</span>
+        <span className={punc}>)</span>
       </div>
 
       {/* } */}
       <div>
-        <span className="text-neutral-600 dark:text-neutral-300">{"}"}</span>
+        <span className={punc}>{"}"}</span>
       </div>
     </CodeBlock>
   );
@@ -464,7 +379,7 @@ export function QuickSetup() {
         >
           <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
             Get Started with{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent">
               Typix
             </span>
           </h2>
