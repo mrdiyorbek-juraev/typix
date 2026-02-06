@@ -10,19 +10,17 @@ const createTouchEvent = (
   type: string,
   clientX: number,
   clientY: number
-): TouchEvent => {
-  return {
+): TouchEvent =>
+  ({
     type,
     changedTouches: [{ clientX, clientY }],
-  } as unknown as TouchEvent;
-};
+  }) as unknown as TouchEvent;
 
-const createEmptyTouchEvent = (type: string): TouchEvent => {
-  return {
+const createEmptyTouchEvent = (type: string): TouchEvent =>
+  ({
     type,
     changedTouches: [],
-  } as unknown as TouchEvent;
-};
+  }) as unknown as TouchEvent;
 
 describe("swipe utilities", () => {
   let element: HTMLElement;
