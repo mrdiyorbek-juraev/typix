@@ -27,27 +27,25 @@ export function getJSON(editor: LexicalEditor): SerializedEditorState {
  * Get the editor content as HTML string.
  */
 export function getHTML(editor: LexicalEditor): string {
-  return editor.getEditorState().read(() => {
-    return $generateHtmlFromNodes(editor, null);
-  });
+  return editor
+    .getEditorState()
+    .read(() => $generateHtmlFromNodes(editor, null));
 }
 
 /**
  * Get the editor content as Markdown string.
  */
 export function getMarkdown(editor: LexicalEditor): string {
-  return editor.getEditorState().read(() => {
-    return $convertToMarkdownString(TRANSFORMERS);
-  });
+  return editor
+    .getEditorState()
+    .read(() => $convertToMarkdownString(TRANSFORMERS));
 }
 
 /**
  * Get the editor content as plain text.
  */
 export function getText(editor: LexicalEditor): string {
-  return editor.getEditorState().read(() => {
-    return $getRoot().getTextContent();
-  });
+  return editor.getEditorState().read(() => $getRoot().getTextContent());
 }
 
 // ============================================

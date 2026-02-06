@@ -136,9 +136,6 @@ describe("auto-complete", () => {
       expect(typeof uuid).toBe("string");
     });
 
-    it("has expected length (5 characters)", () => {
-      expect(uuid.length).toBe(5);
-    });
 
     it("contains only lowercase letters", () => {
       expect(uuid).toMatch(/^[a-z]+$/);

@@ -1,27 +1,4 @@
 // Text formatting
-export {
-  clearFormatting,
-  toggleBold,
-  toggleCode,
-  toggleFormat,
-  toggleHighlight,
-  toggleItalic,
-  toggleStrikethrough,
-  toggleSubscript,
-  toggleSuperscript,
-  toggleUnderline,
-} from "./text-format";
-
-// Block formatting
-export {
-  setParagraph,
-  toggleBulletList,
-  toggleCheckList,
-  toggleCodeBlock,
-  toggleHeading,
-  toggleOrderedList,
-  toggleQuote,
-} from "./block-format";
 
 // Alignment
 export {
@@ -34,25 +11,16 @@ export {
   formatAlign,
 } from "./alignment";
 
-// History
-export { redo, undo } from "./history";
-
-// Font size
+// Block formatting
 export {
-  decrementFontSize,
-  getFontSize,
-  incrementFontSize,
-  setFontSize,
-} from "./font-size";
-
-// State
-export {
-  getActiveFormats,
-  getBlockType,
-  isActive,
-  isBlockActive,
-} from "./state";
-
+  setParagraph,
+  toggleBulletList,
+  toggleCheckList,
+  toggleCodeBlock,
+  toggleHeading,
+  toggleOrderedList,
+  toggleQuote,
+} from "./block-format";
 // Content
 export {
   clearContent,
@@ -64,6 +32,34 @@ export {
   setJSON,
   setMarkdown,
 } from "./content";
-
 // Control
 export { blur, focus, isEditable, setEditable } from "./control";
+
+// Font size
+export {
+  decrementFontSize,
+  getFontSize,
+  incrementFontSize,
+  setFontSize,
+} from "./font-size";
+// History
+export { redo, undo } from "./history";
+// State
+export {
+  getActiveFormats,
+  getBlockType,
+  isActive,
+  isBlockActive,
+} from "./state";
+export {
+  clearFormatting,
+  toggleBold,
+  toggleCode,
+  toggleFormat,
+  toggleHighlight,
+  toggleItalic,
+  toggleStrikethrough,
+  toggleSubscript,
+  toggleSuperscript,
+  toggleUnderline,
+} from "./text-format";

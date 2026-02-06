@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { URL_REGEX, EMAIL_REGEX } from "../lib";
+import { EMAIL_REGEX, URL_REGEX } from "../lib";
 
 describe("auto-link regex patterns", () => {
   describe("URL_REGEX", () => {

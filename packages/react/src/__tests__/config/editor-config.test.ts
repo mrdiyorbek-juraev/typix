@@ -1,8 +1,8 @@
 import type {
+  HTMLConfig,
+  Klass,
   LexicalEditor,
   LexicalNode,
-  Klass,
-  HTMLConfig,
   SerializedEditorState,
 } from "lexical";
 import { describe, expect, it, vi } from "vitest";

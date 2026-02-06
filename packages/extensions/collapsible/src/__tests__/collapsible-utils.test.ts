@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { setDomHiddenUntilFound, domOnBeforeMatch } from "../utils";
+import { domOnBeforeMatch, setDomHiddenUntilFound } from "../utils";
 
 describe("collapsible utilities", () => {
   describe("setDomHiddenUntilFound", () => {

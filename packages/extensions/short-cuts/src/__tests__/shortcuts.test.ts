@@ -1,30 +1,30 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
-  isFormatParagraph,
-  isFormatHeading,
-  isFormatNumberedList,
+  isAddComment,
+  isCapitalize,
+  isCenterAlign,
+  isClearFormatting,
+  isDecreaseFontSize,
   isFormatBulletList,
   isFormatCheckList,
   isFormatCode,
+  isFormatHeading,
+  isFormatNumberedList,
+  isFormatParagraph,
   isFormatQuote,
-  isLowercase,
-  isUppercase,
-  isCapitalize,
-  isStrikeThrough,
+  isIncreaseFontSize,
   isIndent,
-  isOutdent,
-  isCenterAlign,
-  isLeftAlign,
-  isRightAlign,
+  isInsertCodeBlock,
+  isInsertLink,
   isJustifyAlign,
+  isLeftAlign,
+  isLowercase,
+  isOutdent,
+  isRightAlign,
+  isStrikeThrough,
   isSubscript,
   isSuperscript,
-  isInsertCodeBlock,
-  isIncreaseFontSize,
-  isDecreaseFontSize,
-  isClearFormatting,
-  isInsertLink,
-  isAddComment,
+  isUppercase,
   SHORTCUTS,
 } from "../lib/shortcuts";
 
@@ -32,16 +32,15 @@ import {
 const createKeyboardEvent = (
   code: string,
   options: Partial<KeyboardEvent> = {}
-): KeyboardEvent => {
-  return {
+): KeyboardEvent =>
+  ({
     code,
     ctrlKey: false,
     metaKey: false,
     altKey: false,
     shiftKey: false,
     ...options,
-  } as KeyboardEvent;
-};
+  }) as KeyboardEvent;
 
 describe("shortcuts", () => {
   describe("SHORTCUTS constant", () => {

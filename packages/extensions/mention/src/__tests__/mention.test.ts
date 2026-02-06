@@ -6,8 +6,8 @@ import {
 } from "../node";
 import type {
   MentionItem,
-  MentionTriggerConfig,
   MentionNodeConfig,
+  MentionTriggerConfig,
 } from "../types";
 
 describe("mention extension", () => {
