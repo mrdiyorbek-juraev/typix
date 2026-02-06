@@ -138,7 +138,7 @@ export function Hero() {
                   <AnimatePresence initial={false} mode="popLayout">
                     <motion.span
                       animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                      className="inline-block bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent"
+                      className="inline-block bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent"
                       exit={{ y: "-100%", opacity: 0, filter: "blur(4px)" }}
                       initial={{ y: "100%", opacity: 0, filter: "blur(4px)" }}
                       key={rotatingWords[wordIndex]}
@@ -155,7 +155,7 @@ export function Hero() {
               <p className="max-w-lg text-base text-muted-foreground leading-relaxed sm:text-lg">
                 An extensible, headless rich-text editor built on{" "}
                 <a
-                  className="relative inline-block font-semibold text-foreground hover:text-violet-500 transition-colors"
+                  className="relative inline-block font-semibold text-foreground hover:text-emerald-500 transition-colors"
                   href="https://lexical.dev"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -191,9 +191,9 @@ export function Hero() {
                         y1="0"
                         y2="0"
                       >
-                        <stop stopColor="#8b5cf6" />
-                        <stop offset="0.5" stopColor="#d946ef" />
-                        <stop offset="1" stopColor="#ec4899" />
+                        <stop stopColor="#34d399" />
+                        <stop offset="0.5" stopColor="#22c55e" />
+                        <stop offset="1" stopColor="#14b8a6" />
                       </linearGradient>
                     </defs>
                   </svg>
@@ -217,7 +217,7 @@ export function Hero() {
 
               <Button
                 asChild
-                className="w-full border-violet-500/30 text-violet-500 hover:bg-violet-500/10 hover:text-violet-400 sm:w-auto"
+                className="w-full border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 hover:text-emerald-400 sm:w-auto"
                 size="lg"
                 variant="outline"
               >

@@ -50,12 +50,12 @@ function BentoCard({
 }) {
   return (
     <motion.div
-      className={`group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-violet-500/5 sm:p-6 ${className}`}
+      className={`group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 transition-all duration-300 hover:border-border hover:shadow-lg hover:shadow-emerald-500/5 sm:p-6 ${className}`}
       // @ts-expect-error
       variants={cardVariants}
     >
       {/* Hover gradient overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/[0.03] via-transparent to-fuchsia-500/[0.03] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/[0.03] via-transparent to-green-500/[0.03] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <div className="relative">{children}</div>
     </motion.div>
   );
@@ -66,14 +66,38 @@ function BentoCard({
 /* ------------------------------------------------------------------ */
 
 const uiVariants = [
-  { label: "Clean", accent: "bg-foreground text-background" },
+  {
+    label: "Clean",
+    accent: "bg-neutral-200 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200",
+    toolbar: "bg-muted/30",
+    content: "bg-card",
+    heading: "Getting Started with Typix",
+    body: "A minimal, distraction-free writing experience. Just you and your words.",
+    tag: "Documentation",
+    tagClass: "bg-neutral-200/60 text-neutral-600 dark:bg-neutral-700/60 dark:text-neutral-300",
+    highlight: "bg-neutral-200/50 dark:bg-neutral-700/40",
+  },
   {
     label: "Notion",
     accent: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+    toolbar: "bg-[#fbfaf8] dark:bg-amber-950/20",
+    content: "bg-[#fbfaf8] dark:bg-card",
+    heading: "Team Meeting Notes",
+    body: "Discuss Q2 roadmap, assign owners, and track progress across teams.",
+    tag: "Workspace",
+    tagClass: "bg-amber-100/80 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
+    highlight: "bg-amber-200/40 dark:bg-amber-500/10",
   },
   {
     label: "Custom",
-    accent: "bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white",
+    accent: "bg-gradient-to-r from-emerald-500 to-teal-500 text-white",
+    toolbar: "bg-emerald-50/60 dark:bg-emerald-950/20",
+    content: "bg-emerald-50/20 dark:bg-card",
+    heading: "Launch Announcement",
+    body: "Introducing our new editor — built for speed, designed for developers.",
+    tag: "Published",
+    tagClass: "bg-emerald-100/80 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
+    highlight: "bg-emerald-200/40 dark:bg-emerald-500/10",
   },
 ] as const;
 
@@ -91,7 +115,7 @@ function HeadlessCard() {
   return (
     <BentoCard className="flex flex-col md:col-span-2 md:row-span-2">
       {/* Accent border */}
-      <div className="absolute top-1 bottom-4 left-0 w-[3px] rounded-full bg-gradient-to-b from-violet-500 to-fuchsia-500" />
+      <div className="absolute top-1 bottom-4 left-0 w-[3px] rounded-full bg-gradient-to-b from-emerald-500 to-green-500" />
 
       <div className="mb-5 ml-2 pl-2">
         <h3 className="font-bold text-lg tracking-tight sm:text-xl">
@@ -107,7 +131,7 @@ function HeadlessCard() {
       <div className="mb-3 ml-2 flex items-center gap-1.5">
         {uiVariants.map((v, i) => (
           <button
-            className={`rounded-full px-3 py-1 font-medium text-[10px] transition-all duration-200 sm:text-xs ${i === active ? "bg-foreground text-background shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+            className={`rounded-full px-3 py-1 font-medium text-[10px] transition-all duration-200 sm:text-xs ${i === active ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/25" : "text-muted-foreground hover:text-foreground"}`}
             key={v.label}
             onClick={() => setActive(i)}
             type="button"
@@ -135,7 +159,7 @@ function HeadlessCard() {
               transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
             >
               {/* Mini toolbar */}
-              <div className="flex items-center gap-1.5 border-border/40 border-b bg-muted/30 px-3 py-1.5">
+              <div className={`flex items-center gap-1 border-border/40 border-b px-2.5 py-1.5 sm:gap-1.5 sm:px-3 ${v.toolbar}`}>
                 {["B", "I", "U"].map((b) => (
                   <div
                     className={`flex size-5 items-center justify-center rounded font-bold text-[9px] sm:size-6 sm:text-[10px] ${v.accent}`}
@@ -144,28 +168,32 @@ function HeadlessCard() {
                     {b}
                   </div>
                 ))}
-                <div className="mx-1.5 h-3.5 w-px bg-border/40" />
-                <div className="flex h-5 items-center rounded px-2 text-[9px] text-muted-foreground sm:h-6 sm:text-[10px]">
+                <div className="mx-1 h-3.5 w-px bg-border/40 sm:mx-1.5" />
+                <div className="flex h-5 items-center rounded px-1.5 text-[9px] text-muted-foreground sm:h-6 sm:px-2 sm:text-[10px]">
                   Paragraph
                 </div>
-                <div className="ml-auto flex gap-1">
-                  <div className="h-1.5 w-6 rounded-full bg-muted-foreground/15" />
-                  <div className="h-1.5 w-4 rounded-full bg-muted-foreground/10" />
+                <div className="ml-auto flex items-center gap-1.5">
+                  <span className={`rounded-full px-2 py-0.5 text-[8px] font-medium sm:text-[9px] ${v.tagClass}`}>
+                    {v.tag}
+                  </span>
                 </div>
               </div>
               {/* Content */}
-              <div className="space-y-2 p-3 sm:p-4">
-                <div className="font-semibold text-xs sm:text-sm">
-                  Welcome to Typix
+              <div className={`space-y-2.5 p-3 sm:p-4 ${v.content}`}>
+                <div className="font-bold text-xs tracking-tight sm:text-sm">
+                  {v.heading}
                 </div>
-                <div className="space-y-1.5">
-                  <div className="h-2 w-full rounded-full bg-muted-foreground/8" />
-                  <div className="h-2 w-[85%] rounded-full bg-muted-foreground/8" />
-                  <div className="h-2 w-[60%] rounded-full bg-muted-foreground/8" />
+                <p className="text-[10px] text-muted-foreground leading-relaxed sm:text-xs">
+                  {v.body}
+                </p>
+                <div className="flex items-center gap-2 pt-0.5">
+                  <div className={`h-1.5 w-12 rounded-full ${v.highlight}`} />
+                  <div className={`h-1.5 w-20 rounded-full ${v.highlight}`} />
+                  <div className={`h-1.5 w-8 rounded-full ${v.highlight}`} />
                 </div>
-                <div className="flex items-center gap-2 pt-1">
-                  <div className={`h-5 w-16 rounded ${v.accent} opacity-60`} />
-                  <div className="h-2 w-20 rounded-full bg-muted-foreground/8" />
+                <div className="flex items-center gap-2 pt-0.5">
+                  <div className={`h-5 w-16 rounded-md ${v.accent} opacity-70`} />
+                  <div className="h-2 w-16 rounded-full bg-muted-foreground/8" />
                 </div>
               </div>
             </motion.div>
@@ -221,7 +249,7 @@ function ExtensionsCard() {
               className="flex shrink-0 items-center gap-1.5 rounded-full border border-border/60 bg-muted/40 px-3 py-1.5 font-medium text-muted-foreground text-xs"
               key={`${ext.name}-${i}`}
             >
-              <ext.icon className="size-3.5 text-violet-400" />
+              <ext.icon className="size-3.5 text-emerald-400" />
               {ext.name}
             </div>
           ))}
@@ -247,25 +275,25 @@ function TypeSafeCard() {
 
       <div className="mt-4 overflow-hidden rounded-lg border border-border/60 bg-neutral-950 p-3 font-mono text-[10px] leading-relaxed sm:text-xs dark:bg-neutral-900/60">
         <div>
-          <span className="text-violet-400">const</span>
+          <span className="text-purple-400">const</span>
           <span className="text-neutral-300"> editor </span>
-          <span className="text-violet-400">=</span>
-          <span className="text-emerald-400"> useEditor</span>
-          <span className="text-neutral-300">{"<"}</span>
+          <span className="text-purple-400">=</span>
+          <span className="text-blue-400"> useEditor</span>
+          <span className="text-neutral-400">{"<"}</span>
         </div>
         <div className="pl-3">
-          <span className="text-amber-300">RichTextExtension</span>
-          <span className="text-neutral-300">,</span>
+          <span className="text-sky-400">RichTextExtension</span>
+          <span className="text-neutral-400">,</span>
         </div>
         <div className="pl-3">
-          <span className="text-amber-300">LinkExtension</span>
+          <span className="text-sky-400">LinkExtension</span>
         </div>
         <div>
-          <span className="text-neutral-300">{">"}</span>
-          <span className="text-neutral-300">()</span>
+          <span className="text-neutral-400">{">"}</span>
+          <span className="text-neutral-400">()</span>
           <motion.span
             animate={{ opacity: [1, 0] }}
-            className="ml-px inline-block h-3.5 w-[2px] translate-y-[1px] bg-violet-400"
+            className="ml-px inline-block h-3.5 w-[2px] translate-y-[1px] bg-emerald-400"
             transition={{
               duration: 0.6,
               repeat: Number.POSITIVE_INFINITY,
@@ -326,9 +354,9 @@ function PerformanceCard() {
               y1="65"
               y2="65"
             >
-              <stop stopColor="#8b5cf6" />
-              <stop offset="0.5" stopColor="#d946ef" />
-              <stop offset="1" stopColor="#ec4899" />
+              <stop stopColor="#34d399" />
+              <stop offset="0.5" stopColor="#22c55e" />
+              <stop offset="1" stopColor="#14b8a6" />
             </linearGradient>
           </defs>
         </svg>
@@ -340,7 +368,7 @@ function PerformanceCard() {
           viewport={{ once: true }}
           whileInView={{ opacity: 1 }}
         >
-          <span className="bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text font-bold text-2xl text-transparent sm:text-3xl">
+          <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text font-bold text-2xl text-transparent sm:text-3xl">
             {"<1ms"}
           </span>
           <p className="mt-0.5 text-[10px] text-muted-foreground sm:text-xs">
@@ -539,7 +567,7 @@ export function WhyTypix() {
         >
           <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
             Why{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent">
               Typix
             </span>
             ?

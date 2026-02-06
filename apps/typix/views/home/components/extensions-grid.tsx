@@ -74,7 +74,7 @@ export function ExtensionsGrid() {
         >
           <h2 className="font-bold text-3xl tracking-tight sm:text-4xl">
             Build anything,{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent">
               Block by Block.
             </span>
           </h2>
@@ -95,11 +95,11 @@ export function ExtensionsGrid() {
         >
           {blocks.map((block) => (
             <motion.div
-              className="group flex flex-col items-center gap-2.5 rounded-xl border border-border/60 bg-card px-4 py-5 transition-all duration-200 hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/5"
+              className="group flex flex-col items-center gap-2.5 rounded-xl border border-border/60 bg-card px-4 py-5 transition-all duration-200 hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/5"
               key={block.name}
               variants={itemVariants}
             >
-              <block.icon className="size-5 text-muted-foreground transition-colors group-hover:text-violet-500" />
+              <block.icon className="size-5 text-muted-foreground transition-colors group-hover:text-emerald-500" />
               <span className="text-center font-medium text-sm">
                 {block.name}
               </span>
