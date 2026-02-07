@@ -14,6 +14,9 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@orama/core": "^1.2.17",
+    "@orama/orama": "^3.1.18",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@typix-editor/extension-auto-complete": "workspace:*",
     "@typix-editor/extension-auto-link": "workspace:*",
     "@typix-editor/extension-collapsible": "workspace:*",

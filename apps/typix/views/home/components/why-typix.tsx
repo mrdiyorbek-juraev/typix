@@ -68,13 +68,15 @@ function BentoCard({
 const uiVariants = [
   {
     label: "Clean",
-    accent: "bg-neutral-200 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200",
+    accent:
+      "bg-neutral-200 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200",
     toolbar: "bg-muted/30",
     content: "bg-card",
     heading: "Getting Started with Typix",
     body: "A minimal, distraction-free writing experience. Just you and your words.",
     tag: "Documentation",
-    tagClass: "bg-neutral-200/60 text-neutral-600 dark:bg-neutral-700/60 dark:text-neutral-300",
+    tagClass:
+      "bg-neutral-200/60 text-neutral-600 dark:bg-neutral-700/60 dark:text-neutral-300",
     highlight: "bg-neutral-200/50 dark:bg-neutral-700/40",
   },
   {
@@ -85,7 +87,8 @@ const uiVariants = [
     heading: "Team Meeting Notes",
     body: "Discuss Q2 roadmap, assign owners, and track progress across teams.",
     tag: "Workspace",
-    tagClass: "bg-amber-100/80 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
+    tagClass:
+      "bg-amber-100/80 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
     highlight: "bg-amber-200/40 dark:bg-amber-500/10",
   },
   {
@@ -96,7 +99,8 @@ const uiVariants = [
     heading: "Launch Announcement",
     body: "Introducing our new editor — built for speed, designed for developers.",
     tag: "Published",
-    tagClass: "bg-emerald-100/80 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
+    tagClass:
+      "bg-emerald-100/80 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
     highlight: "bg-emerald-200/40 dark:bg-emerald-500/10",
   },
 ] as const;
@@ -159,7 +163,9 @@ function HeadlessCard() {
               transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
             >
               {/* Mini toolbar */}
-              <div className={`flex items-center gap-1 border-border/40 border-b px-2.5 py-1.5 sm:gap-1.5 sm:px-3 ${v.toolbar}`}>
+              <div
+                className={`flex items-center gap-1 border-border/40 border-b px-2.5 py-1.5 sm:gap-1.5 sm:px-3 ${v.toolbar}`}
+              >
                 {["B", "I", "U"].map((b) => (
                   <div
                     className={`flex size-5 items-center justify-center rounded font-bold text-[9px] sm:size-6 sm:text-[10px] ${v.accent}`}
@@ -173,7 +179,9 @@ function HeadlessCard() {
                   Paragraph
                 </div>
                 <div className="ml-auto flex items-center gap-1.5">
-                  <span className={`rounded-full px-2 py-0.5 text-[8px] font-medium sm:text-[9px] ${v.tagClass}`}>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[8px] font-medium sm:text-[9px] ${v.tagClass}`}
+                  >
                     {v.tag}
                   </span>
                 </div>
@@ -192,7 +200,9 @@ function HeadlessCard() {
                   <div className={`h-1.5 w-8 rounded-full ${v.highlight}`} />
                 </div>
                 <div className="flex items-center gap-2 pt-0.5">
-                  <div className={`h-5 w-16 rounded-md ${v.accent} opacity-70`} />
+                  <div
+                    className={`h-5 w-16 rounded-md ${v.accent} opacity-70`}
+                  />
                   <div className="h-2 w-16 rounded-full bg-muted-foreground/8" />
                 </div>
               </div>

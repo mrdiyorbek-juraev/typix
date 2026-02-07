@@ -184,7 +184,17 @@ function StructureCode() {
   const tag = "text-sky-600 dark:text-sky-400";
   const punc = "text-neutral-500 dark:text-neutral-400";
 
-  const Tag = ({ name, indent = 0, selfClosing = false, closing = false }: { name: string; indent?: number; selfClosing?: boolean; closing?: boolean }) => (
+  const Tag = ({
+    name,
+    indent = 0,
+    selfClosing = false,
+    closing = false,
+  }: {
+    name: string;
+    indent?: number;
+    selfClosing?: boolean;
+    closing?: boolean;
+  }) => (
     <div style={{ paddingLeft: indent }}>
       <span className={punc}>{closing ? "</" : "<"}</span>
       <span className={tag}>{name}</span>

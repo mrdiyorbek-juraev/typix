@@ -8,7 +8,7 @@ import { Spotlight } from "@/components/effects/spotlight";
 
 export default function ArticlesPage() {
   return (
-    <div className="relative">
+    <div className="min-h-screen">
       <motion.div
         initial={{ opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -16,11 +16,11 @@ export default function ArticlesPage() {
         whileInView={{ opacity: 1 }}
       >
         <Spotlight
-          className="-translate-x-1/3 -translate-y-1/3 top-0 left-0 opacity-50"
+          className="absolute -translate-x-1/3 -translate-y-1/3 top-0 left-0 opacity-50"
           fill="white"
         />
       </motion.div>
-      <section className="relative py-16 md:py-24 lg:py-32">
+      <section className="py-16 md:py-24 lg:py-32 relative h-[calc(100vh-130px)]">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
           <motion.div
             className="flex flex-col items-center text-center"

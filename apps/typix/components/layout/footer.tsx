@@ -19,7 +19,7 @@ const legalLinks = [
 export function Footer() {
   return (
     <motion.footer
-      className="border-t border-border/60"
+      className="border-t border-border/60 mt-auto"
       initial={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}

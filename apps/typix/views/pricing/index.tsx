@@ -45,7 +45,7 @@ const itemVariants = {
 
 export default function PricingPage() {
   return (
-    <div className="relative">
+    <div> 
       <motion.div
         initial={{ opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -53,7 +53,7 @@ export default function PricingPage() {
         whileInView={{ opacity: 1 }}
       >
         <Spotlight
-          className="-translate-x-1/3 -translate-y-1/3 top-0 left-0 opacity-50"
+          className="absolute -translate-x-1/3 -translate-y-1/3 top-0 left-0 opacity-50"
           fill="white"
         />
       </motion.div>
