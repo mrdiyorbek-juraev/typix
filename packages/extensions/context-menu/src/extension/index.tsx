@@ -62,10 +62,10 @@ export function ContextMenuExtension({ options }: ContextMenuExtensionProps) {
 
   return (
     <NodeContextMenuPlugin
-      className="TypixEditorTheme__contextMenu"
-      itemClassName="TypixEditorTheme__contextMenuItem"
+      className="typix-context-menu"
+      itemClassName="typix-context-menu__item"
       items={menu_options}
-      separatorClassName="TypixEditorTheme__contextMenuSeparator"
+      separatorClassName="typix-context-menu__separator"
     />
   );
 }
