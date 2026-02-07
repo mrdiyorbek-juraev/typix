@@ -92,7 +92,7 @@ export class CollapsibleContainerNode extends ElementNode {
       });
       dom = detailsDom;
     }
-    dom.classList.add("Collapsible__container");
+    dom.classList.add("typix-collapsible");
 
     return dom;
   }
@@ -140,7 +140,7 @@ export class CollapsibleContainerNode extends ElementNode {
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement("details");
-    element.classList.add("TypixCollapsible__container");
+    element.classList.add("typix-collapsible");
     element.setAttribute("open", this.__open.toString());
     return { element };
   }

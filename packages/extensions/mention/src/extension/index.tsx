@@ -108,7 +108,7 @@ function DefaultMenuItem({
   return (
     <li
       aria-selected={isSelected}
-      className={`typix-mention-menu-item ${isSelected ? "typix-mention-menu-item--selected" : ""}`}
+      className={`typix-mention-menu__item ${isSelected ? "typix-mention-menu__item--selected" : ""}`}
       id={`typix-mention-item-${index}`}
       key={item.id}
       onClick={onClick}
@@ -117,7 +117,7 @@ function DefaultMenuItem({
       role="option"
       tabIndex={-1}
     >
-      <span className="typix-mention-menu-item-name">{item.name}</span>
+      <span className="typix-mention-menu__item-name">{item.name}</span>
     </li>
   );
 }
@@ -144,13 +144,13 @@ function DefaultMenu({
   return ReactDOM.createPortal(
     <div className="typix-mention-menu">
       {isLoading ? (
-        <div className="typix-mention-menu-loading">Loading...</div>
+        <div className="typix-mention-menu__loading">Loading...</div>
       ) : items.length === 0 ? (
         query ? (
-          <div className="typix-mention-menu-empty">No results found</div>
+          <div className="typix-mention-menu__empty">No results found</div>
         ) : null
       ) : (
-        <ul className="typix-mention-menu-list" role="listbox">
+        <ul className="typix-mention-menu__list" role="listbox">
           {items.map((item, index) => (
             <ItemRenderer
               index={index}
@@ -405,11 +405,11 @@ export function MentionExtension({
             {isLoading && loadingContent ? (
               loadingContent
             ) : isLoading ? (
-              <div className="typix-mention-menu-loading">Loading...</div>
+              <div className="typix-mention-menu__loading">Loading...</div>
             ) : results.length === 0 && emptyContent ? (
               emptyContent
             ) : results.length === 0 ? null : (
-              <ul className="typix-mention-menu-list" role="listbox">
+              <ul className="typix-mention-menu__list" role="listbox">
                 {options.map((option, index) => {
                   const itemProps: MentionMenuItemProps = {
                     item: option.item,

@@ -34,7 +34,7 @@ export class CollapsibleContentNode extends ElementNode {
 
   createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
     const dom = document.createElement("div");
-    dom.classList.add("TypixCollapsible__content");
+    dom.classList.add("typix-collapsible__content");
     if (IS_CHROME) {
       editor.getEditorState().read(() => {
         const containerNode = this.getParentOrThrow();
@@ -84,7 +84,7 @@ export class CollapsibleContentNode extends ElementNode {
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement("div");
-    element.classList.add("Collapsible__content");
+    element.classList.add("typix-collapsible__content");
     element.setAttribute("data-lexical-collapsible-content", "true");
     return { element };
   }

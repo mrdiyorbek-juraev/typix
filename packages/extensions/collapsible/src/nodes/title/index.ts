@@ -44,7 +44,7 @@ export class CollapsibleTitleNode extends ElementNode {
 
   createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
     const dom = document.createElement("summary");
-    dom.classList.add("TypixCollapsible__title");
+    dom.classList.add("typix-collapsible__title");
     if (IS_CHROME) {
       dom.addEventListener("click", () => {
         editor.update(() => {

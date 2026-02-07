@@ -8,19 +8,19 @@ import { type JSX, useRef } from "react";
 export interface DraggableBlockClassNames {
   /**
    * Class name for the menu container
-   * @default 'draggable-block-menu'
+   * @default 'typix-draggable-menu'
    */
   menu?: string;
 
   /**
    * Class name for the target line indicator
-   * @default 'draggable-block-target-line'
+   * @default 'typix-draggable__target-line'
    */
   targetLine?: string;
 
   /**
    * Class name for the drag handle icon
-   * @default 'draggable-block-menu-icon'
+   * @default 'typix-draggable-menu__icon'
    */
   icon?: string;
 }
@@ -40,12 +40,12 @@ export interface DraggableBlockExtensionProps {
 
 // ========== Constants ==========
 
-const DRAGGABLE_BLOCK_MENU_CLASSNAME = "draggable-block-menu";
+const DRAGGABLE_BLOCK_MENU_CLASSNAME = "typix-draggable-menu";
 
 const DEFAULT_CLASS_NAMES: Required<DraggableBlockClassNames> = {
   menu: DRAGGABLE_BLOCK_MENU_CLASSNAME,
-  targetLine: "draggable-block-target-line",
-  icon: "draggable-block-menu-icon",
+  targetLine: "typix-draggable__target-line",
+  icon: "typix-draggable-menu__icon",
 };
 
 // ========== Utilities ==========

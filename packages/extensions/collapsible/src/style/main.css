@@ -1,11 +1,11 @@
-.TypixCollapsible__container {
-  background: #fcfcfc;
-  border: 1px solid #eee;
+.typix-collapsible {
+  background: var(--typix-bg-white, #fcfcfc);
+  border: 1px solid var(--typix-border-color-light, #eee);
   border-radius: 10px;
   margin-bottom: 8px;
 }
 
-.TypixCollapsible__title {
+.typix-collapsible__title {
   cursor: pointer;
   padding: 5px 5px 5px 20px;
   position: relative;
@@ -14,16 +14,16 @@
   outline: none;
 }
 
-.TypixCollapsible__title::marker,
-.TypixCollapsible__title::-webkit-details-marker {
+.typix-collapsible__title::marker,
+.typix-collapsible__title::-webkit-details-marker {
   display: none;
 }
 
-.TypixCollapsible__title:before {
+.typix-collapsible__title:before {
   border-style: solid;
   border-color: transparent;
   border-width: 4px 6px 4px 6px;
-  border-left-color: #000;
+  border-left-color: var(--typix-color-text, #000);
   display: block;
   content: "";
   position: absolute;
@@ -32,17 +32,17 @@
   transform: translateY(-50%);
 }
 
-.TypixCollapsible__container[open] > .TypixCollapsible__title:before {
+.typix-collapsible[open] > .typix-collapsible__title:before {
   border-color: transparent;
   border-width: 6px 4px 0 4px;
-  border-top-color: #000;
+  border-top-color: var(--typix-color-text, #000);
 }
 
-.TypixCollapsible__content {
+.typix-collapsible__content {
   padding: 0 5px 5px 20px;
 }
 
-.TypixCollapsible__collapsed .TypixCollapsible__content {
+.typix-collapsible--collapsed .typix-collapsible__content {
   display: none;
   user-select: none;
 }
