@@ -263,7 +263,10 @@ export function EditorPreview() {
             <ToolbarBtn icon={Redo} />
           </div>
 
-          <Separator className="!h-5 mx-1.5 shrink-0 sm:mx-2" orientation="vertical" />
+          <Separator
+            className="!h-5 mx-1.5 shrink-0 sm:mx-2"
+            orientation="vertical"
+          />
 
           {/* Block type */}
           <div className="flex h-8 shrink-0 cursor-default items-center gap-1.5 rounded-lg bg-background/60 px-2.5 text-muted-foreground text-xs shadow-sm ring-1 ring-border/40 hover:text-foreground">
@@ -272,7 +275,10 @@ export function EditorPreview() {
             <ChevronDown className="size-3 opacity-40" />
           </div>
 
-          <Separator className="!h-5 mx-1.5 shrink-0 sm:mx-2" orientation="vertical" />
+          <Separator
+            className="!h-5 mx-1.5 shrink-0 sm:mx-2"
+            orientation="vertical"
+          />
 
           {/* Text formatting */}
           <div className="flex shrink-0 items-center gap-0.5 rounded-lg bg-background/60 p-0.5 shadow-sm ring-1 ring-border/40">
@@ -283,7 +289,10 @@ export function EditorPreview() {
             <ToolbarBtn className="hidden sm:flex" icon={CodeXml} />
           </div>
 
-          <Separator className="!h-5 mx-1.5 hidden shrink-0 sm:mx-2 sm:block" orientation="vertical" />
+          <Separator
+            className="!h-5 mx-1.5 hidden shrink-0 sm:mx-2 sm:block"
+            orientation="vertical"
+          />
 
           {/* Insert */}
           <div className="hidden shrink-0 items-center gap-0.5 rounded-lg bg-background/60 p-0.5 shadow-sm ring-1 ring-border/40 sm:flex">
