@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { RootProvider } from 'fumadocs-ui/provider/next';
-import type { ReactNode } from 'react';
-import { TooltipProvider } from '@radix-ui/react-tooltip';
+import { RootProvider } from "fumadocs-ui/provider/next";
+import type { ReactNode } from "react";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const inject = `
 const urlParams = new URLSearchParams(window.location.search);
@@ -20,12 +20,15 @@ if (item === 'true') {
 `;
 
 export function Provider({ children }: { children: ReactNode }) {
-    return (
-        <RootProvider>
-            <TooltipProvider>
-                <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: inject }} />
-                {children}
-            </TooltipProvider>
-        </RootProvider>
-    );
+  return (
+    <RootProvider>
+      <TooltipProvider>
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: inject }}
+        />
+        {children}
+      </TooltipProvider>
+    </RootProvider>
+  );
 }

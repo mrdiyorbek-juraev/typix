@@ -12,9 +12,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <html className={inter.className} lang="en" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <Provider>
-          {children}
-        </Provider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
