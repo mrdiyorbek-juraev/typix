@@ -1,5 +1,5 @@
-import type * as React from 'react';
-import type { ReactNode } from 'react';
+import type * as React from "react";
+import type { ReactNode } from "react";
 
 export type FloatingLinkRenderProps = {
   /** Whether the editor is in editing mode (input visible) */

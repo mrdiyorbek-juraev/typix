@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { LinkPlugin as LexicalLinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { validateUrl } from "@typix-editor/react";
 import type { JSX } from "react";
@@ -16,9 +16,7 @@ export function LinkExtension({
 }: LinkExtensionProps): JSX.Element {
   const urlValidator = customValidateUrl || validateUrl;
 
-  return (
-    <LexicalLinkPlugin validateUrl={urlValidator} />
-  );
+  return <LexicalLinkPlugin validateUrl={urlValidator} />;
 }
 
 LinkExtension.displayName = "Typix.LinkExtension";

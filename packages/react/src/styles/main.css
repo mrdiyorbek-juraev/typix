@@ -1251,8 +1251,6 @@
   border-radius: 2px;
 }
 
-
-
 /* ─── Floating Link Editor ─────────────────────────────────────── */
 
 .typix-floating-link {
@@ -1268,7 +1266,8 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-size: 13px;
   color: #111;
   -webkit-font-smoothing: antialiased;
@@ -1354,7 +1353,9 @@
   background-color: #fafafa;
   border: 1px solid #ddd;
   border-radius: 6px;
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
 }
 
 .typix-floating-link__input-wrapper:focus-within {
@@ -1411,7 +1412,9 @@
   background: transparent;
   color: #666;
   cursor: pointer;
-  transition: background-color 120ms ease, color 120ms ease;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
   flex-shrink: 0;
 }
 
@@ -1461,7 +1464,7 @@
 /* ─── Dark mode ───────────────────────────────────────────────── */
 
 .dark .typix-floating-link,
-[data-theme='dark'] .typix-floating-link {
+[data-theme="dark"] .typix-floating-link {
   background-color: #1a1a1a;
   border-color: #333;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
@@ -1469,45 +1472,44 @@
 }
 
 .dark .typix-floating-link__url,
-[data-theme='dark'] .typix-floating-link__url {
+[data-theme="dark"] .typix-floating-link__url {
   color: #eee;
 }
 
 .dark .typix-floating-link__url:hover,
-[data-theme='dark'] .typix-floating-link__url:hover {
+[data-theme="dark"] .typix-floating-link__url:hover {
   background-color: #2a2a2a;
 }
 
 .dark .typix-floating-link__divider,
-[data-theme='dark'] .typix-floating-link__divider {
+[data-theme="dark"] .typix-floating-link__divider {
   background-color: #333;
 }
 
 .dark .typix-floating-link__input-wrapper,
-[data-theme='dark'] .typix-floating-link__input-wrapper {
+[data-theme="dark"] .typix-floating-link__input-wrapper {
   background-color: #111;
   border-color: #333;
 }
 
 .dark .typix-floating-link__input-wrapper:focus-within,
-[data-theme='dark'] .typix-floating-link__input-wrapper:focus-within {
+[data-theme="dark"] .typix-floating-link__input-wrapper:focus-within {
   border-color: #eee;
   box-shadow: 0 0 0 1px #eee;
 }
 
 .dark .typix-floating-link__input,
-[data-theme='dark'] .typix-floating-link__input {
+[data-theme="dark"] .typix-floating-link__input {
   color: #eee;
 }
 
 .dark .typix-floating-link__btn,
-[data-theme='dark'] .typix-floating-link__btn {
+[data-theme="dark"] .typix-floating-link__btn {
   color: #888;
 }
 
 .dark .typix-floating-link__btn:hover,
-[data-theme='dark'] .typix-floating-link__btn:hover {
+[data-theme="dark"] .typix-floating-link__btn:hover {
   background-color: #2a2a2a;
   color: #eee;
 }
-

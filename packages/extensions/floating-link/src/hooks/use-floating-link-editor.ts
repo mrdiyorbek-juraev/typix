@@ -3,8 +3,8 @@ import {
   $isAutoLinkNode,
   $isLinkNode,
   TOGGLE_LINK_COMMAND,
-} from '@lexical/link';
-import { $findMatchingParent, mergeRegister } from '@lexical/utils';
+} from "@lexical/link";
+import { $findMatchingParent, mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isNodeSelection,
@@ -15,7 +15,7 @@ import {
   getDOMSelection,
   KEY_ESCAPE_COMMAND,
   SELECTION_CHANGE_COMMAND,
-} from 'lexical';
+} from "lexical";
 import {
   type Dispatch,
   type SetStateAction,
@@ -23,8 +23,8 @@ import {
   useEffect,
   useRef,
   useState,
-} from 'react';
-import type * as React from 'react';
+} from "react";
+import type * as React from "react";
 import {
   getSelectedNode,
   sanitizeUrl,
@@ -32,8 +32,8 @@ import {
   type TypixEditor,
   useRootContext,
   validateUrl,
-} from '@typix-editor/react';
-import type { FloatingLinkRenderProps } from '../types';
+} from "@typix-editor/react";
+import type { FloatingLinkRenderProps } from "../types";
 
 export function useFloatingLinkEditor({
   editor,
@@ -41,7 +41,7 @@ export function useFloatingLinkEditor({
   setIsLink,
   verticalOffset,
 }: {
-  editor: TypixEditor['_lexicalEditor'];
+  editor: TypixEditor["_lexicalEditor"];
   isLink: boolean;
   setIsLink: Dispatch<SetStateAction<boolean>>;
   verticalOffset: number;
@@ -52,11 +52,11 @@ export function useFloatingLinkEditor({
   const editorRef = useRef<HTMLDivElement | null>(null);
   const { floatingAnchorElem } = useRootContext();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [linkUrl, setLinkUrl] = useState('');
-  const [editedLinkUrl, setEditedLinkUrl] = useState('https://');
+  const [linkUrl, setLinkUrl] = useState("");
+  const [editedLinkUrl, setEditedLinkUrl] = useState("https://");
   const [isLinkEditMode, setIsLinkEditMode] = useState(false);
   const [lastSelection, setLastSelection] = useState<BaseSelection | null>(
-    null,
+    null
   );
   const isLinkRef = useRef(isLink);
   useEffect(() => {
@@ -68,7 +68,11 @@ export function useFloatingLinkEditor({
 
     // Hide the floating element when no link is active
     if (!isLinkRef.current && editorElem && floatingAnchorElem) {
-      setFloatingElemPositionForLinkEditor(null, editorElem, floatingAnchorElem);
+      setFloatingElemPositionForLinkEditor(
+        null,
+        editorElem,
+        floatingAnchorElem
+      );
       return;
     }
 
@@ -76,7 +80,7 @@ export function useFloatingLinkEditor({
 
     // Resolve current link URL using a local variable
     // to avoid stale closure issues with React state
-    let currentUrl = '';
+    let currentUrl = "";
 
     if ($isRangeSelection(selection)) {
       const node = getSelectedNode(selection);
@@ -140,7 +144,7 @@ export function useFloatingLinkEditor({
         setFloatingElemPositionForLinkEditor(
           domRect,
           editorElem,
-          floatingAnchorElem,
+          floatingAnchorElem
         );
       }
       setLastSelection(selection);
@@ -149,12 +153,12 @@ export function useFloatingLinkEditor({
         setFloatingElemPositionForLinkEditor(
           null,
           editorElem,
-          floatingAnchorElem,
+          floatingAnchorElem
         );
       }
       setLastSelection(null);
       setIsLinkEditMode(false);
-      setLinkUrl('');
+      setLinkUrl("");
     }
 
     return true;
@@ -170,16 +174,16 @@ export function useFloatingLinkEditor({
       });
     };
 
-    window.addEventListener('resize', update);
+    window.addEventListener("resize", update);
 
     if (scrollerElem) {
-      scrollerElem.addEventListener('scroll', update);
+      scrollerElem.addEventListener("scroll", update);
     }
 
     return () => {
-      window.removeEventListener('resize', update);
+      window.removeEventListener("resize", update);
       if (scrollerElem) {
-        scrollerElem.removeEventListener('scroll', update);
+        scrollerElem.removeEventListener("scroll", update);
       }
     };
   }, [floatingAnchorElem?.parentElement, editor, $updateLinkEditor]);
@@ -198,7 +202,7 @@ export function useFloatingLinkEditor({
           $updateLinkEditor();
           return false;
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         KEY_ESCAPE_COMMAND,
@@ -209,8 +213,8 @@ export function useFloatingLinkEditor({
           }
           return false;
         },
-        COMMAND_PRIORITY_HIGH,
-      ),
+        COMMAND_PRIORITY_HIGH
+      )
     );
   }, [editor, $updateLinkEditor, setIsLink, isLink]);
 
@@ -234,18 +238,15 @@ export function useFloatingLinkEditor({
     if (editorElement === null) return;
 
     const handleBlur = (event: FocusEvent) => {
-      if (
-        !editorElement.contains(event.relatedTarget as Element) &&
-        isLink
-      ) {
+      if (!editorElement.contains(event.relatedTarget as Element) && isLink) {
         setIsLink(false);
         setIsLinkEditMode(false);
       }
     };
 
-    editorElement.addEventListener('focusout', handleBlur);
+    editorElement.addEventListener("focusout", handleBlur);
     return () => {
-      editorElement.removeEventListener('focusout', handleBlur);
+      editorElement.removeEventListener("focusout", handleBlur);
     };
   }, [setIsLink, isLink]);
 
@@ -253,13 +254,10 @@ export function useFloatingLinkEditor({
 
   const submitLink = useCallback(() => {
     if (lastSelection === null) return;
-    if (editedLinkUrl.trim() === '' || editedLinkUrl === 'https://') return;
+    if (editedLinkUrl.trim() === "" || editedLinkUrl === "https://") return;
 
     editor.update(() => {
-      editor.dispatchCommand(
-        TOGGLE_LINK_COMMAND,
-        sanitizeUrl(editedLinkUrl),
-      );
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl(editedLinkUrl));
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         const parent = getSelectedNode(selection).getParent();
@@ -274,13 +272,13 @@ export function useFloatingLinkEditor({
       }
     });
 
-    setEditedLinkUrl('https://');
+    setEditedLinkUrl("https://");
     setIsLinkEditMode(false);
   }, [editor, editedLinkUrl, lastSelection]);
 
   const cancelEdit = useCallback(() => {
     setIsLinkEditMode(false);
-    setEditedLinkUrl(linkUrl || 'https://');
+    setEditedLinkUrl(linkUrl || "https://");
   }, [linkUrl]);
 
   const startEdit = useCallback(() => {
@@ -292,8 +290,7 @@ export function useFloatingLinkEditor({
     editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
   }, [editor]);
 
-  const isValidUrl =
-    editedLinkUrl === 'https://' || validateUrl(editedLinkUrl);
+  const isValidUrl = editedLinkUrl === "https://" || validateUrl(editedLinkUrl);
 
   return {
     editorRef,

@@ -1,15 +1,15 @@
-import type { JSX } from 'react';
-import * as React from 'react';
+import type { JSX } from "react";
+import * as React from "react";
 
 const ICON_PROPS = {
   width: 16,
   height: 16,
-  viewBox: '0 0 24 24',
-  fill: 'none',
-  stroke: 'currentColor',
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
   strokeWidth: 2,
-  strokeLinecap: 'round' as const,
-  strokeLinejoin: 'round' as const,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
 };
 
 export function PencilIcon(): JSX.Element {

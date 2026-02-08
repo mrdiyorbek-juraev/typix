@@ -95,7 +95,8 @@ function createEditorConfig(
     );
   }
 
-  const resolvedEditorState = editorState ?? (initialState ? JSON.stringify(initialState) : undefined);
+  const resolvedEditorState =
+    editorState ?? (initialState ? JSON.stringify(initialState) : undefined);
 
   return {
     namespace,

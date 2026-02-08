@@ -146,8 +146,6 @@ export function EditorExtensions() {
   );
 }
 
-
-
 // Speech-to-text toggle button component
 export function SpeechToTextButton() {
   const { isListening, isSupported, toggle } = useSpeechToText();
@@ -158,10 +156,11 @@ export function SpeechToTextButton() {
 
   return (
     <button
-      className={`rounded-md p-2 transition-colors ${isListening
-        ? "bg-red-500 text-white hover:bg-red-600"
-        : "bg-muted text-muted-foreground hover:bg-muted/80"
-        }`}
+      className={`rounded-md p-2 transition-colors ${
+        isListening
+          ? "bg-red-500 text-white hover:bg-red-600"
+          : "bg-muted text-muted-foreground hover:bg-muted/80"
+      }`}
       onClick={toggle}
       title={isListening ? "Stop listening" : "Start speech-to-text"}
       type="button"

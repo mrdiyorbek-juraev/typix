@@ -1,7 +1,13 @@
 import type { BaseSelection } from "lexical";
 import type * as React from "react";
 import type { JSX } from "react";
-import { createContext, type ReactNode, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 export type RootContextShape = {
   floatingAnchorElem: HTMLElement | null;

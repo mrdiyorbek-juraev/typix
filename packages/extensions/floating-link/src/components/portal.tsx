@@ -1,8 +1,8 @@
-import type { Dispatch, JSX, ReactNode, SetStateAction } from 'react';
-import type { TypixEditor } from '@typix-editor/react';
-import { useFloatingLinkEditor } from '../hooks/use-floating-link-editor';
-import type { FloatingLinkRenderProps } from '../types';
-import { DefaultFloatingLinkUI } from './default-ui';
+import type { Dispatch, JSX, ReactNode, SetStateAction } from "react";
+import type { TypixEditor } from "@typix-editor/react";
+import { useFloatingLinkEditor } from "../hooks/use-floating-link-editor";
+import type { FloatingLinkRenderProps } from "../types";
+import { DefaultFloatingLinkUI } from "./default-ui";
 
 export function FloatingLinkEditorPortal({
   editor,
@@ -11,7 +11,7 @@ export function FloatingLinkEditorPortal({
   children,
   verticalOffset,
 }: {
-  editor: TypixEditor['_lexicalEditor'];
+  editor: TypixEditor["_lexicalEditor"];
   isLink: boolean;
   setIsLink: Dispatch<SetStateAction<boolean>>;
   children?: (props: FloatingLinkRenderProps) => ReactNode;

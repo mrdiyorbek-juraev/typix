@@ -101,5 +101,5 @@ export {
   validateUrl,
   getSelectedNode,
   setFloatingElemPositionForLinkEditor,
-  setFloatingElemPosition
+  setFloatingElemPosition,
 } from "./utils";

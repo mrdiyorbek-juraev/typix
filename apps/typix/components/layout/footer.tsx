@@ -31,7 +31,9 @@ export function Footer() {
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <TypixLogo className="size-6" />
-              <span className="font-semibold text-lg tracking-tight text-black dark:text-white">Typix</span>
+              <span className="font-semibold text-lg tracking-tight text-black dark:text-white">
+                Typix
+              </span>
             </div>
             <p className="text-sm text-muted-foreground">Build your editor.</p>
           </div>

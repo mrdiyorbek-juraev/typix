@@ -1,7 +1,11 @@
 "use client";
 
 import { useSpeechToText } from "@typix-editor/extension-speech-to-text";
-import { sanitizeUrl, useActiveFormats, useTypixEditor } from "@typix-editor/react";
+import {
+  sanitizeUrl,
+  useActiveFormats,
+  useTypixEditor,
+} from "@typix-editor/react";
 import { cn } from "@/lib/cn";
 
 const ToolbarDivider = () => <div className="mx-1 h-6 w-px bg-border" />;
@@ -148,7 +152,16 @@ export function Toolbar() {
           }}
           title="Insert Link (Ctrl+K)"
         >
-          <svg fill="none" height="14" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="14">
+          <svg
+            fill="none"
+            height="14"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            width="14"
+          >
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
           </svg>

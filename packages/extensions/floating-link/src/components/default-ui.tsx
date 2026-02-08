@@ -1,8 +1,15 @@
-import type { JSX } from 'react';
-import * as React from 'react';
-import { sanitizeUrl } from '@typix-editor/react';
-import type { FloatingLinkRenderProps } from '../types';
-import { CheckIcon, ExternalLinkIcon, LinkIcon, PencilIcon, TrashIcon, XIcon } from './icons';
+import type { JSX } from "react";
+import * as React from "react";
+import { sanitizeUrl } from "@typix-editor/react";
+import type { FloatingLinkRenderProps } from "../types";
+import {
+  CheckIcon,
+  ExternalLinkIcon,
+  LinkIcon,
+  PencilIcon,
+  TrashIcon,
+  XIcon,
+} from "./icons";
 
 export function DefaultFloatingLinkUI({
   isEditing,
@@ -17,10 +24,10 @@ export function DefaultFloatingLinkUI({
   inputRef,
 }: FloatingLinkRenderProps): JSX.Element {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       submitLink();
-    } else if (event.key === 'Escape') {
+    } else if (event.key === "Escape") {
       event.preventDefault();
       cancelEdit();
     }

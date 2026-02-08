@@ -1,10 +1,10 @@
-import type { JSX } from 'react';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { createPortal } from 'react-dom';
-import { useRootContext } from '@typix-editor/react';
-import { useFloatingLinkToolbar } from '../hooks/use-floating-link-toolbar';
-import { FloatingLinkEditorPortal } from '../components/portal';
-import type { FloatingLinkExtensionProps } from '../types';
+import type { JSX } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { createPortal } from "react-dom";
+import { useRootContext } from "@typix-editor/react";
+import { useFloatingLinkToolbar } from "../hooks/use-floating-link-toolbar";
+import { FloatingLinkEditorPortal } from "../components/portal";
+import type { FloatingLinkExtensionProps } from "../types";
 
 export function FloatingLinkExtension({
   children,
@@ -27,6 +27,6 @@ export function FloatingLinkExtension({
     >
       {children}
     </FloatingLinkEditorPortal>,
-    floatingAnchorElem,
+    floatingAnchorElem
   );
 }

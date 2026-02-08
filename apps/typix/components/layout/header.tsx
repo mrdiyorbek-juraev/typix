@@ -1,5 +1,12 @@
 import type { LinkItemType } from "fumadocs-ui/layouts/shared";
-import { Blocks, BookOpen, DollarSign, FileText, HelpCircle, Home } from "lucide-react";
+import {
+  Blocks,
+  BookOpen,
+  DollarSign,
+  FileText,
+  HelpCircle,
+  Home,
+} from "lucide-react";
 
 export const linkItems: LinkItemType[] = [
   {

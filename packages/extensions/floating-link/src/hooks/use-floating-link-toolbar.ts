@@ -1,5 +1,5 @@
-import { $isAutoLinkNode, $isLinkNode } from '@lexical/link';
-import { $findMatchingParent, mergeRegister } from '@lexical/utils';
+import { $isAutoLinkNode, $isLinkNode } from "@lexical/link";
+import { $findMatchingParent, mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isLineBreakNode,
@@ -9,11 +9,11 @@ import {
   COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_LOW,
   SELECTION_CHANGE_COMMAND,
-} from 'lexical';
-import { useEffect, useState } from 'react';
-import { getSelectedNode, type TypixEditor } from '@typix-editor/react';
+} from "lexical";
+import { useEffect, useState } from "react";
+import { getSelectedNode, type TypixEditor } from "@typix-editor/react";
 
-export function useFloatingLinkToolbar(editor: TypixEditor['_lexicalEditor']) {
+export function useFloatingLinkToolbar(editor: TypixEditor["_lexicalEditor"]) {
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isLink, setIsLink] = useState(false);
 
@@ -25,7 +25,7 @@ export function useFloatingLinkToolbar(editor: TypixEditor['_lexicalEditor']) {
         const focusLinkNode = $findMatchingParent(focusNode, $isLinkNode);
         const focusAutoLinkNode = $findMatchingParent(
           focusNode,
-          $isAutoLinkNode,
+          $isAutoLinkNode
         );
         if (!(focusLinkNode || focusAutoLinkNode)) {
           setIsLink(false);
@@ -72,7 +72,7 @@ export function useFloatingLinkToolbar(editor: TypixEditor['_lexicalEditor']) {
           setActiveEditor(newEditor);
           return false;
         },
-        COMMAND_PRIORITY_CRITICAL,
+        COMMAND_PRIORITY_CRITICAL
       ),
       editor.registerCommand(
         CLICK_COMMAND,
@@ -81,18 +81,15 @@ export function useFloatingLinkToolbar(editor: TypixEditor['_lexicalEditor']) {
           if ($isRangeSelection(selection)) {
             const node = getSelectedNode(selection);
             const linkNode = $findMatchingParent(node, $isLinkNode);
-            if (
-              $isLinkNode(linkNode) &&
-              (payload.metaKey || payload.ctrlKey)
-            ) {
-              window.open(linkNode.getURL(), '_blank');
+            if ($isLinkNode(linkNode) && (payload.metaKey || payload.ctrlKey)) {
+              window.open(linkNode.getURL(), "_blank");
               return true;
             }
           }
           return false;
         },
-        COMMAND_PRIORITY_LOW,
-      ),
+        COMMAND_PRIORITY_LOW
+      )
     );
   }, [editor]);
 
