@@ -1,5 +1,6 @@
+import { $isLinkNode } from "@lexical/link";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { mergeRegister } from "@lexical/utils";
+import { $findMatchingParent, mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isRangeSelection,
@@ -13,6 +14,7 @@ import { useRootContext } from "../../context/root";
 import { cn } from "../../utils";
 import { getDOMRangeRect } from "../../utils/dom-range-rect";
 import { setFloatingElemPosition } from "../../utils/floating-element-position";
+import { getSelectedNode } from "../../utils/selected-node";
 
 interface EditorBubbleMenuProps {
   children?: React.ReactNode;
@@ -194,31 +196,8 @@ const EditorBubbleMenu = forwardRef<HTMLDivElement, EditorBubbleMenuProps>(
     useEffect(
       () =>
         mergeRegister(
-          editor.registerUpdateListener(() => {
-            updateVisibility();
-          }),
-          editor.registerRootListener(() => {
-            if (editor.getRootElement() === null) {
-              setIsVisible(false);
-            }
-          })
-        ),
-      [editor, updateVisibility]
-    );
-
-    // Update position when visible
-    useEffect(() => {
-      if (isVisible) {
-        editor.getEditorState().read(() => {
-          updatePosition();
-        });
-      }
-    }, [isVisible, editor, updatePosition]);
-
-    useEffect(
-      () =>
-        mergeRegister(
           editor.registerUpdateListener(({ editorState }) => {
+            updateVisibility();
             editorState.read(() => {
               updatePosition();
             });
@@ -230,10 +209,24 @@ const EditorBubbleMenu = forwardRef<HTMLDivElement, EditorBubbleMenuProps>(
               return false;
             },
             COMMAND_PRIORITY_LOW
-          )
+          ),
+          editor.registerRootListener(() => {
+            if (editor.getRootElement() === null) {
+              setIsVisible(false);
+            }
+          })
         ),
-      [editor, updatePosition]
+      [editor, updateVisibility, updatePosition]
     );
+
+    // Update position when visibility changes
+    useEffect(() => {
+      if (isVisible) {
+        editor.getEditorState().read(() => {
+          updatePosition();
+        });
+      }
+    }, [isVisible, editor, updatePosition]);
 
     const setRefs = useCallback(
       (node: HTMLDivElement | null) => {

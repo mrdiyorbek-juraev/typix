@@ -18,7 +18,6 @@ export function createCommand(config: CommandConfig) {
     shortDescription: config?.description,
     keyboardShortcut: config?.shortcut,
     onSelect: (queryString, editor) => {
-      console.log("[COMMAND EXECUTED]", config.title);
       editor.update(() => {
         config.onSelect(queryString, editor);
       });

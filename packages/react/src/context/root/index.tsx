@@ -1,7 +1,7 @@
 import type { BaseSelection } from "lexical";
 import type * as React from "react";
 import type { JSX } from "react";
-import { createContext, type ReactNode, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext, useMemo, useState } from "react";
 
 export type RootContextShape = {
   floatingAnchorElem: HTMLElement | null;
@@ -32,12 +32,15 @@ export const RootContext = ({
 
   const [selection, setSelection] = useState<BaseSelection | null>(null);
 
-  const contextValue = {
-    floatingAnchorElem,
-    setFloatingAnchorElem,
-    selection,
-    setSelection,
-  };
+  const contextValue = useMemo(
+    () => ({
+      floatingAnchorElem,
+      setFloatingAnchorElem,
+      selection,
+      setSelection,
+    }),
+    [floatingAnchorElem, selection]
+  );
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 

@@ -30,6 +30,7 @@
     "@typix-editor/extension-short-cuts": "workspace:*",
     "@typix-editor/extension-speech-to-text": "workspace:*",
     "@typix-editor/extension-tab-focus": "workspace:*",
+    "@typix-editor/extension-floating-link": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

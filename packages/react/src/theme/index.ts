@@ -1,5 +1,4 @@
 import type { EditorThemeClasses } from "lexical";
-import "../styles/main.css";
 
 export const defaultTheme: EditorThemeClasses = {
   autocomplete: "typix-autocomplete",

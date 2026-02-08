@@ -8,7 +8,7 @@ import {
   useEditor,
 } from "@typix-editor/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import {
   BubbleMenu,
@@ -32,14 +32,18 @@ const EditorDebug = () => {
 export default function PlayGroundPage() {
   const [editorState, setEditorState] = useState<any>(initialValue);
 
-  const config = createEditorConfig({
-    namespace: "typix-editor",
-    extension_nodes: extensionNodes,
-    editable: true,
-    editorState: null,
-    initialState: initialValue,
-    theme: defaultTheme,
-  });
+  const config = useMemo(
+    () =>
+      createEditorConfig({
+        namespace: "typix-editor",
+        extension_nodes: extensionNodes,
+        editable: true,
+        editorState: null,
+        initialState: initialValue,
+        theme: defaultTheme,
+      }),
+    []
+  );
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col space-y-6 px-4 py-8">

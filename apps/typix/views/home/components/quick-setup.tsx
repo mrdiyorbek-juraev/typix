@@ -2,7 +2,7 @@
 
 import { Check, Copy, Terminal } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 /* ------------------------------------------------------------------ */
 /*  Animation variants                                                 */
@@ -27,12 +27,14 @@ const itemVariants = {
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(text);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+  }, [text]);
 
   return (
     <button

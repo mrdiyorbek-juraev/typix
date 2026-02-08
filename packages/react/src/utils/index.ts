@@ -7,6 +7,9 @@ import {
 } from "./focus-utils";
 import { addSwipeRightListener } from "./swipe";
 import { sanitizeUrl, validateUrl } from "./url";
+import { getSelectedNode } from './selected-node';
+import { setFloatingElemPositionForLinkEditor } from './floating-element-position-for-link';
+import { setFloatingElemPosition } from './floating-element-position';
 
 /**
  * Utility function to merge Tailwind classes safely
@@ -30,4 +33,7 @@ export {
   addSwipeRightListener,
   validateUrl,
   sanitizeUrl,
+  getSelectedNode,
+  setFloatingElemPositionForLinkEditor,
+  setFloatingElemPosition
 };

@@ -4,6 +4,8 @@ import {
   EditorBubbleItem,
   EditorBubbleMenu,
   FORMAT_TEXT_COMMAND,
+  useActiveFormats,
+  useTypixEditor,
 } from "@typix-editor/react";
 import { cn } from "@/lib/cn";
 
@@ -24,16 +26,18 @@ const BubbleButton = ({ isActive, children }: BubbleButtonProps) => (
 );
 
 export function BubbleMenu() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats()
   return (
     <EditorBubbleMenu className="flex items-center gap-1 rounded-lg border border-border bg-popover p-1 shadow-lg">
       <EditorBubbleItem
         name="bold"
-        onSelect={(editor) => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+        onSelect={() => {
+          editor?.toggleBold();
         }}
       >
-        {({ isActive }) => (
-          <BubbleButton isActive={isActive}>
+        {({ }) => (
+          <BubbleButton isActive={isActive("bold")}>
             <strong>B</strong>
           </BubbleButton>
         )}

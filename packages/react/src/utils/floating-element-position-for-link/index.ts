@@ -12,6 +12,7 @@ export function setFloatingElemPositionForLinkEditor(
 
   if (targetRect === null || !scrollerElem) {
     floatingElem.style.opacity = "0";
+    floatingElem.style.pointerEvents = "none";
     floatingElem.style.transform = "translate(-10000px, -10000px)";
     return;
   }
@@ -35,5 +36,6 @@ export function setFloatingElemPositionForLinkEditor(
   left -= anchorElementRect.left;
 
   floatingElem.style.opacity = "1";
-  floatingElem.style.transform = `translate(${left}px, ${top}px)`;
+  floatingElem.style.pointerEvents = "auto";
+  floatingElem.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
 }

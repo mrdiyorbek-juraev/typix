@@ -99,4 +99,7 @@ export {
   isKeyboardInput,
   sanitizeUrl,
   validateUrl,
+  getSelectedNode,
+  setFloatingElemPositionForLinkEditor,
+  setFloatingElemPosition
 } from "./utils";

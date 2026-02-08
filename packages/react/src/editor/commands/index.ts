@@ -63,3 +63,5 @@ export {
   toggleSuperscript,
   toggleUnderline,
 } from "./text-format";
+
+export { toggleLink } from "./link";

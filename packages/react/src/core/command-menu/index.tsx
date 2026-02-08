@@ -81,11 +81,13 @@ export function EditorCommand({
   const filteredItems = useMemo(() => {
     if (!queryString) return items;
 
-    const regex = new RegExp(queryString, "i");
+    const lowerQuery = queryString.toLowerCase();
     return items.filter(
       (item) =>
-        regex.test(item.title) ||
-        item.keywords?.some((keyword) => regex.test(keyword))
+        item.title.toLowerCase().includes(lowerQuery) ||
+        item.keywords?.some((keyword) =>
+          keyword.toLowerCase().includes(lowerQuery)
+        )
     );
   }, [items, queryString]);
 

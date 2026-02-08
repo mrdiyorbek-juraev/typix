@@ -88,13 +88,21 @@ function createEditorConfig(
     html,
   } = options;
 
+  if (editorState && initialState) {
+    console.warn(
+      "[@typix-editor/react] Both `editorState` and `initialState` were provided to createEditorConfig. " +
+        "`editorState` takes priority. Remove one to silence this warning."
+    );
+  }
+
+  const resolvedEditorState = editorState ?? (initialState ? JSON.stringify(initialState) : undefined);
+
   return {
     namespace,
     theme,
     nodes: [...extension_nodes],
     editable,
-    ...(editorState ? { editorState } : {}),
-    ...(initialState ? { editorState: JSON.stringify(initialState) } : {}),
+    ...(resolvedEditorState ? { editorState: resolvedEditorState } : {}),
     onError: onError || ((error) => console.error(error)),
     html,
   };
