@@ -54,8 +54,8 @@ interface RichTextExtensionProps {
    * ```
    */
   editorRef?:
-  | ((instance: HTMLDivElement | null) => void)
-  | RefObject<HTMLDivElement>;
+    | ((instance: HTMLDivElement | null) => void)
+    | RefObject<HTMLDivElement>;
 
   /**
    * Custom class names for different editor layers
