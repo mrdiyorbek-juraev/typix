@@ -952,7 +952,7 @@ function CodeEditorIllustration() {
   );
 }
 
-export const illustrations: Record<string, ComponentType> = {
+export const illustrations: Record<string, any> = {
   "default-editor": DefaultEditorIllustration,
   "markdown-shortcuts": MarkdownIllustration,
   tables: TablesIllustration,
