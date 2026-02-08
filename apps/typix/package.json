@@ -26,7 +26,6 @@
     "@typix-editor/extension-link": "workspace:*",
     "@typix-editor/extension-max-length": "workspace:*",
     "@typix-editor/extension-mention": "workspace:*",
-    "@typix-editor/extension-rich-text": "workspace:*",
     "@typix-editor/extension-short-cuts": "workspace:*",
     "@typix-editor/extension-speech-to-text": "workspace:*",
     "@typix-editor/extension-tab-focus": "workspace:*",

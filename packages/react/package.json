@@ -75,7 +75,6 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.1",
-    "@typix-editor/extension-rich-text": "workspace:*",
     "lexical": "^0.39.0",
     "postcss": "^8.5.6",
     "react": "^19.2.1",
