@@ -1,8 +1,8 @@
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { cn } from "@typix-editor/react/src/utils";
 import type { RefObject } from "react";
+import { cn } from "../../../utils";
 
 /**
  * Class names for different parts of the RichText editor

@@ -94,9 +94,13 @@ export type { LexicalEditor, TextFormatType } from "./types";
 
 export {
   addSwipeRightListener,
+  cn,
   findFirstFocusableDescendant,
   focusNearestDescendant,
   isKeyboardInput,
   sanitizeUrl,
   validateUrl,
+  getSelectedNode,
+  setFloatingElemPositionForLinkEditor,
+  setFloatingElemPosition,
 } from "./utils";

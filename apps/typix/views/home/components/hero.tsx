@@ -5,7 +5,6 @@ import {
   Blocks,
   Code,
   Feather,
-  PenLine,
   Puzzle,
   Shield,
   Zap,
@@ -68,18 +67,6 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      {/* <motion.div
-				initial={{ opacity: 0 }}
-				whileInView={{ opacity: 1 }}
-				viewport={{ once: true }}
-				transition={{ duration: 0.5, delay: 0.3 }}
-			>
-				<Spotlight
-					className="top-0 left-0 -translate-x-1/3 -translate-y-1/3 opacity-50"
-					fill="white"
-				/>
-			</motion.div> */}
-
       <div className="relative mx-auto max-w-[1400px] px-4 pt-12 pb-16 sm:px-6 md:pt-16 md:pb-20 lg:pt-36 lg:pb-28">
         <div className="grid items-center gap-10 md:gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Left — Content */}
@@ -221,9 +208,9 @@ export function Hero() {
                 size="lg"
                 variant="outline"
               >
-                <Link href="/playground">
-                  <PenLine className="size-4" />
-                  Playground
+                <Link href="/examples">
+                  <Blocks className="size-4" />
+                  Examples
                 </Link>
               </Button>
             </motion.div>

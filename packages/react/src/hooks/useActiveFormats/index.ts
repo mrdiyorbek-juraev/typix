@@ -1,7 +1,7 @@
 "use client";
 
 import { $getSelection, $isRangeSelection, type TextFormatType } from "lexical";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTypixEditor } from "../../context/editor";
 import { TEXT_FORMAT_TYPES } from "../../editor";
 
@@ -90,6 +90,16 @@ export function useActiveFormats(
   const editor = useTypixEditor();
   const { formats = TEXT_FORMAT_TYPES } = options;
 
+  // Stabilize formats reference to avoid re-subscribing on every render
+  const formatsRef = useRef(formats);
+  if (
+    formats.length !== formatsRef.current.length ||
+    formats.some((f, i) => f !== formatsRef.current[i])
+  ) {
+    formatsRef.current = formats;
+  }
+  const stableFormats = formatsRef.current;
+
   const [activeFormats, setActiveFormats] = useState<Set<TextFormatType>>(
     () => new Set()
   );
@@ -101,7 +111,7 @@ export function useActiveFormats(
       const active = new Set<TextFormatType>();
 
       if ($isRangeSelection(selection)) {
-        for (const format of formats) {
+        for (const format of stableFormats) {
           if (selection.hasFormat(format)) {
             active.add(format);
           }
@@ -120,7 +130,7 @@ export function useActiveFormats(
         const active = new Set<TextFormatType>();
 
         if ($isRangeSelection(selection)) {
-          for (const format of formats) {
+          for (const format of stableFormats) {
             if (selection.hasFormat(format)) {
               active.add(format);
             }
@@ -139,7 +149,7 @@ export function useActiveFormats(
         });
       });
     });
-  }, [editor, formats]);
+  }, [editor, stableFormats]);
 
   const isActive = useCallback(
     (format: TextFormatType): boolean => activeFormats.has(format),

@@ -9,6 +9,12 @@ export default defineConfig((options: Options) => ({
   format: ["cjs", "esm"],
   dts: true,
   clean: true,
-  external: ["react", "react-dom", "lexical", /^@lexical\/.*/, /^@typix\/.*/],
+  external: [
+    "react",
+    "react-dom",
+    "lexical",
+    /^@lexical\/.*/,
+    /^@typix-editor\/.*/,
+  ],
   ...options,
 }));

@@ -7,7 +7,6 @@ import {
   FOCUS_COMMAND,
 } from "lexical";
 import { useEffect } from "react";
-
 const TAB_TO_FOCUS_INTERVAL = 100;
 
 let lastTabKeyDownTimestamp = 0;

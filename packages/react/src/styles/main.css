@@ -1250,3 +1250,266 @@
   background-color: var(--typix-draggable-target-line-bg);
   border-radius: 2px;
 }
+
+/* ─── Floating Link Editor ─────────────────────────────────────── */
+
+.typix-floating-link {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  max-width: 400px;
+  width: max-content;
+  opacity: 0;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.typix-floating-link:empty {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* ─── View Mode ───────────────────────────────────────────────── */
+
+.typix-floating-link__view {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 6px 6px 10px;
+  width: 100%;
+}
+
+.typix-floating-link__url {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #111;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.4;
+  transition: background-color 120ms ease;
+}
+
+.typix-floating-link__url:hover {
+  background-color: #f5f5f5;
+}
+
+.typix-floating-link__url-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+
+.typix-floating-link__url svg {
+  flex-shrink: 0;
+  opacity: 0.35;
+  width: 12px;
+  height: 12px;
+}
+
+.typix-floating-link__divider {
+  width: 1px;
+  height: 18px;
+  background-color: #e0e0e0;
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+/* ─── Edit Mode ───────────────────────────────────────────────── */
+
+.typix-floating-link__edit {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  width: 100%;
+}
+
+.typix-floating-link__input-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 6px;
+  padding: 0 8px;
+  height: 32px;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.typix-floating-link__input-wrapper:focus-within {
+  border-color: #111;
+  box-shadow: 0 0 0 1px #111;
+}
+
+.typix-floating-link__input-icon {
+  display: flex;
+  align-items: center;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.typix-floating-link__input-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.typix-floating-link__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #111;
+  font-family: inherit;
+}
+
+.typix-floating-link__input::placeholder {
+  color: #aaa;
+}
+
+.typix-floating-link__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────── */
+
+.typix-floating-link__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+  flex-shrink: 0;
+}
+
+.typix-floating-link__btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.typix-floating-link__btn:hover {
+  background-color: #f0f0f0;
+  color: #111;
+}
+
+.typix-floating-link__btn:active {
+  background-color: #e5e5e5;
+}
+
+.typix-floating-link__btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.typix-floating-link__btn--confirm:not(:disabled) {
+  color: #111;
+}
+
+.typix-floating-link__btn--confirm:not(:disabled):hover {
+  background-color: #e5e5e5;
+  color: #000;
+}
+
+.typix-floating-link__btn--delete {
+  color: #666;
+}
+
+.typix-floating-link__btn--delete:hover {
+  background-color: #f0f0f0;
+  color: #111;
+}
+
+.typix-floating-link__btn--delete:active {
+  background-color: #e5e5e5;
+  color: #000;
+}
+
+/* ─── Dark mode ───────────────────────────────────────────────── */
+
+.dark .typix-floating-link,
+[data-theme="dark"] .typix-floating-link {
+  background-color: #1a1a1a;
+  border-color: #333;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  color: #eee;
+}
+
+.dark .typix-floating-link__url,
+[data-theme="dark"] .typix-floating-link__url {
+  color: #eee;
+}
+
+.dark .typix-floating-link__url:hover,
+[data-theme="dark"] .typix-floating-link__url:hover {
+  background-color: #2a2a2a;
+}
+
+.dark .typix-floating-link__divider,
+[data-theme="dark"] .typix-floating-link__divider {
+  background-color: #333;
+}
+
+.dark .typix-floating-link__input-wrapper,
+[data-theme="dark"] .typix-floating-link__input-wrapper {
+  background-color: #111;
+  border-color: #333;
+}
+
+.dark .typix-floating-link__input-wrapper:focus-within,
+[data-theme="dark"] .typix-floating-link__input-wrapper:focus-within {
+  border-color: #eee;
+  box-shadow: 0 0 0 1px #eee;
+}
+
+.dark .typix-floating-link__input,
+[data-theme="dark"] .typix-floating-link__input {
+  color: #eee;
+}
+
+.dark .typix-floating-link__btn,
+[data-theme="dark"] .typix-floating-link__btn {
+  color: #888;
+}
+
+.dark .typix-floating-link__btn:hover,
+[data-theme="dark"] .typix-floating-link__btn:hover {
+  background-color: #2a2a2a;
+  color: #eee;
+}

@@ -95,6 +95,11 @@ export class TypixEditor {
     return this;
   }
 
+  toggleLink(url: string): this {
+    commands.toggleLink(this._lexicalEditor, url);
+    return this;
+  }
+
   clearFormatting(): this {
     commands.clearFormatting(this._lexicalEditor);
     return this;

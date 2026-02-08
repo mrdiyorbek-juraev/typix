@@ -5,6 +5,7 @@ import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
 import { ContextMenuExtension } from "@typix-editor/extension-context-menu";
 import { DraggableBlockExtension } from "@typix-editor/extension-draggable-block";
 import { KeywordsExtension } from "@typix-editor/extension-keywords";
+import { LinkExtension } from "@typix-editor/extension-link";
 import { MaxLengthExtension } from "@typix-editor/extension-max-length";
 import { MentionExtension } from "@typix-editor/extension-mention";
 import { ShortCutsExtension } from "@typix-editor/extension-short-cuts";
@@ -13,6 +14,7 @@ import {
   useSpeechToText,
 } from "@typix-editor/extension-speech-to-text";
 import { TabFocusExtension } from "@typix-editor/extension-tab-focus";
+import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
 import { mockUsers } from "../constants";
 
 export function EditorExtensions() {
@@ -23,6 +25,9 @@ export function EditorExtensions() {
 
   return (
     <>
+      {/* Link plugin (URL validation & TOGGLE_LINK_COMMAND handler) */}
+      <LinkExtension />
+
       {/* Auto-link URLs */}
       <AutoLinkExtension />
 
@@ -114,6 +119,9 @@ export function EditorExtensions() {
           },
         ]}
       />
+
+      {/* Floating link editor */}
+      <FloatingLinkExtension />
 
       {/* Tab focus */}
       <TabFocusExtension />
