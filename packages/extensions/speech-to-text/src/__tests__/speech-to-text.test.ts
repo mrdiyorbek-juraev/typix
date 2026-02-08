@@ -13,7 +13,7 @@ describe("speech-to-text utilities", () => {
       // @ts-expect-error - simulating SSR
       delete global.window;
 
-      expect(isSpeechRecognitionSupported()).toBe(false);
+      expect(isSpeechRecognitionSupported()).toBe(false); 
 
       // Restore window
       global.window = originalWindow;
@@ -22,7 +22,7 @@ describe("speech-to-text utilities", () => {
     it("returns true when SpeechRecognition is available", () => {
       // Mock SpeechRecognition
       const mockWindow = {
-        ...global.window,
+        ...global.window, 
         SpeechRecognition: class MockSpeechRecognition {},
       };
       global.window = mockWindow as unknown as Window & typeof globalThis;
@@ -67,7 +67,7 @@ describe("speech-to-text utilities", () => {
     it("has correct structure", () => {
       // Type check - the result should have these properties
       const mockResult = {
-        transcript: "hello world",
+        transcript: "hello world", 
         confidence: 0.95,
         isFinal: true,
       };
@@ -150,9 +150,9 @@ describe("speech-to-text utilities", () => {
         "zh-CN", // Chinese (Simplified)
         "ja-JP", // Japanese
         "ko-KR", // Korean
-        "pt-BR", // Portuguese (Brazil)
+        "pt-BR", // Portuguese (Brazil) 
         "ru-RU", // Russian
-      ];
+      ]; 
 
       // All should be valid BCP-47 language tags
       for (const lang of supportedLanguages) {

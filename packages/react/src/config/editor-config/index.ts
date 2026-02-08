@@ -91,12 +91,12 @@ function createEditorConfig(
   if (editorState && initialState) {
     console.warn(
       "[@typix-editor/react] Both `editorState` and `initialState` were provided to createEditorConfig. " +
-        "`editorState` takes priority. Remove one to silence this warning."
+      "`initialState` takes priority. Remove one to silence this warning."
     );
   }
 
   const resolvedEditorState =
-    editorState ?? (initialState ? JSON.stringify(initialState) : undefined);
+    initialState ? JSON.stringify(initialState) : editorState;
 
   return {
     namespace,

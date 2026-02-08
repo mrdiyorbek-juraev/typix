@@ -1,7 +1,7 @@
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { cn } from "@typix-editor/react/src/utils";
+import { cn } from "@typix-editor/react";
 import type { RefObject } from "react";
 
 /**
@@ -54,8 +54,8 @@ interface RichTextExtensionProps {
    * ```
    */
   editorRef?:
-    | ((instance: HTMLDivElement | null) => void)
-    | RefObject<HTMLDivElement>;
+  | ((instance: HTMLDivElement | null) => void)
+  | RefObject<HTMLDivElement>;
 
   /**
    * Custom class names for different editor layers
