@@ -1,0 +1,1713 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+
+
+  /* ---- Typography ---- */
+  --typix-font-family: inherit;
+  --typix-font-size: 15px;
+  --typix-font-size-code: 13px;
+  --typix-font-size-inline-code: 94%;
+  --typix-font-family-code: Menlo, Consolas, Monaco, monospace;
+  --typix-line-height-code: 1.53;
+
+  /* ---- Colors (Light Mode) ---- */
+  --typix-color-text: rgb(5, 5, 5);
+  --typix-color-text-muted: rgb(101, 103, 107);
+  --typix-color-placeholder: #999;
+  --typix-color-caret: #444;
+  --typix-color-link: rgb(33, 111, 219);
+  --typix-color-selection: rgb(60, 132, 244);
+  --typix-color-hashtag-bg: rgba(88, 144, 255, 0.15);
+  --typix-color-hashtag-border: rgba(88, 144, 255, 0.3);
+  --typix-color-highlight-bg: rgba(255, 212, 0, 0.14);
+  --typix-color-highlight-border: rgba(255, 212, 0, 0.3);
+  --typix-color-highlight-selected-bg: rgba(255, 212, 0, 0.5);
+  --typix-color-highlight-selected-border: rgba(255, 212, 0, 1);
+  --typix-color-mark-bg: rgba(255, 212, 0, 0.14);
+  --typix-color-mark-border: rgba(255, 212, 0, 0.3);
+  --typix-color-mark-overlap-bg: rgba(255, 212, 0, 0.3);
+  --typix-color-mark-overlap-border: rgba(255, 212, 0, 0.7);
+  --typix-color-special-bg: yellow;
+  --typix-color-character-limit: #ffbbbb;
+  --typix-color-autocomplete: #ccc;
+
+  /* ---- Backgrounds (Light Mode) ---- */
+  --typix-bg-code: rgb(240, 242, 245);
+  --typix-bg-code-gutter: #eee;
+  --typix-bg-white: #fff;
+
+  /* ---- Borders (Light Mode) ---- */
+  --typix-border-color: #bbb;
+  --typix-border-color-light: #ddd;
+  --typix-border-color-code-gutter: #ccc;
+  --typix-color-code-gutter-text: #777;
+
+  /* ---- Quote (Light Mode) ---- */
+  --typix-color-quote-text: rgb(101, 103, 107);
+  --typix-color-quote-border: rgb(206, 208, 212);
+
+  /* ---- Headings ---- */
+  --typix-heading-h1-size: 24px;
+  --typix-heading-h1-weight: 400;
+  --typix-heading-h1-color: rgb(5, 5, 5);
+  --typix-heading-h2-size: 15px;
+  --typix-heading-h2-weight: 700;
+  --typix-heading-h2-color: rgb(101, 103, 107);
+  --typix-heading-h3-size: 12px;
+
+  /* ---- Indent ---- */
+  --typix-indent-base: 40px;
+
+  /* ---- Spacing ---- */
+  --typix-spacing-contenteditable-y: 15px;
+  --typix-spacing-contenteditable-x: 25px;
+  --typix-spacing-layout-gap: 10px;
+
+  /* ---- List ---- */
+  --typix-list-item-margin: 0 32px;
+  --typix-checklist-checkbox-color: #3d87f5;
+  --typix-checklist-checkbox-border: #999;
+  --typix-checklist-focus-shadow: 0 0 0 2px #a6cdfe;
+
+  /* ---- Table (Light Mode) ---- */
+  --typix-table-cell-width: 75px;
+  --typix-table-cell-padding: 6px 8px;
+  --typix-table-cell-header-bg: #f2f3f5;
+  --typix-table-frozen-td-bg: #fff;
+  --typix-table-frozen-th-bg: #f2f3f5;
+  --typix-table-row-striping-bg: #f2f5fb;
+  --typix-table-add-btn-bg: #eee;
+  --typix-table-add-btn-hover-bg: #c9dbf0;
+  --typix-table-action-btn-hover-bg: #ddd;
+  --typix-table-action-btn-color: #222;
+  --typix-table-scroll-shadow: rgba(0, 0, 0, 0.15);
+
+  /* ---- Code Tokens (Light Mode) ---- */
+  --typix-token-comment: slategray;
+  --typix-token-punctuation: #999;
+  --typix-token-property: #905;
+  --typix-token-selector: #690;
+  --typix-token-operator: #9a6e3a;
+  --typix-token-attr: #07a;
+  --typix-token-variable: #e90;
+  --typix-token-function: #dd4a68;
+
+  /* ---- Diff tokens ---- */
+  --typix-token-deleted-gradient: linear-gradient(to right, #ffcecb 50%, #ffebe9 50%);
+  --typix-token-inserted-gradient: linear-gradient(to right, #aceebb 50%, #dafbe1 50%);
+  --typix-token-unchanged-gradient: linear-gradient(to right, #ddd 50%, rgb(240, 242, 245) 50%);
+
+  /* ---- HR (Light Mode) ---- */
+  --typix-hr-color: #ccc;
+
+  /* ---- Block Cursor (Light Mode) ---- */
+  --typix-block-cursor-color: black;
+
+  /* ---- Context Menu (Light Mode) ---- */
+  --typix-context-menu-bg: #fff;
+  --typix-context-menu-border: #ddd;
+  --typix-context-menu-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  --typix-context-menu-radius: 8px;
+  --typix-context-menu-item-color: #050505;
+  --typix-context-menu-item-hover-bg: #eee;
+  --typix-context-menu-item-open-bg: #ddd;
+  --typix-context-menu-item-disabled-color: #aaa;
+
+  /* ---- Mention (Light Mode) ---- */
+  --typix-mention-bg: rgba(24, 119, 232, 0.15);
+  --typix-mention-bg-hover: rgba(24, 119, 232, 0.25);
+  --typix-mention-color: #1877e8;
+  --typix-mention-menu-bg: white;
+  --typix-mention-menu-border: #ddd;
+  --typix-mention-menu-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --typix-mention-menu-radius: 8px;
+  --typix-mention-menu-item-hover-bg: #f0f0f0;
+  --typix-mention-menu-loading-color: #666;
+  --typix-mention-menu-empty-color: #999;
+
+  /* ---- Draggable Block (Light Mode) ---- */
+  --typix-draggable-menu-hover-bg: rgba(0, 0, 0, 0.08);
+  --typix-draggable-icon-color: currentColor;
+  --typix-draggable-target-line-bg: #5742b3;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+
+
+  /* ---- Colors (Dark Mode) ---- */
+  --typix-color-text: rgb(235, 235, 235);
+  --typix-color-text-muted: rgb(160, 160, 160);
+  --typix-color-placeholder: #666;
+  --typix-color-caret: #eee;
+  --typix-color-link: rgb(100, 160, 255);
+  --typix-color-selection: rgb(80, 140, 220);
+  --typix-color-hashtag-bg: rgba(88, 144, 255, 0.25);
+  --typix-color-hashtag-border: rgba(88, 144, 255, 0.4);
+  --typix-color-highlight-bg: rgba(255, 212, 0, 0.2);
+  --typix-color-highlight-border: rgba(255, 212, 0, 0.4);
+  --typix-color-highlight-selected-bg: rgba(255, 212, 0, 0.3);
+  --typix-color-highlight-selected-border: rgba(255, 212, 0, 0.6);
+  --typix-color-mark-bg: rgba(255, 212, 0, 0.2);
+  --typix-color-mark-border: rgba(255, 212, 0, 0.4);
+  --typix-color-mark-overlap-bg: rgba(255, 212, 0, 0.35);
+  --typix-color-mark-overlap-border: rgba(255, 212, 0, 0.6);
+  --typix-color-special-bg: rgb(200, 180, 0);
+  --typix-color-character-limit: #884444;
+  --typix-color-autocomplete: #555;
+
+  /* ---- Backgrounds (Dark Mode) ---- */
+  --typix-bg-code: rgb(30, 30, 30);
+  --typix-bg-code-gutter: #252525;
+  --typix-bg-white: #1a1a1a;
+
+  /* ---- Borders (Dark Mode) ---- */
+  --typix-border-color: #444;
+  --typix-border-color-light: #333;
+  --typix-border-color-code-gutter: #3a3a3a;
+  --typix-color-code-gutter-text: #888;
+
+  /* ---- Quote (Dark Mode) ---- */
+  --typix-color-quote-text: rgb(160, 160, 160);
+  --typix-color-quote-border: rgb(80, 80, 80);
+
+  /* ---- Headings (Dark Mode) ---- */
+  --typix-heading-h1-color: rgb(235, 235, 235);
+  --typix-heading-h2-color: rgb(160, 160, 160);
+
+  /* ---- Checklist (Dark Mode) ---- */
+  --typix-checklist-checkbox-color: #5a9ff5;
+  --typix-checklist-checkbox-border: #666;
+  --typix-checklist-focus-shadow: 0 0 0 2px #5a7fbf;
+
+  /* ---- Table (Dark Mode) ---- */
+  --typix-table-cell-header-bg: #252525;
+  --typix-table-frozen-td-bg: #1a1a1a;
+  --typix-table-frozen-th-bg: #252525;
+  --typix-table-row-striping-bg: #222;
+  --typix-table-add-btn-bg: #2a2a2a;
+  --typix-table-add-btn-hover-bg: #3a3a3a;
+  --typix-table-action-btn-hover-bg: #333;
+  --typix-table-action-btn-color: #ddd;
+  --typix-table-scroll-shadow: rgba(0, 0, 0, 0.4);
+
+  /* ---- Code Tokens (Dark Mode) ---- */
+  --typix-token-comment: #7a9ab3;
+  --typix-token-punctuation: #999;
+  --typix-token-property: #ce9178;
+  --typix-token-selector: #4ec9b0;
+  --typix-token-operator: #d4a374;
+  --typix-token-attr: #9cdcfe;
+  --typix-token-variable: #dcdcaa;
+  --typix-token-function: #c586c0;
+
+  /* ---- Diff tokens (Dark Mode) ---- */
+  --typix-token-deleted-gradient: linear-gradient(to right, #5a2020 50%, #3a1515 50%);
+  --typix-token-inserted-gradient: linear-gradient(to right, #205a30 50%, #153a20 50%);
+  --typix-token-unchanged-gradient: linear-gradient(to right, #2a2a2a 50%, rgb(30, 30, 30) 50%);
+
+  /* ---- HR (Dark Mode) ---- */
+  --typix-hr-color: #444;
+
+  /* ---- Block Cursor (Dark Mode) ---- */
+  --typix-block-cursor-color: white;
+
+  /* ---- Context Menu (Dark Mode) ---- */
+  --typix-context-menu-bg: #1a1a1a;
+  --typix-context-menu-border: #333;
+  --typix-context-menu-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  --typix-context-menu-item-color: #eee;
+  --typix-context-menu-item-hover-bg: #2a2a2a;
+  --typix-context-menu-item-open-bg: #333;
+  --typix-context-menu-item-disabled-color: #666;
+
+  /* ---- Mention (Dark Mode) ---- */
+  --typix-mention-bg: rgba(80, 140, 220, 0.25);
+  --typix-mention-bg-hover: rgba(80, 140, 220, 0.35);
+  --typix-mention-color: #64a0ff;
+  --typix-mention-menu-bg: #1a1a1a;
+  --typix-mention-menu-border: #333;
+  --typix-mention-menu-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --typix-mention-menu-item-hover-bg: #2a2a2a;
+  --typix-mention-menu-loading-color: #999;
+  --typix-mention-menu-empty-color: #666;
+
+  /* ---- Draggable Block (Dark Mode) ---- */
+  --typix-draggable-menu-hover-bg: rgba(255, 255, 255, 0.1);
+  --typix-draggable-target-line-bg: #8b7ad5;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+/* ==============================
+   Editor Shell
+   ============================== */
+
+.typix-editor-scroller {
+  min-height: 150px;
+  max-width: 100%;
+  border: 0;
+  display: flex;
+  position: relative;
+  outline: 0;
+  z-index: 0;
+  resize: vertical;
+}
+
+.typix-editor {
+  flex: auto;
+  max-width: 100%;
+  position: relative;
+  resize: vertical;
+  z-index: -1;
+}
+
+.typix-editor-contenteditable {
+  min-height: 150px;
+  resize: none;
+  font-size: var(--typix-font-size);
+  caret-color: var(--typix-color-caret);
+  position: relative;
+  tab-size: 1;
+  outline: 0;
+  padding: var(--typix-spacing-contenteditable-y) var(--typix-spacing-contenteditable-x);
+  color: var(--typix-color-text);
+}
+
+.typix-editor-placeholder {
+  color: var(--typix-color-placeholder);
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: var(--typix-spacing-contenteditable-y);
+  left: var(--typix-spacing-contenteditable-x);
+  font-size: var(--typix-font-size);
+  user-select: none;
+  display: inline-block;
+  pointer-events: none;
+}
+
+/* ==============================
+   Paragraph
+   ============================== */
+
+.typix-paragraph {
+  margin: 0;
+  position: relative;
+}
+
+.typix-paragraph mark {
+  background-color: unset;
+}
+
+/* ==============================
+   Blockquote
+   ============================== */
+
+.typix-quote {
+  margin: 0;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size: var(--typix-font-size);
+  color: var(--typix-color-quote-text);
+  border-left-color: var(--typix-color-quote-border);
+  border-left-width: 4px;
+  border-left-style: solid;
+  padding-left: 16px;
+}
+
+/* ==============================
+   Headings
+   ============================== */
+
+.typix-heading--h1 {
+  font-size: var(--typix-heading-h1-size);
+  color: var(--typix-heading-h1-color);
+  font-weight: var(--typix-heading-h1-weight);
+  margin: 0;
+}
+
+.typix-heading--h2 {
+  font-size: var(--typix-heading-h2-size);
+  color: var(--typix-heading-h2-color);
+  font-weight: var(--typix-heading-h2-weight);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.typix-heading--h3 {
+  font-size: var(--typix-heading-h3-size);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.typix-heading--h4 {
+  margin: 0;
+}
+
+.typix-heading--h5 {
+  margin: 0;
+}
+
+.typix-heading--h6 {
+  margin: 0;
+}
+
+/* ==============================
+   Indent
+   ============================== */
+
+.typix-indent {
+  --lexical-indent-base-value: var(--typix-indent-base);
+}
+
+/* ==============================
+   Text Formatting
+   ============================== */
+
+.typix-text--bold {
+  font-weight: bold;
+}
+
+.typix-text--italic {
+  font-style: italic;
+}
+
+.typix-text--underline {
+  text-decoration: underline;
+}
+
+.typix-text--strikethrough {
+  text-decoration: line-through;
+}
+
+.typix-text--underline-strikethrough {
+  text-decoration: underline line-through;
+}
+
+.typix-text--subscript {
+  font-size: 0.8em;
+  vertical-align: sub !important;
+}
+
+.typix-text--superscript {
+  font-size: 0.8em;
+  vertical-align: super;
+}
+
+.typix-text--code {
+  background-color: var(--typix-bg-code);
+  padding: 1px 0.25rem;
+  font-family: var(--typix-font-family-code);
+  font-size: var(--typix-font-size-inline-code);
+}
+
+.typix-text--highlight {
+  background: var(--typix-color-highlight-bg);
+  border-bottom: 2px solid var(--typix-color-highlight-border);
+}
+
+.typix-text--lowercase {
+  text-transform: lowercase;
+}
+
+.typix-text--uppercase {
+  text-transform: uppercase;
+}
+
+.typix-text--capitalize {
+  text-transform: capitalize;
+}
+
+/* ==============================
+   Tab Node
+   ============================== */
+
+.typix-tab {
+  position: relative;
+  text-decoration: none;
+}
+
+.typix-tab.typix-text--underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.15em;
+  border-bottom: 0.1em solid currentColor;
+}
+
+.typix-tab.typix-text--strikethrough::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.69em;
+  border-top: 0.1em solid currentColor;
+}
+
+.typix-tab.typix-text--underline-strikethrough::before,
+.typix-tab.typix-text--underline-strikethrough::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.typix-tab.typix-text--underline-strikethrough::before {
+  top: 0.69em;
+  border-top: 0.1em solid currentColor;
+}
+
+.typix-tab.typix-text--underline-strikethrough::after {
+  bottom: 0.05em;
+  border-bottom: 0.1em solid currentColor;
+}
+
+/* ==============================
+   Hashtag
+   ============================== */
+
+.typix-hashtag {
+  background-color: var(--typix-color-hashtag-bg);
+  border-bottom: 1px solid var(--typix-color-hashtag-border);
+}
+
+/* ==============================
+   Link
+   ============================== */
+
+.typix-link {
+  color: var(--typix-color-link);
+  text-decoration: none;
+}
+
+.typix-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ==============================
+   Block Cursor
+   ============================== */
+
+.typix-block-cursor {
+  display: block;
+  pointer-events: none;
+  position: absolute;
+}
+
+.typix-block-cursor:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  width: 20px;
+  border-top: 1px solid var(--typix-block-cursor-color);
+  animation: typix-cursor-blink 1.1s steps(2, start) infinite;
+}
+
+@keyframes typix-cursor-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* ==============================
+   Code Block
+   ============================== */
+
+.typix-code {
+  background-color: var(--typix-bg-code);
+  font-family: var(--typix-font-family-code);
+  display: block;
+  line-height: var(--typix-line-height-code);
+  font-size: var(--typix-font-size-code);
+  padding-top: 8px;
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  position: relative;
+  tab-size: 2;
+  white-space: pre;
+  max-width: 100%;
+  box-sizing: border-box;
+  color: var(--typix-color-text);
+}
+
+.typix-code:before {
+  content: attr(data-gutter);
+  position: sticky;
+  background-color: var(--typix-bg-code-gutter);
+  left: 0;
+  float: left;
+  top: 0;
+  z-index: 3;
+  min-height: 100%;
+  border-right: 1px solid var(--typix-border-color-code-gutter);
+  padding: 8px;
+  color: var(--typix-color-code-gutter-text);
+  white-space: pre-wrap;
+  text-align: right;
+  min-width: 25px;
+  margin-right: 10px;
+  margin-top: -8px;
+}
+
+/* ==============================
+   Code Tokens
+   ============================== */
+
+.typix-token--comment {
+  color: var(--typix-token-comment);
+}
+
+.typix-token--deleted {
+  border-image: var(--typix-token-deleted-gradient) fill 0 / 0 / 0 100vw;
+}
+
+.typix-token--inserted {
+  border-image: var(--typix-token-inserted-gradient) fill 0 / 0 / 0 100vw;
+}
+
+.typix-token--unchanged {
+  border-image: var(--typix-token-unchanged-gradient) fill 0 / 0 / 0 100vw;
+}
+
+.typix-token--punctuation {
+  color: var(--typix-token-punctuation);
+}
+
+.typix-token--property {
+  color: var(--typix-token-property);
+}
+
+.typix-token--selector {
+  color: var(--typix-token-selector);
+}
+
+.typix-token--operator {
+  color: var(--typix-token-operator);
+}
+
+.typix-token--attr {
+  color: var(--typix-token-attr);
+}
+
+.typix-token--variable {
+  color: var(--typix-token-variable);
+}
+
+.typix-token--function {
+  color: var(--typix-token-function);
+}
+
+/* ==============================
+   Table – Scrollable Wrapper
+   ============================== */
+
+.typix-table-scrollable-wrapper {
+  overflow-x: auto;
+  margin: 0px 25px 30px 0px;
+}
+
+.typix-table-scroll--right {
+  box-shadow: inset -10px 0 10px var(--typix-table-scroll-shadow);
+}
+
+.typix-table-scroll--left {
+  box-shadow: inset 10px 0 10px var(--typix-table-scroll-shadow);
+}
+
+.typix-table-scroll--middle {
+  box-shadow:
+    inset 10px 0 10px var(--typix-table-scroll-shadow),
+    inset -10px 0 10px var(--typix-table-scroll-shadow);
+}
+
+.typix-table-scrollable-wrapper>.typix-table {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ==============================
+   Table – Alignment
+   ============================== */
+
+.typix-table--align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.typix-table--align-right {
+  margin-left: auto;
+}
+
+/* ==============================
+   Table – Base
+   ============================== */
+
+.typix-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  table-layout: fixed;
+  width: fit-content;
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+/* ==============================
+   Table – Frozen Row / Column
+   ============================== */
+
+.typix-table-scrollable-wrapper.typix-table--frozen-row {
+  overflow-x: clip;
+}
+
+.typix-table--frozen-row tr:nth-of-type(1)>td {
+  overflow: clip;
+  background-color: var(--typix-table-frozen-td-bg);
+  position: sticky;
+  z-index: 2;
+  top: 44px;
+}
+
+.typix-table--frozen-row tr:nth-of-type(1)>th {
+  overflow: clip;
+  background-color: var(--typix-table-frozen-th-bg);
+  position: sticky;
+  z-index: 2;
+  top: 44px;
+}
+
+.typix-table--frozen-row tr:nth-of-type(1)>th:after,
+.typix-table--frozen-row tr:nth-of-type(1)>td:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 1px solid var(--typix-border-color);
+}
+
+.typix-table--frozen-column tr>td:first-child {
+  background-color: var(--typix-table-frozen-td-bg);
+  position: sticky;
+  z-index: 2;
+  left: 0;
+}
+
+.typix-table--frozen-column tr>th:first-child {
+  background-color: var(--typix-table-frozen-th-bg);
+  position: sticky;
+  z-index: 2;
+  left: 0;
+}
+
+.typix-table--frozen-column tr> :first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-right: 1px solid var(--typix-border-color);
+}
+
+/* ==============================
+   Table – Row Striping
+   ============================== */
+
+.typix-table--row-striping tr:nth-child(even),
+.typix-table--frozen-column .typix-table.typix-table--row-striping tr:nth-child(even)>td:first-child {
+  background-color: var(--typix-table-row-striping-bg);
+}
+
+/* ==============================
+   Table – Selection
+   ============================== */
+
+.typix-table__selection *::selection {
+  background-color: transparent;
+}
+
+.typix-table--selected {
+  outline: 2px solid var(--typix-color-selection);
+}
+
+/* ==============================
+   Table – Cells
+   ============================== */
+
+.typix-table__cell {
+  border: 1px solid var(--typix-border-color);
+  width: var(--typix-table-cell-width);
+  vertical-align: top;
+  text-align: start;
+  padding: var(--typix-table-cell-padding);
+  position: relative;
+  outline: none;
+  overflow: auto;
+}
+
+.typix-table__cell>* {
+  overflow: inherit;
+}
+
+.typix-table__cell-resizer {
+  position: absolute;
+  right: -4px;
+  height: 100%;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 10;
+  top: 0;
+}
+
+.typix-table__cell--header {
+  background-color: var(--typix-table-cell-header-bg);
+  text-align: start;
+}
+
+.typix-table__cell--selected {
+  caret-color: transparent;
+}
+
+.typix-table__cell--selected::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: highlight;
+  mix-blend-mode: multiply;
+  content: "";
+  pointer-events: none;
+}
+
+.typix-table__cell-resize-ruler {
+  display: block;
+  position: absolute;
+  width: 1px;
+  background-color: var(--typix-color-selection);
+  height: 100%;
+  top: 0;
+}
+
+/* ==============================
+   Table – Action Button
+   ============================== */
+
+.typix-table__cell-action-container {
+  display: block;
+  right: 5px;
+  top: 6px;
+  position: absolute;
+  z-index: 4;
+  width: 20px;
+  height: 20px;
+}
+
+.typix-table__cell-action-btn {
+  background-color: var(--typix-table-add-btn-bg);
+  display: block;
+  border: 0;
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--typix-table-action-btn-color);
+  cursor: pointer;
+}
+
+.typix-table__cell-action-btn:hover {
+  background-color: var(--typix-table-action-btn-hover-bg);
+}
+
+/* ==============================
+   Table – Add Columns / Rows
+   ============================== */
+
+.typix-table__add-columns {
+  position: absolute;
+  background-color: var(--typix-table-add-btn-bg);
+  height: 100%;
+  animation: typix-table-controls 0.2s ease;
+  border: 0;
+  cursor: pointer;
+}
+
+.typix-table__add-columns:after {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.typix-table__add-columns:hover,
+.typix-table__add-rows:hover {
+  background-color: var(--typix-table-add-btn-hover-bg);
+}
+
+.typix-table__add-rows {
+  position: absolute;
+  width: calc(100% - 25px);
+  background-color: var(--typix-table-add-btn-bg);
+  animation: typix-table-controls 0.2s ease;
+  border: 0;
+  cursor: pointer;
+}
+
+.typix-table__add-rows:after {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+@keyframes typix-table-controls {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ==============================
+   Character Limit
+   ============================== */
+
+.typix-character-limit {
+  display: inline;
+  background-color: var(--typix-color-character-limit) !important;
+}
+
+/* ==============================
+   Lists – Ordered
+   ============================== */
+
+.typix-list--ol1 {
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
+}
+
+.typix-list--ol2 {
+  padding: 0;
+  margin: 0;
+  list-style-type: upper-alpha;
+  list-style-position: outside;
+}
+
+.typix-list--ol3 {
+  padding: 0;
+  margin: 0;
+  list-style-type: lower-alpha;
+  list-style-position: outside;
+}
+
+.typix-list--ol4 {
+  padding: 0;
+  margin: 0;
+  list-style-type: upper-roman;
+  list-style-position: outside;
+}
+
+.typix-list--ol5 {
+  padding: 0;
+  margin: 0;
+  list-style-type: lower-roman;
+  list-style-position: outside;
+}
+
+/* ==============================
+   Lists – Unordered
+   ============================== */
+
+.typix-list--ul {
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
+}
+
+/* ==============================
+   Lists – Items
+   ============================== */
+
+.typix-list__item {
+  margin: var(--typix-list-item-margin);
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
+  background-color: var(--listitem-marker-background-color);
+}
+
+.typix-list__item::marker {
+  color: var(--listitem-marker-color);
+  background-color: var(--listitem-marker-background-color);
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
+}
+
+/* ==============================
+   Lists – Checklist
+   ============================== */
+
+.typix-checklist {
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
+}
+
+.typix-list__item--checked,
+.typix-list__item--unchecked {
+  position: relative;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  list-style-type: none;
+  outline: none;
+  display: block;
+  min-height: 1.5em;
+}
+
+.typix-list__item--checked>*,
+.typix-list__item--unchecked>* {
+  margin-left: 0.01em;
+}
+
+.typix-list__item--unchecked:before,
+.typix-list__item--checked:before {
+  content: "\200B";
+  width: 0.9em;
+  height: 0.9em;
+  top: 50%;
+  left: 0;
+  cursor: pointer;
+  display: block;
+  background-size: cover;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.typix-list__item--checked {
+  text-decoration: line-through;
+}
+
+.typix-list__item--unchecked:focus:before,
+.typix-list__item--checked:focus:before {
+  box-shadow: var(--typix-checklist-focus-shadow);
+  border-radius: 2px;
+}
+
+.typix-list__item--unchecked:before {
+  border: 1px solid var(--typix-checklist-checkbox-border);
+  border-radius: 2px;
+}
+
+.typix-list__item--checked:before {
+  border: 1px solid var(--typix-checklist-checkbox-color);
+  border-radius: 2px;
+  background-color: var(--typix-checklist-checkbox-color);
+  background-repeat: no-repeat;
+}
+
+.typix-list__item--checked:after {
+  content: "";
+  cursor: pointer;
+  border-color: #fff;
+  border-style: solid;
+  position: absolute;
+  display: block;
+  top: 45%;
+  width: 0.2em;
+  left: 0.35em;
+  height: 0.4em;
+  transform: translateY(-50%) rotate(45deg);
+  border-width: 0 0.1em 0.1em 0;
+}
+
+/* ==============================
+   Lists – Nested
+   ============================== */
+
+.typix-list__item--nested {
+  list-style-type: none;
+}
+
+.typix-list__item--nested:before,
+.typix-list__item--nested:after {
+  display: none;
+}
+
+/* ==============================
+   Mark / Highlight Annotation
+   ============================== */
+
+.typix-mark {
+  background: var(--typix-color-mark-bg);
+  border-bottom: 2px solid var(--typix-color-mark-border);
+  padding-bottom: 2px;
+}
+
+.typix-mark--overlap {
+  background: var(--typix-color-mark-overlap-bg);
+  border-bottom: 2px solid var(--typix-color-mark-overlap-border);
+}
+
+.typix-mark.selected {
+  background: var(--typix-color-highlight-selected-bg);
+  border-bottom: 2px solid var(--typix-color-highlight-selected-border);
+}
+
+.typix-mark--overlap.selected {
+  background: var(--typix-color-mark-overlap-border);
+  border-bottom: 2px solid var(--typix-color-mark-overlap-border);
+}
+
+/* ==============================
+   Embed Block
+   ============================== */
+
+.typix-embed-block {
+  user-select: none;
+}
+
+.typix-embed-block--focus {
+  outline: 2px solid var(--typix-color-selection);
+}
+
+/* ==============================
+   Layout Container / Item
+   ============================== */
+
+.typix-layout-container {
+  display: grid;
+  gap: var(--typix-spacing-layout-gap);
+  margin: 10px 0;
+}
+
+.typix-layout-item {
+  border: 1px dashed var(--typix-border-color-light);
+  padding: 8px 16px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ==============================
+   Autocomplete
+   ============================== */
+
+.typix-autocomplete {
+  color: var(--typix-color-autocomplete);
+}
+
+/* ==============================
+   Horizontal Rule
+   ============================== */
+
+.typix-hr {
+  padding: 2px 2px;
+  border: none;
+  margin: 1em 0;
+  cursor: pointer;
+}
+
+.typix-hr:after {
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: var(--typix-hr-color);
+  line-height: 2px;
+}
+
+.typix-hr.typix-hr--selected {
+  outline: 2px solid var(--typix-color-selection);
+  user-select: none;
+}
+
+/* ==============================
+   Special Text
+   ============================== */
+
+.typix-special-text {
+  background-color: var(--typix-color-special-bg);
+  font-weight: bold;
+}
+
+/* ==============================
+   Image
+   ============================== */
+
+.typix-image {
+  /* User may extend */
+}
+
+/* ==============================
+   Context Menu
+   ============================== */
+
+.typix-context-menu {
+  outline: 0;
+  background: var(--typix-context-menu-bg);
+  border: 1px solid var(--typix-context-menu-border);
+  box-shadow: var(--typix-context-menu-shadow);
+  border-radius: var(--typix-context-menu-radius);
+}
+
+.typix-context-menu button:first-child {
+  border-radius: var(--typix-context-menu-radius) var(--typix-context-menu-radius) 0px 0px;
+}
+
+.typix-context-menu button:last-child {
+  border-radius: 0px 0px var(--typix-context-menu-radius) var(--typix-context-menu-radius);
+}
+
+.typix-context-menu__item {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  background-color: var(--typix-context-menu-bg);
+  color: var(--typix-context-menu-item-color);
+  border: 0;
+  border-radius: 0px;
+  font-size: var(--typix-font-size);
+  text-align: left;
+  line-height: 20px;
+  padding: 8px;
+  padding-right: 14px;
+  outline: 0;
+  cursor: pointer;
+}
+
+.typix-context-menu__item.open {
+  background: var(--typix-context-menu-item-open-bg);
+}
+
+.typix-context-menu__item:focus,
+.typix-context-menu__item:not([disabled]):active {
+  background: var(--typix-context-menu-item-hover-bg);
+}
+
+.typix-context-menu__item:disabled {
+  background: var(--typix-context-menu-bg);
+  color: var(--typix-context-menu-item-disabled-color);
+  cursor: not-allowed;
+}
+
+.typix-context-menu__item-icon {
+  width: 20px;
+  margin-right: 8px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* ==============================
+   Mention – Node
+   ============================== */
+
+.typix-mention {
+  background-color: var(--typix-mention-bg);
+  border-radius: 4px;
+  padding: 2px 4px;
+  color: var(--typix-mention-color);
+  cursor: pointer;
+}
+
+.typix-mention:hover {
+  background-color: var(--typix-mention-bg-hover);
+}
+
+/* ==============================
+   Mention – Menu
+   ============================== */
+
+.typix-mention-menu {
+  position: absolute;
+  background: var(--typix-mention-menu-bg);
+  border: 1px solid var(--typix-mention-menu-border);
+  border-radius: var(--typix-mention-menu-radius);
+  box-shadow: var(--typix-mention-menu-shadow);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.typix-mention-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+}
+
+.typix-mention-menu__item {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.typix-mention-menu__item:hover,
+.typix-mention-menu__item--selected {
+  background: var(--typix-mention-menu-item-hover-bg);
+}
+
+.typix-mention-menu__item-name {
+  font-weight: 500;
+}
+
+.typix-mention-menu__loading {
+  padding: 12px;
+  color: var(--typix-mention-menu-loading-color);
+  text-align: center;
+}
+
+.typix-mention-menu__empty {
+  padding: 12px;
+  color: var(--typix-mention-menu-empty-color);
+  text-align: center;
+}
+
+/* ==============================
+   Draggable Block
+   ============================== */
+
+.typix-draggable-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: grab;
+  border-radius: 4px;
+  padding: 2px 1px;
+  opacity: 0;
+  will-change: transform;
+  transition: background-color 0.15s ease;
+}
+
+.typix-draggable-menu:hover {
+  background-color: var(--typix-draggable-menu-hover-bg);
+}
+
+.typix-draggable-menu:active {
+  cursor: grabbing;
+}
+
+.typix-draggable-menu__icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.3;
+  color: var(--typix-draggable-icon-color);
+}
+
+.typix-draggable__target-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  background-color: var(--typix-draggable-target-line-bg);
+  border-radius: 2px;
+}
+
+/* ─── Floating Link Editor ─────────────────────────────────────── */
+
+.typix-floating-link {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  max-width: 400px;
+  width: max-content;
+  opacity: 0;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.typix-floating-link:empty {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* ─── View Mode ───────────────────────────────────────────────── */
+
+.typix-floating-link__view {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 6px 6px 10px;
+  width: 100%;
+}
+
+.typix-floating-link__url {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #111;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.4;
+  transition: background-color 120ms ease;
+}
+
+.typix-floating-link__url:hover {
+  background-color: #f5f5f5;
+}
+
+.typix-floating-link__url-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+
+.typix-floating-link__url svg {
+  flex-shrink: 0;
+  opacity: 0.35;
+  width: 12px;
+  height: 12px;
+}
+
+.typix-floating-link__divider {
+  width: 1px;
+  height: 18px;
+  background-color: #e0e0e0;
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+/* ─── Edit Mode ───────────────────────────────────────────────── */
+
+.typix-floating-link__edit {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  width: 100%;
+}
+
+.typix-floating-link__input-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 6px;
+  padding: 0 8px;
+  height: 32px;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.typix-floating-link__input-wrapper:focus-within {
+  border-color: #111;
+  box-shadow: 0 0 0 1px #111;
+}
+
+.typix-floating-link__input-icon {
+  display: flex;
+  align-items: center;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.typix-floating-link__input-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.typix-floating-link__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #111;
+  font-family: inherit;
+}
+
+.typix-floating-link__input::placeholder {
+  color: #aaa;
+}
+
+.typix-floating-link__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────── */
+
+.typix-floating-link__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+  flex-shrink: 0;
+}
+
+.typix-floating-link__btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.typix-floating-link__btn:hover {
+  background-color: #f0f0f0;
+  color: #111;
+}
+
+.typix-floating-link__btn:active {
+  background-color: #e5e5e5;
+}
+
+.typix-floating-link__btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.typix-floating-link__btn--confirm:not(:disabled) {
+  color: #111;
+}
+
+.typix-floating-link__btn--confirm:not(:disabled):hover {
+  background-color: #e5e5e5;
+  color: #000;
+}
+
+.typix-floating-link__btn--delete {
+  color: #666;
+}
+
+.typix-floating-link__btn--delete:hover {
+  background-color: #f0f0f0;
+  color: #111;
+}
+
+.typix-floating-link__btn--delete:active {
+  background-color: #e5e5e5;
+  color: #000;
+}
+
+/* ─── Dark mode ───────────────────────────────────────────────── */
+
+.dark .typix-floating-link,
+[data-theme="dark"] .typix-floating-link {
+  background-color: #1a1a1a;
+  border-color: #333;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  color: #eee;
+}
+
+.dark .typix-floating-link__url,
+[data-theme="dark"] .typix-floating-link__url {
+  color: #eee;
+}
+
+.dark .typix-floating-link__url:hover,
+[data-theme="dark"] .typix-floating-link__url:hover {
+  background-color: #2a2a2a;
+}
+
+.dark .typix-floating-link__divider,
+[data-theme="dark"] .typix-floating-link__divider {
+  background-color: #333;
+}
+
+.dark .typix-floating-link__input-wrapper,
+[data-theme="dark"] .typix-floating-link__input-wrapper {
+  background-color: #111;
+  border-color: #333;
+}
+
+.dark .typix-floating-link__input-wrapper:focus-within,
+[data-theme="dark"] .typix-floating-link__input-wrapper:focus-within {
+  border-color: #eee;
+  box-shadow: 0 0 0 1px #eee;
+}
+
+.dark .typix-floating-link__input,
+[data-theme="dark"] .typix-floating-link__input {
+  color: #eee;
+}
+
+.dark .typix-floating-link__btn,
+[data-theme="dark"] .typix-floating-link__btn {
+  color: #888;
+}
+
+.dark .typix-floating-link__btn:hover,
+[data-theme="dark"] .typix-floating-link__btn:hover {
+  background-color: #2a2a2a;
+  color: #eee;
+}
