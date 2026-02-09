@@ -30,7 +30,7 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <TypixLogo className="size-6" />
+              <TypixLogo className="size-7 invert dark:invert-0" />
               <span className="font-semibold text-lg tracking-tight text-black dark:text-white">
                 Typix
               </span>
