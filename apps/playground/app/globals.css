@@ -81,8 +81,6 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-
-
   /* ---- Typography ---- */
   --typix-font-family: inherit;
   --typix-font-size: 15px;
@@ -174,9 +172,21 @@
   --typix-token-function: #dd4a68;
 
   /* ---- Diff tokens ---- */
-  --typix-token-deleted-gradient: linear-gradient(to right, #ffcecb 50%, #ffebe9 50%);
-  --typix-token-inserted-gradient: linear-gradient(to right, #aceebb 50%, #dafbe1 50%);
-  --typix-token-unchanged-gradient: linear-gradient(to right, #ddd 50%, rgb(240, 242, 245) 50%);
+  --typix-token-deleted-gradient: linear-gradient(
+    to right,
+    #ffcecb 50%,
+    #ffebe9 50%
+  );
+  --typix-token-inserted-gradient: linear-gradient(
+    to right,
+    #aceebb 50%,
+    #dafbe1 50%
+  );
+  --typix-token-unchanged-gradient: linear-gradient(
+    to right,
+    #ddd 50%,
+    rgb(240, 242, 245) 50%
+  );
 
   /* ---- HR (Light Mode) ---- */
   --typix-hr-color: #ccc;
@@ -245,7 +255,6 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-
   /* ---- Colors (Dark Mode) ---- */
   --typix-color-text: rgb(235, 235, 235);
   --typix-color-text-muted: rgb(160, 160, 160);
@@ -313,9 +322,21 @@
   --typix-token-function: #c586c0;
 
   /* ---- Diff tokens (Dark Mode) ---- */
-  --typix-token-deleted-gradient: linear-gradient(to right, #5a2020 50%, #3a1515 50%);
-  --typix-token-inserted-gradient: linear-gradient(to right, #205a30 50%, #153a20 50%);
-  --typix-token-unchanged-gradient: linear-gradient(to right, #2a2a2a 50%, rgb(30, 30, 30) 50%);
+  --typix-token-deleted-gradient: linear-gradient(
+    to right,
+    #5a2020 50%,
+    #3a1515 50%
+  );
+  --typix-token-inserted-gradient: linear-gradient(
+    to right,
+    #205a30 50%,
+    #153a20 50%
+  );
+  --typix-token-unchanged-gradient: linear-gradient(
+    to right,
+    #2a2a2a 50%,
+    rgb(30, 30, 30) 50%
+  );
 
   /* ---- HR (Dark Mode) ---- */
   --typix-hr-color: #444;
@@ -358,7 +379,6 @@
   }
 }
 
-
 /* ==============================
    Editor Shell
    ============================== */
@@ -390,7 +410,8 @@
   position: relative;
   tab-size: 1;
   outline: 0;
-  padding: var(--typix-spacing-contenteditable-y) var(--typix-spacing-contenteditable-x);
+  padding: var(--typix-spacing-contenteditable-y)
+    var(--typix-spacing-contenteditable-x);
   color: var(--typix-color-text);
 }
 
@@ -746,7 +767,7 @@
     inset -10px 0 10px var(--typix-table-scroll-shadow);
 }
 
-.typix-table-scrollable-wrapper>.typix-table {
+.typix-table-scrollable-wrapper > .typix-table {
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -787,7 +808,7 @@
   overflow-x: clip;
 }
 
-.typix-table--frozen-row tr:nth-of-type(1)>td {
+.typix-table--frozen-row tr:nth-of-type(1) > td {
   overflow: clip;
   background-color: var(--typix-table-frozen-td-bg);
   position: sticky;
@@ -795,7 +816,7 @@
   top: 44px;
 }
 
-.typix-table--frozen-row tr:nth-of-type(1)>th {
+.typix-table--frozen-row tr:nth-of-type(1) > th {
   overflow: clip;
   background-color: var(--typix-table-frozen-th-bg);
   position: sticky;
@@ -803,8 +824,8 @@
   top: 44px;
 }
 
-.typix-table--frozen-row tr:nth-of-type(1)>th:after,
-.typix-table--frozen-row tr:nth-of-type(1)>td:after {
+.typix-table--frozen-row tr:nth-of-type(1) > th:after,
+.typix-table--frozen-row tr:nth-of-type(1) > td:after {
   content: "";
   position: absolute;
   left: 0;
@@ -813,21 +834,21 @@
   border-bottom: 1px solid var(--typix-border-color);
 }
 
-.typix-table--frozen-column tr>td:first-child {
+.typix-table--frozen-column tr > td:first-child {
   background-color: var(--typix-table-frozen-td-bg);
   position: sticky;
   z-index: 2;
   left: 0;
 }
 
-.typix-table--frozen-column tr>th:first-child {
+.typix-table--frozen-column tr > th:first-child {
   background-color: var(--typix-table-frozen-th-bg);
   position: sticky;
   z-index: 2;
   left: 0;
 }
 
-.typix-table--frozen-column tr> :first-child::after {
+.typix-table--frozen-column tr > :first-child::after {
   content: "";
   position: absolute;
   left: 0;
@@ -842,7 +863,10 @@
    ============================== */
 
 .typix-table--row-striping tr:nth-child(even),
-.typix-table--frozen-column .typix-table.typix-table--row-striping tr:nth-child(even)>td:first-child {
+.typix-table--frozen-column
+  .typix-table.typix-table--row-striping
+  tr:nth-child(even)
+  > td:first-child {
   background-color: var(--typix-table-row-striping-bg);
 }
 
@@ -873,7 +897,7 @@
   overflow: auto;
 }
 
-.typix-table__cell>* {
+.typix-table__cell > * {
   overflow: inherit;
 }
 
@@ -1109,8 +1133,8 @@
   min-height: 1.5em;
 }
 
-.typix-list__item--checked>*,
-.typix-list__item--unchecked>* {
+.typix-list__item--checked > *,
+.typix-list__item--unchecked > * {
   margin-left: 0.01em;
 }
 
@@ -1294,11 +1318,13 @@
 }
 
 .typix-context-menu button:first-child {
-  border-radius: var(--typix-context-menu-radius) var(--typix-context-menu-radius) 0px 0px;
+  border-radius: var(--typix-context-menu-radius)
+    var(--typix-context-menu-radius) 0px 0px;
 }
 
 .typix-context-menu button:last-child {
-  border-radius: 0px 0px var(--typix-context-menu-radius) var(--typix-context-menu-radius);
+  border-radius: 0px 0px var(--typix-context-menu-radius)
+    var(--typix-context-menu-radius);
 }
 
 .typix-context-menu__item {

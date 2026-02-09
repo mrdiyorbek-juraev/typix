@@ -27,7 +27,7 @@ const BubbleButton = ({ isActive, children }: BubbleButtonProps) => (
 
 export function BubbleMenu() {
   const editor = useTypixEditor();
-  const { isActive } = useActiveFormats()
+  const { isActive } = useActiveFormats();
   return (
     <EditorBubbleMenu className="flex items-center gap-1 rounded-lg border border-border bg-popover p-1 shadow-lg">
       <EditorBubbleItem
@@ -36,7 +36,7 @@ export function BubbleMenu() {
           editor?.toggleBold();
         }}
       >
-        {({ }) => (
+        {({}) => (
           <BubbleButton isActive={isActive("bold")}>
             <strong>B</strong>
           </BubbleButton>
