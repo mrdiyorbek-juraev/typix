@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-context-menu",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "Context menu extension for Typix",
   "keywords": [],
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
@@ -32,21 +32,19 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
+    "@typix-editor/react": "workspace:*",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "devDependencies": {
     "@lexical/react": "^0.39.0",
     "@lexical/link": "^0.39.0",
+    "@types/node": "^25.1.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.1",
     "@typix-editor/react": "workspace:*",
     "lexical": "^0.39.0",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
-  },
-  "dependencies": {
-    "@types/node": "^25.1.0",
-    "@typix-editor/react": "workspace:*"
   }
 }
