@@ -10,3 +10,5 @@ export function CodeHighlightShikiExtension(): JSX.Element | null {
 
   return null;
 }
+
+CodeHighlightShikiExtension.displayName = "Typix.CodeHighlightShikiExtension";

@@ -30,3 +30,5 @@ export function FloatingLinkExtension({
     floatingAnchorElem
   );
 }
+
+FloatingLinkExtension.displayName = "Typix.FloatingLinkExtension";

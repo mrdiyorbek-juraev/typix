@@ -12,7 +12,7 @@ interface EditorContentProps {
    */
   className?: string;
 
-  classnames?: {
+  classNames?: {
     scroller?: string;
     container?: string;
     contentEditable?: string;
@@ -36,7 +36,7 @@ interface EditorContentProps {
  * ```
  */
 const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
-  ({ children, className, placeholder, classnames }, ref) => {
+  ({ children, className, placeholder, classNames }, ref) => {
     const { setFloatingAnchorElem } = useRootContext();
 
     const onRef = (_floatingAnchorElem: HTMLDivElement | null): void => {
@@ -48,7 +48,7 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
       <div className={className} ref={ref}>
         {children}
         <RichTextExtension
-          classNames={classnames}
+          classNames={classNames}
           editorRef={onRef}
           placeholder={placeholder}
         />

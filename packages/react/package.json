@@ -8,6 +8,33 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./lexical": {
+      "import": {
+        "types": "./dist/lexical.d.ts",
+        "default": "./dist/lexical.js"
+      },
+      "require": {
+        "types": "./dist/lexical.d.ts",
+        "default": "./dist/lexical.cjs"
+      }
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "lexical": ["./dist/lexical.d.ts"]
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/mrdiyorbek-juraev/typix.git"

@@ -47,3 +47,5 @@ export function KeywordsExtension(): JSX.Element | null {
 
   return null;
 }
+
+KeywordsExtension.displayName = "Typix.KeywordsExtension";

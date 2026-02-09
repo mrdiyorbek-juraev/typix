@@ -1,11 +1,11 @@
+import { createCommand } from "@typix-editor/react";
 import {
   $createHeadingNode,
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
   $setBlocksType,
-  createCommand,
-} from "@typix-editor/react";
+} from "@typix-editor/react/lexical";
 // Slash commands
 export const ParagraphCommand = createCommand({
   title: "Text",

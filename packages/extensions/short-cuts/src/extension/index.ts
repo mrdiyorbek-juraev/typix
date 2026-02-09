@@ -159,3 +159,5 @@ export function ShortCutsExtension({
 
   return null;
 }
+
+ShortCutsExtension.displayName = "Typix.ShortCutsExtension";

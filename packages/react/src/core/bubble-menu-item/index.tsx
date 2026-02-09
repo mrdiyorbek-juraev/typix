@@ -8,7 +8,7 @@ import {
 } from "lexical";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { forwardRef, useEffect, useState } from "react";
-import { useEditor } from "../../hooks/useEditor";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { cn } from "../../utils";
 
 export interface EditorBubbleItemRenderProps {
@@ -30,7 +30,7 @@ export const EditorBubbleItem = forwardRef<
   EditorBubbleItemProps &
     Omit<ComponentPropsWithoutRef<"div">, "onSelect" | "children">
 >(({ children, name, onSelect, className, ...rest }, ref) => {
-  const { editor } = useEditor();
+  const [editor] = useLexicalComposerContext();
   const [isActive, setIsActive] = useState<boolean>(false);
 
   useEffect(() => {

@@ -13,7 +13,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { EditorCommandProvider } from "../../context/command";
-import { useEditor } from "../../hooks/useEditor";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { cn } from "../../utils";
 
 export type CommandMenuItemConfig = {
@@ -68,7 +68,7 @@ export function EditorCommand({
   minLength = 0,
   maxLength = 50,
 }: EditorCommandProps) {
-  const { editor } = useEditor();
+  const [editor] = useLexicalComposerContext();
   const [queryString, setQueryString] = useState<string | null>(null);
 
   const checkForTriggerMatch = useBasicTypeaheadTriggerMatch(trigger, {

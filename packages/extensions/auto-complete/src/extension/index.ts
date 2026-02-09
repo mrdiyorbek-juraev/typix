@@ -265,6 +265,8 @@ export function AutocompleteExtension(): JSX.Element | null {
   return null;
 }
 
+AutocompleteExtension.displayName = "Typix.AutocompleteExtension";
+
 class AutocompleteServer {
   DATABASE = DICTIONARY;
   LATENCY = QUERY_LATENCY_MS;

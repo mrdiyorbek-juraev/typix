@@ -20,7 +20,7 @@ describe("createEditorConfig", () => {
       expect(config.editable).toBe(true);
     });
 
-    it("returns empty nodes array when extension_nodes not provided", () => {
+    it("returns empty nodes array when extensionNodes not provided", () => {
       const config = createEditorConfig({});
       expect(config.nodes).toEqual([]);
     });
@@ -65,16 +65,16 @@ describe("createEditorConfig", () => {
       expect(config.editable).toBe(false);
     });
 
-    it("uses provided extension_nodes", () => {
+    it("uses provided extensionNodes", () => {
       const mockNode = class MockNode {} as unknown as Klass<LexicalNode>;
-      const config = createEditorConfig({ extension_nodes: [mockNode] });
+      const config = createEditorConfig({ extensionNodes: [mockNode] });
       expect(config.nodes).toEqual([mockNode]);
     });
 
-    it("creates a copy of extension_nodes array", () => {
+    it("creates a copy of extensionNodes array", () => {
       const mockNode = class MockNode {} as unknown as Klass<LexicalNode>;
       const extensionNodes = [mockNode];
-      const config = createEditorConfig({ extension_nodes: extensionNodes });
+      const config = createEditorConfig({ extensionNodes: extensionNodes });
       expect(config.nodes).not.toBe(extensionNodes);
       expect(config.nodes).toEqual(extensionNodes);
     });

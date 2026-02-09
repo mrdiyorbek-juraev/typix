@@ -14,12 +14,6 @@ const editor = useTypixEditor();
 const lexical = editor.lexical; // LexicalEditor
 ```
 
-### Via useEditor hook
-
-```tsx
-const { editor } = useEditor(); // LexicalEditor directly
-```
-
 ### Via Lexical's own hook
 
 ```tsx
@@ -80,10 +74,10 @@ import { COMMAND_PRIORITY_LOW, createCommand } from 'lexical';
 const MY_CUSTOM_COMMAND = createCommand('MY_CUSTOM_COMMAND');
 
 function MyPlugin() {
-  const { editor } = useEditor();
+  const editor = useTypixEditor();
 
   useEffect(() => {
-    return editor.registerCommand(
+    return editor.lexical.registerCommand(
       MY_CUSTOM_COMMAND,
       (payload) => {
         console.log('Custom command received:', payload);
@@ -97,17 +91,17 @@ function MyPlugin() {
 }
 
 // Dispatch the command
-editor.dispatchCommand(MY_CUSTOM_COMMAND, { data: 'hello' });
+editor.lexical.dispatchCommand(MY_CUSTOM_COMMAND, { data: 'hello' });
 ```
 
 ## Registering listeners
 
 ```tsx
-useEffect(() => {
-  const { editor } = useEditor();
+const editor = useTypixEditor();
 
+useEffect(() => {
   // Listen for updates
-  const unregister = editor.registerUpdateListener(({ editorState }) => {
+  const unregister = editor.lexical.registerUpdateListener(({ editorState }) => {
     editorState.read(() => {
       // React to changes
     });
@@ -183,10 +177,10 @@ import {
 Register transforms that run whenever a specific node type is modified:
 
 ```tsx
-useEffect(() => {
-  const { editor } = useEditor();
+const editor = useTypixEditor();
 
-  return editor.registerNodeTransform(TextNode, (textNode) => {
+useEffect(() => {
+  return editor.lexical.registerNodeTransform(TextNode, (textNode) => {
     const text = textNode.getTextContent();
     // Auto-correct or transform text
     if (text.includes('teh')) {
