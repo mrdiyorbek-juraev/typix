@@ -1,9 +1,4 @@
 {
   "title": "Getting Started",
-  "pages": [
-    "installation",
-    "quick-start",
-    "editor-setup",
-    "theming"
-  ]
+  "pages": ["installation", "quick-start", "editor-setup", "theming"]
 }

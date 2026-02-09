@@ -3,13 +3,16 @@ import { baseOptions } from "@/lib/layout.shared";
 import { source } from "@/lib/source";
 import { linkItems } from "@/components/layout/header";
 import { TypixLogo } from "@/components/logo";
-import { AISearch, AISearchPanel, AISearchTrigger } from "@/components/ai/search";
+import {
+  AISearch,
+  AISearchPanel,
+  AISearchTrigger,
+} from "@/components/ai/search";
 import { cn } from "@/lib/cn";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import { MessageCircleIcon } from "lucide-react";
 import { getSection } from "@/lib/source/navigation";
-import 'katex/dist/katex.min.css';
-
+import "katex/dist/katex.min.css";
 
 export default function Layout({ children }: LayoutProps<"/docs">) {
   const base = baseOptions();
@@ -22,7 +25,9 @@ export default function Layout({ children }: LayoutProps<"/docs">) {
         title: (
           <>
             <TypixLogo className="size-7 invert dark:invert-0" />
-            <span className="font-medium in-[.uwu]:hidden max-md:hidden">Typix</span>
+            <span className="font-medium in-[.uwu]:hidden max-md:hidden">
+              Typix
+            </span>
           </>
         ),
       }}
@@ -40,7 +45,7 @@ export default function Layout({ children }: LayoutProps<"/docs">) {
                   className="[&_svg]:size-full rounded-lg size-full text-(--tab-color) max-md:bg-(--tab-color)/10 max-md:border max-md:p-1.5"
                   style={
                     {
-                      '--tab-color': color,
+                      "--tab-color": color,
                     } as object
                   }
                 >
@@ -59,9 +64,9 @@ export default function Layout({ children }: LayoutProps<"/docs">) {
           position="float"
           className={cn(
             buttonVariants({
-              variant: 'secondary',
-              className: 'text-fd-muted-foreground rounded-2xl',
-            }),
+              variant: "secondary",
+              className: "text-fd-muted-foreground rounded-2xl",
+            })
           )}
         >
           <MessageCircleIcon className="size-4.5" />

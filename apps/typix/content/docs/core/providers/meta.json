@@ -1,7 +1,4 @@
 {
   "title": "Providers",
-  "pages": [
-    "typix-editor-provider",
-    "editor-command-provider"
-  ]
+  "pages": ["typix-editor-provider", "editor-command-provider"]
 }
