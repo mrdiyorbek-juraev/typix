@@ -1,5 +1,5 @@
 "use client";
-import { LinkNode } from "@lexical/link";
+import { LinkNode } from "@typix-editor/react/lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { LinkPlugin as LexicalLinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { validateUrl } from "@typix-editor/react";
@@ -22,7 +22,7 @@ export function LinkExtension({
     if (!editor.hasNodes([LinkNode])) {
       throw new Error(
         "LinkExtension: LinkNode is not registered in the editor. " +
-          "Make sure to include LinkNode in your extensionNodes array."
+        "Make sure to include LinkNode in your extensionNodes array."
       );
     }
   }, [editor]);

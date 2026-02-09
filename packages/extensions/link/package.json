@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@lexical/react": "^0.39.0",
+    "@lexical/link": "^0.39.0",
     "@types/node": "^25.1.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.1",
