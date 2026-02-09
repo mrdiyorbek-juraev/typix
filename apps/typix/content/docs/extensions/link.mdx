@@ -1,0 +1,75 @@
+---
+title: Link
+description: URL validation for link nodes
+---
+
+The Link extension provides URL validation for link nodes in the editor. It wraps Lexical's `LinkPlugin` with Typix's URL validation.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-link
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-link
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-link
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { LinkExtension } from '@typix-editor/extension-link';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <LinkExtension />
+    </EditorRoot>
+  );
+}
+```
+
+<Callout type="info">
+  `LinkNode` is included in `defaultExtensionNodes`, so no additional node registration is needed.
+</Callout>
+
+### Custom URL validation
+
+```tsx
+<LinkExtension
+  validateUrl={(url) => {
+    // Only allow HTTPS URLs
+    return url.startsWith('https://');
+  }}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `validateUrl` | `(url: string) => boolean` | `validateUrl` from core | Custom URL validator function |
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `LinkExtension` | Component | The link validation plugin |
+| `LinkExtensionProps` | Type | Props type |
+
+## Related
+
+- [Floating Link](/docs/extensions/floating-link) — Floating link editor UI
+- [Auto Link](/docs/extensions/auto-link) — Auto-detect URLs
+- [URL Utilities](/docs/core/utilities/url-utils) — `sanitizeUrl` and `validateUrl`

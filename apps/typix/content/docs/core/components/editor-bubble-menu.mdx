@@ -1,0 +1,64 @@
+---
+title: EditorBubbleMenu
+description: A floating menu that appears when text is selected
+---
+
+`EditorBubbleMenu` renders a floating toolbar near the current text selection. It automatically shows when text is selected and hides when the selection is collapsed.
+
+## Import
+
+```tsx
+import { EditorBubbleMenu } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+<EditorRoot>
+  <EditorContent />
+  <EditorBubbleMenu className="flex gap-1 rounded-lg border bg-white p-1 shadow-md">
+    <button onClick={() => editor.toggleBold()}>B</button>
+    <button onClick={() => editor.toggleItalic()}>I</button>
+    <button onClick={() => editor.toggleUnderline()}>U</button>
+  </EditorBubbleMenu>
+</EditorRoot>
+```
+
+### With EditorBubbleItem
+
+```tsx
+import { EditorBubbleMenu, EditorBubbleItem } from '@typix-editor/react';
+
+<EditorBubbleMenu>
+  <EditorBubbleItem>
+    <button onClick={() => editor.toggleBold()}>Bold</button>
+  </EditorBubbleItem>
+</EditorBubbleMenu>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Toolbar buttons or content |
+| `className` | `string` | — | CSS class for the menu container |
+| `verticalGap` | `number` | `10` | Vertical gap between selection and menu (px) |
+| `horizontalOffset` | `number` | `5` | Horizontal offset from selection (px) |
+
+## Behavior
+
+- **Shows** when text is selected and the editor is editable
+- **Hides** when selection is collapsed, empty, or editor loses focus
+- **Positions** above the selection by default, flips below if insufficient space
+- **Disables pointer events** during mouse drag to prevent interference with selection
+- Renders via a React portal into the floating anchor element
+
+## Styling
+
+The menu has `position: absolute` with `willChange: transform`. Position is managed via inline `transform`. Apply your own styles via `className`:
+
+```tsx
+<EditorBubbleMenu className="flex items-center gap-1 rounded-lg border bg-white px-2 py-1 shadow-lg">
+  {/* buttons */}
+</EditorBubbleMenu>
+```

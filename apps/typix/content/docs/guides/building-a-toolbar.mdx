@@ -1,0 +1,181 @@
+---
+title: Building a Toolbar
+description: Step-by-step guide to building a full-featured formatting toolbar
+---
+
+This guide walks you through building a toolbar with text formatting, block types, alignment, font size, and history controls.
+
+## The basics
+
+Every toolbar needs two hooks:
+
+- `useTypixEditor()` — to call formatting methods
+- `useActiveFormats()` — to highlight active format buttons
+
+```tsx
+import { useTypixEditor, useActiveFormats } from '@typix-editor/react';
+```
+
+<Steps>
+
+### Create the toolbar component
+
+```tsx title="toolbar.tsx"
+import { useTypixEditor, useActiveFormats } from '@typix-editor/react';
+
+export function Toolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats();
+
+  return (
+    <div className="flex items-center gap-1 border-b p-2">
+      {/* We'll add buttons here */}
+    </div>
+  );
+}
+```
+
+### Add text format buttons
+
+```tsx title="toolbar.tsx"
+<button
+  className={isActive('bold') ? 'bg-gray-200' : ''}
+  onClick={() => editor.toggleBold()}
+>
+  B
+</button>
+<button
+  className={isActive('italic') ? 'bg-gray-200' : ''}
+  onClick={() => editor.toggleItalic()}
+>
+  I
+</button>
+<button
+  className={isActive('underline') ? 'bg-gray-200' : ''}
+  onClick={() => editor.toggleUnderline()}
+>
+  U
+</button>
+<button
+  className={isActive('strikethrough') ? 'bg-gray-200' : ''}
+  onClick={() => editor.toggleStrikethrough()}
+>
+  S
+</button>
+<button
+  className={isActive('code') ? 'bg-gray-200' : ''}
+  onClick={() => editor.toggleCode()}
+>
+  {'</>'}
+</button>
+```
+
+### Add block type controls
+
+```tsx title="toolbar.tsx"
+<select
+  value={editor.getBlockType() ?? 'paragraph'}
+  onChange={(e) => {
+    const value = e.target.value;
+    if (value === 'paragraph') editor.setParagraph();
+    else if (value === 'h1') editor.toggleHeading({ level: 1 });
+    else if (value === 'h2') editor.toggleHeading({ level: 2 });
+    else if (value === 'h3') editor.toggleHeading({ level: 3 });
+    else if (value === 'bullet') editor.toggleBulletList();
+    else if (value === 'number') editor.toggleOrderedList();
+    else if (value === 'check') editor.toggleCheckList();
+    else if (value === 'quote') editor.toggleQuote();
+    else if (value === 'code') editor.toggleCodeBlock();
+  }}
+>
+  <option value="paragraph">Paragraph</option>
+  <option value="h1">Heading 1</option>
+  <option value="h2">Heading 2</option>
+  <option value="h3">Heading 3</option>
+  <option value="bullet">Bullet List</option>
+  <option value="number">Numbered List</option>
+  <option value="check">Check List</option>
+  <option value="quote">Quote</option>
+  <option value="code">Code Block</option>
+</select>
+```
+
+### Add alignment controls
+
+```tsx title="toolbar.tsx"
+<button onClick={() => editor.alignLeft()}>Left</button>
+<button onClick={() => editor.alignCenter()}>Center</button>
+<button onClick={() => editor.alignRight()}>Right</button>
+<button onClick={() => editor.alignJustify()}>Justify</button>
+```
+
+### Add history controls
+
+```tsx title="toolbar.tsx"
+<button onClick={() => editor.undo()}>Undo</button>
+<button onClick={() => editor.redo()}>Redo</button>
+```
+
+### Wire it up
+
+```tsx title="editor.tsx"
+import { EditorRoot, EditorContent } from '@typix-editor/react';
+import { Toolbar } from './toolbar';
+
+export function MyEditor() {
+  return (
+    <EditorRoot>
+      <Toolbar />
+      <EditorContent placeholder="Start writing..." />
+    </EditorRoot>
+  );
+}
+```
+
+</Steps>
+
+## Adding a bubble menu
+
+For inline formatting on text selection, use `EditorBubbleMenu`:
+
+```tsx
+import { EditorBubbleMenu, useTypixEditor, useActiveFormats } from '@typix-editor/react';
+
+function BubbleToolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats();
+
+  return (
+    <EditorBubbleMenu className="flex gap-1 rounded-lg border bg-white p-1 shadow-md">
+      <button
+        className={isActive('bold') ? 'bg-gray-200' : ''}
+        onClick={() => editor.toggleBold()}
+      >
+        B
+      </button>
+      <button
+        className={isActive('italic') ? 'bg-gray-200' : ''}
+        onClick={() => editor.toggleItalic()}
+      >
+        I
+      </button>
+    </EditorBubbleMenu>
+  );
+}
+```
+
+## Font size controls
+
+```tsx
+function FontSizeControls() {
+  const editor = useTypixEditor();
+
+  return (
+    <div className="flex items-center gap-1">
+      <button onClick={() => editor.decrementFontSize(2)}>-</button>
+      <span>{editor.getFontSize()}px</span>
+      <button onClick={() => editor.incrementFontSize(2)}>+</button>
+    </div>
+  );
+}
+```

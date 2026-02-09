@@ -1,0 +1,159 @@
+---
+title: Theming
+description: Customize the editor appearance with theme classes
+---
+
+Typix uses Lexical's theming system — a mapping of editor elements to CSS class names. You provide CSS classes and Lexical applies them to the rendered DOM.
+
+## Default theme
+
+Import the built-in theme:
+
+```tsx
+import { defaultTheme } from '@typix-editor/react';
+```
+
+The default theme provides `typix-*` prefixed class names for all editor elements. You write the CSS that targets these classes.
+
+## Theme class reference
+
+### Text formats
+
+| Key | Class | Element |
+| --- | --- | --- |
+| `text.bold` | `typix-text--bold` | Bold text |
+| `text.italic` | `typix-text--italic` | Italic text |
+| `text.underline` | `typix-text--underline` | Underlined text |
+| `text.strikethrough` | `typix-text--strikethrough` | Strikethrough text |
+| `text.code` | `typix-text--code` | Inline code |
+| `text.highlight` | `typix-text--highlight` | Highlighted text |
+| `text.subscript` | `typix-text--subscript` | Subscript text |
+| `text.superscript` | `typix-text--superscript` | Superscript text |
+
+### Block elements
+
+| Key | Class | Element |
+| --- | --- | --- |
+| `paragraph` | `typix-paragraph` | Paragraph |
+| `heading.h1`–`heading.h6` | `typix-heading--h1`–`typix-heading--h6` | Headings |
+| `quote` | `typix-quote` | Block quote |
+| `code` | `typix-code` | Code block |
+| `link` | `typix-link` | Link |
+
+### Lists
+
+| Key | Class | Element |
+| --- | --- | --- |
+| `list.ul` | `typix-list--ul` | Unordered list |
+| `list.checklist` | `typix-checklist` | Check list |
+| `list.listitem` | `typix-list__item` | List item |
+| `list.listitemChecked` | `typix-list__item--checked` | Checked item |
+| `list.listitemUnchecked` | `typix-list__item--unchecked` | Unchecked item |
+
+### Tables
+
+| Key | Class | Element |
+| --- | --- | --- |
+| `table` | `typix-table` | Table |
+| `tableCell` | `typix-table__cell` | Table cell |
+| `tableCellHeader` | `typix-table__cell--header` | Header cell |
+| `tableCellSelected` | `typix-table__cell--selected` | Selected cell |
+
+## Custom theme
+
+Create your own theme object or extend the default:
+
+```tsx
+import { defaultTheme, createEditorConfig } from '@typix-editor/react';
+
+const myTheme = {
+  ...defaultTheme,
+  paragraph: 'my-paragraph',
+  heading: {
+    h1: 'my-heading-1',
+    h2: 'my-heading-2',
+    h3: 'my-heading-3',
+    h4: 'my-heading-4',
+    h5: 'my-heading-5',
+    h6: 'my-heading-6',
+  },
+  text: {
+    ...defaultTheme.text,
+    bold: 'my-bold',
+  },
+};
+
+const config = createEditorConfig({
+  theme: myTheme,
+});
+```
+
+## CSS example
+
+Here's a minimal stylesheet targeting the default theme classes:
+
+```css
+.typix-text--bold {
+  font-weight: bold;
+}
+
+.typix-text--italic {
+  font-style: italic;
+}
+
+.typix-text--underline {
+  text-decoration: underline;
+}
+
+.typix-text--strikethrough {
+  text-decoration: line-through;
+}
+
+.typix-text--code {
+  background: #f4f4f5;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.typix-heading--h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.typix-heading--h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.typix-quote {
+  border-left: 4px solid #e4e4e7;
+  padding-left: 1em;
+  color: #71717a;
+}
+```
+
+## Tailwind CSS
+
+If you use Tailwind, you can apply utility classes directly in the theme:
+
+```tsx
+const tailwindTheme = {
+  paragraph: 'mb-2',
+  heading: {
+    h1: 'text-4xl font-bold mb-4',
+    h2: 'text-3xl font-bold mb-3',
+    h3: 'text-2xl font-bold mb-2',
+  },
+  text: {
+    bold: 'font-bold',
+    italic: 'italic',
+    underline: 'underline',
+    strikethrough: 'line-through',
+    code: 'bg-zinc-100 px-1 rounded font-mono text-sm',
+  },
+  quote: 'border-l-4 border-zinc-300 pl-4 text-zinc-500',
+  link: 'text-blue-600 underline hover:text-blue-800',
+};
+```

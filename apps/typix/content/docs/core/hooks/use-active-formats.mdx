@@ -1,0 +1,81 @@
+---
+title: useActiveFormats
+description: Reactive hook for tracking active text format state
+---
+
+`useActiveFormats` provides reactive format state for building toolbars. Unlike `editor.isActive()` which reads synchronously, this hook causes re-renders when active formats change.
+
+## Import
+
+```tsx
+import { useActiveFormats } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+function Toolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats();
+
+  return (
+    <div>
+      <button
+        className={isActive('bold') ? 'active' : ''}
+        onClick={() => editor.toggleBold()}
+      >
+        Bold
+      </button>
+      <button
+        className={isActive('italic') ? 'active' : ''}
+        onClick={() => editor.toggleItalic()}
+      >
+        Italic
+      </button>
+    </div>
+  );
+}
+```
+
+### Track specific formats only
+
+For performance, you can limit which formats are tracked:
+
+```tsx
+const { isActive } = useActiveFormats({
+  formats: ['bold', 'italic', 'underline'],
+});
+```
+
+### Using the activeFormats set
+
+```tsx
+const { activeFormats } = useActiveFormats();
+
+if (activeFormats.has('bold')) {
+  // Bold is active
+}
+
+console.log('Active formats:', [...activeFormats]);
+```
+
+## Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `formats` | `TextFormatType[]` | All formats | Specific formats to track |
+
+## Return value
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `activeFormats` | `Set<TextFormatType>` | Set of currently active format types |
+| `isActive` | `(format: TextFormatType) => boolean` | Check if a specific format is active |
+
+## Available TextFormatType values
+
+`"bold"` | `"italic"` | `"underline"` | `"strikethrough"` | `"code"` | `"subscript"` | `"superscript"` | `"highlight"` | `"lowercase"` | `"uppercase"`
+
+## Performance
+
+The hook only triggers re-renders when the set of active formats actually changes. It compares the previous and new sets before updating state, avoiding unnecessary renders.

@@ -1,0 +1,156 @@
+---
+title: Slash Commands
+description: Build a Notion-style "/" command menu
+---
+
+This guide shows how to build a Notion-style slash command menu using the `EditorCommand` component.
+
+<Steps>
+
+### Define command options
+
+Create a list of commands using `CommandMenuOption`:
+
+```tsx title="commands.tsx"
+import {
+  CommandMenuOption,
+  $createHeadingNode,
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+  $setBlocksType,
+} from '@typix-editor/react';
+
+export const slashCommands = [
+  new CommandMenuOption('Heading 1', {
+    icon: <span>H1</span>,
+    keywords: ['title', 'heading', 'h1'],
+    shortDescription: 'Large heading',
+    onSelect: (_, editor) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $setBlocksType(selection, () => $createHeadingNode('h1'));
+        }
+      });
+    },
+  }),
+  new CommandMenuOption('Heading 2', {
+    icon: <span>H2</span>,
+    keywords: ['subtitle', 'heading', 'h2'],
+    shortDescription: 'Medium heading',
+    onSelect: (_, editor) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $setBlocksType(selection, () => $createHeadingNode('h2'));
+        }
+      });
+    },
+  }),
+  new CommandMenuOption('Paragraph', {
+    icon: <span>P</span>,
+    keywords: ['text', 'normal'],
+    shortDescription: 'Plain text',
+    onSelect: (_, editor) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $setBlocksType(selection, () => $createParagraphNode());
+        }
+      });
+    },
+  }),
+];
+```
+
+### Build the command menu UI
+
+```tsx title="command-menu.tsx"
+import {
+  EditorCommand,
+  EditorCommandList,
+  EditorCommandItem,
+  EditorCommandEmpty,
+} from '@typix-editor/react';
+import { slashCommands } from './commands';
+
+export function SlashCommandMenu() {
+  return (
+    <EditorCommand
+      items={slashCommands}
+      trigger="/"
+      className="z-50 w-64 rounded-lg border bg-white shadow-lg"
+    >
+      <EditorCommandList className="max-h-64 overflow-y-auto p-1">
+        <EditorCommandEmpty className="px-3 py-2 text-sm text-gray-500">
+          No results found
+        </EditorCommandEmpty>
+        {slashCommands.map((item, index) => (
+          <EditorCommandItem
+            key={item.title}
+            item={item}
+            index={index}
+            className="flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm hover:bg-gray-100"
+          >
+            <span className="text-gray-500">{item.icon}</span>
+            <div>
+              <div className="font-medium">{item.title}</div>
+              {item.shortDescription && (
+                <div className="text-xs text-gray-400">{item.shortDescription}</div>
+              )}
+            </div>
+          </EditorCommandItem>
+        ))}
+      </EditorCommandList>
+    </EditorCommand>
+  );
+}
+```
+
+### Add to the editor
+
+```tsx title="editor.tsx"
+import { EditorRoot, EditorContent } from '@typix-editor/react';
+import { SlashCommandMenu } from './command-menu';
+
+export function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent placeholder='Type "/" for commands...' />
+      <SlashCommandMenu />
+    </EditorRoot>
+  );
+}
+```
+
+</Steps>
+
+## Customizing the trigger
+
+Change the trigger character:
+
+```tsx
+<EditorCommand items={items} trigger="#">
+  {/* ... */}
+</EditorCommand>
+```
+
+## Adding more commands
+
+Extend the commands array with any editor operation:
+
+```tsx
+new CommandMenuOption('Quote', {
+  icon: <span>"</span>,
+  keywords: ['blockquote', 'cite'],
+  onSelect: (_, editor) => {
+    editor.update(() => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
+        $setBlocksType(selection, () => $createQuoteNode());
+      }
+    });
+  },
+}),
+```

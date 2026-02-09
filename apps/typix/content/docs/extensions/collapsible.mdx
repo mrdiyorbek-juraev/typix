@@ -1,0 +1,100 @@
+---
+title: Collapsible
+description: Collapsible/accordion blocks for toggling content visibility
+---
+
+The Collapsible extension adds expandable/collapsible blocks (like `<details>`) to the editor.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-collapsible
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-collapsible
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-collapsible
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+Register the collapsible nodes and add the plugin:
+
+```tsx
+import { createEditorConfig, defaultExtensionNodes } from '@typix-editor/react';
+import {
+  CollapsiblePlugin,
+  CollapsibleContainerNode,
+  CollapsibleContentNode,
+  CollapsibleTitleNode,
+} from '@typix-editor/extension-collapsible';
+
+const config = createEditorConfig({
+  extension_nodes: [
+    ...defaultExtensionNodes,
+    CollapsibleContainerNode,
+    CollapsibleContentNode,
+    CollapsibleTitleNode,
+  ],
+});
+
+function MyEditor() {
+  return (
+    <EditorRoot config={config}>
+      <EditorContent />
+      <CollapsiblePlugin />
+    </EditorRoot>
+  );
+}
+```
+
+## Inserting a collapsible block
+
+Use the `INSERT_COLLAPSIBLE_COMMAND`:
+
+```tsx
+import { INSERT_COLLAPSIBLE_COMMAND } from '@typix-editor/extension-collapsible';
+
+function InsertCollapsibleButton() {
+  const { editor } = useEditor();
+
+  return (
+    <button onClick={() => editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined)}>
+      Insert Collapsible
+    </button>
+  );
+}
+```
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `CollapsiblePlugin` | Component | The collapsible behavior plugin |
+| `INSERT_COLLAPSIBLE_COMMAND` | Lexical Command | Command to insert a new collapsible |
+| `CollapsibleContainerNode` | Lexical Node | Outer container node |
+| `CollapsibleContentNode` | Lexical Node | Content area node |
+| `CollapsibleTitleNode` | Lexical Node | Title/summary node |
+| `$createCollapsibleContainerNode` | Function | Create a container node |
+| `$createCollapsibleContentNode` | Function | Create a content node |
+| `$createCollapsibleTitleNode` | Function | Create a title node |
+| `$isCollapsibleContainerNode` | Function | Type guard for container |
+| `$isCollapsibleContentNode` | Function | Type guard for content |
+| `$isCollapsibleTitleNode` | Function | Type guard for title |
+
+## Nodes
+
+| Node | Description |
+| --- | --- |
+| `CollapsibleContainerNode` | Wraps the title and content. Tracks open/closed state. |
+| `CollapsibleTitleNode` | The clickable title/summary that toggles visibility. |
+| `CollapsibleContentNode` | The content area that shows/hides. |

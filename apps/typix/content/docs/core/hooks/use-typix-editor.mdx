@@ -1,0 +1,55 @@
+---
+title: useTypixEditor
+description: Access the TypixEditor instance for fluent editor operations
+---
+
+`useTypixEditor` returns the `TypixEditor` instance, providing a clean API for all editor operations.
+
+## Import
+
+```tsx
+import { useTypixEditor } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+function Toolbar() {
+  const editor = useTypixEditor();
+
+  return (
+    <div>
+      <button onClick={() => editor.toggleBold()}>Bold</button>
+      <button onClick={() => editor.toggleItalic()}>Italic</button>
+      <button onClick={() => editor.undo()}>Undo</button>
+      <button onClick={() => editor.redo()}>Redo</button>
+    </div>
+  );
+}
+```
+
+## Return value
+
+| Type | Description |
+| --- | --- |
+| `TypixEditor` | The editor instance with fluent API methods |
+
+See [TypixEditor API](/docs/core/typix-editor) for all available methods.
+
+## Requirements
+
+Must be used inside an `EditorRoot`. Throws an error otherwise:
+
+```
+useTypixEditor must be used within EditorRoot.
+Make sure your component is wrapped in <EditorRoot>.
+```
+
+## Difference from useEditor
+
+| Hook | Returns | Use case |
+| --- | --- | --- |
+| `useTypixEditor` | `TypixEditor` | High-level fluent API (formatting, content export, etc.) |
+| `useEditor` | `{ editor: LexicalEditor, isEmpty: boolean }` | Low-level Lexical access + empty state |
+
+Use `useTypixEditor` for most cases. Use `useEditor` when you need the raw Lexical editor instance or the `isEmpty` state.

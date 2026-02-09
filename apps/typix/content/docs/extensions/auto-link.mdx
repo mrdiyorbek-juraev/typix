@@ -1,0 +1,58 @@
+---
+title: Auto Link
+description: Automatically detect and convert URLs into link nodes
+---
+
+The Auto Link extension detects URLs as users type and automatically converts them into clickable link nodes.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-auto-link
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-auto-link
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-auto-link
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { AutoLinkExtension } from '@typix-editor/extension-auto-link';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <AutoLinkExtension />
+    </EditorRoot>
+  );
+}
+```
+
+<Callout type="info">
+  The `AutoLinkNode` is already included in `defaultExtensionNodes`, so you don't need to add it to your config.
+</Callout>
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `AutoLinkExtension` | Component | The auto-link detection plugin |
+
+## Behavior
+
+- Detects URLs matching `http://`, `https://`, `mailto:`, `tel:`, and `sms:` protocols
+- Converts matching text into `AutoLinkNode` instances
+- Works in real-time as the user types
+- Preserves the original text as the link label

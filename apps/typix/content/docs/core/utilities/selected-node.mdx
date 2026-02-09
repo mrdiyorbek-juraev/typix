@@ -1,0 +1,45 @@
+---
+title: getSelectedNode
+description: Get the currently selected node from a range selection
+---
+
+`getSelectedNode` returns the most relevant node in the current selection. Handles forward and backward selections correctly.
+
+## Import
+
+```tsx
+import { getSelectedNode } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+import { $getSelection, $isRangeSelection } from '@typix-editor/react';
+
+editor.read(() => {
+  const selection = $getSelection();
+  if ($isRangeSelection(selection)) {
+    const node = getSelectedNode(selection);
+    console.log(node.getType()); // 'text', 'paragraph', etc.
+  }
+});
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `selection` | `RangeSelection` | A Lexical range selection |
+
+## Return value
+
+| Type | Description |
+| --- | --- |
+| `TextNode \| ElementNode` | The selected node |
+
+## Behavior
+
+- If anchor and focus are the same node, returns that node
+- For forward selections, returns the node at the **anchor end**
+- For backward selections, returns the node at the **focus end**
+- Uses `$isAtNodeEnd` to determine the boundary node

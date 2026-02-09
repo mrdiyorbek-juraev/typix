@@ -1,0 +1,52 @@
+---
+title: TypixEditorProvider
+description: Context provider that makes the TypixEditor instance available
+---
+
+`TypixEditorProvider` creates a `TypixEditor` instance from the Lexical editor and provides it via React context. This is set up automatically by `EditorRoot`.
+
+## Import
+
+```tsx
+import { TypixEditorProvider } from '@typix-editor/react';
+```
+
+## Usage
+
+<Callout type="info">
+  You typically don't need to use this directly. `EditorRoot` includes it automatically.
+</Callout>
+
+If you're building a custom editor root without `EditorRoot`, wrap your components in `TypixEditorProvider` inside a `LexicalComposer`:
+
+```tsx
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { TypixEditorProvider } from '@typix-editor/react';
+
+function CustomEditorRoot({ children, config }) {
+  return (
+    <LexicalComposer initialConfig={config}>
+      <TypixEditorProvider>
+        {children}
+      </TypixEditorProvider>
+    </LexicalComposer>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `children` | `ReactNode` | Components that need access to the TypixEditor |
+
+## Context value
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `editor` | `TypixEditor` | The TypixEditor instance |
+
+## Related
+
+- [`useTypixEditor`](/docs/core/hooks/use-typix-editor) — Hook to consume this context
+- [`EditorRoot`](/docs/core/components/editor-root) — Sets up this provider automatically

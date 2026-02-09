@@ -1,0 +1,76 @@
+---
+title: Installation
+description: Install Typix and its peer dependencies
+---
+
+## Prerequisites
+
+- **Node.js** 18 or later
+- **React** 18 or 19
+- A package manager: pnpm, npm, or yarn
+
+## Install the core package
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/react lexical @lexical/react @lexical/rich-text @lexical/list @lexical/link @lexical/code @lexical/hashtag @lexical/html @lexical/markdown @lexical/overflow @lexical/selection @lexical/table @lexical/text @lexical/utils @lexical/headless
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/react lexical @lexical/react @lexical/rich-text @lexical/list @lexical/link @lexical/code @lexical/hashtag @lexical/html @lexical/markdown @lexical/overflow @lexical/selection @lexical/table @lexical/text @lexical/utils @lexical/headless
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/react lexical @lexical/react @lexical/rich-text @lexical/list @lexical/link @lexical/code @lexical/hashtag @lexical/html @lexical/markdown @lexical/overflow @lexical/selection @lexical/table @lexical/text @lexical/utils @lexical/headless
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+  `@typix-editor/react` requires Lexical **0.39+** and React **18.2+** (or React 19) as peer dependencies.
+</Callout>
+
+## Install extensions (optional)
+
+Extensions are separate packages you add as needed. For example:
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-link @typix-editor/extension-short-cuts
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-link @typix-editor/extension-short-cuts
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-link @typix-editor/extension-short-cuts
+    ```
+  </Tab>
+</Tabs>
+
+See the [Extensions overview](/docs/extensions/overview) for the full catalog.
+
+## Verify installation
+
+Create a minimal editor to confirm everything is working:
+
+```tsx
+import { EditorRoot, EditorContent } from '@typix-editor/react';
+
+export default function App() {
+  return (
+    <EditorRoot>
+      <EditorContent placeholder="Type something..." />
+    </EditorRoot>
+  );
+}
+```
+
+If you see an editable text area, you're ready to go. Next, follow the [Quick Start](/docs/getting-started/quick-start) guide.

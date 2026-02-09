@@ -1,0 +1,53 @@
+---
+title: Tab Focus
+description: Tab key focus management for the editor
+---
+
+The Tab Focus extension manages Tab key behavior, allowing users to tab out of the editor to the next focusable element instead of inserting a tab character.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-tab-focus
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-tab-focus
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-tab-focus
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { TabFocusExtension } from '@typix-editor/extension-tab-focus';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <TabFocusExtension />
+    </EditorRoot>
+  );
+}
+```
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `TabFocusExtension` | Component | The tab focus management plugin |
+
+## Behavior
+
+- Pressing `Tab` moves focus to the next focusable element on the page
+- Pressing `Shift+Tab` moves focus to the previous focusable element
+- Useful for forms where Tab should navigate between fields rather than indent content

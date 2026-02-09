@@ -1,0 +1,105 @@
+---
+title: Short Cuts
+description: Keyboard shortcuts for editor formatting and block operations
+---
+
+The Short Cuts extension registers keyboard shortcuts for common formatting, block, alignment, and font size operations.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-short-cuts
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-short-cuts
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-short-cuts
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { ShortCutsExtension } from '@typix-editor/extension-short-cuts';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <ShortCutsExtension />
+    </EditorRoot>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onLinkEditModeChange` | `(isLinkEditMode: boolean) => void` | — | Callback when link edit mode toggles |
+
+## Available shortcuts
+
+### Block formatting
+
+| Shortcut | Action |
+| --- | --- |
+| `Ctrl+Alt+0` | Paragraph |
+| `Ctrl+Alt+1`–`6` | Heading 1–6 |
+| `Ctrl+Alt+7` | Bullet list |
+| `Ctrl+Alt+8` | Numbered list |
+| `Ctrl+Alt+9` | Check list |
+| `Ctrl+Shift+C` | Code block |
+| `Ctrl+Shift+Q` | Block quote |
+
+### Text formatting
+
+| Shortcut | Action |
+| --- | --- |
+| `Ctrl+Shift+S` | Strikethrough |
+| `Ctrl+Shift+L` | Lowercase |
+| `Ctrl+Shift+U` | Uppercase |
+| `Ctrl+Shift+K` | Capitalize |
+| `Ctrl+,` | Subscript |
+| `Ctrl+.` | Superscript |
+| `Ctrl+Shift+E` | Inline code |
+
+### Alignment
+
+| Shortcut | Action |
+| --- | --- |
+| `Ctrl+Shift+L` | Left align |
+| `Ctrl+Shift+E` | Center align |
+| `Ctrl+Shift+R` | Right align |
+| `Ctrl+Shift+J` | Justify |
+
+### Other
+
+| Shortcut | Action |
+| --- | --- |
+| `Ctrl+Shift+=` | Increase font size |
+| `Ctrl+Shift+-` | Decrease font size |
+| `Ctrl+Shift+X` | Clear formatting |
+| `Ctrl+K` | Insert/toggle link |
+| `Ctrl+]` | Indent |
+| `Ctrl+[` | Outdent |
+
+<Callout type="info">
+  On macOS, `Ctrl` is replaced with `Cmd`.
+</Callout>
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `ShortCutsExtension` | Component | The keyboard shortcuts plugin |
+| `ShortCutsExtensionProps` | Type | Props type |
+| `SHORTCUTS` | Object | Shortcut definitions for reference |

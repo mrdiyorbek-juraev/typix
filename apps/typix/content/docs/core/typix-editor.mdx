@@ -1,0 +1,226 @@
+---
+title: TypixEditor
+description: Full API reference for the TypixEditor class
+---
+
+`TypixEditor` provides a clean, fluent API for all editor operations. Every method that modifies the editor returns `this`, enabling chaining.
+
+```tsx
+const editor = useTypixEditor();
+
+editor
+  .toggleBold()
+  .alignCenter()
+  .setFontSize(18);
+```
+
+## Accessing the editor
+
+```tsx
+import { useTypixEditor } from '@typix-editor/react';
+
+function MyComponent() {
+  const editor = useTypixEditor();
+  // ...
+}
+```
+
+## Lexical access
+
+Access the underlying Lexical editor for advanced operations:
+
+```tsx
+const lexical = editor.lexical;
+```
+
+## Text formatting
+
+| Method | Description |
+| --- | --- |
+| `toggleFormat(format)` | Toggle any `TextFormatType` |
+| `toggleBold()` | Toggle bold |
+| `toggleItalic()` | Toggle italic |
+| `toggleUnderline()` | Toggle underline |
+| `toggleStrikethrough()` | Toggle strikethrough |
+| `toggleCode()` | Toggle inline code |
+| `toggleSubscript()` | Toggle subscript |
+| `toggleSuperscript()` | Toggle superscript |
+| `toggleHighlight()` | Toggle highlight |
+| `toggleLink(url)` | Toggle a link with the given URL |
+| `clearFormatting()` | Remove all formatting from selection |
+
+```tsx
+editor.toggleBold();
+editor.toggleFormat('italic');
+editor.toggleLink('https://example.com');
+editor.clearFormatting();
+```
+
+## Block formatting
+
+| Method | Description |
+| --- | --- |
+| `toggleHeading({ level })` | Toggle heading (1–6) |
+| `setParagraph()` | Convert to paragraph |
+| `toggleBulletList()` | Toggle unordered list |
+| `toggleOrderedList()` | Toggle ordered list |
+| `toggleCheckList()` | Toggle check list |
+| `toggleQuote()` | Toggle block quote |
+| `toggleCodeBlock(language?)` | Toggle code block with optional language |
+
+```tsx
+editor.toggleHeading({ level: 2 });
+editor.toggleBulletList();
+editor.toggleCodeBlock('typescript');
+```
+
+## Alignment
+
+| Method | Description |
+| --- | --- |
+| `formatAlign(alignment)` | Set any `ElementAlignment` |
+| `alignLeft()` | Align left |
+| `alignCenter()` | Align center |
+| `alignRight()` | Align right |
+| `alignJustify()` | Justify |
+| `alignStart()` | Align start (RTL-aware) |
+| `alignEnd()` | Align end (RTL-aware) |
+
+```tsx
+editor.alignCenter();
+editor.formatAlign('justify');
+```
+
+## Font size
+
+| Method | Description |
+| --- | --- |
+| `setFontSize(size)` | Set font size in pixels |
+| `getFontSize()` | Get current font size |
+| `incrementFontSize(step?)` | Increase font size (default step: 1) |
+| `decrementFontSize(step?)` | Decrease font size (default step: 1) |
+
+Font size is constrained between 8 and 144 pixels.
+
+```tsx
+editor.setFontSize(24);
+editor.incrementFontSize(2);
+const size = editor.getFontSize();
+```
+
+## State queries
+
+| Method | Returns | Description |
+| --- | --- | --- |
+| `isActive(format)` | `boolean` | Check if a text format is active |
+| `getActiveFormats()` | `Set<TextFormatType>` | Get all active text formats |
+| `isBlockActive(blockType)` | `boolean` | Check if a block type is active |
+| `getBlockType()` | `BlockType \| null` | Get the current block type |
+
+```tsx
+if (editor.isActive('bold')) {
+  console.log('Bold is active');
+}
+
+const blockType = editor.getBlockType(); // 'paragraph', 'h1', 'bullet', etc.
+```
+
+### BlockType values
+
+`"paragraph"` | `"h1"` | `"h2"` | `"h3"` | `"h4"` | `"h5"` | `"h6"` | `"bullet"` | `"number"` | `"check"` | `"quote"` | `"code"`
+
+## Content export
+
+| Method | Returns | Description |
+| --- | --- | --- |
+| `getJSON()` | `SerializedEditorState` | Export as Lexical JSON |
+| `getHTML()` | `string` | Export as HTML string |
+| `getMarkdown()` | `string` | Export as Markdown string |
+| `getText()` | `string` | Export as plain text |
+
+```tsx
+const json = editor.getJSON();
+const html = editor.getHTML();
+const markdown = editor.getMarkdown();
+const text = editor.getText();
+```
+
+## Content import
+
+| Method | Description |
+| --- | --- |
+| `setJSON(json)` | Replace content from Lexical JSON |
+| `setHTML(html)` | Replace content from HTML string |
+| `setMarkdown(markdown)` | Replace content from Markdown string |
+| `clearContent()` | Clear all content |
+
+```tsx
+editor.setHTML('<p>Hello <strong>world</strong></p>');
+editor.setMarkdown('# Hello\n\nParagraph text');
+editor.clearContent();
+```
+
+## History
+
+| Method | Description |
+| --- | --- |
+| `undo()` | Undo the last change |
+| `redo()` | Redo the last undone change |
+
+```tsx
+editor.undo();
+editor.redo();
+```
+
+## Editor control
+
+| Method | Description |
+| --- | --- |
+| `focus()` | Focus the editor |
+| `blur()` | Blur the editor |
+| `isEditable()` | Check if the editor is editable |
+| `setEditable(editable)` | Enable or disable editing |
+
+```tsx
+editor.focus();
+editor.setEditable(false); // read-only mode
+```
+
+## Advanced operations
+
+### read
+
+Execute a synchronous read operation on the editor state:
+
+```tsx
+const result = editor.read(() => {
+  const selection = $getSelection();
+  return selection?.getTextContent();
+});
+```
+
+### update
+
+Execute a write operation on the editor:
+
+```tsx
+editor.update(() => {
+  const root = $getRoot();
+  root.clear();
+});
+```
+
+### onUpdate
+
+Register a listener for editor state changes. Returns an unsubscribe function.
+
+```tsx
+const unsubscribe = editor.onUpdate(({ editorState }) => {
+  editorState.read(() => {
+    console.log('Editor updated');
+  });
+});
+
+// Later: clean up
+unsubscribe();
+```

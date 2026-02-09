@@ -1,0 +1,52 @@
+---
+title: EditorCommandProvider
+description: Context provider for the command menu system
+---
+
+`EditorCommandProvider` provides the command menu state to `EditorCommandItem` and other command sub-components. This is managed internally by `EditorCommand`.
+
+## Import
+
+```tsx
+import { EditorCommandProvider, useEditorCommand } from '@typix-editor/react';
+```
+
+## Context value
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `editor` | `LexicalEditor` | The Lexical editor instance |
+| `selectedIndex` | `number` | Currently highlighted item index |
+| `setHighlightedIndex` | `(index: number) => void` | Set the highlighted item |
+| `selectOptionAndCleanUp` | `(option: CommandMenuOption) => void` | Select an option and close the menu |
+| `filteredItems` | `Array<CommandMenuOption>` | Currently filtered command options |
+
+## useEditorCommand
+
+Hook to access the command context:
+
+```tsx
+import { useEditorCommand } from '@typix-editor/react';
+
+function CustomCommandItem({ item, index }) {
+  const { selectedIndex, selectOptionAndCleanUp } = useEditorCommand();
+  const isSelected = selectedIndex === index;
+
+  return (
+    <div
+      className={isSelected ? 'bg-blue-50' : ''}
+      onClick={() => selectOptionAndCleanUp(item)}
+    >
+      {item.title}
+    </div>
+  );
+}
+```
+
+<Callout type="info">
+  You typically don't use `EditorCommandProvider` directly. It's set up by `EditorCommand` internally.
+</Callout>
+
+## Related
+
+- [`EditorCommand`](/docs/core/components/editor-command) — Parent component that sets up this provider

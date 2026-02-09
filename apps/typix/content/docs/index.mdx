@@ -1,13 +1,55 @@
 ---
-title: Hello World
-description: Your first document
+title: Typix Editor
+description: A modern, extensible rich-text editor framework built on Lexical
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+Typix is a headless, extension-based rich-text editor framework for React. It wraps Meta's [Lexical](https://lexical.dev) with a clean, fluent API and a powerful extension system.
 
-## What is Next?
+## Why Typix?
+
+- **Headless** — No forced UI. Full control over every rendered element.
+- **Extension-based** — Modular features you install only when needed.
+- **Fluent API** — Chain editor operations with a clean, discoverable interface.
+- **Type-safe** — First-class TypeScript support throughout.
+- **Built on Lexical** — Battle-tested foundation from Meta with direct access when you need it.
+
+## Quick Example
+
+```tsx
+import {
+  EditorRoot,
+  EditorContent,
+  useTypixEditor,
+} from '@typix-editor/react';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <Toolbar />
+      <EditorContent placeholder="Start typing..." />
+    </EditorRoot>
+  );
+}
+
+function Toolbar() {
+  const editor = useTypixEditor();
+
+  return (
+    <div>
+      <button onClick={() => editor.toggleBold()}>Bold</button>
+      <button onClick={() => editor.toggleItalic()}>Italic</button>
+    </div>
+  );
+}
+```
+
+## Explore
 
 <Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.dev" />
+  <Card title="Installation" href="/docs/getting-started/installation" description="Install Typix and its dependencies" />
+  <Card title="Quick Start" href="/docs/getting-started/quick-start" description="Build your first editor in 5 minutes" />
+  <Card title="Core API" href="/docs/core/overview" description="Components, hooks, and the TypixEditor class" />
+  <Card title="Extensions" href="/docs/extensions/overview" description="Browse all 16 official extensions" />
+  <Card title="Guides" href="/docs/guides/building-a-toolbar" description="Step-by-step tutorials for common tasks" />
+  <Card title="Lexical Interop" href="/docs/guides/lexical-interop" description="Use the full Lexical API when you need it" />
 </Cards>

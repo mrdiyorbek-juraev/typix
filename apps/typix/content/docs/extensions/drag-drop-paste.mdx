@@ -1,0 +1,76 @@
+---
+title: Drag Drop Paste
+description: Handle image drag-and-drop and paste operations
+---
+
+The Drag Drop Paste extension handles image files dragged, dropped, or pasted into the editor with validation, size limits, and custom upload support.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-drag-drop-paste
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-drag-drop-paste
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-drag-drop-paste
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { DragDropPasteExtension } from '@typix-editor/extension-drag-drop-paste';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <DragDropPasteExtension />
+    </EditorRoot>
+  );
+}
+```
+
+### With custom upload handler
+
+```tsx
+<DragDropPasteExtension
+  acceptedTypes={['image/png', 'image/jpeg']}
+  maxFileSize={5 * 1024 * 1024}
+  onFilesAdded={async (files) => {
+    const urls = await uploadToS3(files);
+    return urls.map(url => ({ src: url }));
+  }}
+  onValidationError={(file, reason) => {
+    toast.error(reason);
+  }}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `acceptedTypes` | `string[]` | Image MIME types | Accepted file MIME types |
+| `maxFileSize` | `number` | `10485760` (10MB) | Maximum file size in bytes |
+| `priority` | `CommandListenerPriority` | `COMMAND_PRIORITY_LOW` | Lexical command priority |
+| `onFilesAdded` | `(files: File[]) => Promise<InsertImagePayload[]>` | — | Custom upload handler |
+| `onValidationError` | `(file: File, reason: string) => void` | — | Validation error callback |
+| `transformResult` | `(file: File, result: string) => InsertImagePayload` | — | Transform before inserting |
+| `debug` | `boolean` | `false` | Enable debug logging |
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `DragDropPasteExtension` | Component | The drag/drop/paste plugin |
+| `DragDropPasteExtensionProps` | Type | Props type |

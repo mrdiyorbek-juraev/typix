@@ -1,0 +1,62 @@
+---
+title: Code Highlight (Shiki)
+description: Syntax highlighting for code blocks using Shiki
+---
+
+The Code Highlight Shiki extension adds syntax highlighting to code blocks using [Shiki](https://shiki.style/), which uses TextMate grammars for accurate highlighting.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-code-highlight-shiki
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-code-highlight-shiki
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-code-highlight-shiki
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { CodeHighlightShikiExtension } from '@typix-editor/extension-code-highlight-shiki';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <CodeHighlightShikiExtension />
+    </EditorRoot>
+  );
+}
+```
+
+<Callout type="info">
+  `CodeNode` and `CodeHighlightNode` are included in `defaultExtensionNodes`.
+</Callout>
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `CodeHighlightShikiExtension` | Component | Shiki-based syntax highlighter |
+
+## Prism vs Shiki
+
+| Feature | Prism | Shiki |
+| --- | --- | --- |
+| Grammar system | Custom | TextMate (VS Code) |
+| Accuracy | Good | Excellent |
+| Bundle size | Smaller | Larger (lazy-loaded) |
+| Theme support | CSS-based | Built-in themes |
+
+Use **Prism** for lighter bundles, **Shiki** for VS Code-accurate highlighting.

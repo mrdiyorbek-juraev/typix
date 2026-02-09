@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ESNext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,27 +20,33 @@
     "jsx": "react-jsx",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"],
-      "fumadocs-mdx:collections/*": [".source/*"],
-      "@typix-editor/*": ["../../packages/*"]
+      "@/*": [
+        "./*"
+      ],
+      "fumadocs-mdx:collections/*": [
+        ".source/*"
+      ],
+      "@typix-editor/*": [
+        "../../packages/*"
+      ]
     },
     "plugins": [
       {
         "name": "next"
       }
     ]
-    // "plugins": [
-    //   {
-    //     "name": "next"
-    //   }
-    // ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
+    "content/**/*.mdx",
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "eslint.config.mjs",
+    "components/registry/build-graph.ts"
+  ]
 }

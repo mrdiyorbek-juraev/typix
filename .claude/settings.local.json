@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm --filter @typix-editor/extension-floating-link build:*)"
+      "Bash(pnpm --filter @typix-editor/extension-floating-link build:*)",
+      "Bash(ls:*)"
     ]
   }
 }

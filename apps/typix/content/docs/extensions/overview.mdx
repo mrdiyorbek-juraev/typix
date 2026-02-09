@@ -1,0 +1,90 @@
+---
+title: Extensions Overview
+description: Browse all official Typix extensions
+---
+
+Extensions are modular packages that add features to your Typix editor. Each extension is a separate npm package you install only when needed.
+
+## How extensions work
+
+Extensions are React components rendered as children of `EditorRoot`. They register Lexical plugins, commands, and node transforms behind the scenes.
+
+```tsx
+<EditorRoot>
+  <EditorContent />
+  <LinkExtension />
+  <ShortCutsExtension />
+  <MaxLengthExtension maxLength={1000} />
+</EditorRoot>
+```
+
+Some extensions also provide custom Lexical nodes that must be registered in the editor config:
+
+```tsx
+import { createEditorConfig, defaultExtensionNodes } from '@typix-editor/react';
+import { MentionNode } from '@typix-editor/extension-mention';
+
+const config = createEditorConfig({
+  extension_nodes: [...defaultExtensionNodes, MentionNode],
+});
+```
+
+## Extension catalog
+
+### Text & Formatting
+
+<Cards>
+  <Card title="Link" href="/docs/extensions/link" description="URL validation for link nodes" />
+  <Card title="Floating Link" href="/docs/extensions/floating-link" description="Floating link editor UI" />
+  <Card title="Auto Link" href="/docs/extensions/auto-link" description="Auto-detect and convert URLs" />
+  <Card title="Keywords" href="/docs/extensions/keywords" description="Keyword highlighting" />
+</Cards>
+
+### Code
+
+<Cards>
+  <Card title="Code Highlight (Prism)" href="/docs/extensions/code-highlight-prism" description="Syntax highlighting with Prism" />
+  <Card title="Code Highlight (Shiki)" href="/docs/extensions/code-highlight-shiki" description="Syntax highlighting with Shiki" />
+</Cards>
+
+### Input & Behavior
+
+<Cards>
+  <Card title="Short Cuts" href="/docs/extensions/short-cuts" description="Keyboard shortcuts for formatting" />
+  <Card title="Auto Complete" href="/docs/extensions/auto-complete" description="Word auto-completion" />
+  <Card title="Max Length" href="/docs/extensions/max-length" description="Character/word limit enforcement" />
+  <Card title="Tab Focus" href="/docs/extensions/tab-focus" description="Tab key focus management" />
+  <Card title="Speech to Text" href="/docs/extensions/speech-to-text" description="Voice dictation input" />
+</Cards>
+
+### UI & Interaction
+
+<Cards>
+  <Card title="Mention" href="/docs/extensions/mention" description="@mention typeahead with search" />
+  <Card title="Context Menu" href="/docs/extensions/context-menu" description="Right-click context menu" />
+  <Card title="Draggable Block" href="/docs/extensions/draggable-block" description="Drag-and-drop block reordering" />
+  <Card title="Drag Drop Paste" href="/docs/extensions/drag-drop-paste" description="Image drag, drop, and paste" />
+  <Card title="Collapsible" href="/docs/extensions/collapsible" description="Collapsible/accordion blocks" />
+</Cards>
+
+## Installation pattern
+
+All extensions follow the same pattern:
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-{name}
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-{name}
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-{name}
+    ```
+  </Tab>
+</Tabs>

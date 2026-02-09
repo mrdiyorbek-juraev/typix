@@ -1,0 +1,79 @@
+---
+title: Editor Config
+description: createEditorConfig API reference and configuration options
+---
+
+`createEditorConfig` creates a Lexical-compatible config object with sensible defaults.
+
+## Usage
+
+```tsx
+import { createEditorConfig, defaultExtensionNodes, defaultTheme } from '@typix-editor/react';
+
+const config = createEditorConfig({
+  namespace: 'my-editor',
+  theme: defaultTheme,
+  extension_nodes: defaultExtensionNodes,
+});
+```
+
+Pass the config to `EditorRoot`:
+
+```tsx
+<EditorRoot config={config}>
+  <EditorContent />
+</EditorRoot>
+```
+
+## Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `namespace` | `string` | `"typix-editor"` | Unique namespace. Important when using multiple editors on the same page. |
+| `theme` | `EditorThemeClasses` | `undefined` | CSS class mappings for editor elements. See [Theming](/docs/getting-started/theming). |
+| `extension_nodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Nodes to register with the editor. |
+| `editable` | `boolean` | `true` | Whether the editor starts in editable mode. |
+| `onError` | `(error: Error, editor: LexicalEditor) => void` | `console.error` | Custom error handler. |
+| `initialState` | `SerializedEditorState` | `undefined` | Initial content as serialized JSON. |
+| `editorState` | `InitialEditorStateType` | `undefined` | Direct Lexical editor state (advanced). |
+| `html` | `HTMLConfig` | `undefined` | HTML serialization configuration. |
+
+## Return value
+
+Returns a Lexical `InitialConfigType` object suitable for passing to `LexicalComposer` (or `EditorRoot`).
+
+## defaultExtensionNodes
+
+A pre-configured array of all built-in Lexical nodes:
+
+```tsx
+import { defaultExtensionNodes } from '@typix-editor/react';
+```
+
+Includes: `HeadingNode`, `ParagraphNode`, `TextNode`, `QuoteNode`, `ListNode`, `ListItemNode`, `LinkNode`, `AutoLinkNode`, `CodeNode`, `CodeHighlightNode`, `HashtagNode`, `OverflowNode`, `TableNode`, `TableRowNode`, `TableCellNode`.
+
+## Extending with custom nodes
+
+```tsx
+import { defaultExtensionNodes, createEditorConfig } from '@typix-editor/react';
+import { MentionNode } from '@typix-editor/extension-mention';
+
+const config = createEditorConfig({
+  extension_nodes: [...defaultExtensionNodes, MentionNode],
+});
+```
+
+## Without EditorRoot config
+
+If you don't pass a `config` prop to `EditorRoot`, it automatically calls `createEditorConfig` with:
+
+```tsx
+createEditorConfig({
+  namespace: 'typix-editor',
+  extension_nodes: defaultExtensionNodes,
+  editable: true,
+  editorState: null,
+  initialState: content, // from the content prop
+  theme: defaultTheme,
+});
+```

@@ -1,0 +1,115 @@
+---
+title: Quick Start
+description: Build a basic rich-text editor in 5 minutes
+---
+
+This guide walks you through building a working editor with formatting controls.
+
+<Steps>
+
+### Set up the editor root
+
+Every Typix editor starts with `EditorRoot`. It initializes the Lexical composer, sets up providers, and manages editor state.
+
+```tsx title="editor.tsx"
+import { EditorRoot, EditorContent } from '@typix-editor/react';
+
+export function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent placeholder="Start writing..." />
+    </EditorRoot>
+  );
+}
+```
+
+### Add a toolbar
+
+Use the `useTypixEditor` hook to access the editor's fluent API. The `useActiveFormats` hook gives you reactive format state for button highlighting.
+
+```tsx title="toolbar.tsx"
+import { useTypixEditor, useActiveFormats } from '@typix-editor/react';
+
+function Toolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats();
+
+  return (
+    <div style={{ display: 'flex', gap: 4 }}>
+      <button
+        onClick={() => editor.toggleBold()}
+        style={{ fontWeight: isActive('bold') ? 'bold' : 'normal' }}
+      >
+        B
+      </button>
+      <button
+        onClick={() => editor.toggleItalic()}
+        style={{ fontStyle: isActive('italic') ? 'italic' : 'normal' }}
+      >
+        I
+      </button>
+      <button onClick={() => editor.toggleUnderline()}>U</button>
+      <button onClick={() => editor.toggleStrikethrough()}>S</button>
+    </div>
+  );
+}
+```
+
+### Compose the full editor
+
+Place the toolbar inside `EditorRoot` so it has access to the editor context.
+
+```tsx title="editor.tsx"
+import { EditorRoot, EditorContent } from '@typix-editor/react';
+
+export function MyEditor() {
+  return (
+    <EditorRoot>
+      <Toolbar />
+      <EditorContent placeholder="Start writing..." />
+    </EditorRoot>
+  );
+}
+```
+
+### Save editor content
+
+Use `onContentChange` to receive serialized JSON whenever the content changes.
+
+```tsx title="editor.tsx"
+import { EditorRoot, EditorContent } from '@typix-editor/react';
+import type { SerializedEditorState } from 'lexical';
+
+export function MyEditor() {
+  const handleChange = (content: SerializedEditorState) => {
+    // Save to your backend, localStorage, etc.
+    console.log(content);
+  };
+
+  return (
+    <EditorRoot onContentChange={handleChange}>
+      <Toolbar />
+      <EditorContent placeholder="Start writing..." />
+    </EditorRoot>
+  );
+}
+```
+
+### Load saved content
+
+Pass a `content` prop to `EditorRoot` to restore previously saved state.
+
+```tsx
+<EditorRoot content={savedContent} onContentChange={handleChange}>
+  <Toolbar />
+  <EditorContent placeholder="Start writing..." />
+</EditorRoot>
+```
+
+</Steps>
+
+## Next steps
+
+- [Editor Setup](/docs/getting-started/editor-setup) — Learn about `createEditorConfig` and custom nodes
+- [Theming](/docs/getting-started/theming) — Customize the editor's appearance
+- [Building a Toolbar](/docs/guides/building-a-toolbar) — Full toolbar with all format controls

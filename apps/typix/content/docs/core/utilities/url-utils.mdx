@@ -1,0 +1,54 @@
+---
+title: URL Utilities
+description: Functions for URL validation and sanitization
+---
+
+Typix provides two URL utility functions for safe link handling.
+
+## Import
+
+```tsx
+import { sanitizeUrl, validateUrl } from '@typix-editor/react';
+```
+
+## sanitizeUrl
+
+Sanitizes a URL by checking its protocol. Returns `"about:blank"` for unsupported protocols to prevent XSS via `javascript:` URLs.
+
+```tsx
+sanitizeUrl('https://example.com');    // → 'https://example.com'
+sanitizeUrl('mailto:user@example.com'); // → 'mailto:user@example.com'
+sanitizeUrl('javascript:alert(1)');     // → 'about:blank'
+```
+
+### Supported protocols
+
+- `http:`
+- `https:`
+- `mailto:`
+- `sms:`
+- `tel:`
+
+## validateUrl
+
+Validates a URL string against a pattern. Returns `true` for URLs with valid protocols or `www.` prefix.
+
+```tsx
+validateUrl('https://example.com');     // → true
+validateUrl('www.example.com');         // → true
+validateUrl('https://');                // → true (special case for link UI)
+validateUrl('not a url');               // → false
+validateUrl('ftp://example.com');       // → false
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `url` | `string` | The URL to validate |
+
+### Return value
+
+| Type | Description |
+| --- | --- |
+| `boolean` | Whether the URL is valid |
