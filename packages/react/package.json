@@ -32,7 +32,9 @@
   },
   "typesVersions": {
     "*": {
-      "lexical": ["./dist/lexical.d.ts"]
+      "lexical": [
+        "./dist/lexical.d.ts"
+      ]
     }
   },
   "repository": {
