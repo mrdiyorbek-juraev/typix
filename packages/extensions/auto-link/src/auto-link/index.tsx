@@ -29,7 +29,7 @@ export function AutoLinkExtension({
     if (!editor.hasNodes([AutoLinkNode])) {
       throw new Error(
         "AutoLinkExtension: AutoLinkNode is not registered in the editor. " +
-        "Make sure to include AutoLinkNode in your extensionNodes array."
+          "Make sure to include AutoLinkNode in your extensionNodes array."
       );
     }
   }, [editor]);

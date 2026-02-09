@@ -22,7 +22,7 @@ export function LinkExtension({
     if (!editor.hasNodes([LinkNode])) {
       throw new Error(
         "LinkExtension: LinkNode is not registered in the editor. " +
-        "Make sure to include LinkNode in your extensionNodes array."
+          "Make sure to include LinkNode in your extensionNodes array."
       );
     }
   }, [editor]);
