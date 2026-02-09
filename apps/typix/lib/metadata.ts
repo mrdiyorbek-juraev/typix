@@ -1,5 +1,5 @@
+import { Page } from "fumadocs-core/source";
 import type { Metadata } from "next/types";
-import { Page } from "./source";
 
 export function createMetadata(override: Metadata): Metadata {
   return {

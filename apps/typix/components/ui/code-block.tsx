@@ -14,6 +14,7 @@ export async function CodeBlock({ code, lang, wrapper }: CodeBlockProps) {
     config: shikiConfig,
     lang,
     components: {
+      // @ts-expect-error - shiki types are not compatible with fumadocs
       pre: Base.Pre,
     },
   });
