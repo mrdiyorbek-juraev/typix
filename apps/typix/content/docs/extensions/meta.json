@@ -1,0 +1,22 @@
+{
+  "title": "Extensions",
+  "pages": [
+    "overview",
+    "auto-complete",
+    "auto-link",
+    "code-highlight-prism",
+    "code-highlight-shiki",
+    "collapsible",
+    "context-menu",
+    "drag-drop-paste",
+    "draggable-block",
+    "floating-link",
+    "keywords",
+    "link",
+    "max-length",
+    "mention",
+    "short-cuts",
+    "speech-to-text",
+    "tab-focus"
+  ]
+}

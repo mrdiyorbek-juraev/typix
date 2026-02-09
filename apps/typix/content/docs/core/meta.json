@@ -1,0 +1,12 @@
+{
+  "title": "Core",
+  "pages": [
+    "overview",
+    "typix-editor",
+    "editor-config",
+    "components",
+    "hooks",
+    "providers",
+    "utilities"
+  ]
+}

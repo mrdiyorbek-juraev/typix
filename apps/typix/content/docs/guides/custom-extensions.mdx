@@ -1,0 +1,204 @@
+---
+title: Custom Extensions
+description: Create your own Typix extension package
+---
+
+Extensions are React components that register Lexical plugins, commands, or node transforms. This guide shows how to build one from scratch.
+
+## Extension anatomy
+
+A Typix extension is a React component rendered inside `EditorRoot`:
+
+```tsx
+function MyExtension({ someOption }: MyExtensionProps) {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    // Register plugins, commands, or transforms
+    return editor.registerCommand(
+      MY_COMMAND,
+      (payload) => {
+        // Handle command
+        return true;
+      },
+      COMMAND_PRIORITY_NORMAL
+    );
+  }, [editor]);
+
+  return null; // Extensions don't render UI (usually)
+}
+```
+
+<Steps>
+
+### Create the project structure
+
+```
+my-extension/
+├── src/
+│   ├── index.ts          # Public exports
+│   ├── extension.tsx      # Main extension component
+│   └── node.ts           # Custom node (if needed)
+├── package.json
+├── tsconfig.json
+└── tsup.config.ts
+```
+
+### Define the extension component
+
+```tsx title="src/extension.tsx"
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useEffect } from 'react';
+import {
+  COMMAND_PRIORITY_NORMAL,
+  KEY_DOWN_COMMAND,
+} from 'lexical';
+
+export interface MyExtensionProps {
+  enabled?: boolean;
+}
+
+export function MyExtension({ enabled = true }: MyExtensionProps) {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    return editor.registerCommand(
+      KEY_DOWN_COMMAND,
+      (event: KeyboardEvent) => {
+        // Your custom behavior
+        return false; // Return true to stop propagation
+      },
+      COMMAND_PRIORITY_NORMAL
+    );
+  }, [editor, enabled]);
+
+  return null;
+}
+
+MyExtension.displayName = 'Typix.MyExtension';
+```
+
+### Create a custom node (optional)
+
+```tsx title="src/node.ts"
+import {
+  DecoratorNode,
+  type LexicalNode,
+  type NodeKey,
+  type SerializedLexicalNode,
+} from 'lexical';
+
+export interface SerializedMyNode extends SerializedLexicalNode {
+  value: string;
+}
+
+export class MyNode extends DecoratorNode<JSX.Element> {
+  __value: string;
+
+  static getType(): string {
+    return 'my-node';
+  }
+
+  static clone(node: MyNode): MyNode {
+    return new MyNode(node.__value, node.__key);
+  }
+
+  constructor(value: string, key?: NodeKey) {
+    super(key);
+    this.__value = value;
+  }
+
+  createDOM(): HTMLElement {
+    return document.createElement('span');
+  }
+
+  updateDOM(): boolean {
+    return false;
+  }
+
+  decorate(): JSX.Element {
+    return <span>{this.__value}</span>;
+  }
+
+  static importJSON(json: SerializedMyNode): MyNode {
+    return new MyNode(json.value);
+  }
+
+  exportJSON(): SerializedMyNode {
+    return {
+      type: 'my-node',
+      value: this.__value,
+      version: 1,
+    };
+  }
+}
+
+export function $createMyNode(value: string): MyNode {
+  return new MyNode(value);
+}
+
+export function $isMyNode(node: LexicalNode | null): node is MyNode {
+  return node instanceof MyNode;
+}
+```
+
+### Set up exports
+
+```tsx title="src/index.ts"
+export { MyExtension, type MyExtensionProps } from './extension';
+export { MyNode, $createMyNode, $isMyNode } from './node';
+```
+
+### Use the extension
+
+```tsx
+import { createEditorConfig, defaultExtensionNodes } from '@typix-editor/react';
+import { MyExtension, MyNode } from 'my-extension';
+
+const config = createEditorConfig({
+  extension_nodes: [...defaultExtensionNodes, MyNode],
+});
+
+function Editor() {
+  return (
+    <EditorRoot config={config}>
+      <EditorContent />
+      <MyExtension />
+    </EditorRoot>
+  );
+}
+```
+
+</Steps>
+
+## Using the TypixEditor API
+
+Extensions can use `useTypixEditor()` instead of the raw Lexical composer context:
+
+```tsx
+import { useTypixEditor } from '@typix-editor/react';
+
+function MyExtension() {
+  const editor = useTypixEditor();
+
+  useEffect(() => {
+    return editor.onUpdate(({ editorState }) => {
+      editorState.read(() => {
+        // React to editor changes
+      });
+    });
+  }, [editor]);
+
+  return null;
+}
+```
+
+## Best practices
+
+- Extensions should return `null` if they don't render UI
+- Set a `displayName` following the `Typix.ExtensionName` pattern
+- Use `useEffect` cleanup to unregister listeners
+- Validate required nodes in `useEffect` with `editor.hasNodes()`
+- Keep the extension focused on a single responsibility

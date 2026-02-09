@@ -1,0 +1,55 @@
+---
+title: Draggable Block
+description: Drag-and-drop block reordering in the editor
+---
+
+The Draggable Block extension adds drag handles to editor blocks, allowing users to reorder content by dragging.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-draggable-block
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-draggable-block
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-draggable-block
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { DraggableBlockExtension } from '@typix-editor/extension-draggable-block';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <DraggableBlockExtension />
+    </EditorRoot>
+  );
+}
+```
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `DraggableBlockExtension` | Component | The draggable block plugin |
+| `DraggableBlockExtensionProps` | Type | Props type |
+| `DraggableBlockClassNames` | Type | CSS class names for customization |
+
+## Behavior
+
+- Adds a drag handle that appears on hover near block elements
+- Users can drag blocks to reorder them within the editor
+- Works with paragraphs, headings, lists, quotes, and other block-level elements

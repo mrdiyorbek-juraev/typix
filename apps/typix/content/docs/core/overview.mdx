@@ -1,0 +1,82 @@
+---
+title: Core Overview
+description: Architecture overview of the @typix-editor/react package
+---
+
+The `@typix-editor/react` package provides the foundation for building editors with Typix. It exports components, hooks, providers, utilities, and the `TypixEditor` class.
+
+## Component hierarchy
+
+A Typix editor follows this structure:
+
+```
+EditorRoot
+├── TypixEditorProvider (automatic)
+├── SharedHistoryContext (automatic)
+├── Toolbar (your component, uses useTypixEditor)
+├── EditorContent
+│   └── RichTextExtension (automatic)
+├── EditorBubbleMenu (optional)
+└── EditorCommand (optional)
+```
+
+`EditorRoot` sets up the Lexical composer and all required context providers. Everything inside it has access to the editor.
+
+## Key concepts
+
+### TypixEditor class
+
+The `TypixEditor` class wraps the Lexical editor instance with a clean, fluent API. You access it via `useTypixEditor()`.
+
+```tsx
+const editor = useTypixEditor();
+editor.toggleBold().toggleItalic(); // chainable
+```
+
+See [TypixEditor API](/docs/core/typix-editor) for the full reference.
+
+### Extensions
+
+Extensions are React components (plugins) that add features to the editor. They're rendered as children of `EditorRoot`:
+
+```tsx
+<EditorRoot>
+  <EditorContent />
+  <LinkExtension />
+  <ShortCutsExtension />
+  <MaxLengthExtension maxLength={1000} />
+</EditorRoot>
+```
+
+Each extension may also provide custom Lexical nodes that need to be registered via `createEditorConfig`.
+
+### Hooks
+
+Hooks provide reactive access to editor state:
+
+| Hook | Purpose |
+| --- | --- |
+| [`useTypixEditor`](/docs/core/hooks/use-typix-editor) | Access the TypixEditor instance |
+| [`useEditor`](/docs/core/hooks/use-editor) | Access the Lexical editor + isEmpty state |
+| [`useActiveFormats`](/docs/core/hooks/use-active-formats) | Reactive text format state |
+| [`useRange`](/docs/core/hooks/use-range) | Current selection range |
+| [`useMouseListener`](/docs/core/hooks/use-mouse-listener) | Mouse up/down events |
+
+## Package exports
+
+```tsx
+// Components
+import { EditorRoot, EditorContent, EditorBubbleMenu, EditorCommand } from '@typix-editor/react';
+
+// Hooks
+import { useTypixEditor, useEditor, useActiveFormats, useRange } from '@typix-editor/react';
+
+// Configuration
+import { createEditorConfig, defaultExtensionNodes, defaultTheme } from '@typix-editor/react';
+
+// Editor class
+import { TypixEditor } from '@typix-editor/react';
+
+// Utilities
+import { cn, sanitizeUrl, validateUrl, getSelectedNode } from '@typix-editor/react';
+```

@@ -1,0 +1,85 @@
+---
+title: Speech to Text
+description: Voice dictation input for the editor
+---
+
+The Speech to Text extension enables voice-to-text dictation using the Web Speech API.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-speech-to-text
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-speech-to-text
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-speech-to-text
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { SpeechToTextExtension } from '@typix-editor/extension-speech-to-text';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <SpeechToTextExtension />
+    </EditorRoot>
+  );
+}
+```
+
+### With the useSpeechToText hook
+
+```tsx
+import { useSpeechToText, isSpeechRecognitionSupported } from '@typix-editor/extension-speech-to-text';
+
+function VoiceButton() {
+  const { isListening, start, stop } = useSpeechToText();
+
+  if (!isSpeechRecognitionSupported()) {
+    return null;
+  }
+
+  return (
+    <button onClick={isListening ? stop : start}>
+      {isListening ? 'Stop' : 'Dictate'}
+    </button>
+  );
+}
+```
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `SpeechToTextExtension` | Component | The speech-to-text plugin |
+| `SpeechToTextExtensionProps` | Type | Props type |
+| `useSpeechToText` | Hook | Control speech recognition |
+| `isSpeechRecognitionSupported` | Function | Check browser support |
+| `SPEECH_TO_TEXT_COMMAND` | Lexical Command | Command for speech results |
+
+## Browser support
+
+The Web Speech API is required. Check support before rendering:
+
+```tsx
+if (isSpeechRecognitionSupported()) {
+  // Safe to use speech-to-text
+}
+```
+
+<Callout type="warn">
+  The Web Speech API is not supported in all browsers. It works best in Chrome and Edge.
+</Callout>

@@ -1,0 +1,53 @@
+---
+title: cn
+description: Utility for merging CSS class names with Tailwind support
+---
+
+`cn` combines `clsx` for conditional classes with `tailwind-merge` for deduplication. It safely merges Tailwind CSS utility classes.
+
+## Import
+
+```tsx
+import { cn } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+cn('px-4 py-2', 'px-2');
+// → 'py-2 px-2'
+
+cn('text-red-500', isActive && 'text-blue-500');
+// → 'text-blue-500' (when isActive is true)
+
+cn('font-bold', undefined, null, 'text-lg');
+// → 'font-bold text-lg'
+```
+
+### In a component
+
+```tsx
+function Button({ active, className }) {
+  return (
+    <button className={cn(
+      'px-3 py-1 rounded',
+      active && 'bg-blue-500 text-white',
+      className,
+    )}>
+      Click
+    </button>
+  );
+}
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `...inputs` | `ClassValue[]` | Class values (strings, objects, arrays, falsy values) |
+
+## Return value
+
+| Type | Description |
+| --- | --- |
+| `string` | Merged and deduplicated class string |

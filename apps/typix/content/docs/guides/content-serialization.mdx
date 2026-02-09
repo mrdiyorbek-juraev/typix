@@ -1,0 +1,131 @@
+---
+title: Content Serialization
+description: Import and export editor content as JSON, HTML, Markdown, and plain text
+---
+
+Typix supports four serialization formats: JSON, HTML, Markdown, and plain text.
+
+## Export content
+
+Use the `TypixEditor` methods to export content in any format:
+
+```tsx
+const editor = useTypixEditor();
+
+// Lexical JSON (recommended for storage)
+const json = editor.getJSON();
+
+// HTML string
+const html = editor.getHTML();
+
+// Markdown string
+const markdown = editor.getMarkdown();
+
+// Plain text (no formatting)
+const text = editor.getText();
+```
+
+### Saving to a database
+
+```tsx
+<EditorRoot
+  onContentChange={(json) => {
+    // json is SerializedEditorState
+    fetch('/api/save', {
+      method: 'POST',
+      body: JSON.stringify({ content: json }),
+    });
+  }}
+>
+  <EditorContent />
+</EditorRoot>
+```
+
+### Export on demand
+
+```tsx
+function SaveButton() {
+  const editor = useTypixEditor();
+
+  const handleSave = () => {
+    const json = editor.getJSON();
+    localStorage.setItem('draft', JSON.stringify(json));
+  };
+
+  return <button onClick={handleSave}>Save Draft</button>;
+}
+```
+
+## Import content
+
+Replace the editor content from any format:
+
+```tsx
+const editor = useTypixEditor();
+
+// From Lexical JSON
+editor.setJSON(savedJson);
+
+// From HTML
+editor.setHTML('<p>Hello <strong>world</strong></p>');
+
+// From Markdown
+editor.setMarkdown('# Hello\n\nParagraph text');
+
+// Clear everything
+editor.clearContent();
+```
+
+### Loading saved content on mount
+
+Use `EditorRoot`'s `content` prop for initial load:
+
+```tsx
+const savedContent = JSON.parse(localStorage.getItem('draft'));
+
+<EditorRoot content={savedContent}>
+  <EditorContent />
+</EditorRoot>
+```
+
+### Replacing content after mount
+
+```tsx
+function LoadButton() {
+  const editor = useTypixEditor();
+
+  const handleLoad = () => {
+    const draft = localStorage.getItem('draft');
+    if (draft) {
+      editor.setJSON(JSON.parse(draft));
+    }
+  };
+
+  return <button onClick={handleLoad}>Load Draft</button>;
+}
+```
+
+## Format comparison
+
+| Format | Fidelity | Size | Use case |
+| --- | --- | --- | --- |
+| **JSON** | Lossless | Larger | Database storage, full round-trip |
+| **HTML** | High | Medium | Server-side rendering, email |
+| **Markdown** | Medium | Small | README files, simple content |
+| **Plain text** | None | Smallest | Search indexing, previews |
+
+<Callout type="info">
+  **JSON is recommended** for storing and restoring editor content. It preserves all node types, formatting, and metadata with zero information loss.
+</Callout>
+
+## Converting between formats
+
+```tsx
+// Load HTML, save as JSON
+editor.setHTML(htmlFromApi);
+const json = editor.getJSON();
+
+// Load Markdown, export as HTML
+editor.setMarkdown('# Title\n\nContent');
+const html = editor.getHTML();
+```

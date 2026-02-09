@@ -1,0 +1,62 @@
+---
+title: EditorContent
+description: The editable content area of the editor
+---
+
+`EditorContent` renders the editable content area. It sets up the rich text plugin and provides a floating anchor element for menus.
+
+## Import
+
+```tsx
+import { EditorContent } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+<EditorRoot>
+  <EditorContent placeholder="Start writing..." />
+</EditorRoot>
+```
+
+### With custom class names
+
+```tsx
+<EditorContent
+  className="border rounded-lg p-4"
+  classnames={{
+    contentEditable: 'min-h-[200px] outline-none',
+    placeholder: 'text-gray-400',
+  }}
+/>
+```
+
+### With a ref
+
+```tsx
+const ref = useRef<HTMLDivElement>(null);
+
+<EditorContent ref={ref} placeholder="Type here..." />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Additional content rendered inside the wrapper |
+| `placeholder` | `string` | — | Placeholder text shown when the editor is empty |
+| `className` | `string` | — | CSS class for the outer container |
+| `classnames` | `object` | — | Fine-grained class names (see below) |
+
+### classnames object
+
+| Key | Type | Description |
+| --- | --- | --- |
+| `scroller` | `string` | Scroller wrapper class |
+| `container` | `string` | Content container class |
+| `contentEditable` | `string` | The contenteditable element class |
+| `placeholder` | `string` | Placeholder text class |
+
+## Ref
+
+`EditorContent` accepts a `ref` via `forwardRef`. The ref points to the outer `<div>` wrapper element.

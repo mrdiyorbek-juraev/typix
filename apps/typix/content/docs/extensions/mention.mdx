@@ -1,0 +1,129 @@
+---
+title: Mention
+description: "@mention typeahead with async search and custom rendering"
+---
+
+The Mention extension provides a typeahead mention system (like @mentions in Slack or GitHub) with async search, debouncing, and fully customizable UI.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-mention
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-mention
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-mention
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+Register the `MentionNode` and add the extension:
+
+```tsx
+import { createEditorConfig, defaultExtensionNodes } from '@typix-editor/react';
+import { MentionExtension, MentionNode } from '@typix-editor/extension-mention';
+
+const config = createEditorConfig({
+  extension_nodes: [...defaultExtensionNodes, MentionNode],
+});
+
+function MyEditor() {
+  return (
+    <EditorRoot config={config}>
+      <EditorContent />
+      <MentionExtension
+        onSearch={async (query) => {
+          const res = await fetch(`/api/users?q=${query}`);
+          return res.json();
+        }}
+      />
+    </EditorRoot>
+  );
+}
+```
+
+### With custom item rendering
+
+```tsx
+<MentionExtension
+  onSearch={searchUsers}
+  onSelect={(item) => console.log('Selected:', item)}
+  renderMenuItem={(props) => (
+    <div
+      className={props.isSelected ? 'bg-blue-50' : ''}
+      onClick={props.onClick}
+      onMouseEnter={props.onMouseEnter}
+    >
+      <img src={props.item.data?.avatar} alt="" />
+      <span>{props.item.name}</span>
+    </div>
+  )}
+  triggerConfig={{ trigger: '@', minLength: 1 }}
+  maxSuggestions={5}
+  debounceMs={300}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onSearch` | `(query: string, trigger: string) => Promise<MentionItem[]> \| MentionItem[]` | — | Search function (required) |
+| `onSelect` | `(item: MentionItem) => void` | — | Called when a mention is selected |
+| `onMenuOpen` | `() => void` | — | Called when the menu opens |
+| `onMenuClose` | `() => void` | — | Called when the menu closes |
+| `triggerConfig` | `MentionTriggerConfig` | `{ trigger: '@' }` | Trigger behavior config |
+| `nodeConfig` | `MentionNodeConfig` | `{}` | Node appearance config |
+| `maxSuggestions` | `number` | `10` | Max items to display |
+| `debounceMs` | `number` | `200` | Search debounce delay (ms) |
+| `renderMenu` | `(props: MentionMenuProps) => JSX.Element` | — | Custom menu renderer |
+| `renderMenuItem` | `(props: MentionMenuItemProps) => ReactNode` | — | Custom item renderer |
+| `loadingContent` | `ReactNode` | — | Content shown while loading |
+| `emptyContent` | `ReactNode` | — | Content shown for no results |
+| `menuClassName` | `string` | — | CSS class for the menu |
+| `disabled` | `boolean` | `false` | Disable the extension |
+
+### MentionTriggerConfig
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `trigger` | `string` | `"@"` | Trigger character |
+| `minLength` | `number` | `0` | Min query length before searching |
+| `maxLength` | `number` | `75` | Max query length |
+| `allowSpaces` | `boolean` | `true` | Allow spaces in queries |
+
+### MentionItem
+
+```tsx
+interface MentionItem {
+  id: string;
+  name: string;
+  data?: Record<string, unknown>;
+}
+```
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `MentionExtension` | Component | The mention plugin |
+| `MentionNode` | Lexical Node | Custom mention node |
+| `$createMentionNode` | Function | Create a mention node |
+| `$isMentionNode` | Function | Type guard for mention nodes |
+| `configureMentionNode` | Function | Configure global mention node options |
+
+## Nodes
+
+| Node | Description |
+| --- | --- |
+| `MentionNode` | Inline node representing a mention. Stores `id`, `name`, `trigger`, and optional `data`. |

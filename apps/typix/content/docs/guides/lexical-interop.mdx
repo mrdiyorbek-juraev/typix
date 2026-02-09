@@ -1,0 +1,208 @@
+---
+title: Lexical Interop
+description: Use the Lexical API directly alongside Typix
+---
+
+Typix is built on [Lexical](https://lexical.dev), and you always have full access to the underlying Lexical editor. This guide shows common patterns for using the Lexical API directly.
+
+## Accessing the Lexical editor
+
+### Via TypixEditor
+
+```tsx
+const editor = useTypixEditor();
+const lexical = editor.lexical; // LexicalEditor
+```
+
+### Via useEditor hook
+
+```tsx
+const { editor } = useEditor(); // LexicalEditor directly
+```
+
+### Via Lexical's own hook
+
+```tsx
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+
+const [editor] = useLexicalComposerContext();
+```
+
+## Reading editor state
+
+Lexical requires state reads to happen inside `editor.getEditorState().read()`:
+
+```tsx
+const editor = useTypixEditor();
+
+// Using Typix's convenience method
+const text = editor.read(() => {
+  const root = $getRoot();
+  return root.getTextContent();
+});
+
+// Using Lexical directly
+editor.lexical.getEditorState().read(() => {
+  const selection = $getSelection();
+  if ($isRangeSelection(selection)) {
+    console.log('Selected text:', selection.getTextContent());
+  }
+});
+```
+
+## Updating editor state
+
+Lexical requires mutations to happen inside `editor.update()`:
+
+```tsx
+const editor = useTypixEditor();
+
+// Using Typix
+editor.update(() => {
+  const root = $getRoot();
+  const paragraph = $createParagraphNode();
+  const text = $createTextNode('Hello from Lexical!');
+  paragraph.append(text);
+  root.append(paragraph);
+});
+
+// Using Lexical directly
+editor.lexical.update(() => {
+  // Same Lexical operations
+});
+```
+
+## Registering commands
+
+```tsx
+import { COMMAND_PRIORITY_LOW, createCommand } from 'lexical';
+
+const MY_CUSTOM_COMMAND = createCommand('MY_CUSTOM_COMMAND');
+
+function MyPlugin() {
+  const { editor } = useEditor();
+
+  useEffect(() => {
+    return editor.registerCommand(
+      MY_CUSTOM_COMMAND,
+      (payload) => {
+        console.log('Custom command received:', payload);
+        return true;
+      },
+      COMMAND_PRIORITY_LOW
+    );
+  }, [editor]);
+
+  return null;
+}
+
+// Dispatch the command
+editor.dispatchCommand(MY_CUSTOM_COMMAND, { data: 'hello' });
+```
+
+## Registering listeners
+
+```tsx
+useEffect(() => {
+  const { editor } = useEditor();
+
+  // Listen for updates
+  const unregister = editor.registerUpdateListener(({ editorState }) => {
+    editorState.read(() => {
+      // React to changes
+    });
+  });
+
+  return unregister;
+}, [editor]);
+```
+
+## Using Lexical plugins
+
+Lexical's React plugins work directly inside `EditorRoot` since it sets up a `LexicalComposer`:
+
+```tsx
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
+
+<EditorRoot>
+  <EditorContent />
+  <TabIndentationPlugin />
+  <MarkdownShortcutPlugin />
+</EditorRoot>
+```
+
+<Callout type="info">
+  `EditorRoot` already includes `HistoryPlugin`, `ListPlugin`, and `AutoFocusPlugin` by default.
+</Callout>
+
+## Re-exported Lexical utilities
+
+For convenience, `@typix-editor/react` re-exports common Lexical utilities:
+
+```tsx
+import {
+  // Selection
+  $getSelection,
+  $isRangeSelection,
+  $setBlocksType,
+
+  // Node creation
+  $createParagraphNode,
+  $createHeadingNode,
+
+  // Commands
+  FORMAT_TEXT_COMMAND,
+
+  // Node types
+  HeadingNode,
+  ParagraphNode,
+  TextNode,
+  ListNode,
+  ListItemNode,
+  LinkNode,
+  AutoLinkNode,
+  CodeNode,
+  CodeHighlightNode,
+  QuoteNode,
+  TableNode,
+  TableRowNode,
+  TableCellNode,
+
+  // Core types
+  type LexicalNode,
+  type LexicalEditor,
+  type TextFormatType,
+  type Klass,
+} from '@typix-editor/react';
+```
+
+## Node transforms
+
+Register transforms that run whenever a specific node type is modified:
+
+```tsx
+useEffect(() => {
+  const { editor } = useEditor();
+
+  return editor.registerNodeTransform(TextNode, (textNode) => {
+    const text = textNode.getTextContent();
+    // Auto-correct or transform text
+    if (text.includes('teh')) {
+      textNode.setTextContent(text.replace('teh', 'the'));
+    }
+  });
+}, [editor]);
+```
+
+## When to use Lexical vs Typix API
+
+| Use Typix API | Use Lexical API |
+| --- | --- |
+| Toggle formatting | Custom node creation |
+| Export/import content | Register commands |
+| Block type changes | Node transforms |
+| Alignment | Selection manipulation |
+| Font size | Custom plugins |
+| Focus/blur | Low-level DOM operations |

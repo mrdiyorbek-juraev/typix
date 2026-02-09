@@ -1,0 +1,56 @@
+---
+title: useRange
+description: Access the current DOM selection range
+---
+
+`useRange` returns the current DOM `Range` object corresponding to the editor's selection. Useful for positioning custom UI relative to the selection.
+
+## Import
+
+```tsx
+import { useRange } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+function SelectionInfo() {
+  const { range } = useRange();
+
+  if (!range) return null;
+
+  const rect = range.getBoundingClientRect();
+  return (
+    <div style={{ position: 'absolute', top: rect.bottom, left: rect.left }}>
+      Selection at ({Math.round(rect.x)}, {Math.round(rect.y)})
+    </div>
+  );
+}
+```
+
+### Using the ref for non-reactive access
+
+```tsx
+const { rangeRef } = useRange();
+
+function handleClick() {
+  const currentRange = rangeRef.current;
+  if (currentRange) {
+    // Use range without causing re-render
+  }
+}
+```
+
+## Return value
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `range` | `Range \| null` | The current DOM selection range (reactive) |
+| `rangeRef` | `RefObject<Range \| null>` | Ref to the current range (non-reactive) |
+
+## Behavior
+
+- Returns `null` when the selection is collapsed (cursor with no selection)
+- Updates on every editor state change
+- Ignores collaboration-related selection updates
+- Creates a DOM `Range` from the Lexical selection's anchor and focus nodes

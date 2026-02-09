@@ -1,0 +1,101 @@
+---
+title: Max Length
+description: Enforce character, word, or byte limits in the editor
+---
+
+The Max Length extension enforces content length limits with flexible counting modes, strategies, and callbacks.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-max-length
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-max-length
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-max-length
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { MaxLengthExtension } from '@typix-editor/extension-max-length';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <MaxLengthExtension maxLength={280} />
+    </EditorRoot>
+  );
+}
+```
+
+### With character counter
+
+```tsx
+function MyEditor() {
+  const [charCount, setCharCount] = useState(0);
+  const maxLength = 280;
+
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <MaxLengthExtension
+        maxLength={maxLength}
+        onChange={(current) => setCharCount(current)}
+        onLimitReached={() => toast.error('Character limit reached!')}
+      />
+      <div>{charCount}/{maxLength}</div>
+    </EditorRoot>
+  );
+}
+```
+
+### Word counting mode
+
+```tsx
+<MaxLengthExtension
+  maxLength={500}
+  mode="words"
+  onChange={(current, max, remaining) => {
+    console.log(`${remaining} words remaining`);
+  }}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `maxLength` | `number` | — | Maximum allowed length (required) |
+| `mode` | `"characters" \| "words" \| "bytes"` | `"characters"` | Counting mode |
+| `strategy` | `"prevent" \| "trim"` | `"prevent"` | What to do when limit is exceeded |
+| `countWhitespace` | `boolean` | `true` | Whether to count whitespace |
+| `warningThreshold` | `number` | `0.9` | Fraction at which to fire warning (0–1) |
+| `customCounter` | `(text: string) => number` | — | Custom counting function |
+| `onChange` | `(current, max, remaining) => void` | — | Called on every content change |
+| `onLimitReached` | `(current, max, exceeded) => void` | — | Called when limit is exceeded |
+| `onWarning` | `(current, max, remaining) => void` | — | Called when warning threshold is reached |
+| `debug` | `boolean` | `false` | Enable debug logging |
+
+## Strategies
+
+- **`prevent`** (default) — Restores the previous editor state or trims from the cursor to prevent exceeding the limit
+- **`trim`** — Always trims content from the cursor position
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `MaxLengthExtension` | Component | The max length enforcement plugin |
+| `MaxLengthExtensionProps` | Type | Props type |

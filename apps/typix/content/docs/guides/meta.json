@@ -1,0 +1,10 @@
+{
+  "title": "Guides",
+  "pages": [
+    "building-a-toolbar",
+    "slash-commands",
+    "content-serialization",
+    "custom-extensions",
+    "lexical-interop"
+  ]
+}

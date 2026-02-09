@@ -1,0 +1,80 @@
+---
+title: EditorRoot
+description: The root component that initializes the editor and provides context
+---
+
+`EditorRoot` is the top-level component for every Typix editor. It sets up the Lexical composer, context providers, history tracking, list support, and auto-focus.
+
+## Import
+
+```tsx
+import { EditorRoot } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+<EditorRoot>
+  <EditorContent placeholder="Start typing..." />
+</EditorRoot>
+```
+
+### With change handling
+
+```tsx
+<EditorRoot
+  onContentChange={(json) => {
+    localStorage.setItem('draft', JSON.stringify(json));
+  }}
+>
+  <EditorContent />
+</EditorRoot>
+```
+
+### With initial content
+
+```tsx
+const saved = JSON.parse(localStorage.getItem('draft'));
+
+<EditorRoot content={saved}>
+  <EditorContent />
+</EditorRoot>
+```
+
+### With custom config
+
+```tsx
+import { createEditorConfig, defaultExtensionNodes, defaultTheme } from '@typix-editor/react';
+
+const config = createEditorConfig({
+  namespace: 'my-editor',
+  theme: defaultTheme,
+  extension_nodes: defaultExtensionNodes,
+});
+
+<EditorRoot config={config}>
+  <EditorContent />
+</EditorRoot>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Child components (toolbar, content, extensions) |
+| `config` | `InitialConfigType` | Auto-generated | Custom Lexical config. If omitted, creates a default config. |
+| `content` | `SerializedEditorState \| null` | `null` | Initial content to load |
+| `onChange` | `(editorState: EditorState) => void` | — | Raw editor state change handler |
+| `onContentChange` | `(content: SerializedEditorState) => void` | — | Serialized JSON change handler |
+
+## What it sets up
+
+`EditorRoot` internally composes these providers and plugins:
+
+1. **LexicalComposer** — Core Lexical editor initialization
+2. **TypixEditorProvider** — Makes `useTypixEditor()` available
+3. **RootContext** — Floating anchor element for bubble menus
+4. **SharedHistoryContext** — Shared undo/redo history
+5. **OnChangePlugin** — Content change callbacks (when `onChange` or `onContentChange` is provided)
+6. **ListPlugin** — List support (bullet, ordered, check)
+7. **AutoFocusPlugin** — Focuses the editor on mount

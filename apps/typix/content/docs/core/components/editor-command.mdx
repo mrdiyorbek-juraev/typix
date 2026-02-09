@@ -1,0 +1,111 @@
+---
+title: EditorCommand
+description: Slash command menu for inserting blocks and executing actions
+---
+
+`EditorCommand` provides a typeahead command menu (often used as a slash `/` menu). It filters options based on user input and handles keyboard navigation.
+
+## Import
+
+```tsx
+import {
+  EditorCommand,
+  EditorCommandList,
+  EditorCommandItem,
+  EditorCommandEmpty,
+  CommandMenuOption,
+} from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+import { $createHeadingNode, CommandMenuOption } from '@typix-editor/react';
+
+const items = [
+  new CommandMenuOption('Heading 1', {
+    icon: <span>H1</span>,
+    keywords: ['title', 'heading'],
+    onSelect: (_, editor) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) {
+          $setBlocksType(selection, () => $createHeadingNode('h1'));
+        }
+      });
+    },
+  }),
+  new CommandMenuOption('Bullet List', {
+    icon: <span>-</span>,
+    keywords: ['unordered', 'list'],
+    onSelect: (_, editor) => {
+      // Insert bullet list
+    },
+  }),
+];
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <EditorCommand items={items}>
+        <EditorCommandList>
+          <EditorCommandEmpty>No results</EditorCommandEmpty>
+          {items.map((item, index) => (
+            <EditorCommandItem key={item.title} item={item} index={index}>
+              {item.icon}
+              <span>{item.title}</span>
+            </EditorCommandItem>
+          ))}
+        </EditorCommandList>
+      </EditorCommand>
+    </EditorRoot>
+  );
+}
+```
+
+## EditorCommand Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Command list UI |
+| `items` | `Array<CommandMenuOption>` | — | Available command options |
+| `trigger` | `string` | `"/"` | Character that triggers the menu |
+| `className` | `string` | — | CSS class for the menu container |
+| `allowWhitespace` | `boolean` | `false` | Allow spaces in the query string |
+| `minLength` | `number` | `0` | Minimum query length before showing results |
+| `maxLength` | `number` | `50` | Maximum query length |
+
+## CommandMenuOption
+
+Create command options with the `CommandMenuOption` class:
+
+```tsx
+const option = new CommandMenuOption('Option Title', {
+  icon: <Icon />,            // Optional icon element
+  keywords: ['alias'],       // Extra search terms
+  keyboardShortcut: 'Mod+1', // Display-only shortcut hint
+  shortDescription: 'Desc',  // Brief description
+  onSelect: (query, editor) => {
+    // Execute when selected
+  },
+});
+```
+
+## Sub-components
+
+### EditorCommandList
+
+Wrapper for the list of command items. Renders inside the portal created by `EditorCommand`.
+
+### EditorCommandItem
+
+Individual command item. Receives the item and index to handle highlighting and selection.
+
+### EditorCommandEmpty
+
+Shown when no items match the current query.
+
+## See also
+
+- [Slash Commands guide](/docs/guides/slash-commands) — Full tutorial for building a Notion-style command menu

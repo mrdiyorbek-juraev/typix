@@ -1,0 +1,9 @@
+{
+  "title": "Components",
+  "pages": [
+    "editor-root",
+    "editor-content",
+    "editor-bubble-menu",
+    "editor-command"
+  ]
+}

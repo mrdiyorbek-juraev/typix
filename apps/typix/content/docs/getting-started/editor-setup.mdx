@@ -1,0 +1,155 @@
+---
+title: Editor Setup
+description: Configure the editor with createEditorConfig, custom nodes, and initial content
+---
+
+## Default behavior
+
+When you use `EditorRoot` without a `config` prop, it creates a default configuration with:
+
+- Namespace: `"typix-editor"`
+- All default extension nodes (headings, lists, links, tables, code blocks, etc.)
+- The default Typix theme
+- Editable mode enabled
+
+```tsx
+<EditorRoot>
+  <EditorContent />
+</EditorRoot>
+```
+
+This is sufficient for most use cases. For advanced control, read on.
+
+## Custom configuration
+
+Use `createEditorConfig` to build a Lexical config object with Typix defaults.
+
+```tsx
+import {
+  EditorRoot,
+  EditorContent,
+  createEditorConfig,
+  defaultExtensionNodes,
+  defaultTheme,
+} from '@typix-editor/react';
+
+const config = createEditorConfig({
+  namespace: 'my-editor',
+  theme: defaultTheme,
+  extension_nodes: defaultExtensionNodes,
+  editable: true,
+});
+
+function MyEditor() {
+  return (
+    <EditorRoot config={config}>
+      <EditorContent />
+    </EditorRoot>
+  );
+}
+```
+
+### Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `namespace` | `string` | `"typix-editor"` | Unique namespace for the editor instance |
+| `theme` | `EditorThemeClasses` | `undefined` | Theme classes for styling editor elements |
+| `extension_nodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Custom nodes to register |
+| `editable` | `boolean` | `true` | Whether the editor is editable |
+| `onError` | `(error: Error, editor: LexicalEditor) => void` | `console.error` | Error handler |
+| `initialState` | `SerializedEditorState` | `undefined` | Initial content as serialized state |
+| `editorState` | `InitialEditorStateType` | `undefined` | Advanced: direct Lexical editor state |
+
+<Callout type="warn">
+  If both `initialState` and `editorState` are provided, `initialState` takes priority.
+</Callout>
+
+## Adding extension nodes
+
+When you install extensions that provide custom nodes, add them to `extension_nodes`:
+
+```tsx
+import { defaultExtensionNodes } from '@typix-editor/react';
+import { CollapsibleContainerNode, CollapsibleContentNode, CollapsibleTitleNode } from '@typix-editor/extension-collapsible';
+import { MentionNode } from '@typix-editor/extension-mention';
+
+const config = createEditorConfig({
+  extension_nodes: [
+    ...defaultExtensionNodes,
+    CollapsibleContainerNode,
+    CollapsibleContentNode,
+    CollapsibleTitleNode,
+    MentionNode,
+  ],
+});
+```
+
+## Default extension nodes
+
+The `defaultExtensionNodes` array includes nodes for common content types:
+
+| Node | Source | Purpose |
+| --- | --- | --- |
+| `HeadingNode` | `@lexical/rich-text` | H1–H6 headings |
+| `ParagraphNode` | `lexical` | Paragraph blocks |
+| `TextNode` | `lexical` | Inline text |
+| `QuoteNode` | `@lexical/rich-text` | Block quotes |
+| `ListNode` | `@lexical/list` | Ordered, unordered, check lists |
+| `ListItemNode` | `@lexical/list` | Individual list items |
+| `LinkNode` | `@lexical/link` | Hyperlinks |
+| `AutoLinkNode` | `@lexical/link` | Auto-detected links |
+| `CodeNode` | `@lexical/code` | Code blocks |
+| `CodeHighlightNode` | `@lexical/code` | Syntax-highlighted tokens |
+| `HashtagNode` | `@lexical/hashtag` | Hashtag tokens |
+| `OverflowNode` | `@lexical/overflow` | Overflow containers |
+| `TableNode` | `@lexical/table` | Tables |
+| `TableRowNode` | `@lexical/table` | Table rows |
+| `TableCellNode` | `@lexical/table` | Table cells |
+
+## Initial content
+
+You can provide initial content in several ways:
+
+### Via EditorRoot `content` prop
+
+```tsx
+const savedContent = JSON.parse(localStorage.getItem('draft'));
+
+<EditorRoot content={savedContent}>
+  <EditorContent />
+</EditorRoot>
+```
+
+### Via createEditorConfig `initialState`
+
+```tsx
+const config = createEditorConfig({
+  initialState: {
+    root: {
+      children: [],
+      direction: 'ltr',
+      format: '',
+      indent: 0,
+      type: 'root',
+      version: 1,
+    },
+  },
+});
+```
+
+## Listening for changes
+
+`EditorRoot` provides two callbacks:
+
+- **`onContentChange`** — Receives `SerializedEditorState` (JSON), best for persistence
+- **`onChange`** — Receives raw `EditorState`, best for advanced state inspection
+
+```tsx
+<EditorRoot
+  onContentChange={(json) => saveToDatabase(json)}
+  onChange={(editorState) => console.log(editorState)}
+>
+  <EditorContent />
+</EditorRoot>
+```

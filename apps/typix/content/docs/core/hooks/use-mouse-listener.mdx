@@ -1,0 +1,50 @@
+---
+title: useMouseListener
+description: Listen for global mouse up and down events
+---
+
+`useMouseListener` registers global `mousedown` and `mouseup` event listeners. Useful for detecting when users start and stop dragging or selecting text.
+
+## Import
+
+```tsx
+import { useMouseListener } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+import { useCallback, useState } from 'react';
+
+function DragAwareToolbar() {
+  const [isDragging, setIsDragging] = useState(false);
+
+  useMouseListener(
+    useCallback((mouse) => {
+      setIsDragging(mouse === 'down');
+    }, [])
+  );
+
+  return (
+    <div style={{ opacity: isDragging ? 0.5 : 1 }}>
+      {/* toolbar buttons */}
+    </div>
+  );
+}
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `callback` | `(mouse: "up" \| "down") => void` | Called with `"down"` on mousedown and `"up"` on mouseup |
+
+<Callout type="info">
+  Wrap your callback in `useCallback` to avoid re-registering event listeners on every render.
+</Callout>
+
+## Behavior
+
+- Listens on `document` level (captures events anywhere on the page)
+- Automatically cleans up listeners on unmount
+- Does not prevent default browser behavior

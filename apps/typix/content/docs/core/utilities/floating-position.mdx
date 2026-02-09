@@ -1,0 +1,55 @@
+---
+title: Floating Position
+description: Utility for positioning floating elements relative to selections
+---
+
+`setFloatingElemPosition` positions a floating element (like a toolbar or menu) relative to a target rectangle, typically the bounding rect of a text selection.
+
+## Import
+
+```tsx
+import { setFloatingElemPosition } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+setFloatingElemPosition(
+  targetRect,       // DOMRect of the selection
+  floatingElem,     // The floating element to position
+  anchorElem,       // The anchor element (from RootContext)
+  false,            // isLink (adjusts flip gap for link editor)
+  10,               // verticalGap (px)
+  5,                // horizontalOffset (px)
+);
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `targetRect` | `DOMRect \| null` | — | Bounding rect of the target (selection) |
+| `floatingElem` | `HTMLElement` | — | The element to position |
+| `anchorElem` | `HTMLElement \| null` | — | Anchor element for relative positioning |
+| `isLink` | `boolean` | `false` | Whether this is a link editor (adjusts vertical flip gap) |
+| `verticalGap` | `number` | `10` | Vertical gap between target and floating element |
+| `horizontalOffset` | `number` | `5` | Horizontal offset from the target |
+
+## Behavior
+
+- Positions the element **above** the target by default
+- **Flips below** if there isn't enough space above (within the scroller element)
+- Adjusts for **end-aligned text** by positioning relative to the text end
+- Handles **boundary clamping** to keep the element within the editor scroller
+- When `targetRect` is `null`, hides the element off-screen
+- Uses CSS `transform` for positioning (avoids layout thrashing)
+
+## setFloatingElemPositionForLinkEditor
+
+A specialized variant for the link editor floating UI:
+
+```tsx
+import { setFloatingElemPositionForLinkEditor } from '@typix-editor/react';
+```
+
+This function is used internally by the `FloatingLinkExtension`.

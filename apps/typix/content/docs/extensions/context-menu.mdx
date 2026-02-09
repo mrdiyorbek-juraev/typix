@@ -1,0 +1,70 @@
+---
+title: Context Menu
+description: Custom right-click context menu for editor nodes
+---
+
+The Context Menu extension provides a right-click context menu with customizable actions for editor nodes.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-context-menu
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-context-menu
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-context-menu
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import {
+  ContextMenuExtension,
+  NodeContextMenuOption,
+  NodeContextMenuSeparator,
+} from '@typix-editor/extension-context-menu';
+
+const menuOptions = [
+  new NodeContextMenuOption('Cut', () => {
+    document.execCommand('cut');
+  }),
+  new NodeContextMenuOption('Copy', () => {
+    document.execCommand('copy');
+  }),
+  new NodeContextMenuOption('Paste', () => {
+    document.execCommand('paste');
+  }),
+  new NodeContextMenuSeparator(),
+  new NodeContextMenuOption('Delete', (node) => {
+    node.remove();
+  }),
+];
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <ContextMenuExtension options={menuOptions} />
+    </EditorRoot>
+  );
+}
+```
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `ContextMenuExtension` | Component | The context menu plugin |
+| `ContextMenuExtensionProps` | Type | Props for the extension |
+| `NodeContextMenuOption` | Class | A menu item option |
+| `NodeContextMenuSeparator` | Class | A visual separator between menu items |

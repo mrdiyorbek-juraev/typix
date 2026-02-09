@@ -1,0 +1,70 @@
+---
+title: Floating Link
+description: Floating link editor UI for creating and editing links
+---
+
+The Floating Link extension provides a floating UI that appears when a link is selected, allowing users to edit, open, or remove links.
+
+## Installation
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @typix-editor/extension-floating-link
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @typix-editor/extension-floating-link
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @typix-editor/extension-floating-link
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+```tsx
+import { FloatingLinkExtension } from '@typix-editor/extension-floating-link';
+
+function MyEditor() {
+  return (
+    <EditorRoot>
+      <EditorContent />
+      <FloatingLinkExtension />
+    </EditorRoot>
+  );
+}
+```
+
+### With custom rendering
+
+```tsx
+<FloatingLinkExtension
+  render={(props) => (
+    <div className="my-link-editor">
+      <input value={props.url} onChange={(e) => props.setUrl(e.target.value)} />
+      <button onClick={props.onConfirm}>Save</button>
+      <button onClick={props.onRemove}>Remove</button>
+    </div>
+  )}
+/>
+```
+
+## Exports
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `FloatingLinkExtension` | Component | The floating link editor plugin |
+| `FloatingLinkExtensionProps` | Type | Props type |
+| `FloatingLinkRenderProps` | Type | Props passed to custom render function |
+
+## Behavior
+
+- Appears when the cursor is inside a link node
+- Shows the current URL with options to edit, open in new tab, or remove
+- Positions itself using the floating element positioning utility
+- Supports fully custom rendering via the `render` prop
