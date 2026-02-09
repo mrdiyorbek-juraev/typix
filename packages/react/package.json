@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/react",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "React adapter for Typix editor framework",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",

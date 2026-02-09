@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-short-cuts",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "Keyboard shortcuts extension for Typix",
   "keywords": [
     "typix",
@@ -38,12 +38,14 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
+    "@typix-editor/react": "workspace:*",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "devDependencies": {
     "@lexical/link": "^0.39.0",
     "@lexical/react": "^0.39.0",
+    "@types/node": "^25.1.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.1",
     "@lexical/utils": "^0.39.0",
@@ -52,9 +54,5 @@
     "lexical": "^0.39.0",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
-  },
-  "dependencies": {
-    "@types/node": "^25.1.0",
-    "@typix-editor/react": "workspace:*"
   }
 }

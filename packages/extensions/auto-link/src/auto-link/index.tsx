@@ -1,10 +1,12 @@
+import { AutoLinkNode } from "@typix-editor/react/lexical";
 import {
   AutoLinkPlugin,
   type ChangeHandler,
   createLinkMatcherWithRegExp,
   type LinkMatcher,
 } from "@lexical/react/LexicalAutoLinkPlugin";
-import type { JSX } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { type JSX, useEffect } from "react";
 import { EMAIL_REGEX, URL_REGEX } from "../lib";
 
 const MATCHERS = [
@@ -21,6 +23,17 @@ export function AutoLinkExtension({
   matchers?: LinkMatcher[];
   onChange?: ChangeHandler;
 }): JSX.Element {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    if (!editor.hasNodes([AutoLinkNode])) {
+      throw new Error(
+        "AutoLinkExtension: AutoLinkNode is not registered in the editor. " +
+          "Make sure to include AutoLinkNode in your extensionNodes array."
+      );
+    }
+  }, [editor]);
+
   return <AutoLinkPlugin matchers={matchers} onChange={onChange} />;
 }
 

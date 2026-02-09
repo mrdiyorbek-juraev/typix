@@ -100,6 +100,15 @@ export function AutocompleteExtension(): JSX.Element | null {
   const query = useQuery();
 
   useEffect(() => {
+    if (!editor.hasNodes([AutocompleteNode])) {
+      throw new Error(
+        "AutocompleteExtension: AutocompleteNode is not registered in the editor. " +
+          "Make sure to include AutocompleteNode in your extensionNodes array."
+      );
+    }
+  }, [editor]);
+
+  useEffect(() => {
     let autocompleteNodeKey: null | NodeKey = null;
     let lastMatch: null | string = null;
     let lastSuggestion: null | string = null;
