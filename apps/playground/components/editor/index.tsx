@@ -19,7 +19,7 @@ const Editor = () => {
     () =>
       createEditorConfig({
         namespace: "typix-editor",
-        extensionNodes,
+        extension_nodes: extensionNodes,
         editable: true,
         editorState: null,
         initialState: editorState,

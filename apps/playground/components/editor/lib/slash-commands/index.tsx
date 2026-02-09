@@ -5,7 +5,7 @@ import {
   $getSelection,
   $isRangeSelection,
   $setBlocksType,
-} from "@typix-editor/react/lexical";
+} from "@typix-editor/react";
 // Slash commands
 export const ParagraphCommand = createCommand({
   title: "Text",
