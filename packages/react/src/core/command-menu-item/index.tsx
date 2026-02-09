@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from "react";
 import { useEditorCommand } from "../../context/command";
-import { useEditor } from "../../hooks/useEditor";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { cn } from "../../utils";
 
 export interface EditorCommandItemRenderProps {
@@ -45,7 +45,7 @@ const EditorCommandItemInner = forwardRef<HTMLElement, EditorCommandItemProps>(
     } = useEditorCommand();
 
     const Comp = as;
-    const { editor } = useEditor();
+    const [editor] = useLexicalComposerContext();
 
     // Find this item's index in filtered items
     const index = filteredItems.findIndex((item) => item.title === value);

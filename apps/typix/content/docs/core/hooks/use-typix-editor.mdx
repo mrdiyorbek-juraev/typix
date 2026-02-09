@@ -45,11 +45,11 @@ useTypixEditor must be used within EditorRoot.
 Make sure your component is wrapped in <EditorRoot>.
 ```
 
-## Difference from useEditor
+## Difference from useEditorState
 
 | Hook | Returns | Use case |
 | --- | --- | --- |
-| `useTypixEditor` | `TypixEditor` | High-level fluent API (formatting, content export, etc.) |
-| `useEditor` | `{ editor: LexicalEditor, isEmpty: boolean }` | Low-level Lexical access + empty state |
+| `useTypixEditor` | `TypixEditor` | High-level fluent API (formatting, content export, Lexical access via `.lexical`) |
+| `useEditorState` | `{ isEmpty: boolean }` | Reactive editor state (empty check) |
 
-Use `useTypixEditor` for most cases. Use `useEditor` when you need the raw Lexical editor instance or the `isEmpty` state.
+Use `useTypixEditor` for most cases. Use `useEditorState` when you need the reactive `isEmpty` state.

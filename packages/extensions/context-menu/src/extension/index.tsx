@@ -70,6 +70,8 @@ export function ContextMenuExtension({ options }: ContextMenuExtensionProps) {
   );
 }
 
+ContextMenuExtension.displayName = "Typix.ContextMenuExtension";
+
 export {
   NodeContextMenuOption,
   NodeContextMenuSeparator,

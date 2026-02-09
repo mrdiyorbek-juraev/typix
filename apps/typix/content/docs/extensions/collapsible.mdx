@@ -39,7 +39,7 @@ import {
 } from '@typix-editor/extension-collapsible';
 
 const config = createEditorConfig({
-  extension_nodes: [
+  extensionNodes: [
     ...defaultExtensionNodes,
     CollapsibleContainerNode,
     CollapsibleContentNode,
@@ -65,10 +65,10 @@ Use the `INSERT_COLLAPSIBLE_COMMAND`:
 import { INSERT_COLLAPSIBLE_COMMAND } from '@typix-editor/extension-collapsible';
 
 function InsertCollapsibleButton() {
-  const { editor } = useEditor();
+  const editor = useTypixEditor();
 
   return (
-    <button onClick={() => editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined)}>
+    <button onClick={() => editor.lexical.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined)}>
       Insert Collapsible
     </button>
   );

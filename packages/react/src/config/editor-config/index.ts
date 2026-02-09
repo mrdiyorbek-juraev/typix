@@ -38,7 +38,7 @@ interface CreateEditorConfigOptions {
    * Typically provided by extensions.
    * @default []
    */
-  extension_nodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
+  extensionNodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
 
   /**
    * Whether the editor is editable.
@@ -80,7 +80,7 @@ function createEditorConfig(
   const {
     namespace = "typix-editor",
     theme,
-    extension_nodes = [],
+    extensionNodes = [],
     editable = true,
     onError,
     editorState,
@@ -102,7 +102,7 @@ function createEditorConfig(
   return {
     namespace,
     theme,
-    nodes: [...extension_nodes],
+    nodes: [...extensionNodes],
     editable,
     ...(resolvedEditorState ? { editorState: resolvedEditorState } : {}),
     onError: onError || ((error) => console.error(error)),

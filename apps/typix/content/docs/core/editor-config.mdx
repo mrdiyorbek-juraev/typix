@@ -13,7 +13,7 @@ import { createEditorConfig, defaultExtensionNodes, defaultTheme } from '@typix-
 const config = createEditorConfig({
   namespace: 'my-editor',
   theme: defaultTheme,
-  extension_nodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
 });
 ```
 
@@ -31,7 +31,7 @@ Pass the config to `EditorRoot`:
 | --- | --- | --- | --- |
 | `namespace` | `string` | `"typix-editor"` | Unique namespace. Important when using multiple editors on the same page. |
 | `theme` | `EditorThemeClasses` | `undefined` | CSS class mappings for editor elements. See [Theming](/docs/getting-started/theming). |
-| `extension_nodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Nodes to register with the editor. |
+| `extensionNodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Nodes to register with the editor. |
 | `editable` | `boolean` | `true` | Whether the editor starts in editable mode. |
 | `onError` | `(error: Error, editor: LexicalEditor) => void` | `console.error` | Custom error handler. |
 | `initialState` | `SerializedEditorState` | `undefined` | Initial content as serialized JSON. |
@@ -59,7 +59,7 @@ import { defaultExtensionNodes, createEditorConfig } from '@typix-editor/react';
 import { MentionNode } from '@typix-editor/extension-mention';
 
 const config = createEditorConfig({
-  extension_nodes: [...defaultExtensionNodes, MentionNode],
+  extensionNodes: [...defaultExtensionNodes, MentionNode],
 });
 ```
 
@@ -70,7 +70,7 @@ If you don't pass a `config` prop to `EditorRoot`, it automatically calls `creat
 ```tsx
 createEditorConfig({
   namespace: 'typix-editor',
-  extension_nodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
   editable: true,
   editorState: null,
   initialState: content, // from the content prop

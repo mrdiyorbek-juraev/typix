@@ -1,7 +1,7 @@
 import { defineConfig, type Options } from "tsup";
 
 export default defineConfig((options: Options) => ({
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/lexical.ts"],
   banner: {
     js: "'use client'",
   },

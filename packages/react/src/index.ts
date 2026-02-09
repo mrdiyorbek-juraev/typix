@@ -52,45 +52,16 @@ export {
 
 export {
   useActiveFormats,
-  useEditor,
+  useEditorState,
   useMouseListener,
   useRange,
 } from "./hooks";
 
-export {
-  $createHeadingNode,
-  // LEXICAL UTILS
-  $createParagraphNode,
-  $getSelection,
-  $isRangeSelection,
-  $setBlocksType,
-  AutoLinkNode,
-  CodeHighlightNode,
-  CodeNode,
-  // LEXICAL COMMANDS
-  FORMAT_TEXT_COMMAND,
-  HashtagNode,
-  // LEXICAL DEFAULT NODES
-  HeadingNode,
-  // LEXICAL CORE TYPES
-  type Klass,
-  type LexicalNode,
-  type LexicalNodeReplacement,
-  LinkNode,
-  ListItemNode,
-  ListNode,
-  OverflowNode,
-  ParagraphNode,
-  QuoteNode,
-  TableCellNode,
-  TableNode,
-  TableRowNode,
-  TextNode,
-} from "./lib";
+export type { Klass, LexicalNode, LexicalNodeReplacement } from "./lib";
 export { defaultExtensionNodes } from "./shared";
 export { defaultTheme } from "./theme";
 // Re-export types for direct access
-export type { LexicalEditor, TextFormatType } from "./types";
+export type { LexicalEditor, TextFormatType, TypixExtension } from "./types";
 
 export {
   addSwipeRightListener,

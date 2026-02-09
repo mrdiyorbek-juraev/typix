@@ -5,7 +5,7 @@ import {
   defaultTheme,
   EditorContent,
   EditorRoot,
-  useEditor,
+  useEditorState,
 } from "@typix-editor/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -19,9 +19,8 @@ import {
 } from "./components";
 import { extensionNodes, initialValue, slashCommands } from "./constants";
 
-// Debug component to test useEditor hook
 const EditorDebug = () => {
-  const { isEmpty } = useEditor();
+  const { isEmpty } = useEditorState();
   return (
     <div className="absolute top-2 right-2 rounded bg-muted px-2 py-1 text-[10px] text-muted-foreground">
       {isEmpty ? "Empty" : "Has content"}
@@ -36,7 +35,7 @@ export default function PlayGroundPage() {
     () =>
       createEditorConfig({
         namespace: "typix-editor",
-        extension_nodes: extensionNodes,
+        extensionNodes,
         editable: true,
         editorState: null,
         initialState: initialValue,

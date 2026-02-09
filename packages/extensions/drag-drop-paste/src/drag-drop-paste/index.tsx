@@ -271,5 +271,3 @@ export function DragDropPasteExtension({
 }
 
 DragDropPasteExtension.displayName = "Typix.DragDropPasteExtension";
-
-export default DragDropPasteExtension;

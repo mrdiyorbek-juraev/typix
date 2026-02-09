@@ -10,3 +10,5 @@ export function CodeHighlightPrismExtension(): JSX.Element | null {
 
   return null;
 }
+
+CodeHighlightPrismExtension.displayName = "Typix.CodeHighlightPrismExtension";

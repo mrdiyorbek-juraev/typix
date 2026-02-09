@@ -52,3 +52,5 @@ export function TabFocusExtension(): null {
 
   return null;
 }
+
+TabFocusExtension.displayName = "Typix.TabFocusExtension";

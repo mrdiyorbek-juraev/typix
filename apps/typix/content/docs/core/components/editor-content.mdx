@@ -24,7 +24,7 @@ import { EditorContent } from '@typix-editor/react';
 ```tsx
 <EditorContent
   className="border rounded-lg p-4"
-  classnames={{
+  classNames={{
     contentEditable: 'min-h-[200px] outline-none',
     placeholder: 'text-gray-400',
   }}
@@ -46,9 +46,9 @@ const ref = useRef<HTMLDivElement>(null);
 | `children` | `ReactNode` | — | Additional content rendered inside the wrapper |
 | `placeholder` | `string` | — | Placeholder text shown when the editor is empty |
 | `className` | `string` | — | CSS class for the outer container |
-| `classnames` | `object` | — | Fine-grained class names (see below) |
+| `classNames` | `object` | — | Fine-grained class names (see below) |
 
-### classnames object
+### classNames object
 
 | Key | Type | Description |
 | --- | --- | --- |

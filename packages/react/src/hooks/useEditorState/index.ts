@@ -1,20 +1,24 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $isRootTextContentEmpty } from "@lexical/text";
-import type { LexicalEditor } from "lexical";
 import { useEffect, useState } from "react";
 
+interface UseEditorStateReturn {
+  /** Whether the editor content is empty */
+  isEmpty: boolean;
+}
+
 /**
- * Hook to access the Lexical editor instance and state
+ * Hook for reactive editor state.
  *
- * Provides the editor instance along with computed state like `isEmpty`.
+ * Provides computed state that triggers re-renders when the editor content changes.
+ * Use `useTypixEditor()` for editor operations (formatting, export, etc.).
  *
- * @returns Object containing the editor instance and state
- * @throws {Error} If used outside of LexicalComposer
+ * @returns Object containing reactive editor state
  *
  * @example
  * ```tsx
- * function MyPlugin() {
- *   const { editor, isEmpty } = useEditor();
+ * function SubmitButton() {
+ *   const { isEmpty } = useEditorState();
  *
  *   return (
  *     <button disabled={isEmpty}>
@@ -24,15 +28,7 @@ import { useEffect, useState } from "react";
  * }
  * ```
  */
-
-type UseEditorReturn = {
-  /** The Lexical editor instance */
-  editor: LexicalEditor;
-  /** Whether the editor content is empty */
-  isEmpty: boolean;
-};
-
-export function useEditor(): UseEditorReturn {
+export function useEditorState(): UseEditorStateReturn {
   const [editor] = useLexicalComposerContext();
 
   const [isEmpty, setIsEmpty] = useState(() =>
@@ -52,8 +48,5 @@ export function useEditor(): UseEditorReturn {
     [editor]
   );
 
-  return {
-    editor,
-    isEmpty,
-  };
+  return { isEmpty };
 }

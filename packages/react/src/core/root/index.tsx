@@ -73,7 +73,7 @@ const EditorRoot = ({
     config ||
     createEditorConfig({
       namespace: "typix-editor",
-      extension_nodes: defaultExtensionNodes,
+      extensionNodes: defaultExtensionNodes,
       editable: true,
       editorState: null,
       initialState: content!,

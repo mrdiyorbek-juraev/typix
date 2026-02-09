@@ -288,7 +288,7 @@ function TypeSafeCard() {
           <span className="text-purple-400">const</span>
           <span className="text-neutral-300"> editor </span>
           <span className="text-purple-400">=</span>
-          <span className="text-blue-400"> useEditor</span>
+          <span className="text-blue-400"> useEditorState</span>
           <span className="text-neutral-400">{"<"}</span>
         </div>
         <div className="pl-3">

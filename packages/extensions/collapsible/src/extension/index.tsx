@@ -233,3 +233,5 @@ export function CollapsiblePlugin(): null {
 
   return null;
 }
+
+CollapsiblePlugin.displayName = "Typix.CollapsiblePlugin";

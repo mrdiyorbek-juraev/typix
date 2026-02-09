@@ -57,7 +57,7 @@ Hooks provide reactive access to editor state:
 | Hook | Purpose |
 | --- | --- |
 | [`useTypixEditor`](/docs/core/hooks/use-typix-editor) | Access the TypixEditor instance |
-| [`useEditor`](/docs/core/hooks/use-editor) | Access the Lexical editor + isEmpty state |
+| [`useEditorState`](/docs/core/hooks/use-editor) | Reactive editor state (isEmpty) |
 | [`useActiveFormats`](/docs/core/hooks/use-active-formats) | Reactive text format state |
 | [`useRange`](/docs/core/hooks/use-range) | Current selection range |
 | [`useMouseListener`](/docs/core/hooks/use-mouse-listener) | Mouse up/down events |
@@ -69,7 +69,7 @@ Hooks provide reactive access to editor state:
 import { EditorRoot, EditorContent, EditorBubbleMenu, EditorCommand } from '@typix-editor/react';
 
 // Hooks
-import { useTypixEditor, useEditor, useActiveFormats, useRange } from '@typix-editor/react';
+import { useTypixEditor, useEditorState, useActiveFormats, useRange } from '@typix-editor/react';
 
 // Configuration
 import { createEditorConfig, defaultExtensionNodes, defaultTheme } from '@typix-editor/react';

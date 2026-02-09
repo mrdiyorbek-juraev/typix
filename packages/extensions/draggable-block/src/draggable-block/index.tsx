@@ -151,5 +151,3 @@ export function DraggableBlockExtension({
 }
 
 DraggableBlockExtension.displayName = "Typix.DraggableBlockExtension";
-
-export default DraggableBlockExtension;

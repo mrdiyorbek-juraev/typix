@@ -2,7 +2,7 @@
   "title": "Hooks",
   "pages": [
     "use-typix-editor",
-    "use-editor",
+    "use-editor-state",
     "use-active-formats",
     "use-range",
     "use-mouse-listener"

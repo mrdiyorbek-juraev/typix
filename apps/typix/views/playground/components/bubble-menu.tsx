@@ -3,11 +3,11 @@
 import {
   EditorBubbleItem,
   EditorBubbleMenu,
-  FORMAT_TEXT_COMMAND,
   useActiveFormats,
   useTypixEditor,
 } from "@typix-editor/react";
 import { cn } from "@/lib/cn";
+import { FORMAT_TEXT_COMMAND } from "@typix-editor/react/lexical";
 
 type BubbleButtonProps = {
   isActive: boolean;

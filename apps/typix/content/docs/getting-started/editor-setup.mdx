@@ -36,7 +36,7 @@ import {
 const config = createEditorConfig({
   namespace: 'my-editor',
   theme: defaultTheme,
-  extension_nodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
   editable: true,
 });
 
@@ -55,7 +55,7 @@ function MyEditor() {
 | --- | --- | --- | --- |
 | `namespace` | `string` | `"typix-editor"` | Unique namespace for the editor instance |
 | `theme` | `EditorThemeClasses` | `undefined` | Theme classes for styling editor elements |
-| `extension_nodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Custom nodes to register |
+| `extensionNodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Custom nodes to register |
 | `editable` | `boolean` | `true` | Whether the editor is editable |
 | `onError` | `(error: Error, editor: LexicalEditor) => void` | `console.error` | Error handler |
 | `initialState` | `SerializedEditorState` | `undefined` | Initial content as serialized state |
@@ -67,7 +67,7 @@ function MyEditor() {
 
 ## Adding extension nodes
 
-When you install extensions that provide custom nodes, add them to `extension_nodes`:
+When you install extensions that provide custom nodes, add them to `extensionNodes`:
 
 ```tsx
 import { defaultExtensionNodes } from '@typix-editor/react';
@@ -75,7 +75,7 @@ import { CollapsibleContainerNode, CollapsibleContentNode, CollapsibleTitleNode 
 import { MentionNode } from '@typix-editor/extension-mention';
 
 const config = createEditorConfig({
-  extension_nodes: [
+  extensionNodes: [
     ...defaultExtensionNodes,
     CollapsibleContainerNode,
     CollapsibleContentNode,

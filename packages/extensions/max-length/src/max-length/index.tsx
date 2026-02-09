@@ -370,5 +370,3 @@ export function MaxLengthExtension({
 }
 
 MaxLengthExtension.displayName = "Typix.MaxLengthExtension";
-
-export default MaxLengthExtension;

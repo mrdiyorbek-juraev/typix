@@ -1,0 +1,51 @@
+---
+title: useEditorState
+description: Reactive editor state hook for tracking editor emptiness
+---
+
+`useEditorState` provides a reactive `isEmpty` flag that updates whenever the editor content changes.
+
+## Import
+
+```tsx
+import { useEditorState } from '@typix-editor/react';
+```
+
+## Usage
+
+```tsx
+function SubmitButton() {
+  const { isEmpty } = useEditorState();
+
+  return (
+    <button disabled={isEmpty}>
+      Submit
+    </button>
+  );
+}
+```
+
+## Return value
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `isEmpty` | `boolean` | Whether the editor content is empty (reactive) |
+
+## isEmpty behavior
+
+The `isEmpty` flag updates reactively whenever the editor content changes. It uses Lexical's `$isRootTextContentEmpty` to determine if the editor has any text content.
+
+## Accessing the Lexical editor
+
+If you need the raw Lexical editor instance, use `useTypixEditor` instead:
+
+```tsx
+const editor = useTypixEditor();
+const lexical = editor.lexical; // LexicalEditor
+```
+
+See [useTypixEditor](/docs/core/hooks/use-typix-editor) for more details.
+
+## Requirements
+
+Must be used inside a `LexicalComposer` (which `EditorRoot` sets up automatically).
