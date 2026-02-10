@@ -3,8 +3,8 @@
 **A modern, extensible rich-text editor framework built on Lexical.**
 
 <div>
-  <img src="https://img.shields.io/npm/v/typix-editor/react" alt="" />
-  <img src="https://img.shields.io/npm/dm/typix-editor/react" alt="" />
+  <img src="https://img.shields.io/npm/v/@typix-editor/react" alt="" />
+  <img src="https://img.shields.io/npm/dm/@typix-editor/react" alt="" />
   <img src="https://img.shields.io/github/license/mrdiyorbek-juraev/typix" alt="" />
 </div>
 
@@ -90,8 +90,8 @@ Typix aims to **reduce complexity without reducing power**.
 > ⚠️ Typix is under active development.
 
 ```sh
-npm install typix
+npm install @typix-editor/react
 # or
-pnpm add typix
+pnpm add @typix-editor/react
 # or
-yarn add typix
+yarn add @typix-editor/react
