@@ -1,19 +1,7 @@
-# @typix-editor/extension-context-menu
+# @typix-editor/extension-keywords
 
 ## 2.0.0
 
 ### Major Changes
 
 - Breaking changes: Renamed extension_nodes to extensionNodes, classnames to classNames, moved Lexical re-exports to @typix-editor/react/lexical subpath, removed default exports, replaced useEditor with useEditorState hook, added node registration validation, fixed dependency placement.
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @typix-editor/react@2.0.0
-
-## 4.0.0
-
-### Patch Changes
-
-- Updated dependencies [[`3111db7`](https://github.com/mrdiyorbek-juraev/typix/commit/3111db78e30d1760192aa44a39163a1718e62b72)]:
-  - @typix-editor/react@4.0.0

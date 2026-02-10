@@ -8,14 +8,19 @@
   ],
   "commit": false,
   "fixed": [],
-  "linked": [["@typix-editor/*"]],
+  "linked": [
+    [
+      "@typix-editor/*"
+    ]
+  ],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
     "@typix-editor/docs",
     "@typix-editor/next-config",
-    "@typix-editor/typescript-config"
+    "@typix-editor/typescript-config",
+    "@typix-editor/playground"
   ],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
