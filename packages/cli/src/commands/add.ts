@@ -29,9 +29,7 @@ export async function addCommand(
   } else {
     if (components.length === 0) {
       logger.error("Please specify a component name or use --all.");
-      logger.info(
-        "Available: " + getComponentNames().join(", ")
-      );
+      logger.info("Available: " + getComponentNames().join(", "));
       process.exit(1);
     }
 
@@ -68,8 +66,6 @@ export async function addCommand(
   if (deps.length > 0) {
     logger.break();
     logger.info("Install required dependencies:");
-    console.log(
-      chalk.cyan(`  pnpm add ${deps.join(" ")}`)
-    );
+    console.log(chalk.cyan(`  pnpm add ${deps.join(" ")}`));
   }
 }

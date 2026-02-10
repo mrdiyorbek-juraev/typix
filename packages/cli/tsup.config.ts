@@ -11,11 +11,9 @@ export default defineConfig((options: Options) => ({
     js: "#!/usr/bin/env node",
   },
   onSuccess: async () => {
-    cpSync(
-      resolve("src/templates"),
-      resolve("dist/templates"),
-      { recursive: true }
-    );
+    cpSync(resolve("src/templates"), resolve("dist/templates"), {
+      recursive: true,
+    });
   },
   ...options,
 }));
