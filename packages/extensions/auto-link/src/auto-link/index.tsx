@@ -1,4 +1,4 @@
-import { AutoLinkNode } from "@typix-editor/react/lexical";
+import { AutoLinkNode } from "@lexical/link";
 import {
   AutoLinkPlugin,
   type ChangeHandler,

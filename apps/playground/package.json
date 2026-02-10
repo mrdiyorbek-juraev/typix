@@ -1,19 +1,22 @@
 {
-  "name": "playground",
+  "name": "@typix-editor/playground",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "biome format --write",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@typix-editor/extension-auto-complete": "^4.0.0",
-    "@typix-editor/extension-keywords": "^1.0.0",
-    "@typix-editor/extension-mention": "^4.0.0",
-    "@typix-editor/extension-speech-to-text": "^1.0.0",
-    "@typix-editor/react": "^4.0.0",
+    "@typix-editor/extension-auto-complete": "workspace:*",
+    "@typix-editor/extension-keywords": "workspace:*",
+    "@typix-editor/extension-mention": "workspace:*",
+    "@typix-editor/extension-speech-to-text": "workspace:*",
+    "@typix-editor/react": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.563.0",
