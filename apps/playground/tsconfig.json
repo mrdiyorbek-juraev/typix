@@ -19,8 +19,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ],
+      "@typix-editor/*": [
+        "../../packages/*"
+      ]
+    },
   },
   "include": [
     "next-env.d.ts",
