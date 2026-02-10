@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function getTemplatesDir(): string {
-  return path.resolve(__dirname, "..", "templates");
+  return path.resolve(__dirname, "templates");
 }
 
 export async function writeComponent(

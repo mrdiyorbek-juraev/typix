@@ -10,10 +10,7 @@ export async function listCommand() {
   logger.break();
 
   const nameWidth = 20;
-  const header =
-    chalk.gray(
-      "  " + "Name".padEnd(nameWidth) + "Description"
-    );
+  const header = chalk.gray("  " + "Name".padEnd(nameWidth) + "Description");
   console.log(header);
   console.log(chalk.gray("  " + "─".repeat(55)));
 
@@ -23,10 +20,6 @@ export async function listCommand() {
   }
 
   logger.break();
-  logger.info(
-    `Add a component: ${chalk.cyan("typix add <component>")}`
-  );
-  logger.info(
-    `Add all components: ${chalk.cyan("typix add --all")}`
-  );
+  logger.info(`Add a component: ${chalk.cyan("typix add <component>")}`);
+  logger.info(`Add all components: ${chalk.cyan("typix add --all")}`);
 }
