@@ -1,0 +1,47 @@
+{
+  "name": "@typix-editor/cli",
+  "version": "3.0.0",
+  "description": "CLI for adding pre-built UI components to your Typix editor project",
+  "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "typix": "./dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.6.0",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.10.1",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [
+    "typix",
+    "cli",
+    "editor",
+    "ui",
+    "components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrdiyorbek-juraev/typix.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
