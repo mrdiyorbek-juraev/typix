@@ -1,5 +1,5 @@
 {
-  "name": "playground",
+  "name": "@typix-editor/playground",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@typix-editor/extension-auto-complete": "^4.0.0",
-    "@typix-editor/extension-keywords": "^1.0.0",
-    "@typix-editor/extension-mention": "^4.0.0",
-    "@typix-editor/extension-speech-to-text": "^1.0.0",
-    "@typix-editor/react": "^4.0.0",
+    "@typix-editor/extension-auto-complete": "^2.0.0",
+    "@typix-editor/extension-keywords": "^2.0.0",
+    "@typix-editor/extension-mention": "^2.0.0",
+    "@typix-editor/extension-speech-to-text": "^2.0.0",
+    "@typix-editor/react": "^2.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.563.0",
