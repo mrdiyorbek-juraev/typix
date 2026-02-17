@@ -46,6 +46,8 @@ export async function listCommand() {
   }
 
   logger.break();
-  logger.info(`Add extensions: ${chalk.cyan("typix add")} (interactive) or ${chalk.cyan("typix add <name>")}`);
+  logger.info(
+    `Add extensions: ${chalk.cyan("typix add")} (interactive) or ${chalk.cyan("typix add <name>")}`
+  );
   logger.info(`Add all extensions: ${chalk.cyan("typix add --all")}`);
 }

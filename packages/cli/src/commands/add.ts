@@ -15,10 +15,7 @@ import {
 import { collectDependencies, writeComponent } from "../utils/writer.js";
 import { installPackages } from "../utils/package-manager.js";
 
-export async function addCommand(
-  items: string[],
-  options: { all?: boolean }
-) {
+export async function addCommand(items: string[], options: { all?: boolean }) {
   const allExtensions = getAllExtensions();
   const extensionNames = getExtensionNames();
 
@@ -89,9 +86,7 @@ export async function addCommand(
 
     if (extensionItems.length === 0) return;
 
-    selectedExtensions = extensionItems.map(
-      (name) => getExtensionEntry(name)!
-    );
+    selectedExtensions = extensionItems.map((name) => getExtensionEntry(name)!);
   }
 
   // Install selected extensions
@@ -99,7 +94,9 @@ export async function addCommand(
   const names = selectedExtensions.map((ext) => ext.name);
 
   logger.break();
-  logger.info(`Installing ${names.length} extension(s): ${chalk.cyan(names.join(", "))}`);
+  logger.info(
+    `Installing ${names.length} extension(s): ${chalk.cyan(names.join(", "))}`
+  );
   logger.break();
 
   try {
@@ -118,10 +115,7 @@ export async function addCommand(
   }
 }
 
-async function addComponents(
-  components: string[],
-  options: { all?: boolean }
-) {
+async function addComponents(components: string[], options: { all?: boolean }) {
   const config = await readConfig();
 
   if (!config) {

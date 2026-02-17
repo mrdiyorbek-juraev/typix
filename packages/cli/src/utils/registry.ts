@@ -119,9 +119,7 @@ export const extensionRegistry: Record<string, ExtensionEntry> = {
   },
 };
 
-export function getExtensionEntry(
-  name: string
-): ExtensionEntry | undefined {
+export function getExtensionEntry(name: string): ExtensionEntry | undefined {
   return extensionRegistry[name];
 }
 
