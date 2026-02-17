@@ -7,7 +7,7 @@ const program = new Command();
 
 program
   .name("typix")
-  .description("CLI for adding pre-built UI components to your Typix editor")
+  .description("CLI for adding extensions and components to your Typix editor")
   .version("1.0.0");
 
 program
@@ -17,14 +17,14 @@ program
 
 program
   .command("add")
-  .description("Add a component to your project")
-  .argument("[components...]", "Components to add")
-  .option("-a, --all", "Add all available components")
+  .description("Add extensions or components to your project")
+  .argument("[items...]", "Extensions or components to add")
+  .option("-a, --all", "Add all available extensions")
   .action(addCommand);
 
 program
   .command("list")
-  .description("List available components")
+  .description("List available extensions and components")
   .action(listCommand);
 
 program.parse();
