@@ -28,7 +28,7 @@ export async function writeConfig(config: TypixConfig): Promise<void> {
 
 export function getDefaultConfig(): TypixConfig {
   return {
-    componentDir: "src/components/typix",
+    componentDir: "components/typix",
     typescript: true,
     tailwind: true,
   };
