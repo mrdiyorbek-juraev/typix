@@ -1,63 +1,63 @@
 "use client";
 
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
 import {
-	SpeechToTextExtension,
-	useSpeechToText,
-	isSpeechRecognitionSupported,
+  SpeechToTextExtension,
+  useSpeechToText,
+  isSpeechRecognitionSupported,
 } from "@typix-editor/extension-speech-to-text";
 
 const config = createEditorConfig({
-	extensionNodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
 });
 
 function MicButton() {
-	const { isListening, toggle } = useSpeechToText();
+  const { isListening, toggle } = useSpeechToText();
 
-	if (!isSpeechRecognitionSupported()) {
-		return (
-			<p className="text-xs text-fd-muted-foreground">
-				Speech recognition is not supported in your browser.
-			</p>
-		);
-	}
+  if (!isSpeechRecognitionSupported()) {
+    return (
+      <p className="text-xs text-fd-muted-foreground">
+        Speech recognition is not supported in your browser.
+      </p>
+    );
+  }
 
-	return (
-		<button
-			type="button"
-			onClick={toggle}
-			className="rounded-md border border-fd-border bg-fd-background px-3 py-1.5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
-		>
-			{isListening ? "Stop Listening" : "Start Dictation"}
-		</button>
-	);
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className="rounded-md border border-fd-border bg-fd-background px-3 py-1.5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent"
+    >
+      {isListening ? "Stop Listening" : "Start Dictation"}
+    </button>
+  );
 }
 
 export default function SpeechToTextExample() {
-	return (
-		<EditorRoot config={config}>
-			<div className="mb-3">
-				<MicButton />
-			</div>
-			<EditorContent
-				placeholder="Click 'Start Dictation' and speak..."
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<SpeechToTextExtension />
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <div className="mb-3">
+        <MicButton />
+      </div>
+      <EditorContent
+        placeholder="Click 'Start Dictation' and speak..."
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <SpeechToTextExtension />
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import {
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import {
   EditorContent,
   EditorRoot,
   createEditorConfig,
@@ -97,11 +97,11 @@ export default function SpeechToTextExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   paragraph: "typix-paragraph",
@@ -113,11 +113,11 @@ export const theme: EditorThemeClasses = {
     code: "typix-text--code",
   },
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-paragraph {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-paragraph {
   margin: 0;
   position: relative;
 }
@@ -132,5 +132,5 @@ export const theme: EditorThemeClasses = {
   font-family: Menlo, Consolas, Monaco, monospace;
   font-size: 94%;
 }`,
-	},
+  },
 ];

@@ -1,37 +1,37 @@
 "use client";
 
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
 import {
-	KeywordsExtension,
-	KeywordNode,
+  KeywordsExtension,
+  KeywordNode,
 } from "@typix-editor/extension-keywords";
 
 const config = createEditorConfig({
-	extensionNodes: [...defaultExtensionNodes, KeywordNode],
+  extensionNodes: [...defaultExtensionNodes, KeywordNode],
 });
 
 export default function KeywordsExample() {
-	return (
-		<EditorRoot config={config}>
-			<EditorContent
-				placeholder='Type "congratulations" to see it highlighted...'
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<KeywordsExtension />
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <EditorContent
+        placeholder='Type "congratulations" to see it highlighted...'
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <KeywordsExtension />
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import {
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import {
   EditorContent,
   EditorRoot,
   createEditorConfig,
@@ -57,11 +57,11 @@ export default function KeywordsExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   hashtag: "typix-hashtag",
@@ -74,11 +74,11 @@ export const theme: EditorThemeClasses = {
     code: "typix-text--code",
   },
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-hashtag {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-hashtag {
   background-color: rgba(88, 144, 255, 0.15);
   border-bottom: 1px solid rgba(88, 144, 255, 0.3);
 }
@@ -87,5 +87,5 @@ export const theme: EditorThemeClasses = {
   margin: 0;
   position: relative;
 }`,
-	},
+  },
 ];

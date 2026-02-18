@@ -1,52 +1,49 @@
 "use client";
 
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
-import {
-	MentionExtension,
-	MentionNode,
-} from "@typix-editor/extension-mention";
+import { MentionExtension, MentionNode } from "@typix-editor/extension-mention";
 
 const config = createEditorConfig({
-	extensionNodes: [...defaultExtensionNodes, MentionNode],
+  extensionNodes: [...defaultExtensionNodes, MentionNode],
 });
 
 const users = [
-	{ id: "1", name: "Alice Johnson" },
-	{ id: "2", name: "Bob Smith" },
-	{ id: "3", name: "Charlie Brown" },
-	{ id: "4", name: "Diana Prince" },
-	{ id: "5", name: "Edward Norton" },
+  { id: "1", name: "Alice Johnson" },
+  { id: "2", name: "Bob Smith" },
+  { id: "3", name: "Charlie Brown" },
+  { id: "4", name: "Diana Prince" },
+  { id: "5", name: "Edward Norton" },
 ];
 
 export default function MentionExample() {
-	return (
-		<EditorRoot config={config}>
-			<EditorContent
-				placeholder='Type "@" to mention someone...'
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<MentionExtension
-				onSearch={(query) =>
-					users.filter((u) =>
-						u.name.toLowerCase().includes(query.toLowerCase()),
-					)
-				}
-				maxSuggestions={5}
-			/>
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <EditorContent
+        placeholder='Type "@" to mention someone...'
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <MentionExtension
+        onSearch={(query) =>
+          users.filter((u) =>
+            u.name.toLowerCase().includes(query.toLowerCase())
+          )
+        }
+        maxSuggestions={5}
+      />
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import {
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import {
   EditorContent,
   EditorRoot,
   createEditorConfig,
@@ -85,11 +82,11 @@ export default function MentionExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   paragraph: "typix-paragraph",
@@ -101,11 +98,11 @@ export const theme: EditorThemeClasses = {
     code: "typix-text--code",
   },
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-mention {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-mention {
   background-color: rgba(24, 119, 232, 0.15);
   border-radius: 4px;
   padding: 2px 4px;
@@ -151,5 +148,5 @@ export const theme: EditorThemeClasses = {
   margin: 0;
   position: relative;
 }`,
-	},
+  },
 ];

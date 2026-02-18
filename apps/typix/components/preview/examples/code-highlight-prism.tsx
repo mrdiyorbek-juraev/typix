@@ -1,34 +1,34 @@
 "use client";
 
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
 import { CodeHighlightPrismExtension } from "@typix-editor/extension-code-highlight-prism";
 
 const config = createEditorConfig({
-	extensionNodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
 });
 
 export default function CodeHighlightPrismExample() {
-	return (
-		<EditorRoot config={config}>
-			<EditorContent
-				placeholder="Use the shortcut Ctrl+Shift+C to insert a code block..."
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<CodeHighlightPrismExtension />
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <EditorContent
+        placeholder="Use the shortcut Ctrl+Shift+C to insert a code block..."
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <CodeHighlightPrismExtension />
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import {
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import {
   EditorContent,
   EditorRoot,
   createEditorConfig,
@@ -51,11 +51,11 @@ export default function CodeHighlightPrismExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   code: "typix-code",
@@ -71,11 +71,11 @@ export const theme: EditorThemeClasses = {
   },
   paragraph: "typix-paragraph",
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-code {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-code {
   background-color: rgb(240, 242, 245);
   font-family: Menlo, Consolas, Monaco, monospace;
   display: block;
@@ -96,5 +96,5 @@ export const theme: EditorThemeClasses = {
 .typix-token--attr { color: #07a; }
 .typix-token--variable { color: #e90; }
 .typix-token--function { color: #dd4a68; }`,
-	},
+  },
 ];

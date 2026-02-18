@@ -1,34 +1,34 @@
 "use client";
 
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
 import { ShortCutsExtension } from "@typix-editor/extension-short-cuts";
 
 const config = createEditorConfig({
-	extensionNodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
 });
 
 export default function ShortCutsExample() {
-	return (
-		<EditorRoot config={config}>
-			<EditorContent
-				placeholder="Try Ctrl+B (bold), Ctrl+I (italic), Ctrl+Alt+1 (heading)..."
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<ShortCutsExtension />
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <EditorContent
+        placeholder="Try Ctrl+B (bold), Ctrl+I (italic), Ctrl+Alt+1 (heading)..."
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <ShortCutsExtension />
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import {
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import {
   EditorContent,
   EditorRoot,
   createEditorConfig,
@@ -51,11 +51,11 @@ export default function ShortCutsExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   paragraph: "typix-paragraph",
@@ -79,11 +79,11 @@ export const theme: EditorThemeClasses = {
     superscript: "typix-text--superscript",
   },
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-paragraph {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-paragraph {
   margin: 0;
   position: relative;
 }
@@ -136,5 +136,5 @@ export const theme: EditorThemeClasses = {
   font-size: 0.8em;
   vertical-align: super;
 }`,
-	},
+  },
 ];

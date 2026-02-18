@@ -1,34 +1,34 @@
 "use client";
 
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
 import { LinkExtension } from "@typix-editor/extension-link";
 
 const config = createEditorConfig({
-	extensionNodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
 });
 
 export default function LinkExample() {
-	return (
-		<EditorRoot config={config}>
-			<EditorContent
-				placeholder="Select text and use Ctrl+K to add a link..."
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<LinkExtension />
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <EditorContent
+        placeholder="Select text and use Ctrl+K to add a link..."
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <LinkExtension />
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import {
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import {
   EditorContent,
   EditorRoot,
   createEditorConfig,
@@ -51,11 +51,11 @@ export default function LinkExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   link: "typix-link",
@@ -68,11 +68,11 @@ export const theme: EditorThemeClasses = {
     code: "typix-text--code",
   },
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-link {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-link {
   color: rgb(33, 111, 219);
   text-decoration: none;
 }
@@ -86,5 +86,5 @@ export const theme: EditorThemeClasses = {
   margin: 0;
   position: relative;
 }`,
-	},
+  },
 ];

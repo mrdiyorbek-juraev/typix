@@ -2,44 +2,44 @@
 
 import { useState } from "react";
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
 import { MaxLengthExtension } from "@typix-editor/extension-max-length";
 
 const MAX = 280;
 
 const config = createEditorConfig({
-	extensionNodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
 });
 
 export default function MaxLengthExample() {
-	const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-	return (
-		<EditorRoot config={config}>
-			<EditorContent
-				placeholder="Start typing (max 280 characters)..."
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<MaxLengthExtension
-				maxLength={MAX}
-				onChange={(current) => setCount(current)}
-			/>
-			<div className="mt-2 text-right text-xs text-fd-muted-foreground">
-				{count}/{MAX}
-			</div>
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <EditorContent
+        placeholder="Start typing (max 280 characters)..."
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <MaxLengthExtension
+        maxLength={MAX}
+        onChange={(current) => setCount(current)}
+      />
+      <div className="mt-2 text-right text-xs text-fd-muted-foreground">
+        {count}/{MAX}
+      </div>
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import { useState } from "react";
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import { useState } from "react";
 import {
   EditorContent,
   EditorRoot,
@@ -73,11 +73,11 @@ export default function MaxLengthExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   characterLimit: "typix-character-limit",
@@ -90,11 +90,11 @@ export const theme: EditorThemeClasses = {
     code: "typix-text--code",
   },
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-character-limit {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-character-limit {
   display: inline;
   background-color: #ffbbbb !important;
 }
@@ -103,5 +103,5 @@ export const theme: EditorThemeClasses = {
   margin: 0;
   position: relative;
 }`,
-	},
+  },
 ];

@@ -1,38 +1,38 @@
 "use client";
 
 import {
-	EditorContent,
-	EditorRoot,
-	createEditorConfig,
-	defaultExtensionNodes,
+  EditorContent,
+  EditorRoot,
+  createEditorConfig,
+  defaultExtensionNodes,
 } from "@typix-editor/react";
 import { DragDropPasteExtension } from "@typix-editor/extension-drag-drop-paste";
 
 const config = createEditorConfig({
-	extensionNodes: defaultExtensionNodes,
+  extensionNodes: defaultExtensionNodes,
 });
 
 export default function DragDropPasteExample() {
-	return (
-		<EditorRoot config={config}>
-			<EditorContent
-				placeholder="Try dragging or pasting an image here..."
-				className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-			/>
-			<DragDropPasteExtension
-				onValidationError={(_file: File, reason: string) => {
-					console.warn("Validation error:", reason);
-				}}
-			/>
-		</EditorRoot>
-	);
+  return (
+    <EditorRoot config={config}>
+      <EditorContent
+        placeholder="Try dragging or pasting an image here..."
+        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
+      />
+      <DragDropPasteExtension
+        onValidationError={(_file: File, reason: string) => {
+          console.warn("Validation error:", reason);
+        }}
+      />
+    </EditorRoot>
+  );
 }
 
 export const files = [
-	{
-		name: "Editor.tsx",
-		lang: "tsx",
-		code: `import {
+  {
+    name: "Editor.tsx",
+    lang: "tsx",
+    code: `import {
   EditorContent,
   EditorRoot,
   createEditorConfig,
@@ -66,11 +66,11 @@ export default function DragDropPasteExample() {
     </EditorRoot>
   );
 }`,
-	},
-	{
-		name: "theme.ts",
-		lang: "ts",
-		code: `import type { EditorThemeClasses } from "lexical";
+  },
+  {
+    name: "theme.ts",
+    lang: "ts",
+    code: `import type { EditorThemeClasses } from "lexical";
 
 export const theme: EditorThemeClasses = {
   paragraph: "typix-paragraph",
@@ -83,11 +83,11 @@ export const theme: EditorThemeClasses = {
     code: "typix-text--code",
   },
 };`,
-	},
-	{
-		name: "style.css",
-		lang: "css",
-		code: `.typix-paragraph {
+  },
+  {
+    name: "style.css",
+    lang: "css",
+    code: `.typix-paragraph {
   margin: 0;
   position: relative;
 }
@@ -102,5 +102,5 @@ export const theme: EditorThemeClasses = {
   font-family: Menlo, Consolas, Monaco, monospace;
   font-size: 94%;
 }`,
-	},
+  },
 ];

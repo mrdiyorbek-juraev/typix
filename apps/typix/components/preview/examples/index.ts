@@ -18,83 +18,83 @@ import { files as speechToTextFiles } from "./speech-to-text";
 import { files as tabFocusFiles } from "./tab-focus";
 
 export interface ExampleFile {
-	name: string;
-	code: string;
-	lang: string;
+  name: string;
+  code: string;
+  lang: string;
 }
 
 export interface ExampleDefinition {
-	component: ReturnType<typeof lazy>;
-	files: ExampleFile[];
+  component: ReturnType<typeof lazy>;
+  files: ExampleFile[];
 }
 
 export const examples: Record<string, ExampleDefinition> = {
-	"quick-example": {
-		component: lazy(() => import("./quick-example")),
-		files: quickExampleFiles,
-	},
-	"auto-complete": {
-		component: lazy(() => import("./auto-complete")),
-		files: autoCompleteFiles,
-	},
-	"auto-link": {
-		component: lazy(() => import("./auto-link")),
-		files: autoLinkFiles,
-	},
-	"code-highlight-prism": {
-		component: lazy(() => import("./code-highlight-prism")),
-		files: codeHighlightPrismFiles,
-	},
-	"code-highlight-shiki": {
-		component: lazy(() => import("./code-highlight-shiki")),
-		files: codeHighlightShikiFiles,
-	},
-	collapsible: {
-		component: lazy(() => import("./collapsible")),
-		files: collapsibleFiles,
-	},
-	"context-menu": {
-		component: lazy(() => import("./context-menu")),
-		files: contextMenuFiles,
-	},
-	"drag-drop-paste": {
-		component: lazy(() => import("./drag-drop-paste")),
-		files: dragDropPasteFiles,
-	},
-	"draggable-block": {
-		component: lazy(() => import("./draggable-block")),
-		files: draggableBlockFiles,
-	},
-	"floating-link": {
-		component: lazy(() => import("./floating-link")),
-		files: floatingLinkFiles,
-	},
-	keywords: {
-		component: lazy(() => import("./keywords")),
-		files: keywordsFiles,
-	},
-	link: {
-		component: lazy(() => import("./link")),
-		files: linkFiles,
-	},
-	"max-length": {
-		component: lazy(() => import("./max-length")),
-		files: maxLengthFiles,
-	},
-	mention: {
-		component: lazy(() => import("./mention")),
-		files: mentionFiles,
-	},
-	"short-cuts": {
-		component: lazy(() => import("./short-cuts")),
-		files: shortCutsFiles,
-	},
-	"speech-to-text": {
-		component: lazy(() => import("./speech-to-text")),
-		files: speechToTextFiles,
-	},
-	"tab-focus": {
-		component: lazy(() => import("./tab-focus")),
-		files: tabFocusFiles,
-	},
+  "quick-example": {
+    component: lazy(() => import("./quick-example")),
+    files: quickExampleFiles,
+  },
+  "auto-complete": {
+    component: lazy(() => import("./auto-complete")),
+    files: autoCompleteFiles,
+  },
+  "auto-link": {
+    component: lazy(() => import("./auto-link")),
+    files: autoLinkFiles,
+  },
+  "code-highlight-prism": {
+    component: lazy(() => import("./code-highlight-prism")),
+    files: codeHighlightPrismFiles,
+  },
+  "code-highlight-shiki": {
+    component: lazy(() => import("./code-highlight-shiki")),
+    files: codeHighlightShikiFiles,
+  },
+  collapsible: {
+    component: lazy(() => import("./collapsible")),
+    files: collapsibleFiles,
+  },
+  "context-menu": {
+    component: lazy(() => import("./context-menu")),
+    files: contextMenuFiles,
+  },
+  "drag-drop-paste": {
+    component: lazy(() => import("./drag-drop-paste")),
+    files: dragDropPasteFiles,
+  },
+  "draggable-block": {
+    component: lazy(() => import("./draggable-block")),
+    files: draggableBlockFiles,
+  },
+  "floating-link": {
+    component: lazy(() => import("./floating-link")),
+    files: floatingLinkFiles,
+  },
+  keywords: {
+    component: lazy(() => import("./keywords")),
+    files: keywordsFiles,
+  },
+  link: {
+    component: lazy(() => import("./link")),
+    files: linkFiles,
+  },
+  "max-length": {
+    component: lazy(() => import("./max-length")),
+    files: maxLengthFiles,
+  },
+  mention: {
+    component: lazy(() => import("./mention")),
+    files: mentionFiles,
+  },
+  "short-cuts": {
+    component: lazy(() => import("./short-cuts")),
+    files: shortCutsFiles,
+  },
+  "speech-to-text": {
+    component: lazy(() => import("./speech-to-text")),
+    files: speechToTextFiles,
+  },
+  "tab-focus": {
+    component: lazy(() => import("./tab-focus")),
+    files: tabFocusFiles,
+  },
 };
