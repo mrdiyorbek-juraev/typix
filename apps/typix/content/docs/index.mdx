@@ -15,33 +15,7 @@ Typix is a headless, extension-based rich-text editor framework for React. It wr
 
 ## Quick Example
 
-```tsx
-import {
-  EditorRoot,
-  EditorContent,
-  useTypixEditor,
-} from '@typix-editor/react';
-
-function MyEditor() {
-  return (
-    <EditorRoot>
-      <Toolbar />
-      <EditorContent placeholder="Start typing..." />
-    </EditorRoot>
-  );
-}
-
-function Toolbar() {
-  const editor = useTypixEditor();
-
-  return (
-    <div>
-      <button onClick={() => editor.toggleBold()}>Bold</button>
-      <button onClick={() => editor.toggleItalic()}>Italic</button>
-    </div>
-  );
-}
-```
+<ComponentPreview name="quick-example" />
 
 ## Explore
 

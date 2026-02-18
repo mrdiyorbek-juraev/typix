@@ -1,0 +1,73 @@
+---
+title: CLI
+description: Install extensions with the Typix CLI
+---
+
+The Typix CLI (`@typix-editor/cli`) lets you install extensions directly from your terminal — no copy-pasting package names.
+
+## Installation
+
+Run without installing using `npx`:
+
+```bash
+npx @typix-editor/cli add
+```
+
+Or install globally:
+
+```bash
+npm install -g @typix-editor/cli
+```
+
+## Commands
+
+### `typix add`
+
+Installs one or more extensions. The CLI auto-detects your package manager (`pnpm`, `npm`, `yarn`, or `bun`) from your lockfile and runs the appropriate install command.
+
+**Interactive mode** — run without arguments for a multi-select picker:
+
+```bash
+typix add
+```
+
+**Direct install** — pass one or more extension names:
+
+```bash
+typix add auto-link floating-link
+```
+
+**Install everything** — add all available extensions at once:
+
+```bash
+typix add --all
+```
+
+### `typix list`
+
+Print all available extensions with their package names and descriptions:
+
+```bash
+typix list
+```
+
+## Available extensions
+
+| Name | Package |
+| --- | --- |
+| `auto-complete` | `@typix-editor/extension-auto-complete` |
+| `auto-link` | `@typix-editor/extension-auto-link` |
+| `code-highlight-prism` | `@typix-editor/extension-code-highlight-prism` |
+| `code-highlight-shiki` | `@typix-editor/extension-code-highlight-shiki` |
+| `collapsible` | `@typix-editor/extension-collapsible` |
+| `context-menu` | `@typix-editor/extension-context-menu` |
+| `drag-drop-paste` | `@typix-editor/extension-drag-drop-paste` |
+| `draggable-block` | `@typix-editor/extension-draggable-block` |
+| `floating-link` | `@typix-editor/extension-floating-link` |
+| `keywords` | `@typix-editor/extension-keywords` |
+| `link` | `@typix-editor/extension-link` |
+| `max-length` | `@typix-editor/extension-max-length` |
+| `mention` | `@typix-editor/extension-mention` |
+| `short-cuts` | `@typix-editor/extension-short-cuts` |
+| `speech-to-text` | `@typix-editor/extension-speech-to-text` |
+| `tab-focus` | `@typix-editor/extension-tab-focus` |
