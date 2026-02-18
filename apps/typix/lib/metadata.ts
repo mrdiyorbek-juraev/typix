@@ -1,5 +1,12 @@
-import { Page } from "fumadocs-core/source";
+import type { InferPageType } from "fumadocs-core/source";
 import type { Metadata } from "next/types";
+import { source } from "./source";
+
+export const baseUrl =
+  process.env.NODE_ENV === "development" ||
+  !process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? new URL("http://localhost:3000")
+    : new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`);
 
 export function createMetadata(override: Metadata): Metadata {
   return {
@@ -7,44 +14,32 @@ export function createMetadata(override: Metadata): Metadata {
     openGraph: {
       title: override.title ?? undefined,
       description: override.description ?? undefined,
-      url: "https://fumadocs.dev",
+      url: baseUrl.toString(),
       images: "/banner.png",
-      siteName: "Fumadocs",
+      siteName: "Typix",
+      type: "website",
+      locale: "en_US",
       ...override.openGraph,
     },
     twitter: {
       card: "summary_large_image",
-      creator: "@fuma_nama",
       title: override.title ?? undefined,
       description: override.description ?? undefined,
       images: "/banner.png",
       ...override.twitter,
     },
     alternates: {
-      types: {
-        "application/rss+xml": [
-          {
-            title: "Fumadocs Blog",
-            url: "https://fumadocs.dev/blog/rss.xml",
-          },
-        ],
-      },
+      canonical: baseUrl.toString(),
       ...override.alternates,
     },
   };
 }
 
-export function getPageImage(page: Page) {
-  const segments = [...page.slugs, "image.webp"];
+export function getPageImage(page: InferPageType<typeof source>) {
+  const segments = [...page.slugs, "image.png"];
 
   return {
     segments,
-    url: `/og/${segments.join("/")}`,
+    url: `/og/docs/${segments.join("/")}`,
   };
 }
-
-export const baseUrl =
-  process.env.NODE_ENV === "development" ||
-  !process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? new URL("http://localhost:3000")
-    : new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`);
