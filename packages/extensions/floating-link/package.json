@@ -37,12 +37,12 @@
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "devDependencies": {
-    "@lexical/react": "^0.39.0",
+    "@lexical/react": "^0.40.0",
     "@types/react": "^19.2.7",
-    "@lexical/utils": "^0.39.0",
-    "@lexical/link": "^0.39.0",
+    "@lexical/utils": "^0.40.0",
+    "@lexical/link": "^0.40.0",
     "@types/react-dom": "^19.2.1",
-    "lexical": "^0.39.0",
+    "lexical": "^0.40.0",
     "@typix-editor/react": "workspace:*",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"

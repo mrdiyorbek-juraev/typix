@@ -1,7 +1,7 @@
 {
   "name": "@typix-editor/cli",
   "version": "3.0.1",
-  "description": "CLI for adding pre-built UI components to your Typix editor project",
+  "description": "CLI for installing extensions in your Typix editor project",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",
   "type": "module",
@@ -34,8 +34,7 @@
     "typix",
     "cli",
     "editor",
-    "ui",
-    "components"
+    "extensions"
   ],
   "repository": {
     "type": "git",
