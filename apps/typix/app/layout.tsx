@@ -32,9 +32,7 @@ export const metadata = createMetadata({
   ],
   metadataBase: baseUrl,
   icons: {
-    icon: [
-      { url: "/logo.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
     apple: "/logo.svg",
   },
   openGraph: {
@@ -43,7 +41,7 @@ export const metadata = createMetadata({
     siteName: "Typix",
     images: [
       {
-        url: "/banner.png",
+        url: "/og",
         width: 1200,
         height: 630,
         alt: "Typix — Extensible Rich Text Editor for React",
@@ -78,7 +76,7 @@ const jsonLd = {
   description:
     "A headless, extensible rich text editor framework for React built on Meta's Lexical. Features a modular extension system with auto-complete, mentions, code highlighting, drag-and-drop blocks, floating link editor, and more.",
   url: baseUrl.toString(),
-  image: `${baseUrl.toString()}banner.png`,
+  image: `${baseUrl.toString()}og`,
   offers: {
     "@type": "Offer",
     price: "0",

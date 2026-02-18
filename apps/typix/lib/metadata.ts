@@ -15,7 +15,7 @@ export function createMetadata(override: Metadata): Metadata {
       title: override.title ?? undefined,
       description: override.description ?? undefined,
       url: baseUrl.toString(),
-      images: "/banner.png",
+      images: "/og",
       siteName: "Typix",
       type: "website",
       locale: "en_US",
@@ -25,7 +25,7 @@ export function createMetadata(override: Metadata): Metadata {
       card: "summary_large_image",
       title: override.title ?? undefined,
       description: override.description ?? undefined,
-      images: "/banner.png",
+      images: "/og",
       ...override.twitter,
     },
     alternates: {
