@@ -1,6 +1,9 @@
 import inquirer from "inquirer";
 import { getDefaultConfig, readConfig, writeConfig } from "../utils/config.js";
-import { detectPackageManager, type PackageManager } from "../utils/package-manager.js";
+import {
+  detectPackageManager,
+  type PackageManager,
+} from "../utils/package-manager.js";
 import { logger } from "../utils/logger.js";
 
 export async function initCommand() {
@@ -49,10 +52,22 @@ export async function initCommand() {
       name: "packageManager",
       message: "Package manager:",
       choices: [
-        { name: `pnpm${detectedPm === "pnpm" ? "  (detected)" : ""}`, value: "pnpm" },
-        { name: `npm${detectedPm === "npm" ? "  (detected)" : ""}`, value: "npm" },
-        { name: `yarn${detectedPm === "yarn" ? "  (detected)" : ""}`, value: "yarn" },
-        { name: `bun${detectedPm === "bun" ? "  (detected)" : ""}`, value: "bun" },
+        {
+          name: `pnpm${detectedPm === "pnpm" ? "  (detected)" : ""}`,
+          value: "pnpm",
+        },
+        {
+          name: `npm${detectedPm === "npm" ? "  (detected)" : ""}`,
+          value: "npm",
+        },
+        {
+          name: `yarn${detectedPm === "yarn" ? "  (detected)" : ""}`,
+          value: "yarn",
+        },
+        {
+          name: `bun${detectedPm === "bun" ? "  (detected)" : ""}`,
+          value: "bun",
+        },
       ],
       default: detectedPm,
     },

@@ -48,8 +48,8 @@ export async function upgradeCommand(
   } else {
     // Interactive picker from installed extensions only
     const allExtensions = getAllExtensions();
-    const installedEntries = allExtensions.filter((ext) =>
-      installed[ext.package]
+    const installedEntries = allExtensions.filter(
+      (ext) => installed[ext.package]
     );
 
     const { picked } = await inquirer.prompt([

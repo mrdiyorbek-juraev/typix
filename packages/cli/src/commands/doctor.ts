@@ -46,14 +46,18 @@ export async function doctorCommand() {
 
   // 2. package.json readable
   const pkg = findPackageJson();
-  check("package.json found", pkg !== null, "Ensure you are in a project root.");
+  check(
+    "package.json found",
+    pkg !== null,
+    "Ensure you are in a project root."
+  );
   if (!pkg) {
     issues++;
   }
 
   const deps: Record<string, string> = {
-    ...(pkg?.dependencies as Record<string, string> ?? {}),
-    ...(pkg?.devDependencies as Record<string, string> ?? {}),
+    ...((pkg?.dependencies as Record<string, string>) ?? {}),
+    ...((pkg?.devDependencies as Record<string, string>) ?? {}),
   };
 
   // 3. @typix-editor/react installed

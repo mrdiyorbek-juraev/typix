@@ -19,7 +19,9 @@ export async function removeCommand(
   }
 
   const allExtensions = getAllExtensions();
-  const installedEntries = allExtensions.filter((ext) => installed[ext.package]);
+  const installedEntries = allExtensions.filter(
+    (ext) => installed[ext.package]
+  );
 
   let packages: string[];
 

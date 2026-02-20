@@ -9,10 +9,16 @@ export function detectPackageManager(): PackageManager {
   let dir = process.cwd();
 
   while (true) {
-    if (fs.existsSync(path.join(dir, "bun.lockb")) || fs.existsSync(path.join(dir, "bun.lock"))) {
+    if (
+      fs.existsSync(path.join(dir, "bun.lockb")) ||
+      fs.existsSync(path.join(dir, "bun.lock"))
+    ) {
       return "bun";
     }
-    if (fs.existsSync(path.join(dir, "pnpm-lock.yaml")) || fs.existsSync(path.join(dir, "pnpm-workspace.yaml"))) {
+    if (
+      fs.existsSync(path.join(dir, "pnpm-lock.yaml")) ||
+      fs.existsSync(path.join(dir, "pnpm-workspace.yaml"))
+    ) {
       return "pnpm";
     }
     if (fs.existsSync(path.join(dir, "yarn.lock"))) {

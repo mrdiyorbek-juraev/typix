@@ -108,9 +108,15 @@ importers:
 
   apps/playground:
     dependencies:
+      '@typix-editor/cli':
+        specifier: workspace:*
+        version: link:../../packages/cli
       '@typix-editor/extension-auto-complete':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-complete
+      '@typix-editor/extension-auto-link':
+        specifier: ^4.0.0
+        version: 4.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@typix-editor/extension-keywords':
         specifier: workspace:*
         version: link:../../packages/extensions/keywords
@@ -944,7 +950,7 @@ importers:
         version: link:../typescript-config
       next:
         specifier: 16.0.10
-        version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@18.3.0))(react@18.3.0)
 
   packages/react:
     dependencies:
@@ -4223,6 +4229,12 @@ packages:
     resolution: {integrity: sha512-hoBwJwcbKHmvd2QVebiytN1aELvpk9B74B4L1mFm/XT1Q/VOYAWl2vQ9AWRFtQq8zmz6enTpfTV8WRc4ATjW/g==}
     peerDependencies:
       typescript: '*'
+
+  '@typix-editor/extension-auto-link@4.0.0':
+    resolution: {integrity: sha512-Y3Hfqp9oB3i5l5vUVBb0nxn9epsKEOzET+SwLTbs10Jh6eZ0V+2DqWtq9Ld97zkj/vEbpVSKlp1i3I76Qpp9FQ==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0-0
+      react-dom: ^18.2.0 || ^19.0.0-0
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
@@ -13411,6 +13423,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@typix-editor/extension-auto-link@4.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
   '@ungap/structured-clone@1.3.0': {}
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
@@ -17543,15 +17560,15 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@18.3.0))(react@18.3.0):
     dependencies:
       '@next/env': 16.0.10
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001764
       postcss: 8.4.31
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.3)
+      react: 18.3.0
+      react-dom: 19.2.3(react@18.3.0)
+      styled-jsx: 5.1.6(react@18.3.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.0.10
       '@next/swc-darwin-x64': 16.0.10
@@ -19353,6 +19370,11 @@ snapshots:
       react: 19.2.3
     optionalDependencies:
       '@babel/core': 7.29.0
+
+  styled-jsx@5.1.6(react@18.3.0):
+    dependencies:
+      client-only: 0.0.1
+      react: 18.3.0
 
   stylis@4.3.6: {}
 
