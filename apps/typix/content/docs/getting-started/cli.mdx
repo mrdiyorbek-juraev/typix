@@ -1,73 +1,321 @@
 ---
 title: CLI
-description: Install extensions with the Typix CLI
+description: Manage Typix extensions from your terminal with the Typix CLI
 ---
 
-The Typix CLI (`@typix-editor/cli`) lets you install extensions directly from your terminal — no copy-pasting package names.
+The Typix CLI (`@typix-editor/cli`) is the fastest way to manage extensions in your project.
+Instead of looking up package names, running installs manually, or diagnosing config issues yourself — the CLI handles it all in a single command.
 
 ## Installation
 
-Run without installing using `npx`:
+<Tabs items={["npx (no install)", "pnpm", "npm", "yarn", "bun"]}>
+  <Tab value="npx (no install)">
+    ```bash
+    npx @typix-editor/cli <command>
+    ```
+  </Tab>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add -g @typix-editor/cli
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install -g @typix-editor/cli
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn global add @typix-editor/cli
+    ```
+  </Tab>
+  <Tab value="bun">
+    ```bash
+    bun add -g @typix-editor/cli
+    ```
+  </Tab>
+</Tabs>
+
+<Callout type="info">
+  The CLI automatically detects your package manager (`pnpm`, `npm`, `yarn`, or `bun`) by scanning for lockfiles — starting from your current directory and walking up to the project root. You never need to specify it manually.
+</Callout>
+
+---
+
+## Commands overview
+
+| Command | Description |
+| --- | --- |
+| [`typix init`](#init) | Set up a `typix.json` config in your project |
+| [`typix add`](#add) | Add one or more extensions |
+| [`typix upgrade`](#upgrade) | Upgrade installed extensions to their latest versions |
+| [`typix remove`](#remove) | Remove extensions from your project |
+| [`typix list`](#list) | Show all available extensions |
+| [`typix doctor`](#doctor) | Diagnose common issues in your Typix project |
+| [`typix env`](#env) | Print environment and installed package info |
+
+---
+
+## init
+
+Initializes Typix in your project by creating a `typix.json` config file. Run this once when setting up a new project.
 
 ```bash
-npx @typix-editor/cli add
+typix init
 ```
 
-Or install globally:
+You will be prompted for:
+
+| Prompt | Default | Description |
+| --- | --- | --- |
+| Component output directory | `components/typix` | Where generated component files will be placed |
+| Use TypeScript? | `yes` | Enables `.tsx` output |
+| Use Tailwind CSS? | `yes` | Adds Tailwind class names to generated components |
+| Package manager | auto-detected | Which package manager to use for installs |
+
+The result is a `typix.json` at your project root:
+
+```json title="typix.json"
+{
+  "componentDir": "components/typix",
+  "typescript": true,
+  "tailwind": true,
+  "packageManager": "pnpm"
+}
+```
+
+<Callout type="info">
+  If a `typix.json` already exists, the CLI will ask before overwriting it.
+</Callout>
+
+---
+
+## add
+
+Installs one or more extensions into your project. The CLI resolves the correct package name automatically — you only need to use the short extension name.
 
 ```bash
-npm install -g @typix-editor/cli
+typix add [extensions...] [--all]
 ```
 
-## Commands
-
-### `typix add`
-
-Installs one or more extensions. The CLI auto-detects your package manager (`pnpm`, `npm`, `yarn`, or `bun`) from your lockfile and runs the appropriate install command.
-
-**Interactive mode** — run without arguments for a multi-select picker:
+**Interactive mode** — run with no arguments to get a searchable multi-select picker:
 
 ```bash
 typix add
 ```
 
-**Direct install** — pass one or more extension names:
+**Install specific extensions** — pass one or more names directly:
 
 ```bash
-typix add auto-link floating-link
+typix add link floating-link short-cuts
 ```
 
-**Install everything** — add all available extensions at once:
+**Install everything** — add every available extension at once:
 
 ```bash
 typix add --all
 ```
 
-### `typix list`
+### Options
 
-Print all available extensions with their package names and descriptions:
+| Flag | Description |
+| --- | --- |
+| `-a, --all` | Install all available extensions |
+
+<Callout type="warn">
+  Extension names are short identifiers (e.g. `link`, `mention`), not the full npm package names. Run `typix list` to see all valid names.
+</Callout>
+
+---
+
+## upgrade
+
+Upgrades installed Typix extensions to their latest published versions.
+
+```bash
+typix upgrade [extensions...] [--all]
+```
+
+**Interactive mode** — shows only your currently installed extensions:
+
+```bash
+typix upgrade
+```
+
+**Upgrade specific extensions:**
+
+```bash
+typix upgrade link mention
+```
+
+**Upgrade all installed extensions at once:**
+
+```bash
+typix upgrade --all
+```
+
+### Options
+
+| Flag | Description |
+| --- | --- |
+| `-a, --all` | Upgrade all installed extensions |
+
+<Callout type="info">
+  Only extensions that are already installed in your project will appear in interactive mode. Extensions not found in your `package.json` are skipped with a warning.
+</Callout>
+
+---
+
+## remove
+
+Uninstalls Typix extensions from your project and removes them from `package.json`.
+
+```bash
+typix remove [extensions...] [--all]
+```
+
+**Interactive mode** — pick from your installed extensions:
+
+```bash
+typix remove
+```
+
+**Remove specific extensions:**
+
+```bash
+typix remove collapsible drag-drop-paste
+```
+
+**Remove everything** — uninstalls all installed Typix extensions:
+
+```bash
+typix remove --all
+```
+
+### Options
+
+| Flag | Description |
+| --- | --- |
+| `-a, --all` | Remove all installed extensions (requires confirmation) |
+
+<Callout type="warn">
+  All removal operations require a confirmation prompt before any packages are uninstalled. The `--all` flag asks for an explicit `yes` before proceeding.
+</Callout>
+
+---
+
+## list
+
+Prints a formatted table of every available extension — name, package, and description.
 
 ```bash
 typix list
 ```
 
+Example output:
+
+```
+Available extensions:
+
+  Name                    Package                                         Description
+  ────────────────────────────────────────────────────────────────────────────────────────────────────
+  auto-complete           @typix-editor/extension-auto-complete           Autocomplete suggestions as you type
+  auto-link               @typix-editor/extension-auto-link               Automatically detect and convert URLs to links
+  code-highlight-prism    @typix-editor/extension-code-highlight-prism    Syntax highlighting with Prism.js
+  ...
+```
+
+---
+
+## doctor
+
+Runs a health check on your project and reports any issues it finds.
+
+```bash
+typix doctor
+```
+
+The following checks are performed:
+
+| Check | What it verifies |
+| --- | --- |
+| `typix.json` config | Config file exists in the project root |
+| `package.json` | A `package.json` is readable from the working directory |
+| `@typix-editor/react` | The core Typix package is installed |
+| `lexical` peer dependency | The required `lexical` peer dep is present |
+| Extension validity | All installed `@typix-editor/extension-*` packages are known extensions |
+
+Example output when everything is healthy:
+
+```
+Running Typix diagnostics...
+
+  ✔ typix.json config found
+  ✔ package.json found
+  ✔ @typix-editor/react is installed
+  ✔ lexical peer dependency is installed
+  ✔ All installed extensions are valid
+
+✔ All checks passed. Your Typix project looks healthy!
+```
+
+When issues are found, each failing check includes a fix hint:
+
+```
+  ✖ lexical peer dependency is installed
+    → Run pnpm add lexical to install the required peer dependency.
+```
+
+<Callout type="info">
+  Run `typix doctor` whenever something feels off — missing config, broken installs, or peer dependency warnings. It's a fast first step before digging deeper.
+</Callout>
+
+---
+
+## env
+
+Prints system information and a list of all currently installed Typix extensions with their resolved versions. Useful for bug reports and debugging.
+
+```bash
+typix env
+```
+
+Example output:
+
+```
+Typix Environment Info
+
+  System
+  OS:                    Windows_NT 10.0.26200 (x64)
+  Node.js:               v22.0.0
+  Package Manager:       pnpm 10.24.0
+  Working Dir:           /your/project
+
+  Installed Typix Extensions
+  link                   @typix-editor/extension-link       ^3.0.0
+  mention                @typix-editor/extension-mention    ^3.0.0
+  short-cuts             @typix-editor/extension-short-cuts ^3.0.0
+```
+
+---
+
 ## Available extensions
 
-| Name | Package |
-| --- | --- |
-| `auto-complete` | `@typix-editor/extension-auto-complete` |
-| `auto-link` | `@typix-editor/extension-auto-link` |
-| `code-highlight-prism` | `@typix-editor/extension-code-highlight-prism` |
-| `code-highlight-shiki` | `@typix-editor/extension-code-highlight-shiki` |
-| `collapsible` | `@typix-editor/extension-collapsible` |
-| `context-menu` | `@typix-editor/extension-context-menu` |
-| `drag-drop-paste` | `@typix-editor/extension-drag-drop-paste` |
-| `draggable-block` | `@typix-editor/extension-draggable-block` |
-| `floating-link` | `@typix-editor/extension-floating-link` |
-| `keywords` | `@typix-editor/extension-keywords` |
-| `link` | `@typix-editor/extension-link` |
-| `max-length` | `@typix-editor/extension-max-length` |
-| `mention` | `@typix-editor/extension-mention` |
-| `short-cuts` | `@typix-editor/extension-short-cuts` |
-| `speech-to-text` | `@typix-editor/extension-speech-to-text` |
-| `tab-focus` | `@typix-editor/extension-tab-focus` |
+| Name | Package | Description |
+| --- | --- | --- |
+| `auto-complete` | `@typix-editor/extension-auto-complete` | Autocomplete suggestions as you type |
+| `auto-link` | `@typix-editor/extension-auto-link` | Automatically detect and convert URLs to links |
+| `code-highlight-prism` | `@typix-editor/extension-code-highlight-prism` | Syntax highlighting with Prism.js |
+| `code-highlight-shiki` | `@typix-editor/extension-code-highlight-shiki` | Syntax highlighting with Shiki |
+| `collapsible` | `@typix-editor/extension-collapsible` | Collapsible/accordion content blocks |
+| `context-menu` | `@typix-editor/extension-context-menu` | Custom right-click context menu |
+| `drag-drop-paste` | `@typix-editor/extension-drag-drop-paste` | Handle drag, drop, and paste events |
+| `draggable-block` | `@typix-editor/extension-draggable-block` | Drag and drop reordering of editor blocks |
+| `floating-link` | `@typix-editor/extension-floating-link` | Floating link editor toolbar |
+| `keywords` | `@typix-editor/extension-keywords` | Keyword highlighting and detection |
+| `link` | `@typix-editor/extension-link` | Link nodes and commands |
+| `max-length` | `@typix-editor/extension-max-length` | Enforce maximum content length |
+| `mention` | `@typix-editor/extension-mention` | @mention functionality with flexible configuration |
+| `short-cuts` | `@typix-editor/extension-short-cuts` | Keyboard shortcuts for editor actions |
+| `speech-to-text` | `@typix-editor/extension-speech-to-text` | Voice input via speech recognition |
+| `tab-focus` | `@typix-editor/extension-tab-focus` | Tab key focus management |

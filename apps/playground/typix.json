@@ -1,5 +1,6 @@
 {
   "componentDir": "components/typix",
   "typescript": true,
-  "tailwind": true
+  "tailwind": true,
+  "packageManager": "pnpm"
 }

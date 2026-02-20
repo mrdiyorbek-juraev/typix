@@ -12,7 +12,9 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@typix-editor/cli": "workspace:*",
     "@typix-editor/extension-auto-complete": "workspace:*",
+    "@typix-editor/extension-auto-link": "^4.0.0",
     "@typix-editor/extension-keywords": "workspace:*",
     "@typix-editor/extension-mention": "workspace:*",
     "@typix-editor/extension-speech-to-text": "workspace:*",
