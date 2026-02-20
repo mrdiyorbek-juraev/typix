@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/cli",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "CLI for installing extensions in your Typix editor project",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",

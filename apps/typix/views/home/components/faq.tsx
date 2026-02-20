@@ -21,9 +21,9 @@ const faqs = [
       "Unlike opinionated editors, Typix is headless — it doesn't force any UI on you. It's built on Lexical for performance, uses a modular extension system so you only include what you need, and offers full TypeScript support with end-to-end type safety.",
   },
   {
-    question: "Can I use Typix with Next.js?",
+    question: "Is Typix production-ready?",
     answer:
-      "Absolutely. Typix ships with a dedicated Next.js configuration package (@typix-editor/next-config) that handles SSR, transpilation, and other framework-specific concerns out of the box.",
+      "Typix is actively used in production. It's built on Meta's Lexical — a battle-tested editor engine — and ships with full TypeScript support, semantic versioning, and a changelog to ensure stability.",
   },
   {
     question: "How do I add features like mentions or links?",

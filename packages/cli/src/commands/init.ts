@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import { getDefaultConfig, readConfig, writeConfig } from "../utils/config.js";
+import { detectPackageManager, type PackageManager } from "../utils/package-manager.js";
 import { logger } from "../utils/logger.js";
 
 export async function initCommand() {
@@ -22,6 +23,7 @@ export async function initCommand() {
   }
 
   const defaults = getDefaultConfig();
+  const detectedPm = detectPackageManager();
 
   const answers = await inquirer.prompt([
     {
@@ -42,15 +44,29 @@ export async function initCommand() {
       message: "Use Tailwind CSS?",
       default: defaults.tailwind,
     },
+    {
+      type: "list",
+      name: "packageManager",
+      message: "Package manager:",
+      choices: [
+        { name: `pnpm${detectedPm === "pnpm" ? "  (detected)" : ""}`, value: "pnpm" },
+        { name: `npm${detectedPm === "npm" ? "  (detected)" : ""}`, value: "npm" },
+        { name: `yarn${detectedPm === "yarn" ? "  (detected)" : ""}`, value: "yarn" },
+        { name: `bun${detectedPm === "bun" ? "  (detected)" : ""}`, value: "bun" },
+      ],
+      default: detectedPm,
+    },
   ]);
 
   await writeConfig({
     componentDir: answers.componentDir,
     typescript: answers.typescript,
     tailwind: answers.tailwind,
+    packageManager: answers.packageManager as PackageManager,
   });
 
   logger.break();
   logger.success("Created typix.json");
   logger.info(`Components will be added to ${answers.componentDir}`);
+  logger.info(`Package manager: ${answers.packageManager}`);
 }

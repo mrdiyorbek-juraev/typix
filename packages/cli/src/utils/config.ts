@@ -1,10 +1,12 @@
 import fs from "fs-extra";
 import path from "node:path";
+import type { PackageManager } from "./package-manager.js";
 
 export type TypixConfig = {
   componentDir: string;
   typescript: boolean;
   tailwind: boolean;
+  packageManager?: PackageManager;
 };
 
 const CONFIG_FILE = "typix.json";
