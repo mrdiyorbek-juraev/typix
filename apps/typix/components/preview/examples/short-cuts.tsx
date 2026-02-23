@@ -1,24 +1,70 @@
 "use client";
 
 import {
-  EditorContent,
-  EditorRoot,
   createEditorConfig,
   defaultExtensionNodes,
+  defaultTheme,
+  EditorContent,
+  EditorRoot,
+  useActiveFormats,
+  useBlockType,
+  useTypixEditor,
 } from "@typix-editor/react";
+import "@typix-editor/react/src/styles/main.css";
 import { ShortCutsExtension } from "@typix-editor/extension-short-cuts";
+import {
+  Bold, Code, Heading1, Heading2, Italic,
+  List, ListOrdered, Quote, Redo, Strikethrough,
+  Underline, Undo,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
+  theme: defaultTheme,
 });
+
+function Separator() {
+  return <div className="mx-0.5 h-4 w-px bg-fd-border" />;
+}
+
+function Toolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats({
+    formats: ["bold", "italic", "underline", "strikethrough", "code"],
+  });
+  const blockType = useBlockType();
+
+  return (
+    <div className="flex flex-wrap items-center gap-0.5 border-fd-border border-b px-2 py-1.5">
+      <Button onClick={() => editor.undo()} size="icon-sm" title="Undo" variant="ghost"><Undo /></Button>
+      <Button onClick={() => editor.redo()} size="icon-sm" title="Redo" variant="ghost"><Redo /></Button>
+      <Separator />
+      <Button onClick={() => editor.toggleBold()} size="icon-sm" variant={isActive("bold") ? "secondary" : "ghost"}><Bold /></Button>
+      <Button onClick={() => editor.toggleItalic()} size="icon-sm" variant={isActive("italic") ? "secondary" : "ghost"}><Italic /></Button>
+      <Button onClick={() => editor.toggleUnderline()} size="icon-sm" variant={isActive("underline") ? "secondary" : "ghost"}><Underline /></Button>
+      <Button onClick={() => editor.toggleStrikethrough()} size="icon-sm" variant={isActive("strikethrough") ? "secondary" : "ghost"}><Strikethrough /></Button>
+      <Button onClick={() => editor.toggleCode()} size="icon-sm" variant={isActive("code") ? "secondary" : "ghost"}><Code /></Button>
+      <Separator />
+      <Button onClick={() => editor.toggleHeading({ level: 1 })} size="icon-sm" variant={blockType === "h1" ? "secondary" : "ghost"}><Heading1 /></Button>
+      <Button onClick={() => editor.toggleHeading({ level: 2 })} size="icon-sm" variant={blockType === "h2" ? "secondary" : "ghost"}><Heading2 /></Button>
+      <Button onClick={() => editor.toggleQuote()} size="icon-sm" variant={blockType === "quote" ? "secondary" : "ghost"}><Quote /></Button>
+      <Button onClick={() => editor.toggleBulletList()} size="icon-sm" variant={blockType === "bullet" ? "secondary" : "ghost"}><List /></Button>
+      <Button onClick={() => editor.toggleOrderedList()} size="icon-sm" variant={blockType === "number" ? "secondary" : "ghost"}><ListOrdered /></Button>
+    </div>
+  );
+}
 
 export default function ShortCutsExample() {
   return (
     <EditorRoot config={config}>
-      <EditorContent
-        placeholder="Try Ctrl+B (bold), Ctrl+I (italic), Ctrl+Alt+1 (heading)..."
-        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-      />
+      <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
+        <Toolbar />
+        <EditorContent
+          className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
+          placeholder="Try Ctrl+B (bold), Ctrl+I (italic), Ctrl+Alt+1 (heading)..."
+        />
+      </div>
       <ShortCutsExtension />
     </EditorRoot>
   );
@@ -29,112 +75,137 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  EditorContent,
-  EditorRoot,
   createEditorConfig,
   defaultExtensionNodes,
+  defaultTheme,
+  EditorContent,
+  EditorRoot,
 } from "@typix-editor/react";
 import { ShortCutsExtension } from "@typix-editor/extension-short-cuts";
-import { theme } from "./theme";
-import "./style.css";
+import { Toolbar } from "./Toolbar";
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
-  theme,
+  theme: defaultTheme,
 });
 
 export default function ShortCutsExample() {
   return (
     <EditorRoot config={config}>
-      <EditorContent placeholder="Try keyboard shortcuts..." />
+      <div className="editor-container">
+        <Toolbar />
+        <EditorContent placeholder="Try keyboard shortcuts..." />
+      </div>
       <ShortCutsExtension />
     </EditorRoot>
   );
 }`,
   },
   {
-    name: "theme.ts",
-    lang: "ts",
-    code: `import type { EditorThemeClasses } from "lexical";
+    name: "Toolbar.tsx",
+    lang: "tsx",
+    code: `import { useTypixEditor, useActiveFormats, useBlockType } from "@typix-editor/react";
+import {
+  Bold, Italic, Underline, Strikethrough, Code,
+  Heading1, Heading2, Quote, List, ListOrdered,
+  Undo, Redo,
+} from "lucide-react";
+import { ToolbarButton } from "./Button";
 
-export const theme: EditorThemeClasses = {
-  paragraph: "typix-paragraph",
-  heading: {
-    h1: "typix-heading--h1",
-    h2: "typix-heading--h2",
-    h3: "typix-heading--h3",
-    h4: "typix-heading--h4",
-    h5: "typix-heading--h5",
-    h6: "typix-heading--h6",
-  },
-  quote: "typix-quote",
-  text: {
-    bold: "typix-text--bold",
-    italic: "typix-text--italic",
-    underline: "typix-text--underline",
-    strikethrough: "typix-text--strikethrough",
-    underlineStrikethrough: "typix-text--underline-strikethrough",
-    code: "typix-text--code",
-    subscript: "typix-text--subscript",
-    superscript: "typix-text--superscript",
-  },
-};`,
+export function Toolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats({
+    formats: ["bold", "italic", "underline", "strikethrough", "code"],
+  });
+  const blockType = useBlockType();
+
+  return (
+    <div className="toolbar">
+      <ToolbarButton onClick={() => editor.undo()} title="Undo"><Undo /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.redo()} title="Redo"><Redo /></ToolbarButton>
+      <div className="toolbar-sep" />
+      <ToolbarButton onClick={() => editor.toggleBold()} active={isActive("bold")}><Bold /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleItalic()} active={isActive("italic")}><Italic /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleUnderline()} active={isActive("underline")}><Underline /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleStrikethrough()} active={isActive("strikethrough")}><Strikethrough /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleCode()} active={isActive("code")}><Code /></ToolbarButton>
+      <div className="toolbar-sep" />
+      <ToolbarButton onClick={() => editor.toggleHeading({ level: 1 })} active={blockType === "h1"}><Heading1 /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleHeading({ level: 2 })} active={blockType === "h2"}><Heading2 /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleQuote()} active={blockType === "quote"}><Quote /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleBulletList()} active={blockType === "bullet"}><List /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleOrderedList()} active={blockType === "number"}><ListOrdered /></ToolbarButton>
+    </div>
+  );
+}`,
   },
   {
-    name: "style.css",
+    name: "Button.tsx",
+    lang: "tsx",
+    code: `import type { ButtonHTMLAttributes } from "react";
+
+interface ToolbarButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
+}
+
+export function ToolbarButton({
+  active,
+  className = "toolbar-btn",
+  children,
+  ...props
+}: ToolbarButtonProps) {
+  return (
+    <button
+      type="button"
+      data-active={active || undefined}
+      className={className}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}`,
+  },
+  {
+    name: "main.css",
     lang: "css",
-    code: `.typix-paragraph {
-  margin: 0;
-  position: relative;
+    code: `.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 6px 8px;
 }
 
-.typix-heading--h1 {
-  font-size: 24px;
-  font-weight: 400;
-  margin: 0;
+.toolbar-sep {
+  width: 1px;
+  height: 16px;
+  background: #e5e7eb;
+  margin: 0 2px;
 }
 
-.typix-heading--h2 {
-  font-size: 15px;
-  font-weight: 700;
-  color: rgb(101, 103, 107);
-  margin: 0;
-  text-transform: uppercase;
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 100ms;
 }
 
-.typix-heading--h3 {
-  font-size: 12px;
-  margin: 0;
-  text-transform: uppercase;
+.toolbar-btn:hover {
+  background: rgba(0, 0, 0, 0.07);
 }
 
-.typix-quote {
-  margin: 0 0 10px 20px;
-  color: rgb(101, 103, 107);
-  border-left: 4px solid rgb(206, 208, 212);
-  padding-left: 16px;
-}
-
-.typix-text--bold { font-weight: bold; }
-.typix-text--italic { font-style: italic; }
-.typix-text--underline { text-decoration: underline; }
-.typix-text--strikethrough { text-decoration: line-through; }
-.typix-text--underline-strikethrough {
-  text-decoration: underline line-through;
-}
-.typix-text--code {
-  background-color: rgb(240, 242, 245);
-  padding: 1px 0.25rem;
-  font-family: Menlo, Consolas, Monaco, monospace;
-  font-size: 94%;
-}
-.typix-text--subscript {
-  font-size: 0.8em;
-  vertical-align: sub !important;
-}
-.typix-text--superscript {
-  font-size: 0.8em;
-  vertical-align: super;
+.toolbar-btn[data-active] {
+  background: rgba(0, 0, 0, 0.1);
 }`,
   },
 ];

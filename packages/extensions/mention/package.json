@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-mention",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Mention extension for Typix editor - adds @mention functionality with flexible configuration",
   "type": "module",
   "main": "dist/index.cjs",

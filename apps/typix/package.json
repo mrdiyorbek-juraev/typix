@@ -33,6 +33,7 @@
     "@typix-editor/extension-floating-link": "workspace:*",
     "@typix-editor/extension-keywords": "workspace:*",
     "@typix-editor/extension-link": "workspace:*",
+    "@typix-editor/extension-character-limit": "workspace:*",
     "@typix-editor/extension-max-length": "workspace:*",
     "@typix-editor/extension-mention": "workspace:*",
     "@typix-editor/extension-short-cuts": "workspace:*",

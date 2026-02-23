@@ -1,6 +1,5 @@
 export {
   ContextMenuExtension,
   type ContextMenuExtensionProps,
-  NodeContextMenuOption,
-  NodeContextMenuSeparator,
+  type TypixContextMenuItem,
 } from "./extension";

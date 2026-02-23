@@ -47,16 +47,7 @@ export function EditorExtensions() {
       />
 
       {/* Character limit */}
-      <MaxLengthExtension
-        debug={false}
-        maxLength={5000}
-        onLimitReached={(current, max, exceeded) => {
-          console.log(
-            `Character limit: ${current}/${max} (exceeded: ${exceeded})`
-          );
-        }}
-        strategy="trim"
-      />
+      <MaxLengthExtension maxLength={5000} />
 
       {/* Autocomplete suggestions */}
       <AutocompleteExtension />
@@ -69,51 +60,38 @@ export function EditorExtensions() {
         options={[
           {
             type: "item",
-            key: "cut",
             label: "Cut",
             onSelect: () => document.execCommand("cut"),
           },
           {
             type: "item",
-            key: "copy",
             label: "Copy",
             onSelect: () => document.execCommand("copy"),
           },
           {
             type: "item",
-            key: "paste",
             label: "Paste",
             onSelect: () => document.execCommand("paste"),
           },
-          {
-            type: "separator",
-            key: "sep1",
-          },
+          { type: "separator" },
           {
             type: "item",
-            key: "bold",
             label: "Bold",
             onSelect: (editor) => editor.toggleBold(),
           },
           {
             type: "item",
-            key: "italic",
             label: "Italic",
             onSelect: (editor) => editor.toggleItalic(),
           },
           {
             type: "item",
-            key: "underline",
             label: "Underline",
             onSelect: (editor) => editor.toggleUnderline(),
           },
-          {
-            type: "separator",
-            key: "sep2",
-          },
+          { type: "separator" },
           {
             type: "item",
-            key: "clear",
             label: "Clear Formatting",
             onSelect: (editor) => editor.clearFormatting(),
           },

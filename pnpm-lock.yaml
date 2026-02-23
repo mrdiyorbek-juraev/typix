@@ -220,6 +220,9 @@ importers:
       '@typix-editor/extension-auto-link':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-link
+      '@typix-editor/extension-character-limit':
+        specifier: workspace:*
+        version: link:../../packages/extensions/character-limit
       '@typix-editor/extension-code-highlight-prism':
         specifier: workspace:*
         version: link:../../packages/extensions/code-highlight-prism
@@ -498,6 +501,42 @@ importers:
       react-dom:
         specifier: ^18.2.0 || ^19.0.0-0
         version: 19.2.3(react@19.2.3)
+
+  packages/extensions/character-limit:
+    devDependencies:
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@lexical/text':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.19.7
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+      tsup:
+        specifier: ^8.4.0
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
 
   packages/extensions/code-highlight-prism:
     dependencies:
@@ -950,7 +989,7 @@ importers:
         version: link:../typescript-config
       next:
         specifier: 16.0.10
-        version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@18.3.0))(react@18.3.0)
+        version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   packages/react:
     dependencies:
@@ -17560,15 +17599,15 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@18.3.0))(react@18.3.0):
+  next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       '@next/env': 16.0.10
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001764
       postcss: 8.4.31
-      react: 18.3.0
-      react-dom: 19.2.3(react@18.3.0)
-      styled-jsx: 5.1.6(react@18.3.0)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.3)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.0.10
       '@next/swc-darwin-x64': 16.0.10
@@ -19370,11 +19409,6 @@ snapshots:
       react: 19.2.3
     optionalDependencies:
       '@babel/core': 7.29.0
-
-  styled-jsx@5.1.6(react@18.3.0):
-    dependencies:
-      client-only: 0.0.1
-      react: 18.3.0
 
   stylis@4.3.6: {}
 

@@ -12,24 +12,17 @@ import {
 } from "@typix-editor/react";
 import "@typix-editor/react/src/styles/main.css";
 import {
-  ContextMenuExtension,
-  type TypixContextMenuItem,
-} from "@typix-editor/extension-context-menu";
+  CharacterLimitExtension,
+  useCharacterCount,
+} from "@typix-editor/extension-character-limit";
 import {
-  Bold,
-  Code,
-  Heading1,
-  Heading2,
-  Italic,
-  List,
-  ListOrdered,
-  Quote,
-  Redo,
-  Strikethrough,
-  Underline,
-  Undo,
+  Bold, Code, Heading1, Heading2, Italic,
+  List, ListOrdered, Quote, Redo, Strikethrough,
+  Underline, Undo,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const MAX = 200;
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
@@ -67,101 +60,44 @@ function Toolbar() {
   );
 }
 
-// Keep options inside the component so `disabled` stays in sync with editor state.
-function EditorWithContextMenu() {
-  const editor = useTypixEditor();
-  const { isActive } = useActiveFormats({
-    formats: ["bold", "italic", "underline", "strikethrough", "code"],
-  });
-  const blockType = useBlockType();
+// useCharacterCount gives you the raw numbers for your own UI.
+function StatsBar({ max }: { max: number }) {
+  const { characters, words } = useCharacterCount();
+  const remaining = max - characters;
+  const isWarning = remaining <= max * 0.1 && remaining > 0;
+  const isExceeded = remaining < 0;
 
-  const options: TypixContextMenuItem[] = [
-    {
-      type: "item",
-      label: "Bold",
-      icon: <Bold size={14} />,
-      disabled: isActive("bold"),
-      onSelect: (ed) => ed.toggleBold(),
-    },
-    {
-      type: "item",
-      label: "Italic",
-      icon: <Italic size={14} />,
-      disabled: isActive("italic"),
-      onSelect: (ed) => ed.toggleItalic(),
-    },
-    {
-      type: "item",
-      label: "Underline",
-      icon: <Underline size={14} />,
-      disabled: isActive("underline"),
-      onSelect: (ed) => ed.toggleUnderline(),
-    },
-    {
-      type: "item",
-      label: "Strikethrough",
-      icon: <Strikethrough size={14} />,
-      disabled: isActive("strikethrough"),
-      onSelect: (ed) => ed.toggleStrikethrough(),
-    },
-    {
-      type: "item",
-      label: "Inline Code",
-      icon: <Code size={14} />,
-      disabled: isActive("code"),
-      onSelect: (ed) => ed.toggleCode(),
-    },
-    { type: "separator" },
-    {
-      type: "item",
-      label: "Heading 1",
-      icon: <Heading1 size={14} />,
-      disabled: blockType === "h1",
-      onSelect: (ed) => ed.toggleHeading({ level: 1 }),
-    },
-    {
-      type: "item",
-      label: "Heading 2",
-      icon: <Heading2 size={14} />,
-      disabled: blockType === "h2",
-      onSelect: (ed) => ed.toggleHeading({ level: 2 }),
-    },
-    {
-      type: "item",
-      label: "Quote",
-      icon: <Quote size={14} />,
-      disabled: blockType === "quote",
-      onSelect: (ed) => ed.toggleQuote(),
-    },
-    { type: "separator" },
-    {
-      type: "item",
-      label: "Undo",
-      icon: <Undo size={14} />,
-      onSelect: (ed) => ed.undo(),
-    },
-    {
-      type: "item",
-      label: "Redo",
-      icon: <Redo size={14} />,
-      onSelect: (ed) => ed.redo(),
-    },
-  ];
-
-  return <ContextMenuExtension options={options} />;
+  return (
+    <div className="flex items-center justify-between border-t border-fd-border px-3 py-1.5 text-xs text-fd-muted-foreground">
+      <span>{words} {words === 1 ? "word" : "words"}</span>
+      <span
+        className={`tabular-nums font-medium ${
+          isExceeded
+            ? "text-destructive"
+            : isWarning
+              ? "text-amber-500"
+              : ""
+        }`}
+      >
+        {characters}/{max}
+      </span>
+    </div>
+  );
 }
 
-export default function ContextMenuExample() {
+export default function CharacterLimitExample() {
   return (
     <EditorRoot config={config}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
           className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
-          placeholder="Right-click to see the context menu..."
+          placeholder={`Start typing (${MAX} character limit)...`}
         />
+        <StatsBar max={MAX} />
       </div>
-      <EditorWithContextMenu />
+      {/* CharacterLimitExtension highlights overflow text inline */}
+      <CharacterLimitExtension maxLength={MAX} charset="UTF-16" />
     </EditorRoot>
   );
 }
@@ -176,96 +112,41 @@ export const files = [
   defaultTheme,
   EditorContent,
   EditorRoot,
-  useActiveFormats,
-  useBlockType,
-  useTypixEditor,
 } from "@typix-editor/react";
 import {
-  ContextMenuExtension,
-  type TypixContextMenuItem,
-} from "@typix-editor/extension-context-menu";
-import {
-  Bold, Italic, Underline, Code,
-  Heading1, Heading2, Quote, Undo, Redo,
-} from "lucide-react";
+  CharacterLimitExtension,
+  useCharacterCount,
+} from "@typix-editor/extension-character-limit";
 import { Toolbar } from "./Toolbar";
+
+const MAX = 200;
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
   theme: defaultTheme,
 });
 
-// Options live inside the component so \`disabled\` reflects current state.
-function EditorWithContextMenu() {
-  const editor = useTypixEditor();
-  const { isActive } = useActiveFormats({
-    formats: ["bold", "italic", "underline", "code"],
-  });
-  const blockType = useBlockType();
-
-  const options: TypixContextMenuItem[] = [
-    {
-      type: "item",
-      label: "Bold",
-      icon: <Bold size={14} />,
-      disabled: isActive("bold"),
-      onSelect: (ed) => ed.toggleBold(),
-    },
-    {
-      type: "item",
-      label: "Italic",
-      icon: <Italic size={14} />,
-      disabled: isActive("italic"),
-      onSelect: (ed) => ed.toggleItalic(),
-    },
-    {
-      type: "item",
-      label: "Inline Code",
-      icon: <Code size={14} />,
-      disabled: isActive("code"),
-      onSelect: (ed) => ed.toggleCode(),
-    },
-    { type: "separator" },
-    {
-      type: "item",
-      label: "Heading 1",
-      icon: <Heading1 size={14} />,
-      disabled: blockType === "h1",
-      onSelect: (ed) => ed.toggleHeading({ level: 1 }),
-    },
-    {
-      type: "item",
-      label: "Quote",
-      icon: <Quote size={14} />,
-      disabled: blockType === "quote",
-      onSelect: (ed) => ed.toggleQuote(),
-    },
-    { type: "separator" },
-    {
-      type: "item",
-      label: "Undo",
-      icon: <Undo size={14} />,
-      onSelect: (ed) => ed.undo(),
-    },
-    {
-      type: "item",
-      label: "Redo",
-      icon: <Redo size={14} />,
-      onSelect: (ed) => ed.redo(),
-    },
-  ];
-
-  return <ContextMenuExtension options={options} />;
+// useCharacterCount gives you raw numbers for your own status bar / counter UI.
+function StatsBar({ max }: { max: number }) {
+  const { characters, words } = useCharacterCount();
+  return (
+    <div className="stats-bar">
+      <span>{words} words</span>
+      <span>{characters}/{max}</span>
+    </div>
+  );
 }
 
-export default function ContextMenuExample() {
+export default function CharacterLimitExample() {
   return (
     <EditorRoot config={config}>
       <div className="editor-container">
         <Toolbar />
-        <EditorContent placeholder="Right-click to see the context menu..." />
+        <EditorContent placeholder={\`Start typing (\${MAX} character limit)...\`} />
+        <StatsBar max={MAX} />
       </div>
-      <EditorWithContextMenu />
+      {/* Highlights overflow text and renders an inline remaining count */}
+      <CharacterLimitExtension maxLength={MAX} charset="UTF-16" />
     </EditorRoot>
   );
 }`,
@@ -375,6 +256,16 @@ export function ToolbarButton({
 
 .toolbar-btn[data-active] {
   background: rgba(0, 0, 0, 0.1);
+}
+
+.stats-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #6b7280;
 }`,
   },
 ];
