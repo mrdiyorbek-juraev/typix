@@ -1,5 +1,11 @@
 # @typix-editor/cli
 
+## 4.1.0
+
+### Minor Changes
+
+- [#59](https://github.com/mrdiyorbek-juraev/typix/pull/59) [`994d9d9`](https://github.com/mrdiyorbek-juraev/typix/commit/994d9d938cb49365158fbcfc98e1e86f894f1b92) Thanks [@mrdiyorbek-juraev](https://github.com/mrdiyorbek-juraev)! - Add `upgrade`, `remove`, `doctor`, and `env` commands to the CLI. Improve `init` with package manager selection. Fix package manager detection to walk up the directory tree so monorepo setups correctly detect pnpm/yarn/bun instead of falling back to npm.
+
 ## 4.0.0
 
 ### Minor Changes
