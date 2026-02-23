@@ -10,7 +10,6 @@ import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
 import { source } from "@/lib/source";
 import Script from "next/script";
 
-const isProduction = baseUrl.toString() === "https://typix.uz";
 
 export const metadata = createMetadata({
   title: {
@@ -52,11 +51,11 @@ export const metadata = createMetadata({
     ],
   },
   robots: {
-    index: isProduction,
-    follow: isProduction,
+    index: true,
+    follow: true,
     googleBot: {
-      index: isProduction,
-      follow: isProduction,
+      index: true,
+      follow: true,
     },
   },
 });
