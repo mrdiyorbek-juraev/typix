@@ -105,6 +105,16 @@ function DefaultMenuItem({
   onMouseEnter,
   setRefElement,
 }: MentionMenuItemProps): JSX.Element {
+  const avatarSrc = item.data?.avatar as string | undefined;
+  const subtitle = (item.data?.subtitle ?? item.data?.username) as
+    | string
+    | undefined;
+  const initials = item.name
+    .split(" ")
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? "")
+    .join("");
+
   return (
     <li
       aria-selected={isSelected}
@@ -117,7 +127,25 @@ function DefaultMenuItem({
       role="option"
       tabIndex={-1}
     >
-      <span className="typix-mention-menu__item-name">{item.name}</span>
+      <span className="typix-mention-menu__item-avatar">
+        {avatarSrc ? (
+          <img
+            alt={item.name}
+            className="typix-mention-menu__item-avatar-img"
+            src={avatarSrc}
+          />
+        ) : (
+          <span className="typix-mention-menu__item-avatar-initials">
+            {initials}
+          </span>
+        )}
+      </span>
+      <span className="typix-mention-menu__item-info">
+        <span className="typix-mention-menu__item-name">{item.name}</span>
+        {subtitle && (
+          <span className="typix-mention-menu__item-subtitle">{subtitle}</span>
+        )}
+      </span>
     </li>
   );
 }

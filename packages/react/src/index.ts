@@ -58,6 +58,7 @@ export {
 
 export {
   useActiveFormats,
+  useBlockType,
   useEditorState,
   useMouseListener,
   useRange,

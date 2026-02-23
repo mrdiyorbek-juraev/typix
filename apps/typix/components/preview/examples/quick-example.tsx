@@ -7,6 +7,7 @@ import {
   EditorContent,
   EditorRoot,
   useActiveFormats,
+  useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
 import "@typix-editor/react/src/styles/main.css";
@@ -24,7 +25,6 @@ import {
   Underline,
   Undo,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const config = createEditorConfig({
@@ -41,15 +41,7 @@ function Toolbar() {
   const { isActive } = useActiveFormats({
     formats: ["bold", "italic", "underline", "strikethrough", "code"],
   });
-  const [blockType, setBlockType] = useState<string | null>(null);
-
-  useEffect(
-    () =>
-      editor.onUpdate(() => {
-        setBlockType(editor.getBlockType());
-      }),
-    [editor]
-  );
+  const blockType = useBlockType();
 
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-fd-border border-b px-2 py-1.5">
@@ -69,9 +61,7 @@ function Toolbar() {
       >
         <Redo />
       </Button>
-
       <Separator />
-
       <Button
         onClick={() => editor.toggleBold()}
         size="icon-sm"
@@ -107,9 +97,7 @@ function Toolbar() {
       >
         <Code />
       </Button>
-
       <Separator />
-
       <Button
         onClick={() => editor.toggleHeading({ level: 1 })}
         size="icon-sm"
@@ -152,7 +140,7 @@ function Toolbar() {
 export default function QuickExample() {
   return (
     <EditorRoot config={config}>
-      <div className="w-full overflow-hidden rounded-md border border-fd-border bg-background">
+      <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
           className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
@@ -172,18 +160,22 @@ export const files = [
   EditorContent,
   createEditorConfig,
   defaultExtensionNodes,
-} from '@typix-editor/react';
-import { Toolbar } from './Toolbar';
+  defaultTheme,
+} from "@typix-editor/react";
+import { Toolbar } from "./Toolbar";
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
+  theme: defaultTheme,
 });
 
 export default function MyEditor() {
   return (
     <EditorRoot config={config}>
-      <Toolbar />
-      <EditorContent placeholder="Start typing..." />
+      <div className="editor-container">
+        <Toolbar />
+        <EditorContent placeholder="Start typing..." />
+      </div>
     </EditorRoot>
   );
 }`,
@@ -191,48 +183,108 @@ export default function MyEditor() {
   {
     name: "Toolbar.tsx",
     lang: "tsx",
-    code: `import { useEffect, useState } from 'react';
-import {
-  useTypixEditor,
-  useActiveFormats,
-} from '@typix-editor/react';
+    code: `import { useTypixEditor, useActiveFormats, useBlockType } from "@typix-editor/react";
 import {
   Bold, Italic, Underline, Strikethrough, Code,
   Heading1, Heading2, Quote, List, ListOrdered,
   Undo, Redo,
-} from 'lucide-react';
+} from "lucide-react";
+import { ToolbarButton } from "./Button";
 
 export function Toolbar() {
   const editor = useTypixEditor();
   const { isActive } = useActiveFormats({
-    formats: ['bold', 'italic', 'underline', 'strikethrough', 'code'],
+    formats: ["bold", "italic", "underline", "strikethrough", "code"],
   });
-  const [blockType, setBlockType] = useState(null);
-
-  useEffect(() => {
-    return editor.onUpdate(() => {
-      setBlockType(editor.getBlockType());
-    });
-  }, [editor]);
+  const blockType = useBlockType();
 
   return (
-    <div>
-      <button onClick={() => editor.undo()}><Undo /></button>
-      <button onClick={() => editor.redo()}><Redo /></button>
-
-      <button onClick={() => editor.toggleBold()} data-active={isActive('bold')}><Bold /></button>
-      <button onClick={() => editor.toggleItalic()} data-active={isActive('italic')}><Italic /></button>
-      <button onClick={() => editor.toggleUnderline()} data-active={isActive('underline')}><Underline /></button>
-      <button onClick={() => editor.toggleStrikethrough()} data-active={isActive('strikethrough')}><Strikethrough /></button>
-      <button onClick={() => editor.toggleCode()} data-active={isActive('code')}><Code /></button>
-
-      <button onClick={() => editor.toggleHeading({ level: 1 })} data-active={blockType === 'h1'}><Heading1 /></button>
-      <button onClick={() => editor.toggleHeading({ level: 2 })} data-active={blockType === 'h2'}><Heading2 /></button>
-      <button onClick={() => editor.toggleQuote()} data-active={blockType === 'quote'}><Quote /></button>
-      <button onClick={() => editor.toggleBulletList()} data-active={blockType === 'bullet'}><List /></button>
-      <button onClick={() => editor.toggleOrderedList()} data-active={blockType === 'number'}><ListOrdered /></button>
+    <div className="toolbar">
+      <ToolbarButton onClick={() => editor.undo()} title="Undo"><Undo /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.redo()} title="Redo"><Redo /></ToolbarButton>
+      <div className="toolbar-sep" />
+      <ToolbarButton onClick={() => editor.toggleBold()} active={isActive("bold")}><Bold /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleItalic()} active={isActive("italic")}><Italic /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleUnderline()} active={isActive("underline")}><Underline /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleStrikethrough()} active={isActive("strikethrough")}><Strikethrough /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleCode()} active={isActive("code")}><Code /></ToolbarButton>
+      <div className="toolbar-sep" />
+      <ToolbarButton onClick={() => editor.toggleHeading({ level: 1 })} active={blockType === "h1"}><Heading1 /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleHeading({ level: 2 })} active={blockType === "h2"}><Heading2 /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleQuote()} active={blockType === "quote"}><Quote /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleBulletList()} active={blockType === "bullet"}><List /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleOrderedList()} active={blockType === "number"}><ListOrdered /></ToolbarButton>
     </div>
   );
+}`,
+  },
+  {
+    name: "Button.tsx",
+    lang: "tsx",
+    code: `import type { ButtonHTMLAttributes } from "react";
+
+interface ToolbarButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
+}
+
+export function ToolbarButton({
+  active,
+  className = "toolbar-btn",
+  children,
+  ...props
+}: ToolbarButtonProps) {
+  return (
+    <button
+      type="button"
+      data-active={active || undefined}
+      className={className}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}`,
+  },
+  {
+    name: "main.css",
+    lang: "css",
+    code: `.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 6px 8px;
+}
+
+.toolbar-sep {
+  width: 1px;
+  height: 16px;
+  background: #e5e7eb;
+  margin: 0 2px;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 100ms;
+}
+
+.toolbar-btn:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.toolbar-btn[data-active] {
+  background: rgba(0, 0, 0, 0.1);
 }`,
   },
 ];

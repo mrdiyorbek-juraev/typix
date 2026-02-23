@@ -11,7 +11,10 @@ import {
   useTypixEditor,
 } from "@typix-editor/react";
 import "@typix-editor/react/src/styles/main.css";
-import { CodeHighlightShikiExtension } from "@typix-editor/extension-code-highlight-shiki";
+import {
+  CharacterLimitExtension,
+  useCharacterCount,
+} from "@typix-editor/extension-character-limit";
 import {
   Bold,
   Code,
@@ -27,6 +30,8 @@ import {
   Undo,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const MAX = 200;
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
@@ -138,17 +143,42 @@ function Toolbar() {
   );
 }
 
-export default function CodeHighlightShikiExample() {
+// useCharacterCount gives you the raw numbers for your own UI.
+function StatsBar({ max }: { max: number }) {
+  const { characters, words } = useCharacterCount();
+  const remaining = max - characters;
+  const isWarning = remaining <= max * 0.1 && remaining > 0;
+  const isExceeded = remaining < 0;
+
+  return (
+    <div className="flex items-center justify-between border-t border-fd-border px-3 py-1.5 text-xs text-fd-muted-foreground">
+      <span>
+        {words} {words === 1 ? "word" : "words"}
+      </span>
+      <span
+        className={`tabular-nums font-medium ${
+          isExceeded ? "text-destructive" : isWarning ? "text-amber-500" : ""
+        }`}
+      >
+        {characters}/{max}
+      </span>
+    </div>
+  );
+}
+
+export default function CharacterLimitExample() {
   return (
     <EditorRoot config={config}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
           className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
-          placeholder="Use Ctrl+Shift+C to insert a code block..."
+          placeholder={`Start typing (${MAX} character limit)...`}
         />
+        <StatsBar max={MAX} />
       </div>
-      <CodeHighlightShikiExtension />
+      {/* CharacterLimitExtension highlights overflow text inline */}
+      <CharacterLimitExtension maxLength={MAX} charset="UTF-16" />
     </EditorRoot>
   );
 }
@@ -164,22 +194,40 @@ export const files = [
   EditorContent,
   EditorRoot,
 } from "@typix-editor/react";
-import { CodeHighlightShikiExtension } from "@typix-editor/extension-code-highlight-shiki";
+import {
+  CharacterLimitExtension,
+  useCharacterCount,
+} from "@typix-editor/extension-character-limit";
 import { Toolbar } from "./Toolbar";
+
+const MAX = 200;
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
   theme: defaultTheme,
 });
 
-export default function CodeHighlightShikiExample() {
+// useCharacterCount gives you raw numbers for your own status bar / counter UI.
+function StatsBar({ max }: { max: number }) {
+  const { characters, words } = useCharacterCount();
+  return (
+    <div className="stats-bar">
+      <span>{words} words</span>
+      <span>{characters}/{max}</span>
+    </div>
+  );
+}
+
+export default function CharacterLimitExample() {
   return (
     <EditorRoot config={config}>
       <div className="editor-container">
         <Toolbar />
-        <EditorContent placeholder="Use Ctrl+Shift+C to insert a code block..." />
+        <EditorContent placeholder={\`Start typing (\${MAX} character limit)...\`} />
+        <StatsBar max={MAX} />
       </div>
-      <CodeHighlightShikiExtension />
+      {/* Highlights overflow text and renders an inline remaining count */}
+      <CharacterLimitExtension maxLength={MAX} charset="UTF-16" />
     </EditorRoot>
   );
 }`,
@@ -291,14 +339,14 @@ export function ToolbarButton({
   background: rgba(0, 0, 0, 0.1);
 }
 
-:root {
-  --typix-bg-code: rgb(240, 242, 245);
-  --typix-bg-code-gutter: #eee;
-  --typix-font-family-code: Menlo, Consolas, Monaco, monospace;
-  --typix-font-size-code: 13px;
-  --typix-line-height-code: 1.53;
-  --typix-border-color-code-gutter: #ccc;
-  --typix-color-code-gutter-text: #777;
+.stats-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #6b7280;
 }`,
   },
 ];

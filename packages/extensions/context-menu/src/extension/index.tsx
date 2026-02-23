@@ -9,71 +9,62 @@ import {
   useTypixEditor,
 } from "@typix-editor/react";
 import type { ReactElement } from "react";
-import { useMemo } from "react";
 
 export type TypixContextMenuItem =
   | {
       type: "item";
-      key: string;
       label: string;
       icon?: ReactElement;
-      disabled?: boolean | ((editor: TypixEditor) => boolean);
+      /**
+       * Whether the item is disabled. Evaluated at render time —
+       * compute this value inside the component so it stays current.
+       */
+      disabled?: boolean;
+      /**
+       * Return false to hide this item for the right-clicked node.
+       */
       showOn?: (node: LexicalNode, editor: TypixEditor) => boolean;
+      /**
+       * Called when the item is selected.
+       */
       onSelect: (editor: TypixEditor) => void;
     }
   | {
       type: "separator";
-      key: string;
       showOn?: (node: LexicalNode, editor: TypixEditor) => boolean;
     };
 
-type ContextMenuExtensionProps = {
+export type ContextMenuExtensionProps = {
   options: TypixContextMenuItem[];
 };
 
 export function ContextMenuExtension({ options }: ContextMenuExtensionProps) {
   const editor = useTypixEditor();
 
-  const menu_options = useMemo(
-    () =>
-      options.map((item) => {
-        if (item.type === "separator") {
-          return new NodeContextMenuSeparator({
-            $showOn: item.showOn
-              ? (node) => item.showOn!(node, editor)
-              : undefined,
-          });
-        }
+  // No useMemo — options must be fresh so `disabled` reflects current state.
+  const menuOptions = options.map((item) => {
+    if (item.type === "separator") {
+      return new NodeContextMenuSeparator({
+        $showOn: item.showOn ? (node) => item.showOn!(node, editor) : undefined,
+      });
+    }
 
-        return new NodeContextMenuOption(item.label, {
-          disabled:
-            typeof item.disabled === "function"
-              ? item.disabled(editor)
-              : (item.disabled ?? false),
-          icon: item?.icon,
-          $showOn: item.showOn
-            ? (node) => item.showOn!(node, editor)
-            : undefined,
-          $onSelect: () => item.onSelect(editor),
-        });
-      }),
-    [options, editor]
-  );
+    return new NodeContextMenuOption(item.label, {
+      disabled: item.disabled ?? false,
+      icon: item.icon,
+      $showOn: item.showOn ? (node) => item.showOn!(node, editor) : undefined,
+      $onSelect: () => item.onSelect(editor),
+    });
+  });
 
   return (
     <NodeContextMenuPlugin
       className="typix-context-menu"
       itemClassName="typix-context-menu__item"
-      items={menu_options}
+      items={menuOptions}
       separatorClassName="typix-context-menu__separator"
     />
   );
 }
 
 ContextMenuExtension.displayName = "Typix.ContextMenuExtension";
-
-export {
-  NodeContextMenuOption,
-  NodeContextMenuSeparator,
-  type ContextMenuExtensionProps,
-};

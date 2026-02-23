@@ -25,8 +25,8 @@ export function ComponentPreview({ name }: ComponentPreviewProps) {
   const activeFile = files[activeTab];
 
   return (
-    <div className="not-prose my-6 overflow-hidden rounded-lg border border-fd-border">
-      <div className="bg-white p-6 dark:bg-fd-background">
+    <div className="not-prose my-6 overflow-hidden rounded-t-lg ">
+      <div className="bg-white  dark:bg-fd-background">
         <Suspense
           fallback={
             <div className="flex min-h-[120px] items-center justify-center text-sm text-fd-muted-foreground">

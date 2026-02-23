@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-draggable-block",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Draggable block extension for Typix - enables drag and drop reordering of editor blocks",
   "keywords": [
     "typix",

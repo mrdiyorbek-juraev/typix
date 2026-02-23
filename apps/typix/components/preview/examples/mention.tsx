@@ -1,32 +1,181 @@
 "use client";
 
 import {
-  EditorContent,
-  EditorRoot,
   createEditorConfig,
   defaultExtensionNodes,
+  defaultTheme,
+  EditorContent,
+  EditorRoot,
+  useActiveFormats,
+  useBlockType,
+  useTypixEditor,
 } from "@typix-editor/react";
+import "@typix-editor/react/src/styles/main.css";
 import { MentionExtension, MentionNode } from "@typix-editor/extension-mention";
+import {
+  Bold,
+  Code,
+  Heading1,
+  Heading2,
+  Italic,
+  List,
+  ListOrdered,
+  Quote,
+  Redo,
+  Strikethrough,
+  Underline,
+  Undo,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const config = createEditorConfig({
   extensionNodes: [...defaultExtensionNodes, MentionNode],
+  theme: defaultTheme,
 });
 
 const users = [
-  { id: "1", name: "Alice Johnson" },
-  { id: "2", name: "Bob Smith" },
-  { id: "3", name: "Charlie Brown" },
-  { id: "4", name: "Diana Prince" },
-  { id: "5", name: "Edward Norton" },
+  {
+    id: "1",
+    name: "Alice Johnson",
+    data: { avatar: "https://i.pravatar.cc/32?img=1", subtitle: "@alice" },
+  },
+  {
+    id: "2",
+    name: "Bob Smith",
+    data: { avatar: "https://i.pravatar.cc/32?img=2", subtitle: "@bob" },
+  },
+  {
+    id: "3",
+    name: "Charlie Brown",
+    data: { subtitle: "@charlie" },
+  },
+  {
+    id: "4",
+    name: "Diana Prince",
+    data: { avatar: "https://i.pravatar.cc/32?img=4", subtitle: "@diana" },
+  },
+  {
+    id: "5",
+    name: "Edward Norton",
+    data: { subtitle: "@edward" },
+  },
 ];
+
+function Separator() {
+  return <div className="mx-0.5 h-4 w-px bg-fd-border" />;
+}
+
+function Toolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats({
+    formats: ["bold", "italic", "underline", "strikethrough", "code"],
+  });
+  const blockType = useBlockType();
+
+  return (
+    <div className="flex flex-wrap items-center gap-0.5 border-fd-border border-b px-2 py-1.5">
+      <Button
+        onClick={() => editor.undo()}
+        size="icon-sm"
+        title="Undo"
+        variant="ghost"
+      >
+        <Undo />
+      </Button>
+      <Button
+        onClick={() => editor.redo()}
+        size="icon-sm"
+        title="Redo"
+        variant="ghost"
+      >
+        <Redo />
+      </Button>
+      <Separator />
+      <Button
+        onClick={() => editor.toggleBold()}
+        size="icon-sm"
+        variant={isActive("bold") ? "secondary" : "ghost"}
+      >
+        <Bold />
+      </Button>
+      <Button
+        onClick={() => editor.toggleItalic()}
+        size="icon-sm"
+        variant={isActive("italic") ? "secondary" : "ghost"}
+      >
+        <Italic />
+      </Button>
+      <Button
+        onClick={() => editor.toggleUnderline()}
+        size="icon-sm"
+        variant={isActive("underline") ? "secondary" : "ghost"}
+      >
+        <Underline />
+      </Button>
+      <Button
+        onClick={() => editor.toggleStrikethrough()}
+        size="icon-sm"
+        variant={isActive("strikethrough") ? "secondary" : "ghost"}
+      >
+        <Strikethrough />
+      </Button>
+      <Button
+        onClick={() => editor.toggleCode()}
+        size="icon-sm"
+        variant={isActive("code") ? "secondary" : "ghost"}
+      >
+        <Code />
+      </Button>
+      <Separator />
+      <Button
+        onClick={() => editor.toggleHeading({ level: 1 })}
+        size="icon-sm"
+        variant={blockType === "h1" ? "secondary" : "ghost"}
+      >
+        <Heading1 />
+      </Button>
+      <Button
+        onClick={() => editor.toggleHeading({ level: 2 })}
+        size="icon-sm"
+        variant={blockType === "h2" ? "secondary" : "ghost"}
+      >
+        <Heading2 />
+      </Button>
+      <Button
+        onClick={() => editor.toggleQuote()}
+        size="icon-sm"
+        variant={blockType === "quote" ? "secondary" : "ghost"}
+      >
+        <Quote />
+      </Button>
+      <Button
+        onClick={() => editor.toggleBulletList()}
+        size="icon-sm"
+        variant={blockType === "bullet" ? "secondary" : "ghost"}
+      >
+        <List />
+      </Button>
+      <Button
+        onClick={() => editor.toggleOrderedList()}
+        size="icon-sm"
+        variant={blockType === "number" ? "secondary" : "ghost"}
+      >
+        <ListOrdered />
+      </Button>
+    </div>
+  );
+}
 
 export default function MentionExample() {
   return (
     <EditorRoot config={config}>
-      <EditorContent
-        placeholder='Type "@" to mention someone...'
-        className="min-h-[120px] w-full rounded-md border border-fd-border bg-fd-background p-3 text-sm focus-within:ring-2 focus-within:ring-fd-ring"
-      />
+      <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
+        <Toolbar />
+        <EditorContent
+          className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
+          placeholder='Type "@" to mention someone...'
+        />
+      </div>
       <MentionExtension
         onSearch={(query) =>
           users.filter((u) =>
@@ -44,33 +193,49 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  EditorContent,
-  EditorRoot,
   createEditorConfig,
   defaultExtensionNodes,
+  defaultTheme,
+  EditorContent,
+  EditorRoot,
 } from "@typix-editor/react";
 import {
   MentionExtension,
   MentionNode,
 } from "@typix-editor/extension-mention";
-import { theme } from "./theme";
-import "./style.css";
+import { Toolbar } from "./Toolbar";
 
 const config = createEditorConfig({
   extensionNodes: [...defaultExtensionNodes, MentionNode],
-  theme,
+  theme: defaultTheme,
 });
 
 const users = [
-  { id: "1", name: "Alice Johnson" },
-  { id: "2", name: "Bob Smith" },
-  { id: "3", name: "Charlie Brown" },
+  {
+    id: "1",
+    name: "Alice Johnson",
+    data: { avatar: "https://i.pravatar.cc/32?img=1", subtitle: "@alice" },
+  },
+  {
+    id: "2",
+    name: "Bob Smith",
+    data: { avatar: "https://i.pravatar.cc/32?img=2", subtitle: "@bob" },
+  },
+  {
+    id: "3",
+    name: "Charlie Brown",
+    // no avatar — initials fallback is shown automatically
+    data: { subtitle: "@charlie" },
+  },
 ];
 
 export default function MentionExample() {
   return (
     <EditorRoot config={config}>
-      <EditorContent placeholder='Type "@" to mention someone...' />
+      <div className="editor-container">
+        <Toolbar />
+        <EditorContent placeholder='Type "@" to mention someone...' />
+      </div>
       <MentionExtension
         onSearch={(query) =>
           users.filter((u) =>
@@ -84,69 +249,110 @@ export default function MentionExample() {
 }`,
   },
   {
-    name: "theme.ts",
-    lang: "ts",
-    code: `import type { EditorThemeClasses } from "lexical";
+    name: "Toolbar.tsx",
+    lang: "tsx",
+    code: `import { useTypixEditor, useActiveFormats, useBlockType } from "@typix-editor/react";
+import {
+  Bold, Italic, Underline, Strikethrough, Code,
+  Heading1, Heading2, Quote, List, ListOrdered,
+  Undo, Redo,
+} from "lucide-react";
+import { ToolbarButton } from "./Button";
 
-export const theme: EditorThemeClasses = {
-  paragraph: "typix-paragraph",
-  text: {
-    bold: "typix-text--bold",
-    italic: "typix-text--italic",
-    underline: "typix-text--underline",
-    strikethrough: "typix-text--strikethrough",
-    code: "typix-text--code",
-  },
-};`,
+export function Toolbar() {
+  const editor = useTypixEditor();
+  const { isActive } = useActiveFormats({
+    formats: ["bold", "italic", "underline", "strikethrough", "code"],
+  });
+  const blockType = useBlockType();
+
+  return (
+    <div className="toolbar">
+      <ToolbarButton onClick={() => editor.undo()} title="Undo"><Undo /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.redo()} title="Redo"><Redo /></ToolbarButton>
+      <div className="toolbar-sep" />
+      <ToolbarButton onClick={() => editor.toggleBold()} active={isActive("bold")}><Bold /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleItalic()} active={isActive("italic")}><Italic /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleUnderline()} active={isActive("underline")}><Underline /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleStrikethrough()} active={isActive("strikethrough")}><Strikethrough /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleCode()} active={isActive("code")}><Code /></ToolbarButton>
+      <div className="toolbar-sep" />
+      <ToolbarButton onClick={() => editor.toggleHeading({ level: 1 })} active={blockType === "h1"}><Heading1 /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleHeading({ level: 2 })} active={blockType === "h2"}><Heading2 /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleQuote()} active={blockType === "quote"}><Quote /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleBulletList()} active={blockType === "bullet"}><List /></ToolbarButton>
+      <ToolbarButton onClick={() => editor.toggleOrderedList()} active={blockType === "number"}><ListOrdered /></ToolbarButton>
+    </div>
+  );
+}`,
   },
   {
-    name: "style.css",
+    name: "Button.tsx",
+    lang: "tsx",
+    code: `import type { ButtonHTMLAttributes } from "react";
+
+interface ToolbarButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
+}
+
+export function ToolbarButton({
+  active,
+  className = "toolbar-btn",
+  children,
+  ...props
+}: ToolbarButtonProps) {
+  return (
+    <button
+      type="button"
+      data-active={active || undefined}
+      className={className}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}`,
+  },
+  {
+    name: "main.css",
     lang: "css",
-    code: `.typix-mention {
-  background-color: rgba(24, 119, 232, 0.15);
-  border-radius: 4px;
-  padding: 2px 4px;
-  color: #1877e8;
-  cursor: pointer;
-}
-
-.typix-mention:hover {
-  background-color: rgba(24, 119, 232, 0.25);
-}
-
-.typix-mention-menu {
-  position: absolute;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 1000;
-}
-
-.typix-mention-menu__list {
-  list-style: none;
-  margin: 0;
-  padding: 4px 0;
-}
-
-.typix-mention-menu__item {
-  padding: 8px 12px;
-  cursor: pointer;
+    code: `.toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 6px 8px;
 }
 
-.typix-mention-menu__item:hover,
-.typix-mention-menu__item--selected {
-  background: #f0f0f0;
+.toolbar-sep {
+  width: 1px;
+  height: 16px;
+  background: #e5e7eb;
+  margin: 0 2px;
 }
 
-.typix-paragraph {
-  margin: 0;
-  position: relative;
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 100ms;
+}
+
+.toolbar-btn:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.toolbar-btn[data-active] {
+  background: rgba(0, 0, 0, 0.1);
 }`,
   },
 ];

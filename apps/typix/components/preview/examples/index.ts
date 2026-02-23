@@ -11,6 +11,7 @@ import { files as draggableBlockFiles } from "./draggable-block";
 import { files as floatingLinkFiles } from "./floating-link";
 import { files as keywordsFiles } from "./keywords";
 import { files as linkFiles } from "./link";
+import { files as characterLimitFiles } from "./character-limit";
 import { files as maxLengthFiles } from "./max-length";
 import { files as mentionFiles } from "./mention";
 import { files as shortCutsFiles } from "./short-cuts";
@@ -76,6 +77,10 @@ export const examples: Record<string, ExampleDefinition> = {
   link: {
     component: lazy(() => import("./link")),
     files: linkFiles,
+  },
+  "character-limit": {
+    component: lazy(() => import("./character-limit")),
+    files: characterLimitFiles,
   },
   "max-length": {
     component: lazy(() => import("./max-length")),
