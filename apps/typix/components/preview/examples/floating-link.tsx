@@ -13,12 +13,14 @@ import {
 import "@typix-editor/react/src/styles/main.css";
 import { LinkExtension } from "@typix-editor/extension-link";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
+import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
 import {
   Bold,
   Code,
   Heading1,
   Heading2,
   Italic,
+  Link2,
   List,
   ListOrdered,
   Quote,
@@ -32,6 +34,69 @@ import { Button } from "@/components/ui/button";
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
   theme: defaultTheme,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialState: {
+    root: {
+      children: [
+        {
+          children: [
+            {
+              detail: 0,
+              format: 0,
+              mode: "normal",
+              style: "",
+              text: "Visit ",
+              type: "text",
+              version: 1,
+            },
+            {
+              children: [
+                {
+                  detail: 0,
+                  format: 0,
+                  mode: "normal",
+                  style: "",
+                  text: "typix.uz",
+                  type: "text",
+                  version: 1,
+                },
+              ],
+              direction: "ltr",
+              format: "",
+              indent: 0,
+              type: "link",
+              version: 1,
+              rel: "noreferrer",
+              target: null,
+              title: null,
+              url: "https://typix.uz",
+            },
+            {
+              detail: 0,
+              format: 0,
+              mode: "normal",
+              style: "",
+              text: " — Ctrl+click to open. Select text and press Ctrl+K or the link button to insert a link.",
+              type: "text",
+              version: 1,
+            },
+          ],
+          direction: "ltr",
+          format: "",
+          indent: 0,
+          type: "paragraph",
+          version: 1,
+          textFormat: 0,
+          textStyle: "",
+        },
+      ],
+      direction: "ltr",
+      format: "",
+      indent: 0,
+      type: "root",
+      version: 1,
+    },
+  } as any,
 });
 
 function Separator() {
@@ -135,6 +200,15 @@ function Toolbar() {
       >
         <ListOrdered />
       </Button>
+      <Separator />
+      <Button
+        onClick={() => editor.toggleLink("https://")}
+        size="icon-sm"
+        title="Insert link (Ctrl+K)"
+        variant="ghost"
+      >
+        <Link2 />
+      </Button>
     </div>
   );
 }
@@ -146,11 +220,12 @@ export default function FloatingLinkExample() {
         <Toolbar />
         <EditorContent
           className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
-          placeholder="Select text, then use Ctrl+K to insert a link..."
+          placeholder="Select text, then use Ctrl+K or the link button..."
         />
       </div>
       <LinkExtension />
       <FloatingLinkExtension />
+      <AutoLinkExtension />
     </EditorRoot>
   );
 }
@@ -168,11 +243,34 @@ export const files = [
 } from "@typix-editor/react";
 import { LinkExtension } from "@typix-editor/extension-link";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
+import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
 import { Toolbar } from "./Toolbar";
 
 const config = createEditorConfig({
   extensionNodes: defaultExtensionNodes,
   theme: defaultTheme,
+  initialState: {
+    root: {
+      children: [
+        {
+          children: [
+            { detail: 0, format: 0, mode: "normal", style: "", text: "Visit ", type: "text", version: 1 },
+            {
+              children: [{ detail: 0, format: 0, mode: "normal", style: "", text: "typix.uz", type: "text", version: 1 }],
+              direction: "ltr", format: "", indent: 0,
+              type: "link", version: 1,
+              rel: "noreferrer", target: null, title: null,
+              url: "https://typix.uz",
+            },
+            { detail: 0, format: 0, mode: "normal", style: "", text: " — Ctrl+click to open.", type: "text", version: 1 },
+          ],
+          direction: "ltr", format: "", indent: 0,
+          type: "paragraph", version: 1, textFormat: 0, textStyle: "",
+        },
+      ],
+      direction: "ltr", format: "", indent: 0, type: "root", version: 1,
+    },
+  } as any,
 });
 
 export default function FloatingLinkExample() {
@@ -180,10 +278,11 @@ export default function FloatingLinkExample() {
     <EditorRoot config={config}>
       <div className="editor-container">
         <Toolbar />
-        <EditorContent placeholder="Select text, then use Ctrl+K to insert a link..." />
+        <EditorContent placeholder="Select text, then use Ctrl+K or the link button..." />
       </div>
       <LinkExtension />
       <FloatingLinkExtension />
+      <AutoLinkExtension />
     </EditorRoot>
   );
 }`,
@@ -195,7 +294,7 @@ export default function FloatingLinkExample() {
 import {
   Bold, Italic, Underline, Strikethrough, Code,
   Heading1, Heading2, Quote, List, ListOrdered,
-  Undo, Redo,
+  Undo, Redo, Link2,
 } from "lucide-react";
 import { ToolbarButton } from "./Button";
 
@@ -222,6 +321,8 @@ export function Toolbar() {
       <ToolbarButton onClick={() => editor.toggleQuote()} active={blockType === "quote"}><Quote /></ToolbarButton>
       <ToolbarButton onClick={() => editor.toggleBulletList()} active={blockType === "bullet"}><List /></ToolbarButton>
       <ToolbarButton onClick={() => editor.toggleOrderedList()} active={blockType === "number"}><ListOrdered /></ToolbarButton>
+      <div className="toolbar-sep" />
+      <ToolbarButton onClick={() => editor.toggleLink("https://")} title="Insert link (Ctrl+K)"><Link2 /></ToolbarButton>
     </div>
   );
 }`,

@@ -10,6 +10,8 @@ import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
 import { source } from "@/lib/source";
 import Script from "next/script";
 
+const isProduction = baseUrl.toString() === "https://typix.uz";
+
 export const metadata = createMetadata({
   title: {
     template: "%s | Typix",
@@ -42,12 +44,20 @@ export const metadata = createMetadata({
     siteName: "Typix",
     images: [
       {
-        url: "/og",
+        url: "/banner.png",
         width: 1200,
         height: 630,
         alt: "Typix — Extensible Rich Text Editor for React",
       },
     ],
+  },
+  robots: {
+    index: isProduction,
+    follow: isProduction,
+    googleBot: {
+      index: isProduction,
+      follow: isProduction,
+    },
   },
 });
 
@@ -70,14 +80,20 @@ export const viewport: Viewport = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+  "@type": ["SoftwareApplication", "SoftwareSourceCode"],
   name: "Typix",
+  alternateName: ["Typix Editor", "@typix-editor/react"],
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
+  softwareVersion: "4.1.0",
   description:
-    "A headless, extensible rich text editor framework for React built on Meta's Lexical. Features a modular extension system with auto-complete, mentions, code highlighting, drag-and-drop blocks, floating link editor, and more.",
+    "A headless, extensible rich text editor framework for React built on Meta's Lexical. Features a modular extension system with auto-complete, mentions, code highlighting, drag-and-drop blocks, floating link editor, character limit, and more.",
   url: baseUrl.toString(),
   image: `${baseUrl.toString()}og`,
+  screenshot: `${baseUrl.toString()}banner.png`,
+  downloadUrl: "https://www.npmjs.com/package/@typix-editor/react",
+  codeRepository: "https://github.com/mrdiyorbek-juraev/typix",
+  license: "https://opensource.org/licenses/MIT",
   offers: {
     "@type": "Offer",
     price: "0",
@@ -86,11 +102,21 @@ const jsonLd = {
   author: {
     "@type": "Person",
     name: "Diyorbek Juraev",
+    url: "https://github.com/mrdiyorbek-juraev",
+  },
+  maintainer: {
+    "@type": "Person",
+    name: "Diyorbek Juraev",
+    url: "https://github.com/mrdiyorbek-juraev",
   },
   programmingLanguage: ["TypeScript", "JavaScript"],
   runtimePlatform: "React",
   keywords:
-    "rich text editor, react editor, wysiwyg, lexical, headless editor, extensible",
+    "rich text editor, react editor, wysiwyg, lexical, headless editor, extensible, typix, mention editor, code highlight, drag and drop, character limit",
+  sameAs: [
+    "https://www.npmjs.com/package/@typix-editor/react",
+    "https://github.com/mrdiyorbek-juraev/typix",
+  ],
 };
 
 export default function Layout({ children }: LayoutProps<"/">) {

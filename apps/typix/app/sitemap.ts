@@ -30,6 +30,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.6,
     },
+    {
+      url: new URL("/articles", baseUrl).toString(),
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: new URL("/support", baseUrl).toString(),
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
   ];
 
   const docRoutes: MetadataRoute.Sitemap = source.getPages().map((page) => ({

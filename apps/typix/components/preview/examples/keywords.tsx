@@ -148,7 +148,7 @@ export default function KeywordsExample() {
         <Toolbar />
         <EditorContent
           className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
-          placeholder='Try typing "Lexical" or "Typix" to see keyword highlighting...'
+          placeholder='Type your message… (Try "congratulations", "felicitaciones", "恭喜", "축하해")'
         />
       </div>
       <KeywordsExtension />
@@ -183,7 +183,7 @@ export default function KeywordsExample() {
     <EditorRoot config={config}>
       <div className="editor-container">
         <Toolbar />
-        <EditorContent placeholder='Type "Lexical" or "React" to see highlights...' />
+        <EditorContent placeholder='Type your message… (Try "congratulations", "felicitaciones", "恭喜", "축하해")' />
       </div>
       <KeywordsExtension />
     </EditorRoot>

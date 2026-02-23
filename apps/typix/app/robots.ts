@@ -7,18 +7,44 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        disallow: ["/api/", "/og/"],
       },
       {
         // Allow AI crawlers explicit access to LLM-friendly routes
         userAgent: [
+          // OpenAI
           "GPTBot",
           "ChatGPT-User",
+          "OAI-SearchBot",
+          // Anthropic
           "ClaudeBot",
-          "PerplexityBot",
           "anthropic-ai",
+          "Claude-Web",
+          // Google AI
+          "Google-Extended",
+          "Googlebot-AI",
+          // Perplexity
+          "PerplexityBot",
+          // Meta
+          "Meta-ExternalAgent",
+          "Meta-ExternalFetcher",
+          // Cohere
           "cohere-ai",
+          // You.com
+          "YouBot",
+          // DuckDuckGo
+          "DuckAssistBot",
+          // ByteDance
+          "Bytespider",
+          // Amazon
+          "Amazonbot",
+          // Apple
+          "Applebot",
+          // Mistral
+          "MistralAI",
         ],
         allow: ["/", "/llms.txt", "/llms-full.txt", "/docs/"],
+        disallow: [],
       },
     ],
     sitemap: new URL("/sitemap.xml", baseUrl).toString(),
