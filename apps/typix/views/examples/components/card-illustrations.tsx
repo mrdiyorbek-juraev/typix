@@ -956,21 +956,67 @@ function AutoLinkIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Text lines */}
-      <rect x="40" y="50" width="120" height="8" rx="4" fill="currentColor" opacity="0.35" />
+      <rect
+        x="40"
+        y="50"
+        width="120"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.35"
+      />
       {/* URL with underline */}
-      <rect x="40" y="72" width="160" height="8" rx="4" fill="currentColor" opacity="0.45" />
-      <rect x="40" y="82" width="160" height="2" rx="1" fill="currentColor" opacity="0.5" />
-      <rect x="40" y="94" width="100" height="8" rx="4" fill="currentColor" opacity="0.3" />
+      <rect
+        x="40"
+        y="72"
+        width="160"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.45"
+      />
+      <rect
+        x="40"
+        y="82"
+        width="160"
+        height="2"
+        rx="1"
+        fill="currentColor"
+        opacity="0.5"
+      />
+      <rect
+        x="40"
+        y="94"
+        width="100"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
       {/* Chain-link icon */}
       <path
         d="M224 68 C224 64 228 60 232 60 L240 60 C244 60 248 64 248 68 C248 72 244 76 240 76 L238 76"
-        stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.6"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        opacity="0.6"
       />
       <path
         d="M234 76 C234 80 230 84 226 84 L218 84 C214 84 210 80 210 76 C210 72 214 68 218 68 L220 68"
-        stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.6"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        opacity="0.6"
       />
-      <line x1="222" y1="76" x2="236" y2="68" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      <line
+        x1="222"
+        y1="76"
+        x2="236"
+        y2="68"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity="0.4"
+      />
     </svg>
   );
 }
@@ -979,22 +1025,62 @@ function FloatingLinkIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Text with selection highlight */}
-      <rect x="40" y="100" width="240" height="8" rx="4" fill="currentColor" opacity="0.25" />
-      <rect x="100" y="100" width="80" height="8" rx="4" fill="currentColor" opacity="0.45" />
+      <rect
+        x="40"
+        y="100"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
+      <rect
+        x="100"
+        y="100"
+        width="80"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.45"
+      />
       {/* Floating popup above selection */}
-      <rect x="80" y="50" width="160" height="38" rx="8" fill="currentColor" opacity="0.1"
-        stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
+      <rect
+        x="80"
+        y="50"
+        width="160"
+        height="38"
+        rx="8"
+        fill="currentColor"
+        opacity="0.1"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeOpacity="0.3"
+      />
       {/* Link icon in popup */}
       <path
         d="M102 69 C102 66 105 63 108 63 L113 63 C116 63 119 66 119 69 C119 72 116 75 113 75 L111 75"
-        stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.55"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.55"
       />
       <path
         d="M109 75 C109 78 106 81 103 81 L98 81 C95 81 92 78 92 75 C92 72 95 69 98 69 L100 69"
-        stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.55"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.55"
       />
       {/* URL input line */}
-      <rect x="128" y="64" width="96" height="8" rx="4" fill="currentColor" opacity="0.3" />
+      <rect
+        x="128"
+        y="64"
+        width="96"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
       {/* Caret pointing down */}
       <path d="M155 88 L160 96 L165 88" fill="currentColor" opacity="0.25" />
     </svg>
@@ -1005,11 +1091,37 @@ function ContextMenuIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Background text */}
-      <rect x="40" y="40" width="180" height="8" rx="4" fill="currentColor" opacity="0.2" />
-      <rect x="40" y="58" width="140" height="8" rx="4" fill="currentColor" opacity="0.15" />
+      <rect
+        x="40"
+        y="40"
+        width="180"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.2"
+      />
+      <rect
+        x="40"
+        y="58"
+        width="140"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.15"
+      />
       {/* Context menu popup */}
-      <rect x="120" y="72" width="140" height="90" rx="8" fill="currentColor" opacity="0.08"
-        stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.25" />
+      <rect
+        x="120"
+        y="72"
+        width="140"
+        height="90"
+        rx="8"
+        fill="currentColor"
+        opacity="0.08"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeOpacity="0.25"
+      />
       {/* Menu items */}
       {[0, 1, 2, 3].map((i) => {
         const y = 88 + i * 18;
@@ -1017,16 +1129,47 @@ function ContextMenuIllustration() {
         return (
           <g key={i}>
             {selected && (
-              <rect x="122" y={y - 4} width="136" height="16" rx="4" fill="currentColor" opacity="0.1" />
+              <rect
+                x="122"
+                y={y - 4}
+                width="136"
+                height="16"
+                rx="4"
+                fill="currentColor"
+                opacity="0.1"
+              />
             )}
-            <rect x="136" y={y} width={80 - i * 8} height="6" rx="3" fill="currentColor"
-              opacity={selected ? 0.45 : 0.25} />
+            <rect
+              x="136"
+              y={y}
+              width={80 - i * 8}
+              height="6"
+              rx="3"
+              fill="currentColor"
+              opacity={selected ? 0.45 : 0.25}
+            />
           </g>
         );
       })}
       {/* Divider */}
-      <line x1="128" y1="154" x2="252" y2="154" stroke="currentColor" strokeWidth="1" opacity="0.15" />
-      <rect x="136" y="158" width="60" height="6" rx="3" fill="currentColor" opacity="0.2" />
+      <line
+        x1="128"
+        y1="154"
+        x2="252"
+        y2="154"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.15"
+      />
+      <rect
+        x="136"
+        y="158"
+        width="60"
+        height="6"
+        rx="3"
+        fill="currentColor"
+        opacity="0.2"
+      />
     </svg>
   );
 }
@@ -1035,23 +1178,95 @@ function CollapsibleIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Header row — expanded */}
-      <rect x="40" y="32" width="240" height="28" rx="6" fill="currentColor" opacity="0.08"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
+      <rect
+        x="40"
+        y="32"
+        width="240"
+        height="28"
+        rx="6"
+        fill="currentColor"
+        opacity="0.08"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.2"
+      />
       {/* Chevron down */}
-      <path d="M56 44 L62 50 L68 44" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-        strokeLinejoin="round" opacity="0.55" />
-      <rect x="80" y="42" width="120" height="8" rx="4" fill="currentColor" opacity="0.35" />
+      <path
+        d="M56 44 L62 50 L68 44"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.55"
+      />
+      <rect
+        x="80"
+        y="42"
+        width="120"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.35"
+      />
       {/* Collapsed content */}
-      <rect x="52" y="68" width="228" height="8" rx="4" fill="currentColor" opacity="0.25" />
-      <rect x="52" y="84" width="200" height="8" rx="4" fill="currentColor" opacity="0.2" />
-      <rect x="52" y="100" width="160" height="8" rx="4" fill="currentColor" opacity="0.15" />
+      <rect
+        x="52"
+        y="68"
+        width="228"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
+      <rect
+        x="52"
+        y="84"
+        width="200"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.2"
+      />
+      <rect
+        x="52"
+        y="100"
+        width="160"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.15"
+      />
       {/* Second collapsed block */}
-      <rect x="40" y="120" width="240" height="28" rx="6" fill="currentColor" opacity="0.06"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.15" />
+      <rect
+        x="40"
+        y="120"
+        width="240"
+        height="28"
+        rx="6"
+        fill="currentColor"
+        opacity="0.06"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.15"
+      />
       {/* Chevron right */}
-      <path d="M56 132 L62 138 L56 144" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-        strokeLinejoin="round" opacity="0.3" />
-      <rect x="80" y="130" width="100" height="8" rx="4" fill="currentColor" opacity="0.2" />
+      <path
+        d="M56 132 L62 138 L56 144"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.3"
+      />
+      <rect
+        x="80"
+        y="130"
+        width="100"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.2"
+      />
     </svg>
   );
 }
@@ -1080,14 +1295,27 @@ function DraggableBlocksIllustration() {
             )}
             {/* Block */}
             <rect
-              x="68" y={y} width="200" height="34" rx="6"
-              fill="currentColor" opacity={dragging ? 0.12 : 0.07}
-              stroke="currentColor" strokeWidth={dragging ? 1.5 : 1}
+              x="68"
+              y={y}
+              width="200"
+              height="34"
+              rx="6"
+              fill="currentColor"
+              opacity={dragging ? 0.12 : 0.07}
+              stroke="currentColor"
+              strokeWidth={dragging ? 1.5 : 1}
               strokeOpacity={dragging ? 0.4 : 0.2}
               strokeDasharray={dragging ? "4 3" : undefined}
             />
-            <rect x="82" y={y + 13} width={120 - i * 20} height="7" rx="3.5" fill="currentColor"
-              opacity={dragging ? 0.4 : 0.3} />
+            <rect
+              x="82"
+              y={y + 13}
+              width={120 - i * 20}
+              height="7"
+              rx="3.5"
+              fill="currentColor"
+              opacity={dragging ? 0.4 : 0.3}
+            />
           </g>
         );
       })}
@@ -1099,25 +1327,93 @@ function MentionsIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Text line with @mention pill */}
-      <rect x="40" y="60" width="80" height="8" rx="4" fill="currentColor" opacity="0.3" />
+      <rect
+        x="40"
+        y="60"
+        width="80"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
       {/* @mention pill */}
-      <rect x="128" y="56" width="80" height="16" rx="8" fill="currentColor" opacity="0.15"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.35" />
-      <text x="140" y="68" fill="currentColor" fontSize="9" fontFamily="sans-serif" opacity="0.6"
-        fontWeight="600">@username</text>
-      <rect x="216" y="60" width="60" height="8" rx="4" fill="currentColor" opacity="0.25" />
+      <rect
+        x="128"
+        y="56"
+        width="80"
+        height="16"
+        rx="8"
+        fill="currentColor"
+        opacity="0.15"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.35"
+      />
+      <text
+        x="140"
+        y="68"
+        fill="currentColor"
+        fontSize="9"
+        fontFamily="sans-serif"
+        opacity="0.6"
+        fontWeight="600"
+      >
+        @username
+      </text>
+      <rect
+        x="216"
+        y="60"
+        width="60"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
       {/* Dropdown */}
-      <rect x="120" y="80" width="140" height="72" rx="8" fill="currentColor" opacity="0.08"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" />
+      <rect
+        x="120"
+        y="80"
+        width="140"
+        height="72"
+        rx="8"
+        fill="currentColor"
+        opacity="0.08"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.2"
+      />
       {[0, 1, 2].map((i) => {
         const y = 92 + i * 20;
         const active = i === 0;
         return (
           <g key={i}>
-            {active && <rect x="122" y={y - 3} width="136" height="16" rx="4" fill="currentColor" opacity="0.1" />}
-            <circle cx="136" cy={y + 4} r="6" fill="currentColor" opacity={active ? 0.3 : 0.15} />
-            <rect x="148" y={y} width={70 - i * 10} height="6" rx="3" fill="currentColor"
-              opacity={active ? 0.4 : 0.2} />
+            {active && (
+              <rect
+                x="122"
+                y={y - 3}
+                width="136"
+                height="16"
+                rx="4"
+                fill="currentColor"
+                opacity="0.1"
+              />
+            )}
+            <circle
+              cx="136"
+              cy={y + 4}
+              r="6"
+              fill="currentColor"
+              opacity={active ? 0.3 : 0.15}
+            />
+            <rect
+              x="148"
+              y={y}
+              width={70 - i * 10}
+              height="6"
+              rx="3"
+              fill="currentColor"
+              opacity={active ? 0.4 : 0.2}
+            />
           </g>
         );
       })}
@@ -1129,17 +1425,74 @@ function CharacterLimitIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Text lines */}
-      <rect x="40" y="44" width="240" height="8" rx="4" fill="currentColor" opacity="0.35" />
-      <rect x="40" y="62" width="200" height="8" rx="4" fill="currentColor" opacity="0.3" />
-      <rect x="40" y="80" width="160" height="8" rx="4" fill="currentColor" opacity="0.25" />
+      <rect
+        x="40"
+        y="44"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.35"
+      />
+      <rect
+        x="40"
+        y="62"
+        width="200"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
+      <rect
+        x="40"
+        y="80"
+        width="160"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
       {/* Progress bar track */}
-      <rect x="40" y="114" width="240" height="8" rx="4" fill="currentColor" opacity="0.1" />
+      <rect
+        x="40"
+        y="114"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.1"
+      />
       {/* Progress bar fill — 78% */}
-      <rect x="40" y="114" width="187" height="8" rx="4" fill="currentColor" opacity="0.45" />
+      <rect
+        x="40"
+        y="114"
+        width="187"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.45"
+      />
       {/* Count text */}
-      <text x="242" y="122" fill="currentColor" fontSize="9" fontFamily="monospace" opacity="0.5">186/240</text>
+      <text
+        x="242"
+        y="122"
+        fill="currentColor"
+        fontSize="9"
+        fontFamily="monospace"
+        opacity="0.5"
+      >
+        186/240
+      </text>
       {/* Warning — near limit */}
-      <rect x="40" y="132" width="100" height="6" rx="3" fill="currentColor" opacity="0.18" />
+      <rect
+        x="40"
+        y="132"
+        width="100"
+        height="6"
+        rx="3"
+        fill="currentColor"
+        opacity="0.18"
+      />
     </svg>
   );
 }
@@ -1148,19 +1501,95 @@ function KeywordsIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Text line 1 — keyword highlighted */}
-      <rect x="40" y="52" width="60" height="8" rx="4" fill="currentColor" opacity="0.3" />
-      <rect x="108" y="48" width="72" height="16" rx="4" fill="currentColor" opacity="0.18"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.35" />
-      <rect x="114" y="53" width="60" height="7" rx="3" fill="currentColor" opacity="0.45" />
-      <rect x="188" y="52" width="80" height="8" rx="4" fill="currentColor" opacity="0.3" />
+      <rect
+        x="40"
+        y="52"
+        width="60"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
+      <rect
+        x="108"
+        y="48"
+        width="72"
+        height="16"
+        rx="4"
+        fill="currentColor"
+        opacity="0.18"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.35"
+      />
+      <rect
+        x="114"
+        y="53"
+        width="60"
+        height="7"
+        rx="3"
+        fill="currentColor"
+        opacity="0.45"
+      />
+      <rect
+        x="188"
+        y="52"
+        width="80"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
       {/* Text line 2 */}
-      <rect x="40" y="78" width="240" height="8" rx="4" fill="currentColor" opacity="0.25" />
+      <rect
+        x="40"
+        y="78"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
       {/* Text line 3 — another keyword */}
-      <rect x="40" y="104" width="100" height="8" rx="4" fill="currentColor" opacity="0.3" />
-      <rect x="148" y="100" width="60" height="16" rx="4" fill="currentColor" opacity="0.18"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.35" />
-      <rect x="154" y="105" width="48" height="7" rx="3" fill="currentColor" opacity="0.45" />
-      <rect x="216" y="104" width="64" height="8" rx="4" fill="currentColor" opacity="0.25" />
+      <rect
+        x="40"
+        y="104"
+        width="100"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
+      <rect
+        x="148"
+        y="100"
+        width="60"
+        height="16"
+        rx="4"
+        fill="currentColor"
+        opacity="0.18"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.35"
+      />
+      <rect
+        x="154"
+        y="105"
+        width="48"
+        height="7"
+        rx="3"
+        fill="currentColor"
+        opacity="0.45"
+      />
+      <rect
+        x="216"
+        y="104"
+        width="64"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
     </svg>
   );
 }
@@ -1169,21 +1598,89 @@ function TabFocusIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Editor box with focus ring */}
-      <rect x="48" y="32" width="224" height="100" rx="10"
-        stroke="currentColor" strokeWidth="2" strokeOpacity="0.45" />
-      <rect x="44" y="28" width="232" height="108" rx="12"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.15" strokeDasharray="4 3" />
+      <rect
+        x="48"
+        y="32"
+        width="224"
+        height="100"
+        rx="10"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeOpacity="0.45"
+      />
+      <rect
+        x="44"
+        y="28"
+        width="232"
+        height="108"
+        rx="12"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.15"
+        strokeDasharray="4 3"
+      />
       {/* Text lines inside */}
-      <rect x="64" y="52" width="160" height="8" rx="4" fill="currentColor" opacity="0.3" />
-      <rect x="64" y="70" width="192" height="8" rx="4" fill="currentColor" opacity="0.25" />
-      <rect x="64" y="88" width="120" height="8" rx="4" fill="currentColor" opacity="0.2" />
+      <rect
+        x="64"
+        y="52"
+        width="160"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
+      <rect
+        x="64"
+        y="70"
+        width="192"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
+      <rect
+        x="64"
+        y="88"
+        width="120"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.2"
+      />
       {/* Cursor */}
-      <rect x="190" y="86" width="2" height="14" rx="1" fill="currentColor" opacity="0.6" />
+      <rect
+        x="190"
+        y="86"
+        width="2"
+        height="14"
+        rx="1"
+        fill="currentColor"
+        opacity="0.6"
+      />
       {/* Tab key symbol */}
-      <rect x="116" y="148" width="88" height="24" rx="6" fill="currentColor" opacity="0.1"
-        stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
-      <text x="131" y="164" fill="currentColor" fontSize="10" fontFamily="monospace"
-        fontWeight="600" opacity="0.5">Tab ⇥</text>
+      <rect
+        x="116"
+        y="148"
+        width="88"
+        height="24"
+        rx="6"
+        fill="currentColor"
+        opacity="0.1"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeOpacity="0.3"
+      />
+      <text
+        x="131"
+        y="164"
+        fill="currentColor"
+        fontSize="10"
+        fontFamily="monospace"
+        fontWeight="600"
+        opacity="0.5"
+      >
+        Tab ⇥
+      </text>
     </svg>
   );
 }
@@ -1192,20 +1689,94 @@ function MaxLengthIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Text lines — all full width (limit reached) */}
-      <rect x="40" y="44" width="240" height="8" rx="4" fill="currentColor" opacity="0.35" />
-      <rect x="40" y="62" width="240" height="8" rx="4" fill="currentColor" opacity="0.3" />
-      <rect x="40" y="80" width="240" height="8" rx="4" fill="currentColor" opacity="0.25" />
-      <rect x="40" y="98" width="190" height="8" rx="4" fill="currentColor" opacity="0.22" />
+      <rect
+        x="40"
+        y="44"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.35"
+      />
+      <rect
+        x="40"
+        y="62"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
+      <rect
+        x="40"
+        y="80"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.25"
+      />
+      <rect
+        x="40"
+        y="98"
+        width="190"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.22"
+      />
       {/* Cursor at limit edge */}
-      <rect x="234" y="96" width="2" height="14" rx="1" fill="currentColor" opacity="0.7" />
+      <rect
+        x="234"
+        y="96"
+        width="2"
+        height="14"
+        rx="1"
+        fill="currentColor"
+        opacity="0.7"
+      />
       {/* Progress bar track */}
-      <rect x="40" y="124" width="240" height="8" rx="4" fill="currentColor" opacity="0.08" />
+      <rect
+        x="40"
+        y="124"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.08"
+      />
       {/* Progress bar — 100% full */}
-      <rect x="40" y="124" width="240" height="8" rx="4" fill="currentColor" opacity="0.5" />
+      <rect
+        x="40"
+        y="124"
+        width="240"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.5"
+      />
       {/* MAX badge */}
-      <rect x="248" y="140" width="32" height="16" rx="8" fill="currentColor" opacity="0.15"
-        stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" />
-      <rect x="254" y="145" width="20" height="6" rx="3" fill="currentColor" opacity="0.5" />
+      <rect
+        x="248"
+        y="140"
+        width="32"
+        height="16"
+        rx="8"
+        fill="currentColor"
+        opacity="0.15"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeOpacity="0.4"
+      />
+      <rect
+        x="254"
+        y="145"
+        width="20"
+        height="6"
+        rx="3"
+        fill="currentColor"
+        opacity="0.5"
+      />
     </svg>
   );
 }
@@ -1214,14 +1785,44 @@ function SpeechToTextIllustration() {
   return (
     <svg className={illustrationClass} viewBox="0 0 320 180" fill="none">
       {/* Microphone body */}
-      <rect x="148" y="28" width="24" height="44" rx="12" fill="currentColor" opacity="0.35" />
+      <rect
+        x="148"
+        y="28"
+        width="24"
+        height="44"
+        rx="12"
+        fill="currentColor"
+        opacity="0.35"
+      />
       {/* Microphone stand */}
-      <path d="M136 68 C136 80 184 80 184 68" stroke="currentColor" strokeWidth="2.5"
-        strokeLinecap="round" fill="none" opacity="0.45" />
-      <line x1="160" y1="80" x2="160" y2="92" stroke="currentColor" strokeWidth="2.5"
-        strokeLinecap="round" opacity="0.4" />
-      <line x1="148" y1="92" x2="172" y2="92" stroke="currentColor" strokeWidth="2.5"
-        strokeLinecap="round" opacity="0.4" />
+      <path
+        d="M136 68 C136 80 184 80 184 68"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.45"
+      />
+      <line
+        x1="160"
+        y1="80"
+        x2="160"
+        y2="92"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        opacity="0.4"
+      />
+      <line
+        x1="148"
+        y1="92"
+        x2="172"
+        y2="92"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        opacity="0.4"
+      />
       {/* Waveform bars */}
       {[
         { x: 40, h: 16 },
@@ -1247,8 +1848,24 @@ function SpeechToTextIllustration() {
         />
       ))}
       {/* Transcription text */}
-      <rect x="64" y="118" width="192" height="8" rx="4" fill="currentColor" opacity="0.3" />
-      <rect x="80" y="136" width="160" height="8" rx="4" fill="currentColor" opacity="0.2" />
+      <rect
+        x="64"
+        y="118"
+        width="192"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.3"
+      />
+      <rect
+        x="80"
+        y="136"
+        width="160"
+        height="8"
+        rx="4"
+        fill="currentColor"
+        opacity="0.2"
+      />
     </svg>
   );
 }

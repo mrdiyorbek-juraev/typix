@@ -232,9 +232,7 @@ export function EditorPreview() {
             <div className="size-2.5 rounded-full bg-amber-400 shadow-amber-400/30 shadow-sm sm:size-3" />
             <div className="size-2.5 rounded-full bg-emerald-400 shadow-emerald-400/30 shadow-sm sm:size-3" />
           </div>
-          <div className="flex flex-1 items-center justify-center">
-            
-          </div>
+          <div className="flex flex-1 items-center justify-center"></div>
           {/* Online avatars */}
           <div className="-space-x-1.5 flex items-center">
             {collaborators.map((c) => (

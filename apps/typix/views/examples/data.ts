@@ -93,7 +93,8 @@ export const examples: ExampleConfig[] = [
   {
     slug: "tab-focus",
     title: "Tab Focus",
-    description: "Control focus behavior and tab key interactions in the editor.",
+    description:
+      "Control focus behavior and tab key interactions in the editor.",
     category: "editor",
     available: true,
     previewName: "tab-focus",
@@ -104,7 +105,8 @@ export const examples: ExampleConfig[] = [
   {
     slug: "floating-link",
     title: "Floating Link",
-    description: "Floating toolbar for inserting and editing hyperlinks inline.",
+    description:
+      "Floating toolbar for inserting and editing hyperlinks inline.",
     category: "editor",
     available: true,
     previewName: "floating-link",
@@ -211,7 +213,8 @@ export const examples: ExampleConfig[] = [
   {
     slug: "minimal-note",
     title: "Minimal Note",
-    description: "A clean, distraction-free writing experience for quick notes.",
+    description:
+      "A clean, distraction-free writing experience for quick notes.",
     category: "editor",
     available: false,
     complexity: "beginner",

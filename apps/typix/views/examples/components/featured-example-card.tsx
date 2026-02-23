@@ -32,7 +32,9 @@ export function FeaturedExampleCard({ example }: FeaturedExampleCardProps) {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="font-bold text-2xl tracking-tight">{example.title}</h2>
+            <h2 className="font-bold text-2xl tracking-tight">
+              {example.title}
+            </h2>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {example.description}
             </p>
@@ -72,7 +74,14 @@ export function FeaturedExampleCard({ example }: FeaturedExampleCardProps) {
                   </div>
                 }
               >
-                <ComponentPreview name={example.previewName} classNames={{ preview: "[&_div]:border-t-0 [&_div]:border-r-0  [&_div]:border-l-0 [&_div]:rounded-none", codeBlock: "max-h-[420px] overflow-y-auto"}}/>
+                <ComponentPreview
+                  name={example.previewName}
+                  classNames={{
+                    preview:
+                      "[&_div]:border-t-0 [&_div]:border-r-0  [&_div]:border-l-0 [&_div]:rounded-none",
+                    codeBlock: "max-h-[420px] overflow-y-auto",
+                  }}
+                />
               </Suspense>
             </div>
           ) : (

@@ -105,7 +105,10 @@ export function ExampleCard({ example, index }: ExampleCardProps) {
         {/* Footer */}
         <CardFooter className="mt-3 justify-between border-t border-border/40 px-5 py-3">
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="px-2 py-0.5 text-xs font-normal">
+            <Badge
+              variant="outline"
+              className="px-2 py-0.5 text-xs font-normal"
+            >
               {categoryLabel}
             </Badge>
             <ComplexityDots complexity={example.complexity} />

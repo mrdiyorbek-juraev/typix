@@ -30,8 +30,7 @@ export async function POST(req: Request) {
   }
 
   const { email, exampleSlug } = parsed.data;
-  const fromEmail =
-    process.env.NOTIFY_FROM_EMAIL ?? "notifications@typix.dev";
+  const fromEmail = process.env.NOTIFY_FROM_EMAIL ?? "notifications@typix.dev";
 
   const { Resend } = await import("resend");
   const resend = new Resend(process.env.RESEND_API_KEY);

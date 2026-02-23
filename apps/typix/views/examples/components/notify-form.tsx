@@ -49,7 +49,10 @@ export function NotifyForm({ exampleSlug, exampleTitle }: NotifyFormProps) {
       </div>
 
       <div className="flex flex-col items-center gap-2">
-        <Badge variant="secondary" className="text-[11px] font-medium uppercase tracking-wider">
+        <Badge
+          variant="secondary"
+          className="text-[11px] font-medium uppercase tracking-wider"
+        >
           Coming soon
         </Badge>
         <h2 className="font-semibold text-xl">{exampleTitle}</h2>
@@ -62,10 +65,15 @@ export function NotifyForm({ exampleSlug, exampleTitle }: NotifyFormProps) {
       {state === "success" ? (
         <div className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-emerald-600 text-sm dark:text-emerald-400">
           <CheckCircle2 className="size-4 shrink-0" />
-          <span>You're on the list! We'll notify you when this example is ready.</span>
+          <span>
+            You're on the list! We'll notify you when this example is ready.
+          </span>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex w-full max-w-sm flex-col gap-3">
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full max-w-sm flex-col gap-3"
+        >
           <div className="flex gap-2">
             <input
               type="email"

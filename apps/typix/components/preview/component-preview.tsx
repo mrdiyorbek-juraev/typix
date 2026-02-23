@@ -59,16 +59,33 @@ export function ComponentPreview({ name, classNames }: ComponentPreviewProps) {
   const activeFile = files[activeTab];
 
   return (
-    <div className={cn("not-prose my-6 overflow-hidden rounded-t-lg", classNames?.root)}>
-      <div className={cn("bg-white dark:bg-fd-background", classNames?.preview)}>
+    <div
+      className={cn(
+        "not-prose my-6 overflow-hidden rounded-t-lg",
+        classNames?.root
+      )}
+    >
+      <div
+        className={cn("bg-white dark:bg-fd-background", classNames?.preview)}
+      >
         <Suspense fallback={<PreviewLoader />}>
           <Component />
         </Suspense>
       </div>
 
-      <div className={cn("border-t border-fd-border bg-fd-secondary/50", classNames?.code)}>
+      <div
+        className={cn(
+          "border-t border-fd-border bg-fd-secondary/50",
+          classNames?.code
+        )}
+      >
         {files.length > 1 && (
-          <div className={cn("flex border-b border-fd-border bg-fd-muted/80", classNames?.tabs)}>
+          <div
+            className={cn(
+              "flex border-b border-fd-border bg-fd-muted/80",
+              classNames?.tabs
+            )}
+          >
             {files.map((file, index) => (
               <button
                 key={file.name}

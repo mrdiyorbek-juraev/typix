@@ -43,7 +43,6 @@ export default function ExampleDetailPage({ example }: ExampleDetailPageProps) {
 
       {/* Two-panel layout */}
       <div className="flex flex-col gap-8 lg:flex-row lg:gap-10">
-
         {/* ── Left sidebar — collapses on maximize */}
         <aside
           className={`flex flex-col gap-5 overflow-hidden lg:shrink-0 lg:sticky lg:top-24 lg:self-start transition-all duration-300 ease-in-out ${
@@ -69,7 +68,9 @@ export default function ExampleDetailPage({ example }: ExampleDetailPageProps) {
 
           {/* Title + description */}
           <div className="flex flex-col gap-2">
-            <h1 className="font-bold text-2xl tracking-tight">{example.title}</h1>
+            <h1 className="font-bold text-2xl tracking-tight">
+              {example.title}
+            </h1>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {example.description}
             </p>
@@ -153,7 +154,6 @@ export default function ExampleDetailPage({ example }: ExampleDetailPageProps) {
               [&_.not-prose]:my-0  → negates the my-6 baked into ComponentPreview
                                      so no margin bleeds outside the border card    */}
           <div className="overflow-hidden rounded-xl border border-border bg-card [&_.not-prose]:my-0 [&_.not-prose]:rounded-none">
-
             {/* Toolbar: maximize/minimize (only when a live preview exists) */}
             {example.previewName && (
               <div className="flex items-center justify-end border-b border-border/60 px-3 py-1.5">
@@ -161,7 +161,9 @@ export default function ExampleDetailPage({ example }: ExampleDetailPageProps) {
                   type="button"
                   onClick={() => setIsExpanded((v) => !v)}
                   className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  aria-label={isExpanded ? "Minimize preview" : "Maximize preview"}
+                  aria-label={
+                    isExpanded ? "Minimize preview" : "Maximize preview"
+                  }
                 >
                   {isExpanded ? (
                     <>
@@ -179,7 +181,13 @@ export default function ExampleDetailPage({ example }: ExampleDetailPageProps) {
             )}
 
             {example.previewName ? (
-              <ComponentPreview name={example.previewName} classNames={{ preview: "[&_div]:border-t-0 [&_div]:border-r-0  [&_div]:border-l-0 [&_div]:rounded-none" }} />
+              <ComponentPreview
+                name={example.previewName}
+                classNames={{
+                  preview:
+                    "[&_div]:border-t-0 [&_div]:border-r-0  [&_div]:border-l-0 [&_div]:rounded-none",
+                }}
+              />
             ) : (
               <NotifyForm
                 exampleSlug={example.slug}
@@ -188,7 +196,6 @@ export default function ExampleDetailPage({ example }: ExampleDetailPageProps) {
             )}
           </div>
         </div>
-
       </div>
     </div>
   );
