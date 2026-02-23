@@ -15,9 +15,19 @@ import { LinkExtension } from "@typix-editor/extension-link";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
 import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
 import {
-  Bold, Code, Heading1, Heading2, Italic,
-  Link2, List, ListOrdered, Quote, Redo, Strikethrough,
-  Underline, Undo,
+  Bold,
+  Code,
+  Heading1,
+  Heading2,
+  Italic,
+  Link2,
+  List,
+  ListOrdered,
+  Quote,
+  Redo,
+  Strikethrough,
+  Underline,
+  Undo,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -30,9 +40,27 @@ const config = createEditorConfig({
       children: [
         {
           children: [
-            { detail: 0, format: 0, mode: "normal", style: "", text: "Visit ", type: "text", version: 1 },
             {
-              children: [{ detail: 0, format: 0, mode: "normal", style: "", text: "typix.uz", type: "text", version: 1 }],
+              detail: 0,
+              format: 0,
+              mode: "normal",
+              style: "",
+              text: "Visit ",
+              type: "text",
+              version: 1,
+            },
+            {
+              children: [
+                {
+                  detail: 0,
+                  format: 0,
+                  mode: "normal",
+                  style: "",
+                  text: "typix.uz",
+                  type: "text",
+                  version: 1,
+                },
+              ],
               direction: "ltr",
               format: "",
               indent: 0,
@@ -43,7 +71,15 @@ const config = createEditorConfig({
               title: null,
               url: "https://typix.uz",
             },
-            { detail: 0, format: 0, mode: "normal", style: "", text: " — Ctrl+click to open. Select text and press Ctrl+K or the link button to insert a link.", type: "text", version: 1 },
+            {
+              detail: 0,
+              format: 0,
+              mode: "normal",
+              style: "",
+              text: " — Ctrl+click to open. Select text and press Ctrl+K or the link button to insert a link.",
+              type: "text",
+              version: 1,
+            },
           ],
           direction: "ltr",
           format: "",
@@ -76,22 +112,103 @@ function Toolbar() {
 
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-fd-border border-b px-2 py-1.5">
-      <Button onClick={() => editor.undo()} size="icon-sm" title="Undo" variant="ghost"><Undo /></Button>
-      <Button onClick={() => editor.redo()} size="icon-sm" title="Redo" variant="ghost"><Redo /></Button>
+      <Button
+        onClick={() => editor.undo()}
+        size="icon-sm"
+        title="Undo"
+        variant="ghost"
+      >
+        <Undo />
+      </Button>
+      <Button
+        onClick={() => editor.redo()}
+        size="icon-sm"
+        title="Redo"
+        variant="ghost"
+      >
+        <Redo />
+      </Button>
       <Separator />
-      <Button onClick={() => editor.toggleBold()} size="icon-sm" variant={isActive("bold") ? "secondary" : "ghost"}><Bold /></Button>
-      <Button onClick={() => editor.toggleItalic()} size="icon-sm" variant={isActive("italic") ? "secondary" : "ghost"}><Italic /></Button>
-      <Button onClick={() => editor.toggleUnderline()} size="icon-sm" variant={isActive("underline") ? "secondary" : "ghost"}><Underline /></Button>
-      <Button onClick={() => editor.toggleStrikethrough()} size="icon-sm" variant={isActive("strikethrough") ? "secondary" : "ghost"}><Strikethrough /></Button>
-      <Button onClick={() => editor.toggleCode()} size="icon-sm" variant={isActive("code") ? "secondary" : "ghost"}><Code /></Button>
+      <Button
+        onClick={() => editor.toggleBold()}
+        size="icon-sm"
+        variant={isActive("bold") ? "secondary" : "ghost"}
+      >
+        <Bold />
+      </Button>
+      <Button
+        onClick={() => editor.toggleItalic()}
+        size="icon-sm"
+        variant={isActive("italic") ? "secondary" : "ghost"}
+      >
+        <Italic />
+      </Button>
+      <Button
+        onClick={() => editor.toggleUnderline()}
+        size="icon-sm"
+        variant={isActive("underline") ? "secondary" : "ghost"}
+      >
+        <Underline />
+      </Button>
+      <Button
+        onClick={() => editor.toggleStrikethrough()}
+        size="icon-sm"
+        variant={isActive("strikethrough") ? "secondary" : "ghost"}
+      >
+        <Strikethrough />
+      </Button>
+      <Button
+        onClick={() => editor.toggleCode()}
+        size="icon-sm"
+        variant={isActive("code") ? "secondary" : "ghost"}
+      >
+        <Code />
+      </Button>
       <Separator />
-      <Button onClick={() => editor.toggleHeading({ level: 1 })} size="icon-sm" variant={blockType === "h1" ? "secondary" : "ghost"}><Heading1 /></Button>
-      <Button onClick={() => editor.toggleHeading({ level: 2 })} size="icon-sm" variant={blockType === "h2" ? "secondary" : "ghost"}><Heading2 /></Button>
-      <Button onClick={() => editor.toggleQuote()} size="icon-sm" variant={blockType === "quote" ? "secondary" : "ghost"}><Quote /></Button>
-      <Button onClick={() => editor.toggleBulletList()} size="icon-sm" variant={blockType === "bullet" ? "secondary" : "ghost"}><List /></Button>
-      <Button onClick={() => editor.toggleOrderedList()} size="icon-sm" variant={blockType === "number" ? "secondary" : "ghost"}><ListOrdered /></Button>
+      <Button
+        onClick={() => editor.toggleHeading({ level: 1 })}
+        size="icon-sm"
+        variant={blockType === "h1" ? "secondary" : "ghost"}
+      >
+        <Heading1 />
+      </Button>
+      <Button
+        onClick={() => editor.toggleHeading({ level: 2 })}
+        size="icon-sm"
+        variant={blockType === "h2" ? "secondary" : "ghost"}
+      >
+        <Heading2 />
+      </Button>
+      <Button
+        onClick={() => editor.toggleQuote()}
+        size="icon-sm"
+        variant={blockType === "quote" ? "secondary" : "ghost"}
+      >
+        <Quote />
+      </Button>
+      <Button
+        onClick={() => editor.toggleBulletList()}
+        size="icon-sm"
+        variant={blockType === "bullet" ? "secondary" : "ghost"}
+      >
+        <List />
+      </Button>
+      <Button
+        onClick={() => editor.toggleOrderedList()}
+        size="icon-sm"
+        variant={blockType === "number" ? "secondary" : "ghost"}
+      >
+        <ListOrdered />
+      </Button>
       <Separator />
-      <Button onClick={() => editor.toggleLink("https://")} size="icon-sm" title="Insert link (Ctrl+K)" variant="ghost"><Link2 /></Button>
+      <Button
+        onClick={() => editor.toggleLink("https://")}
+        size="icon-sm"
+        title="Insert link (Ctrl+K)"
+        variant="ghost"
+      >
+        <Link2 />
+      </Button>
     </div>
   );
 }

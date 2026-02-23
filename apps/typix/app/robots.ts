@@ -7,6 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        disallow: ["/api/", "/og/"],
       },
       {
         // Allow AI crawlers explicit access to LLM-friendly routes

@@ -10,6 +10,9 @@ import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
 import { source } from "@/lib/source";
 import Script from "next/script";
 
+
+const isProduction = baseUrl.toString() === "https://typix.uz";
+
 export const metadata = createMetadata({
   title: {
     template: "%s | Typix",
@@ -48,6 +51,14 @@ export const metadata = createMetadata({
         alt: "Typix — Extensible Rich Text Editor for React",
       },
     ],
+  },
+  robots: {
+    index: isProduction,
+    follow: isProduction,
+    googleBot: {
+      index: isProduction,
+      follow: isProduction,
+    },
   },
 });
 
