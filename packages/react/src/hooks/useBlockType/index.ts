@@ -34,6 +34,6 @@ export function useBlockType(): BlockType | null {
   return useSyncExternalStore(
     (onStoreChange) => editor.onUpdate(onStoreChange),
     () => editor.getBlockType(),
-    () => null,
+    () => null
   );
 }

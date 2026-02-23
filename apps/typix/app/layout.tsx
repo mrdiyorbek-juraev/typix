@@ -101,7 +101,10 @@ export default function Layout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
-        <meta name="google-site-verification" content="X4NcIMx9id5XZ3A-V_Tjp8M9Pvmosf06SDZFUAc6IkU" />
+        <meta
+          name="google-site-verification"
+          content="X4NcIMx9id5XZ3A-V_Tjp8M9Pvmosf06SDZFUAc6IkU"
+        />
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-8MJYHQ37XW"

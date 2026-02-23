@@ -14,9 +14,18 @@ import "@typix-editor/react/src/styles/main.css";
 import { MaxLengthExtension } from "@typix-editor/extension-max-length";
 import { CharacterLimitExtension } from "@typix-editor/extension-character-limit";
 import {
-  Bold, Code, Heading1, Heading2, Italic,
-  List, ListOrdered, Quote, Redo, Strikethrough,
-  Underline, Undo,
+  Bold,
+  Code,
+  Heading1,
+  Heading2,
+  Italic,
+  List,
+  ListOrdered,
+  Quote,
+  Redo,
+  Strikethrough,
+  Underline,
+  Undo,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -40,20 +49,94 @@ function Toolbar() {
 
   return (
     <div className="flex flex-wrap items-center gap-0.5 border-fd-border border-b px-2 py-1.5">
-      <Button onClick={() => editor.undo()} size="icon-sm" title="Undo" variant="ghost"><Undo /></Button>
-      <Button onClick={() => editor.redo()} size="icon-sm" title="Redo" variant="ghost"><Redo /></Button>
+      <Button
+        onClick={() => editor.undo()}
+        size="icon-sm"
+        title="Undo"
+        variant="ghost"
+      >
+        <Undo />
+      </Button>
+      <Button
+        onClick={() => editor.redo()}
+        size="icon-sm"
+        title="Redo"
+        variant="ghost"
+      >
+        <Redo />
+      </Button>
       <Separator />
-      <Button onClick={() => editor.toggleBold()} size="icon-sm" variant={isActive("bold") ? "secondary" : "ghost"}><Bold /></Button>
-      <Button onClick={() => editor.toggleItalic()} size="icon-sm" variant={isActive("italic") ? "secondary" : "ghost"}><Italic /></Button>
-      <Button onClick={() => editor.toggleUnderline()} size="icon-sm" variant={isActive("underline") ? "secondary" : "ghost"}><Underline /></Button>
-      <Button onClick={() => editor.toggleStrikethrough()} size="icon-sm" variant={isActive("strikethrough") ? "secondary" : "ghost"}><Strikethrough /></Button>
-      <Button onClick={() => editor.toggleCode()} size="icon-sm" variant={isActive("code") ? "secondary" : "ghost"}><Code /></Button>
+      <Button
+        onClick={() => editor.toggleBold()}
+        size="icon-sm"
+        variant={isActive("bold") ? "secondary" : "ghost"}
+      >
+        <Bold />
+      </Button>
+      <Button
+        onClick={() => editor.toggleItalic()}
+        size="icon-sm"
+        variant={isActive("italic") ? "secondary" : "ghost"}
+      >
+        <Italic />
+      </Button>
+      <Button
+        onClick={() => editor.toggleUnderline()}
+        size="icon-sm"
+        variant={isActive("underline") ? "secondary" : "ghost"}
+      >
+        <Underline />
+      </Button>
+      <Button
+        onClick={() => editor.toggleStrikethrough()}
+        size="icon-sm"
+        variant={isActive("strikethrough") ? "secondary" : "ghost"}
+      >
+        <Strikethrough />
+      </Button>
+      <Button
+        onClick={() => editor.toggleCode()}
+        size="icon-sm"
+        variant={isActive("code") ? "secondary" : "ghost"}
+      >
+        <Code />
+      </Button>
       <Separator />
-      <Button onClick={() => editor.toggleHeading({ level: 1 })} size="icon-sm" variant={blockType === "h1" ? "secondary" : "ghost"}><Heading1 /></Button>
-      <Button onClick={() => editor.toggleHeading({ level: 2 })} size="icon-sm" variant={blockType === "h2" ? "secondary" : "ghost"}><Heading2 /></Button>
-      <Button onClick={() => editor.toggleQuote()} size="icon-sm" variant={blockType === "quote" ? "secondary" : "ghost"}><Quote /></Button>
-      <Button onClick={() => editor.toggleBulletList()} size="icon-sm" variant={blockType === "bullet" ? "secondary" : "ghost"}><List /></Button>
-      <Button onClick={() => editor.toggleOrderedList()} size="icon-sm" variant={blockType === "number" ? "secondary" : "ghost"}><ListOrdered /></Button>
+      <Button
+        onClick={() => editor.toggleHeading({ level: 1 })}
+        size="icon-sm"
+        variant={blockType === "h1" ? "secondary" : "ghost"}
+      >
+        <Heading1 />
+      </Button>
+      <Button
+        onClick={() => editor.toggleHeading({ level: 2 })}
+        size="icon-sm"
+        variant={blockType === "h2" ? "secondary" : "ghost"}
+      >
+        <Heading2 />
+      </Button>
+      <Button
+        onClick={() => editor.toggleQuote()}
+        size="icon-sm"
+        variant={blockType === "quote" ? "secondary" : "ghost"}
+      >
+        <Quote />
+      </Button>
+      <Button
+        onClick={() => editor.toggleBulletList()}
+        size="icon-sm"
+        variant={blockType === "bullet" ? "secondary" : "ghost"}
+      >
+        <List />
+      </Button>
+      <Button
+        onClick={() => editor.toggleOrderedList()}
+        size="icon-sm"
+        variant={blockType === "number" ? "secondary" : "ghost"}
+      >
+        <ListOrdered />
+      </Button>
     </div>
   );
 }

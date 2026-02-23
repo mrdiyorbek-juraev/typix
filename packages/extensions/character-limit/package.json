@@ -2,7 +2,14 @@
   "name": "@typix-editor/extension-character-limit",
   "version": "4.1.0",
   "description": "Character limit extension for Typix — visual counter with overflow highlight and a useCharacterCount hook",
-  "keywords": ["typix", "lexical", "character-limit", "editor", "rich-text", "extension"],
+  "keywords": [
+    "typix",
+    "lexical",
+    "character-limit",
+    "editor",
+    "rich-text",
+    "extension"
+  ],
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "homepage": "https://typix.com",
   "license": "MIT",
@@ -11,13 +18,19 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
-  "files": ["dist"],
-  "publishConfig": { "access": "public" },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
   },
-  "bugs": { "url": "https://github.com/mrdiyorbek-juraev/typix/issues" },
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
+  },
   "scripts": {
     "build": "tsup",
     "build:fast": "tsup",

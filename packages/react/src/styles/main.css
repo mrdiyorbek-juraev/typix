@@ -19,7 +19,7 @@
   --typix-font-size-inline-code: 94%;
   --typix-font-family-code: Menlo, Consolas, Monaco, monospace;
   --typix-line-height-code: 1.53;
- 
+
   /* ---- Colors ---- */
   --typix-color-text: rgb(5, 5, 5);
   --typix-color-text-muted: rgb(101, 103, 107);
@@ -117,7 +117,7 @@
   /* ---- Spacing ---- */
   --typix-spacing-contenteditable-y: 15px;
   --typix-spacing-contenteditable-x: 25px;
-  --typix-spacing-layout-gap: 10px;                
+  --typix-spacing-layout-gap: 10px;
 
   /* ---- List ---- */
   --typix-list-item-margin: 0 32px;
@@ -174,7 +174,8 @@
   /* ---- Context Menu ---- */
   --typix-context-menu-bg: #fff;
   --typix-context-menu-border: #e5e7eb;
-  --typix-context-menu-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --typix-context-menu-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
   --typix-context-menu-radius: 10px;
   --typix-context-menu-padding: 4px;
   --typix-context-menu-min-width: 168px;
@@ -295,7 +296,8 @@
   font-size: var(--typix-font-size);
   color: var(--typix-color-quote-text);
   background-color: var(--typix-quote-bg);
-  border-left: var(--typix-quote-border-width) solid var(--typix-color-quote-border);
+  border-left: var(--typix-quote-border-width) solid
+    var(--typix-color-quote-border);
   border-radius: var(--typix-quote-radius);
   padding: 10px 16px;
   font-style: italic;
@@ -1333,7 +1335,8 @@
 [data-theme="dark"] .typix-context-menu {
   --typix-context-menu-bg: #1c1c1e;
   --typix-context-menu-border: #2d2d30;
-  --typix-context-menu-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --typix-context-menu-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
   --typix-context-menu-item-color: #e5e5e5;
   --typix-context-menu-item-hover-bg: rgba(255, 255, 255, 0.08);
   --typix-context-menu-item-open-bg: rgba(255, 255, 255, 0.12);
@@ -1768,7 +1771,7 @@
 
 .dark .typix-floating-link__btn,
 [data-theme="dark"] .typix-floating-link__btn {
-  color: #888;   
+  color: #888;
 }
 
 .dark .typix-floating-link__btn:hover,
@@ -1776,8 +1779,6 @@
   background-color: #2a2a2a;
   color: #eee;
 }
-
-
 
 /* ==============================
    Collapsible

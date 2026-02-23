@@ -22,38 +22,35 @@ export function MaxLengthExtension({
   useEffect(() => {
     let lastRestoredEditorState: EditorState | null = null;
 
-    return editor.registerNodeTransform(
-      RootNodeClass,
-      (rootNode: RootNode) => {
-        const selection = $getSelection();
-        if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
-          return;
-        }
+    return editor.registerNodeTransform(RootNodeClass, (rootNode: RootNode) => {
+      const selection = $getSelection();
+      if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
+        return;
+      }
 
-        const prevEditorState = editor.getEditorState();
-        const prevTextContentSize = prevEditorState.read(() =>
-          rootNode.getTextContentSize()
-        );
-        const textContentSize = rootNode.getTextContentSize();
+      const prevEditorState = editor.getEditorState();
+      const prevTextContentSize = prevEditorState.read(() =>
+        rootNode.getTextContentSize()
+      );
+      const textContentSize = rootNode.getTextContentSize();
 
-        if (prevTextContentSize !== textContentSize) {
-          const delCount = textContentSize - maxLength;
-          const anchor = selection.anchor;
+      if (prevTextContentSize !== textContentSize) {
+        const delCount = textContentSize - maxLength;
+        const anchor = selection.anchor;
 
-          if (delCount > 0) {
-            if (
-              prevTextContentSize === maxLength &&
-              lastRestoredEditorState !== prevEditorState
-            ) {
-              lastRestoredEditorState = prevEditorState;
-              $restoreEditorState(editor, prevEditorState);
-            } else {
-              $trimTextContentFromAnchor(editor, anchor, delCount);
-            }
+        if (delCount > 0) {
+          if (
+            prevTextContentSize === maxLength &&
+            lastRestoredEditorState !== prevEditorState
+          ) {
+            lastRestoredEditorState = prevEditorState;
+            $restoreEditorState(editor, prevEditorState);
+          } else {
+            $trimTextContentFromAnchor(editor, anchor, delCount);
           }
         }
       }
-    );
+    });
   }, [editor, maxLength]);
 
   return null;
