@@ -9,25 +9,26 @@ import { Footer } from "@/components/layout/footer";
 import { Spotlight } from "@/components/effects/spotlight";
 
 const communityFeatures = [
-  "Unlimited projects",
-  "All extensions included",
-  "Full TypeScript support",
-  "Headless architecture",
-  "Community support",
-  "MIT licensed",
-  "Regular updates",
-  "Next.js integration",
+  "Unlimited editors & projects",
+  "17+ modular extensions",
+  "Rich text, code blocks & media",
+  "Zero UI restrictions",
+  "TypeScript support",
+  "Next.js & React ready",
+  "MIT license — use anywhere",
+  "Community & GitHub support",
 ];
 
-const proFeatures = [
-  "Everything in Community",
-  "Priority support",
-  "AI extensions",
-  "Real-time collaboration",
-  "Custom themes builder",
-  "Analytics dashboard",
-  "SLA guarantee",
-  "Dedicated onboarding",
+const proFeatures: { label: string; isAI: boolean }[] = [
+  { label: "Everything in Community", isAI: false },
+  { label: "AI writing assistant", isAI: true },
+  { label: "AI autocomplete & suggestions", isAI: true },
+  { label: "AI grammar & style checking", isAI: true },
+  { label: "AI content generation", isAI: true },
+  { label: "Real-time collaboration", isAI: false },
+  { label: "Custom themes builder", isAI: false },
+  { label: "Priority support & SLA", isAI: false },
+  { label: "Dedicated onboarding", isAI: false },
 ];
 
 const containerVariants = {
@@ -203,13 +204,21 @@ export default function PricingPage() {
                     {proFeatures.map((feature) => (
                       <motion.li
                         className="flex items-center gap-3 text-sm text-muted-foreground"
-                        key={feature}
+                        key={feature.label}
                         variants={itemVariants}
                       >
-                        <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10">
-                          <Check className="size-3 text-emerald-500" />
+                        <div
+                          className={`flex size-5 shrink-0 items-center justify-center rounded-full ${feature.isAI ? "bg-emerald-500/20" : "bg-emerald-500/10"}`}
+                        >
+                          {feature.isAI ? (
+                            <Sparkles className="size-3 text-emerald-400" />
+                          ) : (
+                            <Check className="size-3 text-emerald-500" />
+                          )}
                         </div>
-                        {feature}
+                        <span className={feature.isAI ? "text-foreground" : ""}>
+                          {feature.label}
+                        </span>
                       </motion.li>
                     ))}
                   </motion.ul>

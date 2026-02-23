@@ -13,6 +13,12 @@ const config = {
       },
     ];
   },
+  images: {
+    localPatterns: [
+      { pathname: "/api/og/**" },
+      { pathname: "/api/illustration/**" },
+    ],
+  },
 };
 
 export default withMDX(config);

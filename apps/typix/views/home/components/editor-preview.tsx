@@ -232,11 +232,7 @@ export function EditorPreview() {
             <div className="size-2.5 rounded-full bg-amber-400 shadow-amber-400/30 shadow-sm sm:size-3" />
             <div className="size-2.5 rounded-full bg-emerald-400 shadow-emerald-400/30 shadow-sm sm:size-3" />
           </div>
-          <div className="flex flex-1 items-center justify-center">
-            <div className="max-w-[180px] truncate rounded-md bg-background/70 px-3 py-1 text-[10px] text-muted-foreground/70 sm:max-w-none sm:px-4 sm:text-[11px]">
-              typix-editor.dev/playground
-            </div>
-          </div>
+          <div className="flex flex-1 items-center justify-center"></div>
           {/* Online avatars */}
           <div className="-space-x-1.5 flex items-center">
             {collaborators.map((c) => (
