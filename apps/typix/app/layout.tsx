@@ -9,7 +9,8 @@ import { NextProvider } from "fumadocs-core/framework/next";
 import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
 import { source } from "@/lib/source";
 import Script from "next/script";
-
+import GoogleAnalytics from "@/components/seo/google-analytics";
+import MicrosoftClarity from "@/components/seo/microsoft-clarity";
 
 export const metadata = createMetadata({
   title: {
@@ -130,19 +131,8 @@ export default function Layout({ children }: LayoutProps<"/">) {
           name="google-site-verification"
           content="X4NcIMx9id5XZ3A-V_Tjp8M9Pvmosf06SDZFUAc6IkU"
         />
-        {/* Google tag (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-8MJYHQ37XW"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-8MJYHQ37XW');
-          `}
-        </Script>
+        <GoogleAnalytics />
+        <MicrosoftClarity />
         <script
           type="application/ld+json"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: structured data
