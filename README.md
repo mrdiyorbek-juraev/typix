@@ -1,3 +1,4 @@
+
 # Typix
 
 **A headless, extensible rich text editor framework for React, built on Meta's [Lexical](https://lexical.dev).**
@@ -9,6 +10,7 @@
 
 **[Documentation](https://typix.uz/docs) · [Examples](https://typix.uz/examples) · [npm](https://www.npmjs.com/package/@typix-editor/react)**
 
+![banner](./apps/typix/public/banner.png)
 ---
 
 ## What is Typix?
@@ -38,19 +40,6 @@ export default function Editor() {
   );
 }
 ```
-
-## Why Typix?
-
-| | Typix | TipTap | Quill | Slate | Draft.js |
-|---|---|---|---|---|---|
-| Foundation | Lexical (Meta) | ProseMirror | Custom | Custom | Custom |
-| Headless | ✅ | ✅ | ❌ | ✅ | ❌ |
-| TypeScript first | ✅ | ✅ | Partial | ✅ | ❌ |
-| Tree-shakeable extensions | ✅ | Partial | ❌ | ❌ | ❌ |
-| Fluent chaining API | ✅ | ❌ | ❌ | ❌ | ❌ |
-| React 18/19 support | ✅ | ❌ | ❌ | Partial | ❌ |
-| Maintained | ✅ Active | ✅ | ⚠️ Slow | ⚠️ Slow | ❌ Deprecated |
-
 ## Installation
 
 ```bash
