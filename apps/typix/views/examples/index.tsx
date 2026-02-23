@@ -5,13 +5,21 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExampleCard } from "./components";
-import { categories, examples } from "./data";
+import { ExampleCard, FeaturedExampleCard } from "./components";
+import { categories, examples, getFeaturedExample } from "./data";
 
 export default function ExamplesPage() {
+  const featured = getFeaturedExample();
+  const gridExamples = examples.filter((e) => !e.featured);
+
+  function countForCategory(value: string) {
+    if (value === "all") return examples.length;
+    return examples.filter((e) => e.category === value).length;
+  }
+
   return (
     <div className="relative">
-      {/* Hero header with green accent */}
+      {/* Hero header */}
       <div className="border-b border-border/40 bg-gradient-to-b from-emerald-500/5 via-transparent to-transparent">
         <div className="mx-auto max-w-[1400px] px-4 pt-16 pb-12 sm:px-6 md:pt-20 md:pb-14 lg:pt-28 lg:pb-16">
           <div className="flex flex-col gap-5">
@@ -55,22 +63,35 @@ export default function ExamplesPage() {
       {/* Content */}
       <div className="mx-auto max-w-[1400px] px-4 pt-10 pb-20 sm:px-6 md:pt-12">
         <Tabs defaultValue="all">
-          <TabsList className="mb-8">
+          <TabsList className="mb-8 h-auto flex-wrap gap-1">
             {categories.map((cat) => (
-              <TabsTrigger key={cat.value} value={cat.value}>
+              <TabsTrigger
+                key={cat.value}
+                value={cat.value}
+                className="flex items-center gap-1.5"
+              >
                 {cat.label}
+                <Badge
+                  variant="outline"
+                  className="rounded-sm px-1 text-[10px] font-medium tabular-nums"
+                >
+                  {countForCategory(cat.value)}
+                </Badge>
               </TabsTrigger>
             ))}
           </TabsList>
 
+          {/* All tab — featured card + grid */}
           <TabsContent value="all">
+            {featured && <FeaturedExampleCard example={featured} />}
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {examples.map((example, i) => (
+              {gridExamples.map((example, i) => (
                 <ExampleCard key={example.slug} example={example} index={i} />
               ))}
             </div>
           </TabsContent>
 
+          {/* Category tabs — just grid, no featured card */}
           {categories
             .filter((cat) => cat.value !== "all")
             .map((cat) => (
