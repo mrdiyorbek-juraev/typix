@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  createEditorConfig,
+  configExtension,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
+import { TailwindExtension } from "@lexical/tailwind";
 import { MaxLengthExtension } from "@typix-editor/extension-max-length";
 import { CharacterLimitExtension } from "@typix-editor/extension-character-limit";
 import {
@@ -28,12 +28,15 @@ import {
   Undo,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CharacterLimitUI } from "@typix-editor/react-extensions/character-limit/dist";
 
 const MAX = 280;
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/max-length",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension, configExtension(CharacterLimitExtension, { maxLength: MAX, charset: "UTF-16" }), configExtension(MaxLengthExtension, { maxLength: MAX })],
 });
 
 function Separator() {
@@ -143,16 +146,15 @@ function Toolbar() {
 
 export default function MaxLengthExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
           className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
           placeholder="Start typing (max 280 characters)..."
         />
+        <CharacterLimitUI maxLength={MAX} />
       </div>
-      <CharacterLimitExtension maxLength={MAX} charset="UTF-16" />
-      <MaxLengthExtension maxLength={MAX} />
     </EditorRoot>
   );
 }
@@ -162,26 +164,28 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
   EditorContent,
   EditorRoot,
 } from "@typix-editor/react";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
 import { MaxLengthExtension } from "@typix-editor/extension-max-length";
 import { CharacterLimitExtension } from "@typix-editor/extension-character-limit";
 import { Toolbar } from "./Toolbar";
 
 const MAX = 280;
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/max-length",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
 });
 
 export default function MaxLengthExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar />
         <EditorContent placeholder="Start typing (max 280 characters)..." />

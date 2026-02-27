@@ -18,7 +18,9 @@ export async function addCommand(
 
   // --all flag: install every extension
   if (options.all) {
-    const packages = allExtensions.map((ext) => ext.package);
+    const packages = allExtensions.flatMap((ext) =>
+      ext.reactPackage ? [ext.package, ext.reactPackage] : [ext.package]
+    );
     const s = spinner("Installing all extensions...").start();
     try {
       installPackages(packages);
@@ -67,7 +69,9 @@ export async function addCommand(
     selected = extensions.map((name) => getExtensionEntry(name)!);
   }
 
-  const packages = selected.map((ext) => ext.package);
+  const packages = selected.flatMap((ext) =>
+    ext.reactPackage ? [ext.package, ext.reactPackage] : [ext.package]
+  );
   const names = selected.map((ext) => ext.name);
 
   logger.break();
@@ -89,5 +93,8 @@ export async function addCommand(
   logger.break();
   for (const ext of selected) {
     logger.success(`${chalk.bold(ext.name)} ${chalk.gray(`(${ext.package})`)}`);
+    if (ext.reactPackage) {
+      logger.success(`  ${chalk.gray("+ React UI:")} ${chalk.gray(ext.reactPackage)}`);
+    }
   }
 }

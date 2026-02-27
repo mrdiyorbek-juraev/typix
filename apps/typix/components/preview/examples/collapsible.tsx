@@ -1,20 +1,20 @@
 "use client";
 
 import {
-  createEditorConfig,
+  configExtension,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
+import { TailwindExtension } from "@lexical/tailwind";
 import {
   CollapsibleContainerNode,
   CollapsibleContentNode,
-  CollapsiblePlugin,
+  CollapsibleExtension,
   CollapsibleTitleNode,
   INSERT_COLLAPSIBLE_COMMAND,
 } from "@typix-editor/extension-collapsible";
@@ -34,14 +34,16 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const config = createEditorConfig({
-  extensionNodes: [
+const extension = defineExtension({
+  name: "typix/collapsible",
+  namespace: "typix-editor",
+  nodes: [
     ...defaultExtensionNodes,
     CollapsibleContainerNode,
     CollapsibleContentNode,
     CollapsibleTitleNode,
   ],
-  theme: defaultTheme,
+  dependencies: [TailwindExtension, configExtension(CollapsibleExtension, { disabled: false })],
 });
 
 function Separator() {
@@ -162,7 +164,7 @@ function Toolbar() {
 
 export default function CollapsibleExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
@@ -170,7 +172,6 @@ export default function CollapsibleExample() {
           placeholder="Start typing or insert a collapsible block..."
         />
       </div>
-      <CollapsiblePlugin />
     </EditorRoot>
   );
 }
@@ -180,13 +181,13 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
   EditorContent,
   EditorRoot,
   useTypixEditor,
 } from "@typix-editor/react";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
 import {
   CollapsibleContainerNode,
   CollapsibleContentNode,
@@ -196,14 +197,16 @@ import {
 } from "@typix-editor/extension-collapsible";
 import { Toolbar } from "./Toolbar";
 
-const config = createEditorConfig({
-  extensionNodes: [
+const extension = defineExtension({
+  name: "typix/collapsible",
+  namespace: "typix-editor",
+  nodes: [
     ...defaultExtensionNodes,
     CollapsibleContainerNode,
     CollapsibleContentNode,
     CollapsibleTitleNode,
   ],
-  theme: defaultTheme,
+  dependencies: [TailwindExtension],
 });
 
 function InsertCollapsibleButton() {
@@ -223,7 +226,7 @@ function InsertCollapsibleButton() {
 
 export default function CollapsibleExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar extra={<InsertCollapsibleButton />} />
         <EditorContent placeholder="Start typing or insert a collapsible block..." />

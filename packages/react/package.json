@@ -59,10 +59,12 @@
     "tailwind-merge": "^3.4.0"
   },
   "peerDependencies": {
+    "@typix-editor/core": "workspace:*",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "devDependencies": {
+    "@typix-editor/core": "workspace:*",
     "@lexical/code": "^0.40.0",
     "@lexical/extension": "^0.40.0",
     "@lexical/file": "^0.40.0",

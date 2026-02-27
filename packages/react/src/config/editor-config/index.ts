@@ -74,6 +74,10 @@ interface CreateEditorConfigOptions {
   html?: HTMLConfig;
 }
 
+/**
+ * @deprecated Build a root extension with `defineExtension` and pass it to
+ * `LexicalExtensionComposer` or `EditorRoot`'s `extension` prop instead.
+ */
 function createEditorConfig(
   options: CreateEditorConfigOptions = {}
 ): InitialConfigType {

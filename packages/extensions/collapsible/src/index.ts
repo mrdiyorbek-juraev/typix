@@ -1,4 +1,4 @@
-export { CollapsiblePlugin, INSERT_COLLAPSIBLE_COMMAND } from "./extension";
+export { CollapsibleExtension, INSERT_COLLAPSIBLE_COMMAND } from "./extension";
 export {
   $convertDetailsElement,
   $createCollapsibleContainerNode,

@@ -140,7 +140,7 @@ importers:
         version: 0.563.0(react@19.2.3)
       next:
         specifier: 16.1.6
-        version: 16.1.6(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -196,6 +196,9 @@ importers:
       '@ai-sdk/react':
         specifier: ^3.0.79
         version: 3.0.79(react@19.2.3)(zod@4.3.6)
+      '@lexical/tailwind':
+        specifier: ^0.40.0
+        version: 0.40.0
       '@orama/core':
         specifier: ^1.2.17
         version: 1.2.17
@@ -214,6 +217,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@typix-editor/extension-auto-complete':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-complete
@@ -268,6 +274,24 @@ importers:
       '@typix-editor/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@typix-editor/react-character-limit':
+        specifier: workspace:*
+        version: link:../../packages/react-extensions/character-limit
+      '@typix-editor/react-context-menu':
+        specifier: workspace:*
+        version: link:../../packages/react-extensions/context-menu
+      '@typix-editor/react-draggable-block':
+        specifier: workspace:*
+        version: link:../../packages/react-extensions/draggable-block
+      '@typix-editor/react-floating-link':
+        specifier: workspace:*
+        version: link:../../packages/react-extensions/floating-link
+      '@typix-editor/react-mention':
+        specifier: workspace:*
+        version: link:../../packages/react-extensions/mention
+      '@typix-editor/react-speech-to-text':
+        specifier: workspace:*
+        version: link:../../packages/react-extensions/speech-to-text
       ai:
         specifier: ^6.0.77
         version: 6.0.77(zod@4.3.6)
@@ -282,25 +306,25 @@ importers:
         version: 3.0.0
       fumadocs-core:
         specifier: 16.5.2
-        version: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
+        version: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
       fumadocs-docgen:
         specifier: ^3.0.6
-        version: 3.0.6(@types/estree@1.0.8)(@types/hast@3.0.4)(@types/mdast@4.0.4)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(mdast-util-mdx-jsx@3.2.0)
+        version: 3.0.6(@types/estree@1.0.8)(@types/hast@3.0.4)(@types/mdast@4.0.4)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(mdast-util-mdx-jsx@3.2.0)
       fumadocs-mdx:
         specifier: 14.2.5
-        version: 14.2.5(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(vite@7.3.1(@types/node@25.0.8)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
+        version: 14.2.5(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(vite@7.3.1(@types/node@25.0.8)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
       fumadocs-openapi:
         specifier: ^10.3.3
-        version: 10.3.3(8750dbf121081aab37b81a273609d18d)
+        version: 10.3.3(44172877a30f673fe36d9c97395cbfcd)
       fumadocs-twoslash:
         specifier: ^3.1.13
-        version: 3.1.13(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-ui@16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
+        version: 3.1.13(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-ui@16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
       fumadocs-typescript:
         specifier: ^5.1.2
-        version: 5.1.2(60c3d6d79848ea33d4f642019d9b4a8f)
+        version: 5.1.2(c14060879384e092c11fb11ddbe89a91)
       fumadocs-ui:
         specifier: 16.5.2
-        version: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
+        version: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
       hast-util-to-jsx-runtime:
         specifier: ^2.3.6
         version: 2.3.6
@@ -321,7 +345,7 @@ importers:
         version: 12.33.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next:
         specifier: 16.1.1
-        version: 16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -448,92 +472,108 @@ importers:
         specifier: ^5.3.0
         version: 5.9.3
 
+  packages/core:
+    devDependencies:
+      '@lexical/code':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/hashtag':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/headless':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/html':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/link':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/list':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/mark':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/markdown':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/overflow':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/rich-text':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/selection':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/table':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/text':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/utils':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      tsup:
+        specifier: ^8.4.0
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
   packages/extensions/auto-complete:
     devDependencies:
-      '@lexical/react':
+      '@lexical/extension':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+        version: 0.40.0
       '@lexical/selection':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/utils':
         specifier: ^0.40.0
         version: 0.40.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
 
   packages/extensions/auto-link:
-    devDependencies:
+    dependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
       '@lexical/link':
         specifier: ^0.40.0
         version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
 
   packages/extensions/character-limit:
     devDependencies:
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@lexical/text':
+      '@lexical/extension':
         specifier: ^0.40.0
         version: 0.40.0
       '@types/node':
         specifier: ^22.15.3
         version: 22.19.7
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
       tsup:
         specifier: ^8.4.0
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
@@ -546,332 +586,175 @@ importers:
       '@lexical/code':
         specifier: ^0.40.0
         version: 0.40.0
-    devDependencies:
-      '@lexical/react':
+      '@lexical/extension':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
+        version: 0.40.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
 
   packages/extensions/code-highlight-shiki:
     dependencies:
       '@lexical/code-shiki':
         specifier: ^0.40.0
         version: 0.40.0
-    devDependencies:
-      '@lexical/react':
+      '@lexical/extension':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
+        version: 0.40.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
 
   packages/extensions/collapsible:
-    devDependencies:
-      '@lexical/react':
+    dependencies:
+      '@lexical/extension':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+        version: 0.40.0
       '@lexical/utils':
         specifier: ^0.40.0
         version: 0.40.0
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
 
   packages/extensions/context-menu:
     devDependencies:
-      '@lexical/link':
+      '@lexical/extension':
         specifier: ^0.40.0
         version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
+      '@typix-editor/core':
         specifier: workspace:*
-        version: link:../../react
+        version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
 
   packages/extensions/drag-drop-paste:
     dependencies:
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
-    devDependencies:
-      '@lexical/react':
+      '@lexical/extension':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+        version: 0.40.0
       '@lexical/rich-text':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/utils':
         specifier: ^0.40.0
         version: 0.40.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/extensions/draggable-block:
     devDependencies:
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@lexical/rich-text':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/extensions/floating-link:
-    devDependencies:
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/extensions/keywords:
-    devDependencies:
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/extensions/link:
-    devDependencies:
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
+
+  packages/extensions/draggable-block:
+    devDependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
 
-  packages/extensions/max-length:
-    dependencies:
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
+  packages/extensions/floating-link:
     devDependencies:
-      '@lexical/react':
+      '@lexical/extension':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+        version: 0.40.0
+      '@lexical/link':
+        specifier: ^0.40.0
+        version: 0.40.0
       '@lexical/selection':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/utils':
         specifier: ^0.40.0
         version: 0.40.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
 
-  packages/extensions/mention:
+  packages/extensions/keywords:
     dependencies:
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-    devDependencies:
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@lexical/selection':
+      '@lexical/extension':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/text':
         specifier: ^0.40.0
         version: 0.40.0
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+
+  packages/extensions/link:
+    dependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/link':
+        specifier: ^0.40.0
+        version: 0.40.0
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+
+  packages/extensions/max-length:
+    dependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/selection':
+        specifier: ^0.40.0
+        version: 0.40.0
       '@lexical/utils':
+        specifier: ^0.40.0
+        version: 0.40.0
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+
+  packages/extensions/mention:
+    devDependencies:
+      '@lexical/extension':
         specifier: ^0.40.0
         version: 0.40.0
       '@types/node':
         specifier: ^22.15.3
         version: 22.19.7
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
@@ -883,14 +766,39 @@ importers:
         version: 5.9.3
 
   packages/extensions/short-cuts:
-    devDependencies:
+    dependencies:
+      '@lexical/code':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
       '@lexical/link':
         specifier: ^0.40.0
         version: 0.40.0
-      '@lexical/react':
+      '@lexical/list':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+        version: 0.40.0
       '@lexical/rich-text':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/selection':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/utils':
+        specifier: ^0.40.0
+        version: 0.40.0
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+
+  packages/extensions/speech-to-text:
+    devDependencies:
+      '@lexical/extension':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/utils':
@@ -899,78 +807,22 @@ importers:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/extensions/speech-to-text:
-    devDependencies:
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
 
   packages/extensions/tab-focus:
-    devDependencies:
-      '@lexical/react':
+    dependencies:
+      '@lexical/extension':
         specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
+        version: 0.40.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
 
   packages/next-config:
     dependencies:
@@ -992,7 +844,7 @@ importers:
         version: link:../typescript-config
       next:
         specifier: 16.0.10
-        version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@18.3.0))(react@18.3.0)
+        version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   packages/react:
     dependencies:
@@ -1081,6 +933,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.1
         version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
@@ -1102,6 +957,216 @@ importers:
       typescript:
         specifier: ^5.3.0
         version: 5.9.3
+
+  packages/react-extensions/character-limit:
+    devDependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@lexical/text':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.19.7
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/extension-character-limit':
+        specifier: workspace:*
+        version: link:../../extensions/character-limit
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+      tsup:
+        specifier: ^8.4.0
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
+  packages/react-extensions/context-menu:
+    devDependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@typix-editor/extension-context-menu':
+        specifier: workspace:*
+        version: link:../../extensions/context-menu
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
+  packages/react-extensions/draggable-block:
+    devDependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/extension-draggable-block':
+        specifier: workspace:*
+        version: link:../../extensions/draggable-block
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../../react
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
+  packages/react-extensions/floating-link:
+    devDependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/link':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@lexical/selection':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/utils':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/extension-floating-link':
+        specifier: workspace:*
+        version: link:../../extensions/floating-link
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+
+  packages/react-extensions/mention:
+    devDependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.19.7
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/extension-mention':
+        specifier: workspace:*
+        version: link:../../extensions/mention
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
+      tsup:
+        specifier: ^8.4.0
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
+  packages/react-extensions/speech-to-text:
+    devDependencies:
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@types/react':
+        specifier: ^19.2.7
+        version: 19.2.8
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/extension-speech-to-text':
+        specifier: workspace:*
+        version: link:../../extensions/speech-to-text
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      react:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3
+      react-dom:
+        specifier: ^18.2.0 || ^19.0.0-0
+        version: 19.2.3(react@19.2.3)
 
   packages/typescript-config: {}
 
@@ -14996,7 +15061,7 @@ snapshots:
       '@next/eslint-plugin-next': 16.1.6
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-react: 7.37.5(eslint@9.39.2(jiti@2.6.1))
@@ -15019,7 +15084,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.3
@@ -15034,14 +15099,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
@@ -15056,7 +15121,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -15544,7 +15609,7 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6):
+  fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6):
     dependencies:
       '@formatjs/intl-localematcher': 0.8.1
       '@orama/orama': 3.1.18
@@ -15576,18 +15641,18 @@ snapshots:
       '@types/react': 19.2.8
       lucide-react: 0.562.0(react@19.2.3)
       mdast-util-mdx-jsx: 3.2.0
-      next: 16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next: 16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       zod: 4.3.6
     transitivePeerDependencies:
       - supports-color
 
-  fumadocs-docgen@3.0.6(@types/estree@1.0.8)(@types/hast@3.0.4)(@types/mdast@4.0.4)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(mdast-util-mdx-jsx@3.2.0):
+  fumadocs-docgen@3.0.6(@types/estree@1.0.8)(@types/hast@3.0.4)(@types/mdast@4.0.4)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(mdast-util-mdx-jsx@3.2.0):
     dependencies:
       estree-util-to-js: 2.0.0
       estree-util-value-to-estree: 3.5.0
-      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
+      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
       npm-to-yarn: 3.0.1
       oxc-transform: 0.112.0
       unified: 11.0.5
@@ -15600,14 +15665,14 @@ snapshots:
       '@types/mdast': 4.0.4
       mdast-util-mdx-jsx: 3.2.0
 
-  fumadocs-mdx@14.2.5(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(vite@7.3.1(@types/node@25.0.8)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2)):
+  fumadocs-mdx@14.2.5(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(vite@7.3.1(@types/node@25.0.8)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2)):
     dependencies:
       '@mdx-js/mdx': 3.1.1
       '@standard-schema/spec': 1.1.0
       chokidar: 5.0.0
       esbuild: 0.27.2
       estree-util-value-to-estree: 3.5.0
-      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
+      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
       js-yaml: 4.1.1
       mdast-util-to-markdown: 2.1.2
       picocolors: 1.1.1
@@ -15622,13 +15687,13 @@ snapshots:
       zod: 4.3.6
     optionalDependencies:
       '@types/react': 19.2.8
-      next: 16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next: 16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
       vite: 7.3.1(@types/node@25.0.8)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
 
-  fumadocs-openapi@10.3.3(8750dbf121081aab37b81a273609d18d):
+  fumadocs-openapi@10.3.3(44172877a30f673fe36d9c97395cbfcd):
     dependencies:
       '@fumari/json-schema-to-typescript': 2.0.0(prettier@3.8.1)
       '@fumari/stf': 0.0.2(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -15640,8 +15705,8 @@ snapshots:
       '@scalar/openapi-parser': 0.24.8
       ajv: 8.17.1
       class-variance-authority: 0.7.1
-      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
-      fumadocs-ui: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
+      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
+      fumadocs-ui: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
       github-slugger: 2.0.0
       hast-util-to-jsx-runtime: 2.3.6
       js-yaml: 4.1.1
@@ -15664,11 +15729,11 @@ snapshots:
       - prettier
       - supports-color
 
-  fumadocs-twoslash@3.1.13(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-ui@16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3):
+  fumadocs-twoslash@3.1.13(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-ui@16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3):
     dependencies:
       '@radix-ui/react-popover': 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@shikijs/twoslash': 3.22.0(typescript@5.9.3)
-      fumadocs-ui: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
+      fumadocs-ui: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.1.0
       mdast-util-to-hast: 13.2.1
@@ -15684,10 +15749,10 @@ snapshots:
       - supports-color
       - typescript
 
-  fumadocs-typescript@5.1.2(60c3d6d79848ea33d4f642019d9b4a8f):
+  fumadocs-typescript@5.1.2(c14060879384e092c11fb11ddbe89a91):
     dependencies:
       estree-util-value-to-estree: 3.5.0
-      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
+      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
       hast-util-to-estree: 3.1.3
       hast-util-to-jsx-runtime: 2.3.6
       react: 19.2.3
@@ -15703,11 +15768,11 @@ snapshots:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       '@types/react': 19.2.8
-      fumadocs-ui: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
+      fumadocs-ui: 16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18)
     transitivePeerDependencies:
       - supports-color
 
-  fumadocs-ui@16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18):
+  fumadocs-ui@16.5.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(fumadocs-core@16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6))(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tailwindcss@4.1.18):
     dependencies:
       '@fumadocs/tailwind': 0.0.2(tailwindcss@4.1.18)
       '@radix-ui/react-accordion': 1.2.12(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -15721,7 +15786,7 @@ snapshots:
       '@radix-ui/react-slot': 1.2.4(@types/react@19.2.8)(react@19.2.3)
       '@radix-ui/react-tabs': 1.1.13(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       class-variance-authority: 0.7.1
-      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
+      fumadocs-core: 16.5.2(@mdx-js/mdx@3.1.1)(@orama/core@1.2.17)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.8)(lucide-react@0.562.0(react@19.2.3))(mdast-util-mdx-jsx@3.2.0)(next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(zod@4.3.6)
       lucide-react: 0.563.0(react@19.2.3)
       motion: 12.33.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next-themes: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -15733,7 +15798,7 @@ snapshots:
       tailwind-merge: 3.4.0
     optionalDependencies:
       '@types/react': 19.2.8
-      next: 16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      next: 16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       tailwindcss: 4.1.18
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
@@ -17711,15 +17776,15 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@18.3.0))(react@18.3.0):
+  next@16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       '@next/env': 16.0.10
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001764
       postcss: 8.4.31
-      react: 18.3.0
-      react-dom: 19.2.3(react@18.3.0)
-      styled-jsx: 5.1.6(react@18.3.0)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.3)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.0.10
       '@next/swc-darwin-x64': 16.0.10
@@ -17735,7 +17800,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@16.1.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  next@16.1.1(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       '@next/env': 16.1.1
       '@swc/helpers': 0.5.15
@@ -17760,7 +17825,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@16.1.6(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       '@next/env': 16.1.6
       '@swc/helpers': 0.5.15
@@ -19545,11 +19610,6 @@ snapshots:
       react: 19.2.3
     optionalDependencies:
       '@babel/core': 7.29.0
-
-  styled-jsx@5.1.6(react@18.3.0):
-    dependencies:
-      client-only: 0.0.1
-      react: 18.3.0
 
   stylis@4.3.6: {}
 

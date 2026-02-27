@@ -10,11 +10,13 @@ import {
 } from "lexical";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import {
+  getDOMRangeRect,
+  getSelectedNode,
+  setFloatingElemPosition,
+} from "@typix-editor/core";
 import { useRootContext } from "../../context/root";
 import { cn } from "../../utils";
-import { getDOMRangeRect } from "../../utils/dom-range-rect";
-import { setFloatingElemPosition } from "../../utils/floating-element-position";
-import { getSelectedNode } from "../../utils/selected-node";
 
 interface EditorBubbleMenuProps {
   children?: React.ReactNode;

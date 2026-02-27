@@ -2,7 +2,7 @@
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { createContext, type ReactNode, useContext, useMemo } from "react";
-import { TypixEditor } from "../../editor";
+import { TypixEditor } from "@typix-editor/core";
 
 /**
  * Context shape for TypixEditor

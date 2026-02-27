@@ -1,8 +1,8 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import type { BlockType } from "@typix-editor/core";
 import { useTypixEditor } from "../../context/editor";
-import type { BlockType } from "../../editor";
 
 /**
  * Returns the current block type reactively, re-rendering only when the

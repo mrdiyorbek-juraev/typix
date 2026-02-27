@@ -28,17 +28,43 @@ export async function envCommand() {
 
   logger.break();
 
-  // Installed Typix packages
-  console.log(chalk.dim("  Installed Typix Extensions"));
-  if (Object.keys(installed).length === 0) {
+  // Split installed packages into extensions and react companions
+  const extensions: Record<string, string> = {};
+  const reactCompanions: Record<string, string> = {};
+  for (const [name, version] of Object.entries(installed)) {
+    if (name.startsWith("@typix-editor/react-")) {
+      reactCompanions[name] = version;
+    } else {
+      extensions[name] = version;
+    }
+  }
+
+  // Extensions
+  console.log(chalk.dim("  Extensions"));
+  if (Object.keys(extensions).length === 0) {
     console.log(
       `  ${chalk.gray("None found. Run")} ${chalk.cyan("typix add")} ${chalk.gray("to install extensions.")}`
     );
   } else {
-    for (const [name, version] of Object.entries(installed)) {
+    for (const [name, version] of Object.entries(extensions)) {
       const shortName = name.replace("@typix-editor/extension-", "");
       console.log(
         `  ${chalk.cyan(shortName.padEnd(22))} ${chalk.gray(name)}  ${chalk.white(version)}`
+      );
+    }
+  }
+
+  logger.break();
+
+  // React UI Companions
+  console.log(chalk.dim("  React UI Companions"));
+  if (Object.keys(reactCompanions).length === 0) {
+    console.log(`  ${chalk.gray("None installed.")}`);
+  } else {
+    for (const [name, version] of Object.entries(reactCompanions)) {
+      const shortName = name.replace("@typix-editor/react-", "");
+      console.log(
+        `  ${chalk.magenta(shortName.padEnd(22))} ${chalk.gray(name)}  ${chalk.white(version)}`
       );
     }
   }

@@ -1,3 +1,7 @@
+// ─── Core re-export (backward compat — consumers get all core APIs from react) ─
+export * from "@typix-editor/core";
+
+// ─── React-specific ───────────────────────────────────────────────────────────
 export {
   type CommandConfig,
   type CreateEditorConfigOptions,
@@ -44,19 +48,6 @@ export {
 } from "./core";
 
 export {
-  type BlockType,
-  DEFAULT_FONT_SIZE,
-  ELEMENT_ALIGNMENTS,
-  ELEMENT_FORMAT_OPTIONS,
-  type ElementAlignment,
-  type HeadingLevel,
-  MAX_FONT_SIZE,
-  MIN_FONT_SIZE,
-  TEXT_FORMAT_TYPES,
-  TypixEditor,
-} from "./editor";
-
-export {
   useActiveFormats,
   useBlockType,
   useEditorState,
@@ -64,21 +55,27 @@ export {
   useRange,
 } from "./hooks";
 
-export type { Klass, LexicalNode, LexicalNodeReplacement } from "./lib";
 export { defaultExtensionNodes } from "./shared";
 export { defaultTheme } from "./theme";
-// Re-export types for direct access
-export type { LexicalEditor, TextFormatType, TypixExtension } from "./types";
+export type { TypixExtension } from "./types";
 
+// React-only utilities not in core
+export { cn } from "./utils/classnames";
 export {
-  addSwipeRightListener,
-  cn,
   findFirstFocusableDescendant,
   focusNearestDescendant,
   isKeyboardInput,
-  sanitizeUrl,
-  validateUrl,
-  getSelectedNode,
-  setFloatingElemPositionForLinkEditor,
-  setFloatingElemPosition,
-} from "./utils";
+} from "./utils/focus-utils";
+
+// Extension API
+export {
+  LexicalExtensionComposer,
+  type LexicalExtensionComposerProps,
+} from "@lexical/react/LexicalExtensionComposer";
+export {
+  configExtension,
+  declarePeerDependency,
+  defineExtension,
+  safeCast,
+} from "lexical";
+export { buildEditorFromExtensions } from "@lexical/extension";

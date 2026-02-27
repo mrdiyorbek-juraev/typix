@@ -1,99 +1,67 @@
 "use client";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import {
-  type InitialConfigType,
-  LexicalComposer,
-} from "@lexical/react/LexicalComposer";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
-import type { EditorState, SerializedEditorState } from "lexical";
-import { createEditorConfig } from "../../config";
+import type {
+  AnyLexicalExtensionArgument,
+  EditorState,
+  SerializedEditorState,
+} from "lexical";
 import { TypixEditorProvider } from "../../context/editor";
 import { History, SharedHistoryContext } from "../../context/history";
 import { RootContext } from "../../context/root";
-import { defaultExtensionNodes } from "../../shared";
-import { defaultTheme } from "../../theme";
-
-/**
- * Props for the TypixEditorRoot component.
- *
- * @example
- * ```tsx
- * <TypixEditorRoot
- *   namespace="my-editor"
- *   initialContent='{"root":{"children":[...],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
- *   nodes={[BoldNode, ItalicNode]}
- * >
- *   <RichTextPlugin />
- * </TypixEditorRoot>
- * ```
- */
 
 interface EditorRootProps {
   /**
-   * Child components (typically Lexical plugins like RichTextPlugin, HistoryPlugin, etc.)
+   * Child components rendered inside the editor context.
    */
   children: React.ReactNode;
 
-  config?: InitialConfigType;
-
   /**
-   * Initial content to load into the editor
+   * Root extension built with `defineExtension`. When provided, the editor is
+   * created via `LexicalExtensionComposer` and the legacy `config` prop is
+   * ignored. Include History, List, AutoFocus etc. in your extension's
+   * `dependencies` array.
    */
-  content?: SerializedEditorState | null;
+  extension?: AnyLexicalExtensionArgument;
 
   /**
-   * Called when editor content changes (raw EditorState)
-   * Use for advanced state manipulation
+   * Called when editor content changes (raw EditorState).
    */
   onChange?: (editorState: EditorState) => void;
 
   /**
-   * Called when editor content changes (serialized JSON)
-   * Use for saving to database or localStorage
-   *
-   * @example
-   * ```tsx
-   * onContentChange={(json) => {
-   *   localStorage.setItem('draft', JSON.stringify(json));
-   * }}
-   * ```
+   * Called when editor content changes (serialized JSON).
    */
   onContentChange?: (content: SerializedEditorState) => void;
 }
 
 const EditorRoot = ({
   children,
-  config,
-  content = null,
+  extension,
   onChange,
   onContentChange,
 }: EditorRootProps) => {
-  const defaultConfig =
-    config ||
-    createEditorConfig({
-      namespace: "typix-editor",
-      extensionNodes: defaultExtensionNodes,
-      editable: true,
-      editorState: null,
-      initialState: content!,
-      theme: defaultTheme,
-    });
+  const changePlugin =
+    onChange || onContentChange ? (
+      <OnChangePlugin
+        ignoreSelectionChange={true}
+        onChange={(editorState) => {
+          onChange?.(editorState);
+          onContentChange?.(editorState.toJSON());
+        }}
+      />
+    ) : null;
+
+  if (!extension) return null;
 
   return (
-    <LexicalComposer initialConfig={defaultConfig}>
+    <LexicalExtensionComposer extension={extension} contentEditable={null}> 
       <TypixEditorProvider>
         <RootContext>
           <SharedHistoryContext>
-            {(onChange || onContentChange) && (
-              <OnChangePlugin
-                ignoreSelectionChange={true}
-                onChange={(editorState) => {
-                  onChange?.(editorState);
-                  onContentChange?.(editorState.toJSON());
-                }}
-              />
-            )}
+            {changePlugin}
             {children}
             <History />
             <ListPlugin />
@@ -101,7 +69,7 @@ const EditorRoot = ({
           </SharedHistoryContext>
         </RootContext>
       </TypixEditorProvider>
-    </LexicalComposer>
+    </LexicalExtensionComposer>
   );
 };
 

@@ -1,21 +1,21 @@
 "use client";
 
 import {
-  createEditorConfig,
+  configExtension,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
+import { TailwindExtension } from "@lexical/tailwind";
 import {
   SpeechToTextExtension,
-  useSpeechToText,
   isSpeechRecognitionSupported,
 } from "@typix-editor/extension-speech-to-text";
+import { useSpeechToText } from "@typix-editor/react-speech-to-text";
 import {
   Bold,
   Code,
@@ -34,9 +34,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/speech-to-text",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension, configExtension(SpeechToTextExtension, {})],
 });
 
 function Separator() {
@@ -160,7 +162,7 @@ function Toolbar() {
 
 export default function SpeechToTextExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
@@ -168,7 +170,6 @@ export default function SpeechToTextExample() {
           placeholder="Click the mic button in the toolbar and speak..."
         />
       </div>
-      <SpeechToTextExtension />
     </EditorRoot>
   );
 }
@@ -178,23 +179,25 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
   EditorContent,
   EditorRoot,
 } from "@typix-editor/react";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
 import { SpeechToTextExtension } from "@typix-editor/extension-speech-to-text";
 import { Toolbar } from "./Toolbar";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/speech-to-text",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
 });
 
 export default function SpeechToTextExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar />
         <EditorContent placeholder="Click the mic button and speak..." />
@@ -208,10 +211,8 @@ export default function SpeechToTextExample() {
     name: "Toolbar.tsx",
     lang: "tsx",
     code: `import { useTypixEditor, useActiveFormats, useBlockType } from "@typix-editor/react";
-import {
-  useSpeechToText,
-  isSpeechRecognitionSupported,
-} from "@typix-editor/extension-speech-to-text";
+import { isSpeechRecognitionSupported } from "@typix-editor/extension-speech-to-text";
+import { useSpeechToText } from "@typix-editor/react-speech-to-text";
 import {
   Bold, Italic, Underline, Strikethrough, Code,
   Heading1, Heading2, Quote, List, ListOrdered,

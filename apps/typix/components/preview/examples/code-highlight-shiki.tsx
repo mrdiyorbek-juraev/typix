@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  createEditorConfig,
+  configExtension,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
+import { TailwindExtension } from "@lexical/tailwind";
 import { CodeHighlightShikiExtension } from "@typix-editor/extension-code-highlight-shiki";
 import {
   Bold,
@@ -28,9 +28,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/code-highlight-shiki",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension, configExtension(CodeHighlightShikiExtension, { disabled: false })],
 });
 
 function Separator() {
@@ -140,7 +142,7 @@ function Toolbar() {
 
 export default function CodeHighlightShikiExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
@@ -148,7 +150,6 @@ export default function CodeHighlightShikiExample() {
           placeholder="Use Ctrl+Shift+C to insert a code block..."
         />
       </div>
-      <CodeHighlightShikiExtension />
     </EditorRoot>
   );
 }
@@ -158,23 +159,25 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
   EditorContent,
   EditorRoot,
 } from "@typix-editor/react";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
 import { CodeHighlightShikiExtension } from "@typix-editor/extension-code-highlight-shiki";
 import { Toolbar } from "./Toolbar";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/code-highlight-shiki",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
 });
 
 export default function CodeHighlightShikiExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar />
         <EditorContent placeholder="Use Ctrl+Shift+C to insert a code block..." />

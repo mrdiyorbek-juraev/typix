@@ -1,11 +1,30 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { logger, spinner } from "../utils/logger.js";
-import { getExtensionEntry, getAllExtensions } from "../utils/registry.js";
+import {
+  getExtensionEntry,
+  getAllExtensions,
+  type ExtensionEntry,
+} from "../utils/registry.js";
 import {
   upgradePackages,
   getInstalledTypixExtensions,
 } from "../utils/package-manager.js";
+
+function appendReactCompanions(
+  packages: string[],
+  installed: Record<string, string>,
+  allExtensions: ExtensionEntry[]
+): string[] {
+  const result = [...packages];
+  for (const pkg of packages) {
+    const entry = allExtensions.find((e) => e.package === pkg);
+    if (entry?.reactPackage && installed[entry.reactPackage]) {
+      result.push(entry.reactPackage);
+    }
+  }
+  return result;
+}
 
 export async function upgradeCommand(
   extensions: string[],
@@ -72,11 +91,14 @@ export async function upgradeCommand(
     packages = picked;
   }
 
+  const allExts = getAllExtensions();
+  packages = appendReactCompanions(packages, installed, allExts);
+
   logger.break();
-  logger.info(`Upgrading ${packages.length} extension(s)...`);
+  logger.info(`Upgrading ${packages.length} package(s)...`);
   logger.break();
 
-  const s = spinner("Upgrading extensions...").start();
+  const s = spinner("Upgrading packages...").start();
   try {
     upgradePackages(packages);
     s.succeed("Extensions upgraded successfully!");

@@ -2,8 +2,8 @@
 
 import { $getSelection, $isRangeSelection, type TextFormatType } from "lexical";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { TEXT_FORMAT_TYPES } from "@typix-editor/core";
 import { useTypixEditor } from "../../context/editor";
-import { TEXT_FORMAT_TYPES } from "../../editor";
 
 /**
  * Options for useActiveFormats hook

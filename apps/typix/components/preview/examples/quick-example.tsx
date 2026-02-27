@@ -1,16 +1,15 @@
 "use client";
 
 import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
+import { TailwindExtension } from "@lexical/tailwind";
 import {
   Bold,
   Code,
@@ -27,9 +26,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/quick-example",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
 });
 
 function Separator() {
@@ -139,7 +140,7 @@ function Toolbar() {
 
 export default function QuickExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
@@ -158,20 +159,22 @@ export const files = [
     code: `import {
   EditorRoot,
   EditorContent,
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
 } from "@typix-editor/react";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
 import { Toolbar } from "./Toolbar";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/quick-example",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
 });
 
 export default function MyEditor() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar />
         <EditorContent placeholder="Start typing..." />

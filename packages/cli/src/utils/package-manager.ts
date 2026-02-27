@@ -108,7 +108,10 @@ export function getInstalledTypixExtensions(): Record<string, string> {
       const deps = { ...pkg.dependencies, ...pkg.devDependencies };
       const result: Record<string, string> = {};
       for (const [name, version] of Object.entries(deps)) {
-        if (name.startsWith("@typix-editor/extension-")) {
+        if (
+          name.startsWith("@typix-editor/extension-") ||
+          name.startsWith("@typix-editor/react-")
+        ) {
           result[name] = version as string;
         }
       }

@@ -1,19 +1,20 @@
 "use client";
 
 import {
-  createEditorConfig,
+  configExtension,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
+import { TailwindExtension } from "@lexical/tailwind";
 import { LinkExtension } from "@typix-editor/extension-link";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
 import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
+import { FloatingLinkUI } from "@typix-editor/react-floating-link";
 import {
   Bold,
   Code,
@@ -31,11 +32,12 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  initialState: {
+const extension = defineExtension({
+  name: "typix/floating-link",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension, configExtension(LinkExtension, {}), configExtension(FloatingLinkExtension, {}), configExtension(AutoLinkExtension, {})],
+  $initialEditorState: JSON.stringify({
     root: {
       children: [
         {
@@ -96,7 +98,7 @@ const config = createEditorConfig({
       type: "root",
       version: 1,
     },
-  } as any,
+  }),
 });
 
 function Separator() {
@@ -215,17 +217,15 @@ function Toolbar() {
 
 export default function FloatingLinkExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
           className="max-h-[300px] min-h-[120px] overflow-y-auto text-sm"
           placeholder="Select text, then use Ctrl+K or the link button..."
         />
+        <FloatingLinkUI />
       </div>
-      <LinkExtension />
-      <FloatingLinkExtension />
-      <AutoLinkExtension />
     </EditorRoot>
   );
 }
@@ -235,21 +235,23 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
   EditorContent,
   EditorRoot,
 } from "@typix-editor/react";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
 import { LinkExtension } from "@typix-editor/extension-link";
-import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
+import { FloatingLinkUI } from "@typix-editor/react-floating-link";
 import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
 import { Toolbar } from "./Toolbar";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
-  initialState: {
+const extension = defineExtension({
+  name: "typix/floating-link",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
+  $initialEditorState: JSON.stringify({
     root: {
       children: [
         {
@@ -270,18 +272,19 @@ const config = createEditorConfig({
       ],
       direction: "ltr", format: "", indent: 0, type: "root", version: 1,
     },
-  } as any,
+  }),
 });
 
 export default function FloatingLinkExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar />
         <EditorContent placeholder="Select text, then use Ctrl+K or the link button..." />
       </div>
       <LinkExtension />
       <FloatingLinkExtension />
+      <FloatingLinkUI />
       <AutoLinkExtension />
     </EditorRoot>
   );

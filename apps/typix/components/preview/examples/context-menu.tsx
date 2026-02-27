@@ -1,20 +1,17 @@
 "use client";
 
 import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
-import {
-  ContextMenuExtension,
-  type TypixContextMenuItem,
-} from "@typix-editor/extension-context-menu";
+import { TailwindExtension } from "@lexical/tailwind";
+import { ContextMenuUI } from "@typix-editor/react-context-menu";
+import { ContextMenuExtension, type TypixContextMenuItem } from "@typix-editor/extension-context-menu";
 import {
   Bold,
   Code,
@@ -31,9 +28,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/context-menu",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension, ContextMenuExtension],
 });
 
 function Separator() {
@@ -143,7 +142,6 @@ function Toolbar() {
 
 // Keep options inside the component so `disabled` stays in sync with editor state.
 function EditorWithContextMenu() {
-  const editor = useTypixEditor();
   const { isActive } = useActiveFormats({
     formats: ["bold", "italic", "underline", "strikethrough", "code"],
   });
@@ -222,12 +220,12 @@ function EditorWithContextMenu() {
     },
   ];
 
-  return <ContextMenuExtension options={options} />;
+  return <ContextMenuUI options={options} />;
 }
 
 export default function ContextMenuExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
@@ -245,28 +243,28 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import {
-  ContextMenuExtension,
-  type TypixContextMenuItem,
-} from "@typix-editor/extension-context-menu";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
+import { ContextMenuUI } from "@typix-editor/react-context-menu";
+import type { TypixContextMenuItem } from "@typix-editor/extension-context-menu";
 import {
   Bold, Italic, Underline, Code,
   Heading1, Heading2, Quote, Undo, Redo,
 } from "lucide-react";
 import { Toolbar } from "./Toolbar";
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/context-menu",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
 });
 
 // Options live inside the component so \`disabled\` reflects current state.
@@ -329,12 +327,12 @@ function EditorWithContextMenu() {
     },
   ];
 
-  return <ContextMenuExtension options={options} />;
+  return <ContextMenuUI options={options} />;
 }
 
 export default function ContextMenuExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar />
         <EditorContent placeholder="Right-click to see the context menu..." />

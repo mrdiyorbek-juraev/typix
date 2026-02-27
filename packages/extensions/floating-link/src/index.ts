@@ -1,5 +1,6 @@
-export { FloatingLinkExtension } from "./extension";
-export type {
-  FloatingLinkExtensionProps,
-  FloatingLinkRenderProps,
-} from "./types";
+export {
+  FloatingLinkExtension,
+  getFloatingLinkOutput,
+  type FloatingLinkConfig,
+  type FloatingLinkOutput,
+} from "./extension";

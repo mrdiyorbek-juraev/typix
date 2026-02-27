@@ -8,22 +8,10 @@ import type { FC } from "react";
 export type { LexicalEditor, TextFormatType };
 
 /**
- * Base type for Typix extensions.
- *
- * Extensions are React function components that integrate with the editor.
- * They typically register Lexical plugins, commands, or UI elements.
+ * @deprecated Use `defineExtension` from `lexical` to define framework-agnostic
+ * extensions instead of React function components.
  *
  * @template P - Props type for the extension
- *
- * @example
- * ```tsx
- * const MyExtension: TypixExtension<{ maxLength: number }> = ({ maxLength }) => {
- *   const [editor] = useLexicalComposerContext();
- *   // ... register plugins
- *   return null;
- * };
- * MyExtension.displayName = "Typix.MyExtension";
- * ```
  */
 export type TypixExtension<P = Record<string, never>> = FC<P> & {
   displayName?: string;

@@ -1,10 +1,4 @@
 export {
   CharacterLimitExtension,
-  type CharacterLimitExtensionProps,
+  type CharacterLimitConfig,
 } from "./extension";
-
-export {
-  useCharacterCount,
-  type UseCharacterCountOptions,
-  type CharacterCountStats,
-} from "./hooks/use-character-count";

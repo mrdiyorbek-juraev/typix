@@ -4,6 +4,7 @@ import path from "node:path";
 import { logger } from "../utils/logger.js";
 import { getInstalledTypixExtensions } from "../utils/package-manager.js";
 import { getConfigPath } from "../utils/config.js";
+import { getAllExtensions } from "../utils/registry.js";
 
 function check(label: string, ok: boolean, hint?: string) {
   const icon = ok ? chalk.green("✔") : chalk.red("✖");
@@ -60,16 +61,25 @@ export async function doctorCommand() {
     ...((pkg?.devDependencies as Record<string, string>) ?? {}),
   };
 
-  // 3. @typix-editor/react installed
+  // 3. @typix-editor/core installed
+  const hasCore = "@typix-editor/core" in deps;
+  check(
+    "@typix-editor/core is installed",
+    hasCore,
+    `Run ${chalk.cyan("pnpm add @typix-editor/core")} to install the core package.`
+  );
+  if (!hasCore) issues++;
+
+  // 4. @typix-editor/react installed
   const hasReact = "@typix-editor/react" in deps;
   check(
     "@typix-editor/react is installed",
     hasReact,
-    `Run ${chalk.cyan("pnpm add @typix-editor/react")} to install the core package.`
+    `Run ${chalk.cyan("pnpm add @typix-editor/react")} to install the React bindings.`
   );
   if (!hasReact) issues++;
 
-  // 4. lexical peer dep
+  // 5. lexical peer dep
   const hasLexical = "lexical" in deps;
   check(
     "lexical peer dependency is installed",
@@ -78,10 +88,12 @@ export async function doctorCommand() {
   );
   if (!hasLexical) issues++;
 
-  // 5. Installed extensions are recognised in registry
+  // 6. Installed extensions are recognised in registry
   const installed = getInstalledTypixExtensions();
   const unknownExts = Object.keys(installed).filter(
-    (pkg) => !pkg.startsWith("@typix-editor/extension-")
+    (pkg) =>
+      !pkg.startsWith("@typix-editor/extension-") &&
+      !pkg.startsWith("@typix-editor/react-")
   );
   const hasUnknown = unknownExts.length > 0;
   check(
@@ -90,6 +102,20 @@ export async function doctorCommand() {
     hasUnknown ? `Unknown packages: ${unknownExts.join(", ")}` : undefined
   );
   if (hasUnknown) issues++;
+
+  // 7. React companion packages have their base extension installed
+  const allExtensions = getAllExtensions();
+  for (const ext of allExtensions) {
+    if (ext.reactPackage && installed[ext.reactPackage]) {
+      const hasBase = !!installed[ext.package];
+      check(
+        `${ext.reactPackage} has base extension installed`,
+        hasBase,
+        `Install the base extension: ${chalk.cyan(`typix add ${ext.name}`)}`
+      );
+      if (!hasBase) issues++;
+    }
+  }
 
   logger.break();
 

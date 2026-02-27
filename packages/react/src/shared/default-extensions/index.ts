@@ -13,6 +13,10 @@ import {
   TextNode,
 } from "lexical";
 
+/**
+ * @deprecated Each extension now declares its own nodes via `nodes: () => [...]`
+ * in `defineExtension`. This list is no longer needed.
+ */
 export const defaultExtensionNodes: ReadonlyArray<
   Klass<LexicalNode> | LexicalNodeReplacement
 > = [

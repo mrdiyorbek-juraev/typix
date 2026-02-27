@@ -1,20 +1,18 @@
 "use client";
 
 import {
-  createEditorConfig,
+  configExtension,
   defaultExtensionNodes,
-  defaultTheme,
+  defineExtension,
   EditorContent,
   EditorRoot,
   useActiveFormats,
   useBlockType,
   useTypixEditor,
 } from "@typix-editor/react";
-import "@typix-editor/react/src/styles/main.css";
-import {
-  CharacterLimitExtension,
-  useCharacterCount,
-} from "@typix-editor/extension-character-limit";
+import { TailwindExtension } from "@lexical/tailwind";
+import { CharacterLimitExtension } from "@typix-editor/extension-character-limit";
+import { useCharacterCount } from "@typix-editor/react-character-limit";
 import {
   Bold,
   Code,
@@ -33,9 +31,12 @@ import { Button } from "@/components/ui/button";
 
 const MAX = 200;
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+
+const extension = defineExtension({
+  name: "typix/character-limit",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension, configExtension(CharacterLimitExtension, { maxLength: MAX, charset: "UTF-16" })],
 });
 
 function Separator() {
@@ -156,9 +157,8 @@ function StatsBar({ max }: { max: number }) {
         {words} {words === 1 ? "word" : "words"}
       </span>
       <span
-        className={`tabular-nums font-medium ${
-          isExceeded ? "text-destructive" : isWarning ? "text-amber-500" : ""
-        }`}
+        className={`tabular-nums font-medium ${isExceeded ? "text-destructive" : isWarning ? "text-amber-500" : ""
+          }`}
       >
         {characters}/{max}
       </span>
@@ -168,7 +168,7 @@ function StatsBar({ max }: { max: number }) {
 
 export default function CharacterLimitExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="w-full overflow-hidden rounded-t-md border border-fd-border bg-background">
         <Toolbar />
         <EditorContent
@@ -177,8 +177,6 @@ export default function CharacterLimitExample() {
         />
         <StatsBar max={MAX} />
       </div>
-      {/* CharacterLimitExtension highlights overflow text inline */}
-      <CharacterLimitExtension maxLength={MAX} charset="UTF-16" />
     </EditorRoot>
   );
 }
@@ -188,23 +186,23 @@ export const files = [
     name: "Editor.tsx",
     lang: "tsx",
     code: `import {
-  createEditorConfig,
   defaultExtensionNodes,
-  defaultTheme,
   EditorContent,
   EditorRoot,
 } from "@typix-editor/react";
-import {
-  CharacterLimitExtension,
-  useCharacterCount,
-} from "@typix-editor/extension-character-limit";
+import { defineExtension } from "lexical";
+import { TailwindExtension } from "@lexical/tailwind";
+import { CharacterLimitExtension } from "@typix-editor/extension-character-limit";
+import { useCharacterCount } from "@typix-editor/react-character-limit";
 import { Toolbar } from "./Toolbar";
 
 const MAX = 200;
 
-const config = createEditorConfig({
-  extensionNodes: defaultExtensionNodes,
-  theme: defaultTheme,
+const extension = defineExtension({
+  name: "typix/character-limit",
+  namespace: "typix-editor",
+  nodes: [...defaultExtensionNodes],
+  dependencies: [TailwindExtension],
 });
 
 // useCharacterCount gives you raw numbers for your own status bar / counter UI.
@@ -220,7 +218,7 @@ function StatsBar({ max }: { max: number }) {
 
 export default function CharacterLimitExample() {
   return (
-    <EditorRoot config={config}>
+    <EditorRoot extension={extension}>
       <div className="editor-container">
         <Toolbar />
         <EditorContent placeholder={\`Start typing (\${MAX} character limit)...\`} />

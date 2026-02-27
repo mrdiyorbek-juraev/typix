@@ -19,11 +19,16 @@ export async function listCommand() {
   console.log(chalk.gray("  " + "\u2500".repeat(nameWidth + pkgWidth + 30)));
 
   for (const ext of extensions) {
+    const tag = ext.reactPackage ? chalk.magenta(" [+React UI]") : "";
     const name = chalk.cyan(ext.name.padEnd(nameWidth));
     const pkg = chalk.gray(ext.package.padEnd(pkgWidth));
-    console.log(`  ${name}${pkg}${ext.description}`);
+    console.log(`  ${name}${pkg}${ext.description}${tag}`);
   }
 
+  logger.break();
+  console.log(
+    chalk.gray(`  ${chalk.magenta("[+React UI]")} = has a companion React UI package`)
+  );
   logger.break();
   logger.info(
     `Add extensions: ${chalk.cyan("typix add")} (interactive) or ${chalk.cyan("typix add <name>")}`

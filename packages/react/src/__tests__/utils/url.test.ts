@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { sanitizeUrl, validateUrl } from "../../utils";
+import { sanitizeUrl, validateUrl } from "@typix-editor/core";
 
 describe("sanitizeUrl", () => {
   it("returns the same url for supported protocols", () => {
