@@ -32,7 +32,10 @@ const extension = defineExtension({
   name: "typix/code-highlight-shiki",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes],
-  dependencies: [TailwindExtension, configExtension(CodeHighlightShikiExtension, { disabled: false })],
+  dependencies: [
+    TailwindExtension,
+    configExtension(CodeHighlightShikiExtension, { disabled: false }),
+  ],
 });
 
 function Separator() {

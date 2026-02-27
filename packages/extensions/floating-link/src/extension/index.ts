@@ -42,9 +42,7 @@ export function getFloatingLinkOutput(
   return _outputByEditor.get(editor);
 }
 
-function getSelectedNode(
-  selection: RangeSelection
-): TextNode | ElementNode {
+function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   const anchor = selection.anchor;
   const focus = selection.focus;
   const anchorNode = selection.anchor.getNode();

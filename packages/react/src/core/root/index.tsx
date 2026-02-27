@@ -57,7 +57,7 @@ const EditorRoot = ({
   if (!extension) return null;
 
   return (
-    <LexicalExtensionComposer extension={extension} contentEditable={null}> 
+    <LexicalExtensionComposer extension={extension} contentEditable={null}>
       <TypixEditorProvider>
         <RootContext>
           <SharedHistoryContext>

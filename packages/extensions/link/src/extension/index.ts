@@ -5,11 +5,7 @@ import {
   LinkNode,
   TOGGLE_LINK_COMMAND,
 } from "@lexical/link";
-import {
-  COMMAND_PRIORITY_EDITOR,
-  defineExtension,
-  safeCast,
-} from "lexical";
+import { COMMAND_PRIORITY_EDITOR, defineExtension, safeCast } from "lexical";
 
 export interface LinkConfig {
   /** Set to true to temporarily disable link toggle handling. */
@@ -48,7 +44,10 @@ export const LinkExtension = defineExtension({
             return true;
           }
           if (typeof payload === "string") {
-            if (currentValidateUrl === undefined || currentValidateUrl(payload)) {
+            if (
+              currentValidateUrl === undefined ||
+              currentValidateUrl(payload)
+            ) {
               $toggleLink(payload, defaultAttributes);
               return true;
             }

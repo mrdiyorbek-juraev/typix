@@ -224,12 +224,11 @@ export const SpeechToTextExtension = defineExtension({
       recognition.maxAlternatives = config.maxAlternatives;
       recognition.lang = config.language;
 
-      recognition.addEventListener(
-        "result",
-        ((e: WebSpeechRecognitionEvent) => {
-          handleResult(e);
-        }) as EventListener
-      );
+      recognition.addEventListener("result", ((
+        e: WebSpeechRecognitionEvent
+      ) => {
+        handleResult(e);
+      }) as EventListener);
 
       recognition.addEventListener("start", () => {
         config.onStart?.();
@@ -246,15 +245,12 @@ export const SpeechToTextExtension = defineExtension({
         }
       });
 
-      recognition.addEventListener(
-        "error",
-        ((event: WebSpeechRecognitionErrorEvent) => {
-          const error = new Error(
-            `Speech recognition error: ${event.error}`
-          );
-          config.onError?.(error);
-        }) as EventListener
-      );
+      recognition.addEventListener("error", ((
+        event: WebSpeechRecognitionErrorEvent
+      ) => {
+        const error = new Error(`Speech recognition error: ${event.error}`);
+        config.onError?.(error);
+      }) as EventListener);
 
       recognition.addEventListener("nomatch", () => {
         config.onNoMatch?.();

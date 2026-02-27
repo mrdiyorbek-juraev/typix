@@ -36,7 +36,12 @@ const extension = defineExtension({
   name: "typix/floating-link",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes],
-  dependencies: [TailwindExtension, configExtension(LinkExtension, {}), configExtension(FloatingLinkExtension, {}), configExtension(AutoLinkExtension, {})],
+  dependencies: [
+    TailwindExtension,
+    configExtension(LinkExtension, {}),
+    configExtension(FloatingLinkExtension, {}),
+    configExtension(AutoLinkExtension, {}),
+  ],
   $initialEditorState: JSON.stringify({
     root: {
       children: [

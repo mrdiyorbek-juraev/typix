@@ -94,7 +94,9 @@ export async function addCommand(
   for (const ext of selected) {
     logger.success(`${chalk.bold(ext.name)} ${chalk.gray(`(${ext.package})`)}`);
     if (ext.reactPackage) {
-      logger.success(`  ${chalk.gray("+ React UI:")} ${chalk.gray(ext.reactPackage)}`);
+      logger.success(
+        `  ${chalk.gray("+ React UI:")} ${chalk.gray(ext.reactPackage)}`
+      );
     }
   }
 }

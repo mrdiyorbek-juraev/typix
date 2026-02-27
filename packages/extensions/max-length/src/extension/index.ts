@@ -23,7 +23,7 @@ export const MaxLengthExtension = defineExtension({
 
   config: safeCast<MaxLengthConfig>({ maxLength: 500, disabled: false }),
 
-  build(_editor, config ) {
+  build(_editor, config) {
     return namedSignals(config);
   },
 

@@ -43,7 +43,10 @@ const extension = defineExtension({
     CollapsibleContentNode,
     CollapsibleTitleNode,
   ],
-  dependencies: [TailwindExtension, configExtension(CollapsibleExtension, { disabled: false })],
+  dependencies: [
+    TailwindExtension,
+    configExtension(CollapsibleExtension, { disabled: false }),
+  ],
 });
 
 function Separator() {

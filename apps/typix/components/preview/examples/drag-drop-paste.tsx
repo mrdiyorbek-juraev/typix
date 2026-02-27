@@ -32,7 +32,10 @@ const extension = defineExtension({
   name: "typix/drag-drop-paste",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes],
-  dependencies: [TailwindExtension, configExtension(DragDropPasteExtension, {})],
+  dependencies: [
+    TailwindExtension,
+    configExtension(DragDropPasteExtension, {}),
+  ],
 });
 
 function Separator() {

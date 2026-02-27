@@ -27,7 +27,9 @@ export async function listCommand() {
 
   logger.break();
   console.log(
-    chalk.gray(`  ${chalk.magenta("[+React UI]")} = has a companion React UI package`)
+    chalk.gray(
+      `  ${chalk.magenta("[+React UI]")} = has a companion React UI package`
+    )
   );
   logger.break();
   logger.info(

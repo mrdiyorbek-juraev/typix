@@ -36,7 +36,10 @@ const extension = defineExtension({
   name: "typix/auto-complete",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes, AutocompleteNode],
-  dependencies: [TailwindExtension, configExtension(AutocompleteExtension, { disabled: false })],
+  dependencies: [
+    TailwindExtension,
+    configExtension(AutocompleteExtension, { disabled: false }),
+  ],
   theme: defaultTheme,
 });
 

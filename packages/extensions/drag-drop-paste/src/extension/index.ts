@@ -32,8 +32,9 @@ export interface DragDropPasteConfig {
   debug?: boolean;
 }
 
-export const INSERT_IMAGE_COMMAND =
-  createCommand<InsertImagePayload>("INSERT_IMAGE_COMMAND");
+export const INSERT_IMAGE_COMMAND = createCommand<InsertImagePayload>(
+  "INSERT_IMAGE_COMMAND"
+);
 
 const DEFAULT_ACCEPTED_TYPES = [
   "image/",

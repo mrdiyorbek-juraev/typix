@@ -11,7 +11,10 @@ import {
 } from "@typix-editor/react";
 import { TailwindExtension } from "@lexical/tailwind";
 import { ContextMenuUI } from "@typix-editor/react-context-menu";
-import { ContextMenuExtension, type TypixContextMenuItem } from "@typix-editor/extension-context-menu";
+import {
+  ContextMenuExtension,
+  type TypixContextMenuItem,
+} from "@typix-editor/extension-context-menu";
 import {
   Bold,
   Code,

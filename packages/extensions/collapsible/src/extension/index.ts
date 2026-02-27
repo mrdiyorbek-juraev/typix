@@ -211,9 +211,7 @@ export const CollapsibleExtension = defineExtension({
               $insertNodeToNearestRoot(
                 $createCollapsibleContainerNode(true).append(
                   title.append(paragraph),
-                  $createCollapsibleContentNode().append(
-                    $createParagraphNode()
-                  )
+                  $createCollapsibleContentNode().append($createParagraphNode())
                 )
               );
               paragraph.select();

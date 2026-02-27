@@ -14,10 +14,7 @@ export type ContextMenuUIProps = {
 
 export function ContextMenuUI({ options }: ContextMenuUIProps) {
   const [lexicalEditor] = useLexicalComposerContext();
-  const editor = useMemo(
-    () => new TypixEditor(lexicalEditor),
-    [lexicalEditor]
-  );
+  const editor = useMemo(() => new TypixEditor(lexicalEditor), [lexicalEditor]);
 
   // No useMemo — options must be fresh so `disabled` reflects current state.
   const menuOptions = options.map((item) => {

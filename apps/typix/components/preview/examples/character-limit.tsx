@@ -31,12 +31,17 @@ import { Button } from "@/components/ui/button";
 
 const MAX = 200;
 
-
 const extension = defineExtension({
   name: "typix/character-limit",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes],
-  dependencies: [TailwindExtension, configExtension(CharacterLimitExtension, { maxLength: MAX, charset: "UTF-16" })],
+  dependencies: [
+    TailwindExtension,
+    configExtension(CharacterLimitExtension, {
+      maxLength: MAX,
+      charset: "UTF-16",
+    }),
+  ],
 });
 
 function Separator() {
@@ -157,8 +162,9 @@ function StatsBar({ max }: { max: number }) {
         {words} {words === 1 ? "word" : "words"}
       </span>
       <span
-        className={`tabular-nums font-medium ${isExceeded ? "text-destructive" : isWarning ? "text-amber-500" : ""
-          }`}
+        className={`tabular-nums font-medium ${
+          isExceeded ? "text-destructive" : isWarning ? "text-amber-500" : ""
+        }`}
       >
         {characters}/{max}
       </span>

@@ -105,9 +105,11 @@ function isListActive(
     const listNode = $getNearestNodeOfType(element, ListNode);
     if (!(listNode && $isListNode(listNode))) return false;
     const t = listNode.getListType();
-    return listType === "bullet" ? t === "bullet"
-      : listType === "number" ? t === "number"
-      : t === "check";
+    return listType === "bullet"
+      ? t === "bullet"
+      : listType === "number"
+        ? t === "number"
+        : t === "check";
   });
 }
 
@@ -183,9 +185,16 @@ function toggleQuote(editor: LexicalEditor): void {
 }
 
 const TEXT_FORMAT_TYPES = [
-  "bold", "italic", "underline", "strikethrough",
-  "code", "subscript", "superscript", "highlight",
-  "lowercase", "uppercase",
+  "bold",
+  "italic",
+  "underline",
+  "strikethrough",
+  "code",
+  "subscript",
+  "superscript",
+  "highlight",
+  "lowercase",
+  "uppercase",
 ] as const;
 
 function clearFormatting(editor: LexicalEditor): void {

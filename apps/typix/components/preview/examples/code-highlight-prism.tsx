@@ -32,7 +32,10 @@ const extension = defineExtension({
   name: "typix/code-highlight-prism",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes],
-  dependencies: [TailwindExtension, configExtension(CodeHighlightPrismExtension, { disabled: false })],
+  dependencies: [
+    TailwindExtension,
+    configExtension(CodeHighlightPrismExtension, { disabled: false }),
+  ],
 });
 
 function Separator() {

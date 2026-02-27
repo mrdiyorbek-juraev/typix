@@ -33,7 +33,10 @@ const extension = defineExtension({
   name: "typix/draggable-block",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes],
-  dependencies: [TailwindExtension, configExtension(DraggableBlockExtension, { disabled: false })],
+  dependencies: [
+    TailwindExtension,
+    configExtension(DraggableBlockExtension, { disabled: false }),
+  ],
 });
 
 function Separator() {

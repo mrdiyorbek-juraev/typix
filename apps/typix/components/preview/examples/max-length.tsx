@@ -36,7 +36,14 @@ const extension = defineExtension({
   name: "typix/max-length",
   namespace: "typix-editor",
   nodes: [...defaultExtensionNodes],
-  dependencies: [TailwindExtension, configExtension(CharacterLimitExtension, { maxLength: MAX, charset: "UTF-16" }), configExtension(MaxLengthExtension, { maxLength: MAX })],
+  dependencies: [
+    TailwindExtension,
+    configExtension(CharacterLimitExtension, {
+      maxLength: MAX,
+      charset: "UTF-16",
+    }),
+    configExtension(MaxLengthExtension, { maxLength: MAX }),
+  ],
 });
 
 function Separator() {

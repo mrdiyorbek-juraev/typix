@@ -20,12 +20,18 @@
   },
   "typesVersions": {
     "*": {
-      "lexical": ["./dist/lexical.d.ts"]
+      "lexical": [
+        "./dist/lexical.d.ts"
+      ]
     }
   },
   "sideEffects": false,
-  "files": ["dist"],
-  "publishConfig": { "access": "public" },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup",
     "build:fast": "tsup",
