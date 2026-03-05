@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev --turbo -p 3100",
     "start": "next start",
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
     "postinstall": "fumadocs-mdx",
@@ -42,6 +42,7 @@
     "@typix-editor/extension-tab-focus": "workspace:*",
     "@typix-editor/core": "workspace:*",
     "@typix-editor/react": "workspace:*",
+    "@typix-editor/theme": "workspace:*",
     "@typix-editor/react-character-limit": "workspace:*",
     "@typix-editor/react-context-menu": "workspace:*",
     "@typix-editor/react-draggable-block": "workspace:*",

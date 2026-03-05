@@ -12,6 +12,7 @@ import {
   type LexicalCommand,
   type LexicalEditor,
 } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 
 import type {
   SpeechRecognitionResult,
@@ -142,10 +143,8 @@ export function getSpeechToTextOutput(
 // Extension
 // ============================================================================
 
-export const SpeechToTextExtension = defineExtension({
-  name: "@typix/speech-to-text",
-
-  config: safeCast<SpeechToTextConfig>({
+export const SpeechToTextExtension = (userConfig: Partial<SpeechToTextConfig> = {}) => {
+  const resolvedConfig: SpeechToTextConfig = {
     disabled: false,
     language: "en-US",
     continuous: true,
@@ -153,140 +152,161 @@ export const SpeechToTextExtension = defineExtension({
     maxAlternatives: 1,
     voiceCommands: {},
     includeDefaultCommands: true,
-  }),
+    ...userConfig,
+  };
 
-  build(editor) {
-    const isListening = signal(false);
-    const output: SpeechToTextOutput = { isListening };
-    _outputByEditor.set(editor, output);
-    return output;
-  },
+  const lexicalExt = defineExtension({
+    name: "@typix/speech-to-text",
 
-  register(editor, config, state) {
-    const { isListening } = state.getOutput();
+    config: safeCast<SpeechToTextConfig>(resolvedConfig),
 
-    const SpeechRecognitionCtor = getSpeechRecognitionConstructor();
-    let recognition: WebSpeechRecognitionInstance | null = null;
+    build(editor) {
+      const isListening = signal(false);
+      const output: SpeechToTextOutput = { isListening };
+      _outputByEditor.set(editor, output);
+      return output;
+    },
 
-    // Merge voice commands
-    const voiceCommands: VoiceCommands = {};
-    if (config.includeDefaultCommands) {
-      Object.assign(voiceCommands, DEFAULT_VOICE_COMMANDS);
-    }
-    if (config.voiceCommands) {
-      Object.assign(voiceCommands, config.voiceCommands);
-    }
+    register(editor, config, state) {
+      const { isListening } = state.getOutput();
 
-    function handleResult(event: WebSpeechRecognitionEvent) {
-      const resultItem = event.results[event.resultIndex];
-      if (!resultItem) return;
+      const SpeechRecognitionCtor = getSpeechRecognitionConstructor();
+      let recognition: WebSpeechRecognitionInstance | null = null;
 
-      const firstAlternative = resultItem[0];
-      if (!firstAlternative) return;
+      // Merge voice commands
+      const voiceCommands: VoiceCommands = {};
+      if (config.includeDefaultCommands) {
+        Object.assign(voiceCommands, DEFAULT_VOICE_COMMANDS);
+      }
+      if (config.voiceCommands) {
+        Object.assign(voiceCommands, config.voiceCommands);
+      }
 
-      const { transcript, confidence } = firstAlternative;
-      const isFinal = resultItem.isFinal;
+      function handleResult(event: WebSpeechRecognitionEvent) {
+        const resultItem = event.results[event.resultIndex];
+        if (!resultItem) return;
 
-      config.onResult?.({ transcript, confidence, isFinal });
+        const firstAlternative = resultItem[0];
+        if (!firstAlternative) return;
 
-      if (!isFinal) return;
+        const { transcript, confidence } = firstAlternative;
+        const isFinal = resultItem.isFinal;
 
-      const processedTranscript = config.processTranscript
-        ? config.processTranscript(transcript)
-        : transcript;
+        config.onResult?.({ transcript, confidence, isFinal });
 
-      if (processedTranscript === null) return;
+        if (!isFinal) return;
 
-      editor.update(() => {
-        const selection = $getSelection();
+        const processedTranscript = config.processTranscript
+          ? config.processTranscript(transcript)
+          : transcript;
 
-        if ($isRangeSelection(selection)) {
-          const normalizedCommand = processedTranscript.toLowerCase().trim();
-          const commandHandler = voiceCommands[normalizedCommand];
+        if (processedTranscript === null) return;
 
-          if (commandHandler) {
-            commandHandler({ editor, selection });
-          } else if (processedTranscript.match(/\s*\n\s*/)) {
-            selection.insertParagraph();
-          } else {
-            selection.insertText(processedTranscript);
+        editor.update(() => {
+          const selection = $getSelection();
+
+          if ($isRangeSelection(selection)) {
+            const normalizedCommand = processedTranscript.toLowerCase().trim();
+            const commandHandler = voiceCommands[normalizedCommand];
+
+            if (commandHandler) {
+              commandHandler({ editor, selection });
+            } else if (processedTranscript.match(/\s*\n\s*/)) {
+              selection.insertParagraph();
+            } else {
+              selection.insertText(processedTranscript);
+            }
           }
+        });
+      }
+
+      function startRecognition() {
+        if (!SpeechRecognitionCtor || recognition) return;
+
+        recognition = new SpeechRecognitionCtor();
+        recognition.continuous = config.continuous;
+        recognition.interimResults = config.interimResults;
+        recognition.maxAlternatives = config.maxAlternatives;
+        recognition.lang = config.language;
+
+        recognition.addEventListener("result", ((
+          e: WebSpeechRecognitionEvent
+        ) => {
+          handleResult(e);
+        }) as EventListener);
+
+        recognition.addEventListener("start", () => {
+          config.onStart?.();
+        });
+
+        recognition.addEventListener("end", () => {
+          config.onStop?.();
+          if (isListening.value && config.continuous && recognition) {
+            try {
+              recognition.start();
+            } catch {
+              // Already started or other error
+            }
+          }
+        });
+
+        recognition.addEventListener("error", ((
+          event: WebSpeechRecognitionErrorEvent
+        ) => {
+          const error = new Error(`Speech recognition error: ${event.error}`);
+          config.onError?.(error);
+        }) as EventListener);
+
+        recognition.addEventListener("nomatch", () => {
+          config.onNoMatch?.();
+        });
+
+        try {
+          recognition.start();
+        } catch {
+          // Already started
         }
-      });
-    }
+      }
 
-    function startRecognition() {
-      if (!SpeechRecognitionCtor || recognition) return;
-
-      recognition = new SpeechRecognitionCtor();
-      recognition.continuous = config.continuous;
-      recognition.interimResults = config.interimResults;
-      recognition.maxAlternatives = config.maxAlternatives;
-      recognition.lang = config.language;
-
-      recognition.addEventListener("result", ((
-        e: WebSpeechRecognitionEvent
-      ) => {
-        handleResult(e);
-      }) as EventListener);
-
-      recognition.addEventListener("start", () => {
-        config.onStart?.();
-      });
-
-      recognition.addEventListener("end", () => {
-        config.onStop?.();
-        if (isListening.value && config.continuous && recognition) {
-          try {
-            recognition.start();
-          } catch {
-            // Already started or other error
-          }
+      function stopRecognition() {
+        if (recognition) {
+          recognition.stop();
+          recognition = null;
         }
-      });
-
-      recognition.addEventListener("error", ((
-        event: WebSpeechRecognitionErrorEvent
-      ) => {
-        const error = new Error(`Speech recognition error: ${event.error}`);
-        config.onError?.(error);
-      }) as EventListener);
-
-      recognition.addEventListener("nomatch", () => {
-        config.onNoMatch?.();
-      });
-
-      try {
-        recognition.start();
-      } catch {
-        // Already started
       }
-    }
 
-    function stopRecognition() {
-      if (recognition) {
-        recognition.stop();
-        recognition = null;
-      }
-    }
+      return mergeRegister(
+        editor.registerCommand(
+          SPEECH_TO_TEXT_COMMAND,
+          (newIsEnabled: boolean) => {
+            isListening.value = newIsEnabled;
+            if (newIsEnabled) {
+              startRecognition();
+            } else {
+              stopRecognition();
+            }
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        () => {
+          stopRecognition();
+        }
+      );
+    },
+  });
 
-    return mergeRegister(
-      editor.registerCommand(
-        SPEECH_TO_TEXT_COMMAND,
-        (newIsEnabled: boolean) => {
-          isListening.value = newIsEnabled;
-          if (newIsEnabled) {
-            startRecognition();
-          } else {
-            stopRecognition();
-          }
-          return true;
-        },
-        COMMAND_PRIORITY_EDITOR
-      ),
-      () => {
-        stopRecognition();
-      }
-    );
-  },
-});
+  return defineTypixExtension({
+    name: "speech-to-text",
+    typix: lexicalExt,
+    config: resolvedConfig,
+    commands: {
+      toggleSpeechToText: () => (ctx) => {
+        const output = getSpeechToTextOutput(ctx.editor);
+        const isListening = output?.isListening.value ?? false;
+        ctx.editor.dispatchCommand(SPEECH_TO_TEXT_COMMAND, !isListening);
+        return true;
+      },
+    },
+  });
+};

@@ -1,0 +1,12 @@
+.typix-layout-container {
+  display: grid;
+  gap: var(--typix-spacing-layout-gap);
+  margin: 10px 0;
+}
+
+.typix-layout-item {
+  border: 1px dashed var(--typix-border-color-light);
+  padding: 8px 16px;
+  min-width: 0;
+  max-width: 100%;
+}

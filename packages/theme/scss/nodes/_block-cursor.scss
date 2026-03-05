@@ -1,0 +1,15 @@
+.typix-block-cursor {
+  display: block;
+  pointer-events: none;
+  position: absolute;
+}
+
+.typix-block-cursor:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  width: 20px;
+  border-top: 1px solid var(--typix-block-cursor-color);
+  animation: typix-cursor-blink 1.1s steps(2, start) infinite;
+}

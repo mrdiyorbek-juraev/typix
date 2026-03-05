@@ -1,0 +1,30 @@
+// =============================================================================
+// Foundation: Mixins
+// =============================================================================
+
+/// Emit CSS custom properties from an SCSS map.
+/// @param {String} $prefix - The token prefix (e.g. "typix-color")
+/// @param {Map} $map - The SCSS map of token-name: value
+@mixin typix-tokens($prefix, $map) {
+  @each $key, $value in $map {
+    --#{$prefix}-#{$key}: #{$value};
+  }
+}
+
+/// Scope content to dark mode (component-level).
+/// Matches `.dark <selector>` and `[data-theme="dark"] <selector>`.
+@mixin dark-mode {
+  .dark &,
+  [data-theme="dark"] & {
+    @content;
+  }
+}
+
+/// Scope content to dark mode at the root level.
+/// Use for :root-level dark overrides.
+@mixin dark-mode-root {
+  .dark,
+  [data-theme="dark"] {
+    @content;
+  }
+}

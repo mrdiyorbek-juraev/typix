@@ -1,8 +1,5 @@
 // Main editor class
 
-// Re-export commands for advanced usage
-export * as commands from "./commands";
-
 // Constants and types
 export {
   type BlockType,
@@ -15,4 +12,4 @@ export {
   MIN_FONT_SIZE,
   TEXT_FORMAT_TYPES,
 } from "./constants";
-export { TypixEditor } from "./typix-editor";
+export { TypixEditor } from "./editor"; 

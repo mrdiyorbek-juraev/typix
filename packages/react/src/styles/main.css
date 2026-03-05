@@ -1,4 +1,9 @@
 /**
+ * @deprecated Use `@typix-editor/theme` instead.
+ *   import "@typix-editor/theme";
+ *
+ * This file is kept for backward compatibility and will be removed in a future release.
+ *
  * Typix Editor Theme
  *
  * All visual values are controlled via CSS custom properties on :root.

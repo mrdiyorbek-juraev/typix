@@ -1,3 +1,4 @@
+
 import { $isAtNodeEnd } from "@lexical/selection";
 import { mergeRegister } from "@lexical/utils";
 import type { BaseSelection, NodeKey, TextNode } from "lexical";
@@ -16,13 +17,14 @@ import {
   defineExtension,
   safeCast,
 } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 
 import DICTIONARY from "../dictionary";
 import { uuid } from "../lib";
 import { addSwipeRightListener } from "../lib/swipe";
 import { $createAutocompleteNode, AutocompleteNode } from "../node";
 
-export interface AutocompleteConfig {
+export interface AutocompleteConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable autocomplete. */
   disabled: boolean;
 }
@@ -166,172 +168,185 @@ class AutocompleteServer {
   }
 }
 
-export const AutocompleteExtension = defineExtension({
-  name: "@typix/auto-complete",
+export const AutocompleteExtension = (userConfig: Partial<AutocompleteConfig> = {}) => {
+  const resolvedConfig: AutocompleteConfig = {
+    disabled: false,
+    ...userConfig,
+  };
 
-  nodes: () => [AutocompleteNode],
+  const lexicalExt = defineExtension({
+    name: "@typix/auto-complete",
 
-  config: safeCast<AutocompleteConfig>({ disabled: false }),
+    nodes: () => [AutocompleteNode],
 
-  register(editor) {
-    const server = new AutocompleteServer();
+    config: safeCast<AutocompleteConfig>(resolvedConfig),
 
-    let autocompleteNodeKey: null | NodeKey = null;
-    let lastMatch: null | string = null;
-    let lastSuggestion: null | string = null;
-    let searchPromise: null | SearchPromise = null;
-    let prevNodeFormat = 0;
+    register(editor) {
+      const server = new AutocompleteServer();
 
-    function $clearSuggestion() {
-      const autocompleteNode =
-        autocompleteNodeKey !== null
-          ? $getNodeByKey(autocompleteNodeKey)
-          : null;
-      if (autocompleteNode !== null && autocompleteNode.isAttached()) {
-        autocompleteNode.remove();
-        autocompleteNodeKey = null;
+      let autocompleteNodeKey: null | NodeKey = null;
+      let lastMatch: null | string = null;
+      let lastSuggestion: null | string = null;
+      let searchPromise: null | SearchPromise = null;
+      let prevNodeFormat = 0;
+
+      function $clearSuggestion() {
+        const autocompleteNode =
+          autocompleteNodeKey !== null
+            ? $getNodeByKey(autocompleteNodeKey)
+            : null;
+        if (autocompleteNode !== null && autocompleteNode.isAttached()) {
+          autocompleteNode.remove();
+          autocompleteNodeKey = null;
+        }
+        if (searchPromise !== null) {
+          searchPromise.dismiss();
+          searchPromise = null;
+        }
+        lastMatch = null;
+        lastSuggestion = null;
+        prevNodeFormat = 0;
       }
-      if (searchPromise !== null) {
-        searchPromise.dismiss();
-        searchPromise = null;
-      }
-      lastMatch = null;
-      lastSuggestion = null;
-      prevNodeFormat = 0;
-    }
 
-    function updateAsyncSuggestion(
-      refSearchPromise: SearchPromise,
-      newSuggestion: null | string
-    ) {
-      if (searchPromise !== refSearchPromise || newSuggestion === null) {
-        return;
-      }
-      editor.update(() => {
-        const selection = $getSelection();
-        const [hasMatch, match] = $search(selection);
-        if (!hasMatch || match !== lastMatch || !$isRangeSelection(selection)) {
+      function updateAsyncSuggestion(
+        refSearchPromise: SearchPromise,
+        newSuggestion: null | string
+      ) {
+        if (searchPromise !== refSearchPromise || newSuggestion === null) {
           return;
         }
-        const selectionCopy = selection.clone();
-        const prevNode = selection.getNodes()[0] as TextNode;
-        prevNodeFormat = prevNode.getFormat();
-        const node = $createAutocompleteNode(
-          formatSuggestionText(newSuggestion),
-          uuid
-        )
-          .setFormat(prevNodeFormat)
-          .setStyle(`font-size: ${14}px`);
-        autocompleteNodeKey = node.getKey();
-        selection.insertNodes([node]);
-        $setSelection(selectionCopy);
-        lastSuggestion = newSuggestion;
-      }, HISTORY_MERGE);
-    }
-
-    function $handleAutocompleteNodeTransform(node: AutocompleteNode) {
-      const key = node.getKey();
-      if (node.__uuid === uuid && key !== autocompleteNodeKey) {
-        $clearSuggestion();
+        editor.update(() => {
+          const selection = $getSelection();
+          const [hasMatch, match] = $search(selection);
+          if (!hasMatch || match !== lastMatch || !$isRangeSelection(selection)) {
+            return;
+          }
+          const selectionCopy = selection.clone();
+          const prevNode = selection.getNodes()[0] as TextNode;
+          prevNodeFormat = prevNode.getFormat();
+          const node = $createAutocompleteNode(
+            formatSuggestionText(newSuggestion),
+            uuid
+          )
+            .setFormat(prevNodeFormat)
+            .setStyle(`font-size: ${14}px`);
+          autocompleteNodeKey = node.getKey();
+          selection.insertNodes([node]);
+          $setSelection(selectionCopy);
+          lastSuggestion = newSuggestion;
+        }, HISTORY_MERGE);
       }
-    }
 
-    function handleUpdate() {
-      editor.update(() => {
-        const selection = $getSelection();
-        const [hasMatch, match] = $search(selection);
-
-        if (!hasMatch) {
+      function $handleAutocompleteNodeTransform(node: AutocompleteNode) {
+        const key = node.getKey();
+        if (node.__uuid === uuid && key !== autocompleteNodeKey) {
           $clearSuggestion();
-          return;
+        }
+      }
+
+      function handleUpdate() {
+        editor.update(() => {
+          const selection = $getSelection();
+          const [hasMatch, match] = $search(selection);
+
+          if (!hasMatch) {
+            $clearSuggestion();
+            return;
+          }
+
+          if (match === lastMatch) {
+            return;
+          }
+          $clearSuggestion();
+
+          searchPromise = server.query(match);
+
+          searchPromise.promise
+            .then((newSuggestion) => {
+              if (searchPromise !== null) {
+                updateAsyncSuggestion(searchPromise, newSuggestion);
+              }
+            })
+            .catch((e) => {
+              if (e !== "Dismissed") {
+                console.error("[AutocompleteExtension] Query failed:", e);
+              }
+            });
+          lastMatch = match;
+        }, HISTORY_MERGE);
+      }
+
+      function $handleAutocompleteIntent(): boolean {
+        if (lastSuggestion === null || autocompleteNodeKey === null) {
+          return false;
+        }
+        const autocompleteNode = $getNodeByKey(autocompleteNodeKey);
+        if (autocompleteNode === null) {
+          return false;
         }
 
-        if (match === lastMatch) {
-          return;
-        }
+        const textNode = $createTextNode(lastSuggestion).setStyle(
+          `font-size: ${14}`
+        );
+        autocompleteNode.replace(textNode);
+        textNode.selectNext();
         $clearSuggestion();
-
-        searchPromise = server.query(match);
-
-        searchPromise.promise
-          .then((newSuggestion) => {
-            if (searchPromise !== null) {
-              updateAsyncSuggestion(searchPromise, newSuggestion);
-            }
-          })
-          .catch((e) => {
-            if (e !== "Dismissed") {
-              console.error("[AutocompleteExtension] Query failed:", e);
-            }
-          });
-        lastMatch = match;
-      }, HISTORY_MERGE);
-    }
-
-    function $handleAutocompleteIntent(): boolean {
-      if (lastSuggestion === null || autocompleteNodeKey === null) {
-        return false;
-      }
-      const autocompleteNode = $getNodeByKey(autocompleteNodeKey);
-      if (autocompleteNode === null) {
-        return false;
-      }
-
-      const textNode = $createTextNode(lastSuggestion).setStyle(
-        `font-size: ${14}`
-      );
-      autocompleteNode.replace(textNode);
-      textNode.selectNext();
-      $clearSuggestion();
-      return true;
-    }
-
-    function $handleKeypressCommand(e: Event) {
-      if ($handleAutocompleteIntent()) {
-        e.preventDefault();
         return true;
       }
-      return false;
-    }
 
-    function handleSwipeRight(_force: number, e: TouchEvent) {
-      editor.update(() => {
+      function $handleKeypressCommand(e: Event) {
         if ($handleAutocompleteIntent()) {
           e.preventDefault();
-        } else {
-          $addUpdateTag(HISTORY_MERGE.tag);
+          return true;
         }
-      });
-    }
+        return false;
+      }
 
-    function unmountSuggestion() {
-      editor.update(() => {
-        $clearSuggestion();
-      }, HISTORY_MERGE);
-    }
+      function handleSwipeRight(_force: number, e: TouchEvent) {
+        editor.update(() => {
+          if ($handleAutocompleteIntent()) {
+            e.preventDefault();
+          } else {
+            $addUpdateTag(HISTORY_MERGE.tag);
+          }
+        });
+      }
 
-    const rootElem = editor.getRootElement();
+      function unmountSuggestion() {
+        editor.update(() => {
+          $clearSuggestion();
+        }, HISTORY_MERGE);
+      }
 
-    return mergeRegister(
-      editor.registerNodeTransform(
-        AutocompleteNode,
-        $handleAutocompleteNodeTransform
-      ),
-      editor.registerUpdateListener(handleUpdate),
-      editor.registerCommand(
-        KEY_TAB_COMMAND,
-        $handleKeypressCommand,
-        COMMAND_PRIORITY_LOW
-      ),
-      editor.registerCommand(
-        KEY_ARROW_RIGHT_COMMAND,
-        $handleKeypressCommand,
-        COMMAND_PRIORITY_LOW
-      ),
-      ...(rootElem !== null
-        ? [addSwipeRightListener(rootElem, handleSwipeRight)]
-        : []),
-      unmountSuggestion
-    );
-  },
-});
+      const rootElem = editor.getRootElement();
+
+      return mergeRegister(
+        editor.registerNodeTransform(
+          AutocompleteNode,
+          $handleAutocompleteNodeTransform
+        ),
+        editor.registerUpdateListener(handleUpdate),
+        editor.registerCommand(
+          KEY_TAB_COMMAND,
+          $handleKeypressCommand,
+          COMMAND_PRIORITY_LOW
+        ),
+        editor.registerCommand(
+          KEY_ARROW_RIGHT_COMMAND,
+          $handleKeypressCommand,
+          COMMAND_PRIORITY_LOW
+        ),
+        ...(rootElem !== null
+          ? [addSwipeRightListener(rootElem, handleSwipeRight)]
+          : []),
+        unmountSuggestion
+      );
+    },
+  });
+
+  return defineTypixExtension({
+    name: "auto-complete",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

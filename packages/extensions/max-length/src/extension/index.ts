@@ -10,64 +10,79 @@ import {
   RootNode as RootNodeClass,
   safeCast,
 } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 
-export interface MaxLengthConfig {
+export interface MaxLengthConfig extends TypixExtensionConfig {
   /** Maximum number of characters allowed. Adjustable at runtime via signals. */
   maxLength: number;
   /** Set to true to temporarily disable the limit without removing the extension. */
   disabled: boolean;
 }
 
-export const MaxLengthExtension = defineExtension({
-  name: "@typix/max-length",
+export const MaxLengthExtension = (userConfig: Partial<MaxLengthConfig> = {}) => {
+  const resolvedConfig: MaxLengthConfig = {
+    maxLength: 500,
+    disabled: false,
+    ...userConfig,
+  };
 
-  config: safeCast<MaxLengthConfig>({ maxLength: 500, disabled: false }),
+  const lexicalExt = defineExtension({
+    name: "@typix/max-length",
 
-  build(_editor, config) {
-    return namedSignals(config);
-  },
+    config: safeCast<MaxLengthConfig>(resolvedConfig),
 
-  register(editor, _config, state) {
-    const { disabled, maxLength } = state.getOutput();
+    build(_editor, config) {
+      return namedSignals(config);
+    },
 
-    return effect(() => {
-      if (disabled.value) return;
+    register(editor, _config, state) {
+      const { disabled, maxLength } = state.getOutput();
 
-      const limit = maxLength.value;
-      let lastRestoredEditorState: EditorState | null = null;
+      return effect(() => {
+        if (disabled.value) return;
 
-      return editor.registerNodeTransform(
-        RootNodeClass,
-        (rootNode: RootNode) => {
-          const selection = $getSelection();
-          if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
-            return;
-          }
+        const limit = maxLength.value;
+        let lastRestoredEditorState: EditorState | null = null;
 
-          const prevEditorState = editor.getEditorState();
-          const prevTextContentSize = prevEditorState.read(() =>
-            rootNode.getTextContentSize()
-          );
-          const textContentSize = rootNode.getTextContentSize();
+        return editor.registerNodeTransform(
+          RootNodeClass,
+          (rootNode: RootNode) => {
+            const selection = $getSelection();
+            if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
+              return;
+            }
 
-          if (prevTextContentSize !== textContentSize) {
-            const delCount = textContentSize - limit;
-            const anchor = selection.anchor;
+            const prevEditorState = editor.getEditorState();
+            const prevTextContentSize = prevEditorState.read(() =>
+              rootNode.getTextContentSize()
+            );
+            const textContentSize = rootNode.getTextContentSize();
 
-            if (delCount > 0) {
-              if (
-                prevTextContentSize === limit &&
-                lastRestoredEditorState !== prevEditorState
-              ) {
-                lastRestoredEditorState = prevEditorState;
-                $restoreEditorState(editor, prevEditorState);
-              } else {
-                $trimTextContentFromAnchor(editor, anchor, delCount);
+            if (prevTextContentSize !== textContentSize) {
+              const delCount = textContentSize - limit;
+              const anchor = selection.anchor;
+
+              if (delCount > 0) {
+                if (
+                  prevTextContentSize === limit &&
+                  lastRestoredEditorState !== prevEditorState
+                ) {
+                  lastRestoredEditorState = prevEditorState;
+                  $restoreEditorState(editor, prevEditorState);
+                } else {
+                  $trimTextContentFromAnchor(editor, anchor, delCount);
+                }
               }
             }
           }
-        }
-      );
-    });
-  },
-});
+        );
+      });
+    },
+  });
+
+  return defineTypixExtension({
+    name: "max-length",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

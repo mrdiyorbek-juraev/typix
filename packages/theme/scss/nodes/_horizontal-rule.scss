@@ -1,0 +1,19 @@
+.typix-hr {
+  padding: 2px 2px;
+  border: none;
+  margin: 1em 0;
+  cursor: pointer;
+}
+
+.typix-hr:after {
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: var(--typix-hr-color);
+  line-height: 2px;
+}
+
+.typix-hr.typix-hr--selected {
+  outline: 2px solid var(--typix-color-selection);
+  user-select: none;
+}

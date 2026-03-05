@@ -1,6 +1,7 @@
 import { effect, namedSignals } from "@lexical/extension";
 import { registerLexicalTextEntity } from "@lexical/text";
 import { defineExtension, mergeRegister, safeCast } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 import { $createKeywordNode, KeywordNode } from "../node";
 
 // Use Unicode property escapes (\p{L}) instead of manually listing Unicode ranges.
@@ -19,36 +20,49 @@ function getKeywordMatch(text: string) {
   return { end: endOffset, start: startOffset };
 }
 
-export interface KeywordsConfig {
+export interface KeywordsConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable keyword detection. */
   disabled: boolean;
 }
 
-export const KeywordsExtension = defineExtension({
-  name: "@typix/keywords",
+export const KeywordsExtension = (userConfig: Partial<KeywordsConfig> = {}) => {
+  const resolvedConfig: KeywordsConfig = {
+    disabled: false,
+    ...userConfig,
+  };
 
-  nodes: () => [KeywordNode],
+  const lexicalExt = defineExtension({
+    name: "@typix/keywords",
 
-  config: safeCast<KeywordsConfig>({ disabled: false }),
+    nodes: () => [KeywordNode],
 
-  build(_editor, config) {
-    return namedSignals(config);
-  },
+    config: safeCast<KeywordsConfig>(resolvedConfig),
 
-  register(editor, _config, state) {
-    const { disabled } = state.getOutput();
+    build(_editor, config) {
+      return namedSignals(config);
+    },
 
-    return effect(() => {
-      if (disabled.value) return;
+    register(editor, _config, state) {
+      const { disabled } = state.getOutput();
 
-      return mergeRegister(
-        ...registerLexicalTextEntity(
-          editor,
-          getKeywordMatch,
-          KeywordNode,
-          (textNode) => $createKeywordNode(textNode.getTextContent())
-        )
-      );
-    });
-  },
-});
+      return effect(() => {
+        if (disabled.value) return;
+
+        return mergeRegister(
+          ...registerLexicalTextEntity(
+            editor,
+            getKeywordMatch,
+            KeywordNode,
+            (textNode) => $createKeywordNode(textNode.getTextContent())
+          )
+        );
+      });
+    },
+  });
+
+  return defineTypixExtension({
+    name: "keywords",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

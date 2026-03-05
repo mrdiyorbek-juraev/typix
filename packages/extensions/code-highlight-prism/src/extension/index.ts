@@ -1,28 +1,42 @@
 import { effect, namedSignals } from "@lexical/extension";
 import { registerCodeHighlighting } from "@lexical/code";
 import { defineExtension, safeCast } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 
-export interface CodeHighlightPrismConfig {
+export interface CodeHighlightPrismConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable code highlighting. */
   disabled: boolean;
 }
 
-export const CodeHighlightPrismExtension = defineExtension({
-  name: "@typix/code-highlight-prism",
+export const CodeHighlightPrismExtension = (userConfig: Partial<CodeHighlightPrismConfig> = {}) => {
+  const resolvedConfig: CodeHighlightPrismConfig = {
+    disabled: false,
+    ...userConfig,
+  };
 
-  config: safeCast<CodeHighlightPrismConfig>({ disabled: false }),
+  const lexicalExt = defineExtension({
+    name: "@typix/code-highlight-prism",
 
-  build(_editor, config) {
-    return namedSignals(config);
-  },
+    config: safeCast<CodeHighlightPrismConfig>(resolvedConfig),
 
-  register(editor, _config, state) {
-    const { disabled } = state.getOutput();
+    build(_editor, config) {
+      return namedSignals(config);
+    },
 
-    return effect(() => {
-      if (disabled.value) return;
+    register(editor, _config, state) {
+      const { disabled } = state.getOutput();
 
-      return registerCodeHighlighting(editor);
-    });
-  },
-});
+      return effect(() => {
+        if (disabled.value) return;
+
+        return registerCodeHighlighting(editor);
+      });
+    },
+  });
+
+  return defineTypixExtension({
+    name: "code-highlight-prism",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

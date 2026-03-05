@@ -1,6 +1,7 @@
 import { defineExtension, safeCast } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 
-export interface CharacterLimitConfig {
+export interface CharacterLimitConfig extends TypixExtensionConfig {
   /** Maximum number of characters allowed. */
   maxLength: number;
   /**
@@ -14,11 +15,22 @@ export interface CharacterLimitConfig {
   disabled: boolean;
 }
 
-export const CharacterLimitExtension = defineExtension({
-  name: "@typix/character-limit",
-  config: safeCast<CharacterLimitConfig>({
+export const CharacterLimitExtension = (userConfig: Partial<CharacterLimitConfig> = {}) => {
+  const resolvedConfig: CharacterLimitConfig = {
     maxLength: 280,
     charset: "UTF-16",
     disabled: false,
-  }),
-});
+    ...userConfig,
+  };
+
+  const lexicalExt = defineExtension({
+    name: "@typix/character-limit",
+    config: safeCast<CharacterLimitConfig>(resolvedConfig),
+  });
+
+  return defineTypixExtension({
+    name: "character-limit",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

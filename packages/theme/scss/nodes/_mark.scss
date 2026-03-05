@@ -1,0 +1,20 @@
+.typix-mark {
+  background: var(--typix-color-mark-bg);
+  border-bottom: 2px solid var(--typix-color-mark-border);
+  padding-bottom: 2px;
+}
+
+.typix-mark--overlap {
+  background: var(--typix-color-mark-overlap-bg);
+  border-bottom: 2px solid var(--typix-color-mark-overlap-border);
+}
+
+.typix-mark.selected {
+  background: var(--typix-color-highlight-selected-bg);
+  border-bottom: 2px solid var(--typix-color-highlight-selected-border);
+}
+
+.typix-mark--overlap.selected {
+  background: var(--typix-color-mark-overlap-border);
+  border-bottom: 2px solid var(--typix-color-mark-overlap-border);
+}

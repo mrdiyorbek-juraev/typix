@@ -31,6 +31,9 @@
     "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
+  "dependencies": {
+    "@typix-editor/core": "workspace:*"
+  },
   "peerDependencies": {
     "@lexical/extension": "^0.40.0",
     "@lexical/selection": "^0.40.0",

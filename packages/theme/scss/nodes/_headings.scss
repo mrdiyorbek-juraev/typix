@@ -1,0 +1,26 @@
+@use "../foundation/mixins" as *;
+
+@each $level in (h1, h2, h3, h4, h5, h6) {
+  .typix-heading--#{$level} {
+    font-size: var(--typix-heading-#{$level}-size);
+    font-weight: var(--typix-heading-#{$level}-weight);
+    color: var(--typix-heading-#{$level}-color);
+    line-height: var(--typix-heading-#{$level}-line-height);
+    margin: 0;
+  }
+}
+
+@each $level, $color in (
+  "h1": #f4f4f5,
+  "h2": #e4e4e7,
+  "h3": #d4d4d8,
+  "h4": #a1a1aa,
+  "h5": #71717a,
+  "h6": #52525b,
+) {
+  .typix-heading--#{$level} {
+    @include dark-mode {
+      --typix-heading-#{$level}-color: #{$color};
+    }
+  }
+}

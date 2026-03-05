@@ -1,0 +1,81 @@
+.typix-code {
+  background-color: var(--typix-bg-code);
+  font-family: var(--typix-font-family-code);
+  display: block;
+  line-height: var(--typix-line-height-code);
+  font-size: var(--typix-font-size-code);
+  padding-top: 8px;
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  position: relative;
+  tab-size: 2;
+  white-space: pre;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.typix-code:before {
+  content: attr(data-gutter);
+  position: sticky;
+  background-color: var(--typix-bg-code-gutter);
+  left: 0;
+  float: left;
+  top: 0;
+  z-index: 3;
+  min-height: 100%;
+  border-right: 1px solid var(--typix-border-color-code-gutter);
+  padding: 8px;
+  color: var(--typix-color-code-gutter-text);
+  white-space: pre-wrap;
+  text-align: right;
+  min-width: 25px;
+  margin-right: 10px;
+  margin-top: -8px;
+}
+
+// Code Tokens
+.typix-token--comment {
+  color: var(--typix-token-comment);
+}
+
+.typix-token--deleted {
+  border-image: var(--typix-token-deleted-gradient) fill 0 / 0 / 0 100vw;
+}
+
+.typix-token--inserted {
+  border-image: var(--typix-token-inserted-gradient) fill 0 / 0 / 0 100vw;
+}
+
+.typix-token--unchanged {
+  border-image: var(--typix-token-unchanged-gradient) fill 0 / 0 / 0 100vw;
+}
+
+.typix-token--punctuation {
+  color: var(--typix-token-punctuation);
+}
+
+.typix-token--property {
+  color: var(--typix-token-property);
+}
+
+.typix-token--selector {
+  color: var(--typix-token-selector);
+}
+
+.typix-token--operator {
+  color: var(--typix-token-operator);
+}
+
+.typix-token--attr {
+  color: var(--typix-token-attr);
+}
+
+.typix-token--variable {
+  color: var(--typix-token-variable);
+}
+
+.typix-token--function {
+  color: var(--typix-token-function);
+}

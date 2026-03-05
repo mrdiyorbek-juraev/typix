@@ -1,0 +1,142 @@
+// Ordered Lists
+.typix-list--ol1 {
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
+}
+
+.typix-list--ol2 {
+  padding: 0;
+  margin: 0;
+  list-style-type: upper-alpha;
+  list-style-position: outside;
+}
+
+.typix-list--ol3 {
+  padding: 0;
+  margin: 0;
+  list-style-type: lower-alpha;
+  list-style-position: outside;
+}
+
+.typix-list--ol4 {
+  padding: 0;
+  margin: 0;
+  list-style-type: upper-roman;
+  list-style-position: outside;
+}
+
+.typix-list--ol5 {
+  padding: 0;
+  margin: 0;
+  list-style-type: lower-roman;
+  list-style-position: outside;
+}
+
+// Unordered Lists
+.typix-list--ul {
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
+}
+
+// List Items
+.typix-list__item {
+  margin: var(--typix-list-item-margin);
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
+  background-color: var(--listitem-marker-background-color);
+}
+
+.typix-list__item::marker {
+  color: var(--listitem-marker-color);
+  background-color: var(--listitem-marker-background-color);
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
+}
+
+// Checklist
+.typix-checklist {
+  padding: 0;
+  margin: 0;
+  list-style-position: outside;
+}
+
+.typix-list__item--checked,
+.typix-list__item--unchecked {
+  position: relative;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  list-style-type: none;
+  outline: none;
+  display: block;
+  min-height: 1.5em;
+}
+
+.typix-list__item--checked > *,
+.typix-list__item--unchecked > * {
+  margin-left: 0.01em;
+}
+
+.typix-list__item--unchecked:before,
+.typix-list__item--checked:before {
+  content: "\200B";
+  width: 0.9em;
+  height: 0.9em;
+  top: 50%;
+  left: 0;
+  cursor: pointer;
+  display: block;
+  background-size: cover;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.typix-list__item--checked {
+  text-decoration: line-through;
+}
+
+.typix-list__item--unchecked:focus:before,
+.typix-list__item--checked:focus:before {
+  box-shadow: var(--typix-checklist-focus-shadow);
+  border-radius: 2px;
+}
+
+.typix-list__item--unchecked:before {
+  border: 1px solid var(--typix-checklist-checkbox-border);
+  border-radius: 2px;
+}
+
+.typix-list__item--checked:before {
+  border: 1px solid var(--typix-checklist-checkbox-color);
+  border-radius: 2px;
+  background-color: var(--typix-checklist-checkbox-color);
+  background-repeat: no-repeat;
+}
+
+.typix-list__item--checked:after {
+  content: "";
+  cursor: pointer;
+  border-color: #fff;
+  border-style: solid;
+  position: absolute;
+  display: block;
+  top: 45%;
+  width: 0.2em;
+  left: 0.35em;
+  height: 0.4em;
+  transform: translateY(-50%) rotate(45deg);
+  border-width: 0 0.1em 0.1em 0;
+}
+
+// Nested Lists
+.typix-list__item--nested {
+  list-style-type: none;
+}
+
+.typix-list__item--nested:before,
+.typix-list__item--nested:after {
+  display: none;
+}

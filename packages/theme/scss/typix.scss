@@ -1,0 +1,55 @@
+// =============================================================================
+// Typix Theme — Main Entry
+//
+// Imports all layers in correct cascade order.
+// Import this file in your app: `@import "@typix-editor/theme"`
+// =============================================================================
+
+// Layer 0: Foundation (no CSS output — SCSS-only tools)
+@use "foundation/variables";
+@use "foundation/functions";
+@use "foundation/mixins";
+@use "foundation/keyframes";
+
+// Layer 1: CSS Custom Properties on :root
+@use "tokens/typography";
+@use "tokens/colors";
+@use "tokens/spacing";
+@use "tokens/code-tokens";
+@use "tokens/component-tokens";
+
+// Layer 2: Editor shell & text primitives
+@use "base/editor-shell";
+@use "base/paragraph";
+@use "base/text";
+@use "base/tab";
+
+// Layer 3: Content node styles
+@use "nodes/headings";
+@use "nodes/blockquote";
+@use "nodes/link";
+@use "nodes/code-block";
+@use "nodes/horizontal-rule";
+@use "nodes/list";
+@use "nodes/table";
+@use "nodes/embed-block";
+@use "nodes/layout";
+@use "nodes/image";
+@use "nodes/hashtag";
+@use "nodes/mark";
+@use "nodes/special-text";
+@use "nodes/block-cursor";
+@use "nodes/indent";
+@use "nodes/autocomplete";
+
+// Layer 4: UI overlay/floating styles
+@use "components/context-menu";
+@use "components/mention";
+@use "components/floating-link";
+@use "components/draggable-block";
+@use "components/collapsible";
+@use "components/character-limit";
+@use "components/keyword";
+
+// Layer 5: UI primitive styles are co-located in @typix-editor/ui.
+// Import @typix-editor/ui/styles in your app to load primitive styles.

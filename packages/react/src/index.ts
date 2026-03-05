@@ -48,9 +48,8 @@ export {
 } from "./core";
 
 export {
-  useActiveFormats,
-  useBlockType,
   useEditorState,
+  useTypixEditorState,
   useMouseListener,
   useRange,
 } from "./hooks";

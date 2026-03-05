@@ -1,0 +1,254 @@
+// Scrollable Wrapper
+.typix-table-scrollable-wrapper {
+  overflow-x: auto;
+  margin: 0px 25px 30px 0px;
+}
+
+.typix-table-scroll--right {
+  box-shadow: inset -10px 0 10px var(--typix-table-scroll-shadow);
+}
+
+.typix-table-scroll--left {
+  box-shadow: inset 10px 0 10px var(--typix-table-scroll-shadow);
+}
+
+.typix-table-scroll--middle {
+  box-shadow:
+    inset 10px 0 10px var(--typix-table-scroll-shadow),
+    inset -10px 0 10px var(--typix-table-scroll-shadow);
+}
+
+.typix-table-scrollable-wrapper > .typix-table {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// Alignment
+.typix-table--align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.typix-table--align-right {
+  margin-left: auto;
+}
+
+// Base
+.typix-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  table-layout: fixed;
+  width: fit-content;
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+// Frozen Row / Column
+.typix-table-scrollable-wrapper.typix-table--frozen-row {
+  overflow-x: clip;
+}
+
+.typix-table--frozen-row tr:nth-of-type(1) > td {
+  overflow: clip;
+  background-color: var(--typix-table-frozen-td-bg);
+  position: sticky;
+  z-index: 2;
+  top: 44px;
+}
+
+.typix-table--frozen-row tr:nth-of-type(1) > th {
+  overflow: clip;
+  background-color: var(--typix-table-frozen-th-bg);
+  position: sticky;
+  z-index: 2;
+  top: 44px;
+}
+
+.typix-table--frozen-row tr:nth-of-type(1) > th:after,
+.typix-table--frozen-row tr:nth-of-type(1) > td:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 1px solid var(--typix-border-color);
+}
+
+.typix-table--frozen-column tr > td:first-child {
+  background-color: var(--typix-table-frozen-td-bg);
+  position: sticky;
+  z-index: 2;
+  left: 0;
+}
+
+.typix-table--frozen-column tr > th:first-child {
+  background-color: var(--typix-table-frozen-th-bg);
+  position: sticky;
+  z-index: 2;
+  left: 0;
+}
+
+.typix-table--frozen-column tr > :first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-right: 1px solid var(--typix-border-color);
+}
+
+// Row Striping
+.typix-table--row-striping tr:nth-child(even),
+.typix-table--frozen-column
+  .typix-table.typix-table--row-striping
+  tr:nth-child(even)
+  > td:first-child {
+  background-color: var(--typix-table-row-striping-bg);
+}
+
+// Selection
+.typix-table__selection *::selection {
+  background-color: transparent;
+}
+
+.typix-table--selected {
+  outline: 2px solid var(--typix-color-selection);
+}
+
+// Cells
+.typix-table__cell {
+  border: 1px solid var(--typix-border-color);
+  width: var(--typix-table-cell-width);
+  vertical-align: top;
+  text-align: start;
+  padding: var(--typix-table-cell-padding);
+  position: relative;
+  outline: none;
+  overflow: auto;
+}
+
+// Firefox workaround for scrolling of overflowing table cell
+.typix-table__cell > * {
+  overflow: inherit;
+}
+
+.typix-table__cell-resizer {
+  position: absolute;
+  right: -4px;
+  height: 100%;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 10;
+  top: 0;
+}
+
+.typix-table__cell--header {
+  background-color: var(--typix-table-cell-header-bg);
+  text-align: start;
+}
+
+.typix-table__cell--selected {
+  caret-color: transparent;
+}
+
+.typix-table__cell--selected::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: highlight;
+  mix-blend-mode: multiply;
+  content: "";
+  pointer-events: none;
+}
+
+.typix-table__cell-resize-ruler {
+  display: block;
+  position: absolute;
+  width: 1px;
+  background-color: var(--typix-color-selection);
+  height: 100%;
+  top: 0;
+}
+
+// Action Button
+.typix-table__cell-action-container {
+  display: block;
+  right: 5px;
+  top: 6px;
+  position: absolute;
+  z-index: 4;
+  width: 20px;
+  height: 20px;
+}
+
+.typix-table__cell-action-btn {
+  background-color: var(--typix-table-add-btn-bg);
+  display: block;
+  border: 0;
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--typix-table-action-btn-color);
+  cursor: pointer;
+}
+
+.typix-table__cell-action-btn:hover {
+  background-color: var(--typix-table-action-btn-hover-bg);
+}
+
+// Add Columns / Rows
+.typix-table__add-columns {
+  position: absolute;
+  background-color: var(--typix-table-add-btn-bg);
+  height: 100%;
+  animation: typix-table-controls 0.2s ease;
+  border: 0;
+  cursor: pointer;
+}
+
+.typix-table__add-columns:after {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.typix-table__add-columns:hover,
+.typix-table__add-rows:hover {
+  background-color: var(--typix-table-add-btn-hover-bg);
+}
+
+.typix-table__add-rows {
+  position: absolute;
+  width: calc(100% - 25px);
+  background-color: var(--typix-table-add-btn-bg);
+  animation: typix-table-controls 0.2s ease;
+  border: 0;
+  cursor: pointer;
+}
+
+.typix-table__add-rows:after {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}

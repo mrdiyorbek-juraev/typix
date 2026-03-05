@@ -1,0 +1,9 @@
+.typix-link {
+  color: var(--typix-color-link);
+  text-decoration: none;
+}
+
+.typix-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

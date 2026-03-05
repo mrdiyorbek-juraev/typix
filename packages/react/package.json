@@ -55,6 +55,7 @@
     "@floating-ui/react-dom": "^2.1.6",
     "@lexical/tailwind": "^0.40.0",
     "@radix-ui/react-slot": "^1.2.4",
+    "@typix-editor/theme": "workspace:*",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.4.0"
   },

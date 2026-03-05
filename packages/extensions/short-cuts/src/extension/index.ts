@@ -32,6 +32,7 @@ import {
   OUTDENT_CONTENT_COMMAND,
   safeCast,
 } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 import {
   isCapitalize,
   isCenterAlign,
@@ -61,7 +62,7 @@ import {
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-export interface ShortCutsConfig {
+export interface ShortCutsConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable all keyboard shortcuts. */
   disabled: boolean;
   /**
@@ -257,113 +258,126 @@ const NO_MODIFIER = IS_APPLE
   ? { metaKey: false, altKey: false, ctrlKey: false, shiftKey: false }
   : { ctrlKey: false, altKey: false, metaKey: false, shiftKey: false };
 
-export const ShortCutsExtension = defineExtension({
-  name: "@typix/short-cuts",
+export const ShortCutsExtension = (userConfig: Partial<ShortCutsConfig> = {}) => {
+  const resolvedConfig: ShortCutsConfig = {
+    disabled: false,
+    ...userConfig,
+  };
 
-  config: safeCast<ShortCutsConfig>({ disabled: false }),
+  const lexicalExt = defineExtension({
+    name: "@typix/short-cuts",
 
-  build(_editor, config) {
-    return namedSignals(config);
-  },
+    config: safeCast<ShortCutsConfig>(resolvedConfig),
 
-  register(editor, _config, state) {
-    const { disabled, onLinkEditModeChange } = state.getOutput();
+    build(_editor, config) {
+      return namedSignals(config);
+    },
 
-    // Declared outside the effect so it survives enable/disable cycles.
-    let isLinkEditMode = false;
+    register(editor, _config, state) {
+      const { disabled, onLinkEditModeChange } = state.getOutput();
 
-    return effect(() => {
-      if (disabled.value) return;
+      // Declared outside the effect so it survives enable/disable cycles.
+      let isLinkEditMode = false;
 
-      const keyboardShortcutsHandler = (event: KeyboardEvent): boolean => {
-        // Short-circuit if no modifier is pressed
-        if (isModifierMatch(event, NO_MODIFIER)) {
-          return false;
-        }
+      return effect(() => {
+        if (disabled.value) return;
 
-        // Block formatting
-        if (isFormatParagraph(event)) {
-          setParagraph(editor);
-        } else if (isFormatHeading(event)) {
-          const { code } = event;
-          const level = Number.parseInt(code[code.length - 1]) as HeadingLevel;
-          if (level >= 1 && level <= 6) {
-            toggleHeading(editor, level);
+        const keyboardShortcutsHandler = (event: KeyboardEvent): boolean => {
+          // Short-circuit if no modifier is pressed
+          if (isModifierMatch(event, NO_MODIFIER)) {
+            return false;
           }
-        } else if (isFormatBulletList(event)) {
-          toggleBulletList(editor);
-        } else if (isFormatNumberedList(event)) {
-          toggleOrderedList(editor);
-        } else if (isFormatCheckList(event)) {
-          toggleCheckList(editor);
-        } else if (isFormatCode(event)) {
-          toggleCodeBlock(editor);
-        } else if (isFormatQuote(event)) {
-          toggleQuote(editor);
-        }
-        // Text formatting
-        else if (isStrikeThrough(event)) {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-        } else if (isLowercase(event)) {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "lowercase");
-        } else if (isUppercase(event)) {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "uppercase");
-        } else if (isCapitalize(event)) {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "capitalize");
-        } else if (isSubscript(event)) {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
-        } else if (isSuperscript(event)) {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript");
-        } else if (isInsertCodeBlock(event)) {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
-        }
-        // Indentation
-        else if (isIndent(event)) {
-          editor.dispatchCommand(INDENT_CONTENT_COMMAND, undefined);
-        } else if (isOutdent(event)) {
-          editor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined);
-        }
-        // Alignment
-        else if (isCenterAlign(event)) {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-        } else if (isLeftAlign(event)) {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
-        } else if (isRightAlign(event)) {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-        } else if (isJustifyAlign(event)) {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-        }
-        // Font size
-        else if (isIncreaseFontSize(event)) {
-          incrementFontSize(editor, 2);
-        } else if (isDecreaseFontSize(event)) {
-          decrementFontSize(editor, 2);
-        }
-        // Clear formatting
-        else if (isClearFormatting(event)) {
-          clearFormatting(editor);
-        }
-        // Link — read onLinkEditModeChange.value in the handler (not effect body)
-        // so callback changes don't trigger re-registration.
-        else if (isInsertLink(event)) {
-          isLinkEditMode = !isLinkEditMode;
-          onLinkEditModeChange?.value?.(isLinkEditMode);
-          editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl("https://"));
-        }
-        // No match
-        else {
-          return false;
-        }
 
-        event.preventDefault();
-        return true;
-      };
+          // Block formatting
+          if (isFormatParagraph(event)) {
+            setParagraph(editor);
+          } else if (isFormatHeading(event)) {
+            const { code } = event;
+            const level = Number.parseInt(code[code.length - 1]) as HeadingLevel;
+            if (level >= 1 && level <= 6) {
+              toggleHeading(editor, level);
+            }
+          } else if (isFormatBulletList(event)) {
+            toggleBulletList(editor);
+          } else if (isFormatNumberedList(event)) {
+            toggleOrderedList(editor);
+          } else if (isFormatCheckList(event)) {
+            toggleCheckList(editor);
+          } else if (isFormatCode(event)) {
+            toggleCodeBlock(editor);
+          } else if (isFormatQuote(event)) {
+            toggleQuote(editor);
+          }
+          // Text formatting
+          else if (isStrikeThrough(event)) {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
+          } else if (isLowercase(event)) {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "lowercase");
+          } else if (isUppercase(event)) {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "uppercase");
+          } else if (isCapitalize(event)) {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "capitalize");
+          } else if (isSubscript(event)) {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
+          } else if (isSuperscript(event)) {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript");
+          } else if (isInsertCodeBlock(event)) {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
+          }
+          // Indentation
+          else if (isIndent(event)) {
+            editor.dispatchCommand(INDENT_CONTENT_COMMAND, undefined);
+          } else if (isOutdent(event)) {
+            editor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined);
+          }
+          // Alignment
+          else if (isCenterAlign(event)) {
+            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+          } else if (isLeftAlign(event)) {
+            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+          } else if (isRightAlign(event)) {
+            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+          } else if (isJustifyAlign(event)) {
+            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
+          }
+          // Font size
+          else if (isIncreaseFontSize(event)) {
+            incrementFontSize(editor, 2);
+          } else if (isDecreaseFontSize(event)) {
+            decrementFontSize(editor, 2);
+          }
+          // Clear formatting
+          else if (isClearFormatting(event)) {
+            clearFormatting(editor);
+          }
+          // Link — read onLinkEditModeChange.value in the handler (not effect body)
+          // so callback changes don't trigger re-registration.
+          else if (isInsertLink(event)) {
+            isLinkEditMode = !isLinkEditMode;
+            onLinkEditModeChange?.value?.(isLinkEditMode);
+            editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl("https://"));
+          }
+          // No match
+          else {
+            return false;
+          }
 
-      return editor.registerCommand(
-        KEY_DOWN_COMMAND,
-        keyboardShortcutsHandler,
-        COMMAND_PRIORITY_NORMAL
-      );
-    });
-  },
-});
+          event.preventDefault();
+          return true;
+        };
+
+        return editor.registerCommand(
+          KEY_DOWN_COMMAND,
+          keyboardShortcutsHandler,
+          COMMAND_PRIORITY_NORMAL
+        );
+      });
+    },
+  });
+
+  return defineTypixExtension({
+    name: "short-cuts",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

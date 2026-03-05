@@ -1,0 +1,570 @@
+// =============================================================================
+// Foundation: SCSS Variables
+// Source of truth for all design tokens. Use `!default` so consumers can override.
+// =============================================================================
+
+// ---- Typography ----
+$typix-typography: (
+  "font-family": inherit,
+  "font-size": 15px,
+  "font-size-code": 13px,
+  "font-size-inline-code": 94%,
+  "font-family-code": (Menlo, Consolas, Monaco, monospace),
+  "line-height-code": 1.53,
+) !default;
+
+// ---- Colors ----
+$typix-colors: (
+  "text": rgb(5, 5, 5),
+  "text-muted": rgb(101, 103, 107),
+  "placeholder": #999,
+  "caret": #444,
+  "link": rgb(33, 111, 219),
+  "selection": rgb(60, 132, 244),
+  "hashtag-bg": rgba(88, 144, 255, 0.15),
+  "hashtag-border": rgba(88, 144, 255, 0.3),
+  "highlight-bg": rgba(255, 212, 0, 0.14),
+  "highlight-border": rgba(255, 212, 0, 0.3),
+  "highlight-selected-bg": rgba(255, 212, 0, 0.5),
+  "highlight-selected-border": rgba(255, 212, 0, 1),
+  "mark-bg": rgba(255, 212, 0, 0.14),
+  "mark-border": rgba(255, 212, 0, 0.3),
+  "mark-overlap-bg": rgba(255, 212, 0, 0.3),
+  "mark-overlap-border": rgba(255, 212, 0, 0.7),
+  "special-bg": yellow,
+  "character-limit": #ffbbbb,
+  "autocomplete": #ccc,
+  "quote-text": rgb(101, 103, 107),
+  "quote-border": rgb(206, 208, 212),
+) !default;
+
+// ---- Keyword ----
+$typix-keyword: (
+  "bg": rgba(251, 191, 36, 0.12),
+  "color": inherit,
+  "border": rgba(251, 191, 36, 0.35),
+  "radius": 3px,
+  "padding": 0.1em 0.35em,
+) !default;
+
+// ---- Character Limit Counter ----
+$typix-character-limit-counter: (
+  "color": #9ca3af,
+  "warning-color": #f59e0b,
+  "exceeded-color": #ef4444,
+) !default;
+
+// ---- Backgrounds ----
+$typix-backgrounds: (
+  "code": rgb(240, 242, 245),
+  "code-gutter": #eee,
+  "white": #fff,
+  "inline-code": rgba(135, 131, 120, 0.1),
+) !default;
+
+// ---- Inline Code ----
+$typix-inline-code: (
+  "color": inherit,
+  "border-color": rgba(135, 131, 120, 0.22),
+  "radius": 4px,
+  "padding": 0.15em 0.4em,
+) !default;
+
+// ---- Borders ----
+$typix-borders: (
+  "color": #bbb,
+  "color-light": #ddd,
+  "color-code-gutter": #ccc,
+  "color-code-gutter-text": #777,
+) !default;
+
+// ---- Quote ----
+$typix-quote: (
+  "bg": rgba(0, 0, 0, 0.03),
+  "border-width": 3px,
+  "radius": 0 6px 6px 0,
+) !default;
+
+// ---- Headings ----
+$typix-headings: (
+  "h1-size": 30px,
+  "h1-weight": 700,
+  "h1-color": #0a0a0a,
+  "h1-line-height": 1.2,
+  "h2-size": 24px,
+  "h2-weight": 700,
+  "h2-color": #111,
+  "h2-line-height": 1.25,
+  "h3-size": 20px,
+  "h3-weight": 600,
+  "h3-color": #111,
+  "h3-line-height": 1.3,
+  "h4-size": 17px,
+  "h4-weight": 600,
+  "h4-color": #1a1a1a,
+  "h4-line-height": 1.35,
+  "h5-size": 14px,
+  "h5-weight": 600,
+  "h5-color": #374151,
+  "h5-line-height": 1.4,
+  "h6-size": 13px,
+  "h6-weight": 600,
+  "h6-color": #6b7280,
+  "h6-line-height": 1.4,
+) !default;
+
+// ---- Headings Dark Mode ----
+$typix-headings-dark: (
+  "h1-color": #f4f4f5,
+  "h2-color": #e4e4e7,
+  "h3-color": #d4d4d8,
+  "h4-color": #a1a1aa,
+  "h5-color": #71717a,
+  "h6-color": #52525b,
+) !default;
+
+// ---- Spacing ----
+$typix-spacing: (
+  "contenteditable-y": 15px,
+  "contenteditable-x": 25px,
+  "layout-gap": 10px,
+  "indent-base": 40px,
+) !default;
+
+// ---- List ----
+$typix-list: (
+  "item-margin": 0 32px,
+  "checklist-checkbox-color": #3d87f5,
+  "checklist-checkbox-border": #999,
+  "checklist-focus-shadow": 0 0 0 2px #a6cdfe,
+) !default;
+
+// ---- Table ----
+$typix-table: (
+  "cell-width": 75px,
+  "cell-padding": 6px 8px,
+  "cell-header-bg": #f2f3f5,
+  "frozen-td-bg": #fff,
+  "frozen-th-bg": #f2f3f5,
+  "row-striping-bg": #f2f5fb,
+  "add-btn-bg": #eee,
+  "add-btn-hover-bg": #c9dbf0,
+  "action-btn-hover-bg": #ddd,
+  "action-btn-color": #222,
+  "scroll-shadow": rgba(0, 0, 0, 0.15),
+) !default;
+
+// ---- Code Tokens ----
+$typix-code-tokens: (
+  "comment": slategray,
+  "punctuation": #999,
+  "property": #905,
+  "selector": #690,
+  "operator": #9a6e3a,
+  "attr": #07a,
+  "variable": #e90,
+  "function": #dd4a68,
+) !default;
+
+// ---- HR ----
+$typix-hr-color: #ccc !default;
+
+// ---- Block Cursor ----
+$typix-block-cursor-color: black !default;
+
+// ---- Context Menu ----
+$typix-context-menu: (
+  "bg": #fff,
+  "border": #e5e7eb,
+  "shadow": (0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06)),
+  "radius": 10px,
+  "padding": 4px,
+  "min-width": 168px,
+  "item-color": #111,
+  "item-hover-bg": rgba(0, 0, 0, 0.06),
+  "item-open-bg": rgba(0, 0, 0, 0.08),
+  "item-disabled-color": #bbb,
+  "item-radius": 6px,
+  "item-height": 32px,
+  "item-font-size": 13px,
+  "item-icon-color": rgba(0, 0, 0, 0.45),
+  "separator-color": rgba(0, 0, 0, 0.07),
+  "separator-margin": 3px 0,
+) !default;
+
+// ---- Context Menu Dark Mode ----
+$typix-context-menu-dark: (
+  "bg": #1c1c1e,
+  "border": #2d2d30,
+  "shadow": (0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3)),
+  "item-color": #e5e5e5,
+  "item-hover-bg": rgba(255, 255, 255, 0.08),
+  "item-open-bg": rgba(255, 255, 255, 0.12),
+  "item-disabled-color": #444,
+  "item-icon-color": rgba(255, 255, 255, 0.4),
+  "separator-color": rgba(255, 255, 255, 0.08),
+) !default;
+
+// ---- Mention ----
+$typix-mention: (
+  "bg": rgba(24, 119, 232, 0.15),
+  "bg-hover": rgba(24, 119, 232, 0.25),
+  "color": #1877e8,
+  "menu-bg": white,
+  "menu-border": #ddd,
+  "menu-shadow": 0 4px 12px rgba(0, 0, 0, 0.15),
+  "menu-radius": 8px,
+  "menu-item-hover-bg": #f0f0f0,
+  "menu-loading-color": #666,
+  "menu-empty-color": #999,
+  "menu-min-width": 220px,
+  "avatar-size": 32px,
+  "avatar-bg": rgba(24, 119, 232, 0.1),
+  "avatar-color": #1877e8,
+  "avatar-radius": 50%,
+  "avatar-font-size": 12px,
+  "avatar-font-weight": 600,
+  "item-subtitle-color": #999,
+  "item-subtitle-size": 12px,
+) !default;
+
+// ---- Mention Dark Mode ----
+$typix-mention-dark: (
+  "menu-bg": #1c1c1e,
+  "menu-border": #2d2d30,
+  "menu-shadow": 0 4px 16px rgba(0, 0, 0, 0.4),
+  "menu-item-hover-bg": rgba(255, 255, 255, 0.06),
+  "avatar-bg": rgba(24, 119, 232, 0.15),
+  "item-subtitle-color": #666,
+) !default;
+
+// ---- Draggable Block ----
+$typix-draggable: (
+  "menu-hover-bg": rgba(0, 0, 0, 0.08),
+  "icon-color": currentColor,
+  "target-line-bg": #5742b3,
+) !default;
+
+// ---- Collapsible ----
+$typix-collapsible: (
+  "bg": #f9fafb,
+  "border": #e5e7eb,
+  "radius": 10px,
+  "title-hover-bg": rgba(0, 0, 0, 0.04),
+  "arrow-color": #9ca3af,
+  "content-border": #e5e7eb,
+) !default;
+
+// ---- Collapsible Dark Mode ----
+$typix-collapsible-dark: (
+  "bg": #1c1c1e,
+  "border": #2d2d30,
+  "title-hover-bg": rgba(255, 255, 255, 0.05),
+  "arrow-color": #6b7280,
+  "content-border": #2d2d30,
+) !default;
+
+// =============================================================================
+// UI Primitives
+// =============================================================================
+
+// ---- UI: Shared ----
+$typix-ui-shared: (
+  "radius-sm": 4px,
+  "radius-md": 6px,
+  "radius-lg": 8px,
+  "radius-xl": 12px,
+  "transition-fast": 120ms ease,
+  "transition-normal": 200ms ease,
+  "focus-ring": 0 0 0 2px rgba(59, 130, 246, 0.5),
+  "font-family": ("Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif),
+  "font-size-xs": 11px,
+  "font-size-sm": 13px,
+  "font-size-md": 14px,
+  "font-size-lg": 16px,
+) !default;
+
+// ---- UI: Button ----
+$typix-ui-button: (
+  "height-sm": 28px,
+  "height-md": 34px,
+  "height-lg": 40px,
+  "height-icon": 34px,
+  "padding-x-sm": 10px,
+  "padding-x-md": 14px,
+  "padding-x-lg": 18px,
+  "font-weight": 500,
+  "primary-bg": #18181b,
+  "primary-color": #fff,
+  "primary-hover-bg": #27272a,
+  "secondary-bg": #f4f4f5,
+  "secondary-color": #18181b,
+  "secondary-hover-bg": #e4e4e7,
+  "ghost-bg": transparent,
+  "ghost-color": #18181b,
+  "ghost-hover-bg": rgba(0, 0, 0, 0.06),
+  "outline-bg": transparent,
+  "outline-color": #18181b,
+  "outline-border": #d4d4d8,
+  "outline-hover-bg": #f4f4f5,
+  "destructive-bg": #ef4444,
+  "destructive-color": #fff,
+  "destructive-hover-bg": #dc2626,
+  "disabled-opacity": 0.5,
+) !default;
+
+$typix-ui-button-dark: (
+  "primary-bg": #fafafa,
+  "primary-color": #18181b,
+  "primary-hover-bg": #e4e4e7,
+  "secondary-bg": #27272a,
+  "secondary-color": #fafafa,
+  "secondary-hover-bg": #3f3f46,
+  "ghost-color": #fafafa,
+  "ghost-hover-bg": rgba(255, 255, 255, 0.08),
+  "outline-color": #fafafa,
+  "outline-border": #3f3f46,
+  "outline-hover-bg": #27272a,
+) !default;
+
+// ---- UI: Badge ----
+$typix-ui-badge: (
+  "height-sm": 20px,
+  "height-md": 24px,
+  "padding-x-sm": 6px,
+  "padding-x-md": 8px,
+  "font-size-sm": 11px,
+  "font-size-md": 12px,
+  "font-weight": 500,
+  "default-bg": #18181b,
+  "default-color": #fff,
+  "secondary-bg": #f4f4f5,
+  "secondary-color": #18181b,
+  "outline-bg": transparent,
+  "outline-color": #18181b,
+  "outline-border": #d4d4d8,
+  "destructive-bg": #fef2f2,
+  "destructive-color": #ef4444,
+  "success-bg": #f0fdf4,
+  "success-color": #16a34a,
+) !default;
+
+$typix-ui-badge-dark: (
+  "default-bg": #fafafa,
+  "default-color": #18181b,
+  "secondary-bg": #27272a,
+  "secondary-color": #fafafa,
+  "outline-color": #fafafa,
+  "outline-border": #3f3f46,
+  "destructive-bg": rgba(239, 68, 68, 0.15),
+  "success-bg": rgba(22, 163, 74, 0.15),
+) !default;
+
+// ---- UI: Input ----
+$typix-ui-input: (
+  "height-sm": 28px,
+  "height-md": 34px,
+  "height-lg": 40px,
+  "padding-x": 10px,
+  "bg": #fff,
+  "color": #18181b,
+  "border": #d4d4d8,
+  "placeholder": #a1a1aa,
+  "focus-border": #a1a1aa,
+  "disabled-opacity": 0.5,
+) !default;
+
+$typix-ui-input-dark: (
+  "bg": #18181b,
+  "color": #fafafa,
+  "border": #3f3f46,
+  "placeholder": #71717a,
+  "focus-border": #71717a,
+) !default;
+
+// ---- UI: Label ----
+$typix-ui-label: (
+  "color": #18181b,
+  "font-weight": 500,
+  "required-color": #ef4444,
+) !default;
+
+$typix-ui-label-dark: (
+  "color": #fafafa,
+) !default;
+
+// ---- UI: Separator ----
+$typix-ui-separator: (
+  "color": #e4e4e7,
+  "size": 1px,
+) !default;
+
+$typix-ui-separator-dark: (
+  "color": #27272a,
+) !default;
+
+// ---- UI: Spacer ----
+$typix-ui-spacer: (
+  "xs": 4px,
+  "sm": 8px,
+  "md": 16px,
+  "lg": 24px,
+  "xl": 40px,
+) !default;
+
+// ---- UI: Card ----
+$typix-ui-card: (
+  "bg": #fff,
+  "border": #e4e4e7,
+  "shadow": 0 1px 3px rgba(0, 0, 0, 0.06),
+  "radius": 12px,
+  "padding": 24px,
+  "header-gap": 6px,
+  "footer-border": #e4e4e7,
+) !default;
+
+$typix-ui-card-dark: (
+  "bg": #18181b,
+  "border": #27272a,
+  "shadow": 0 1px 3px rgba(0, 0, 0, 0.2),
+  "footer-border": #27272a,
+) !default;
+
+// ---- UI: Toolbar ----
+$typix-ui-toolbar: (
+  "bg": #fff,
+  "border": #e4e4e7,
+  "padding": 4px,
+  "gap": 2px,
+  "radius": 8px,
+  "toggle-active-bg": #f4f4f5,
+) !default;
+
+$typix-ui-toolbar-dark: (
+  "bg": #18181b,
+  "border": #27272a,
+  "toggle-active-bg": #27272a,
+) !default;
+
+// ---- UI: Tooltip ----
+$typix-ui-tooltip: (
+  "bg": #18181b,
+  "color": #fff,
+  "font-size": 12px,
+  "padding": 4px 8px,
+  "radius": 6px,
+  "shadow": 0 2px 8px rgba(0, 0, 0, 0.15),
+  "max-width": 240px,
+) !default;
+
+$typix-ui-tooltip-dark: (
+  "bg": #f4f4f5,
+  "color": #18181b,
+  "shadow": 0 2px 8px rgba(0, 0, 0, 0.3),
+) !default;
+
+// ---- UI: Popover ----
+$typix-ui-popover: (
+  "bg": #fff,
+  "border": #e4e4e7,
+  "shadow": (0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06)),
+  "radius": 10px,
+  "padding": 16px,
+  "min-width": 200px,
+) !default;
+
+$typix-ui-popover-dark: (
+  "bg": #1c1c1e,
+  "border": #2d2d30,
+  "shadow": (0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3)),
+) !default;
+
+// ---- UI: Avatar ----
+$typix-ui-avatar: (
+  "size-sm": 28px,
+  "size-md": 36px,
+  "size-lg": 48px,
+  "radius": 50%,
+  "fallback-bg": #e4e4e7,
+  "fallback-color": #71717a,
+  "fallback-font-weight": 500,
+  "group-overlap": -8px,
+  "group-ring": 2px solid #fff,
+) !default;
+
+$typix-ui-avatar-dark: (
+  "fallback-bg": #3f3f46,
+  "fallback-color": #a1a1aa,
+  "group-ring": 2px solid #18181b,
+) !default;
+
+// ---- UI: Menu ----
+$typix-ui-menu: (
+  "bg": #fff,
+  "border": #e4e4e7,
+  "shadow": (0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06)),
+  "radius": 10px,
+  "padding": 4px,
+  "min-width": 180px,
+  "item-color": #18181b,
+  "item-hover-bg": rgba(0, 0, 0, 0.06),
+  "item-active-bg": rgba(0, 0, 0, 0.08),
+  "item-disabled-color": #a1a1aa,
+  "item-radius": 6px,
+  "item-height": 32px,
+  "item-padding-x": 10px,
+  "item-font-size": 13px,
+  "item-icon-color": rgba(0, 0, 0, 0.45),
+  "label-color": #71717a,
+  "label-font-size": 12px,
+  "label-font-weight": 500,
+  "label-padding": 6px 10px 4px,
+  "separator-color": rgba(0, 0, 0, 0.07),
+  "separator-margin": 3px 0,
+) !default;
+
+$typix-ui-menu-dark: (
+  "bg": #1c1c1e,
+  "border": #2d2d30,
+  "shadow": (0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3)),
+  "item-color": #e5e5e5,
+  "item-hover-bg": rgba(255, 255, 255, 0.08),
+  "item-active-bg": rgba(255, 255, 255, 0.12),
+  "item-disabled-color": #52525b,
+  "item-icon-color": rgba(255, 255, 255, 0.4),
+  "label-color": #a1a1aa,
+  "separator-color": rgba(255, 255, 255, 0.08),
+) !default;
+
+// ---- UI: Dropdown Menu (inherits from Menu) ----
+
+// ---- UI: Combobox ----
+$typix-ui-combobox: (
+  "empty-color": #a1a1aa,
+  "empty-font-size": 13px,
+  "empty-padding": 24px 0,
+) !default;
+
+$typix-ui-combobox-dark: (
+  "empty-color": #71717a,
+) !default;
+
+// ---- UI: Textarea Autosize ----
+$typix-ui-textarea: (
+  "min-height": 60px,
+  "padding": 8px 10px,
+  "bg": #fff,
+  "color": #18181b,
+  "border": #d4d4d8,
+  "placeholder": #a1a1aa,
+  "focus-border": #a1a1aa,
+  "disabled-opacity": 0.5,
+) !default;
+
+$typix-ui-textarea-dark: (
+  "bg": #18181b,
+  "color": #fafafa,
+  "border": #3f3f46,
+  "placeholder": #71717a,
+  "focus-border": #71717a,
+) !default;

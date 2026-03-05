@@ -38,6 +38,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@typix-editor/core": "workspace:*",
     "@lexical/extension": "^0.40.0",
     "@lexical/code": "^0.40.0",
     "@lexical/link": "^0.40.0",

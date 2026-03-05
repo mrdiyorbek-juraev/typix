@@ -1,28 +1,42 @@
 import { effect, namedSignals } from "@lexical/extension";
 import { registerCodeHighlighting } from "@lexical/code-shiki";
 import { defineExtension, safeCast } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 
-export interface CodeHighlightShikiConfig {
+export interface CodeHighlightShikiConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable code highlighting. */
   disabled: boolean;
 }
 
-export const CodeHighlightShikiExtension = defineExtension({
-  name: "@typix/code-highlight-shiki",
+export const CodeHighlightShikiExtension = (userConfig: Partial<CodeHighlightShikiConfig> = {}) => {
+  const resolvedConfig: CodeHighlightShikiConfig = {
+    disabled: false,
+    ...userConfig,
+  };
 
-  config: safeCast<CodeHighlightShikiConfig>({ disabled: false }),
+  const lexicalExt = defineExtension({
+    name: "@typix/code-highlight-shiki",
 
-  build(_editor, config) {
-    return namedSignals(config);
-  },
+    config: safeCast<CodeHighlightShikiConfig>(resolvedConfig),
 
-  register(editor, _config, state) {
-    const { disabled } = state.getOutput();
+    build(_editor, config) {
+      return namedSignals(config);
+    },
 
-    return effect(() => {
-      if (disabled.value) return;
+    register(editor, _config, state) {
+      const { disabled } = state.getOutput();
 
-      return registerCodeHighlighting(editor);
-    });
-  },
-});
+      return effect(() => {
+        if (disabled.value) return;
+
+        return registerCodeHighlighting(editor);
+      });
+    },
+  });
+
+  return defineTypixExtension({
+    name: "code-highlight-shiki",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

@@ -19,7 +19,6 @@ import {
   TextNode,
   defineExtension,
   safeCast,
-  configExtension,
 } from "lexical";
 
 export {
@@ -49,7 +48,6 @@ export {
   $createHeadingNode,
   defineExtension,
   safeCast,
-  configExtension,
 };
 
 // LEXICAL CORE TYPES

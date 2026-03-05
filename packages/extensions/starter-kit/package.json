@@ -1,0 +1,49 @@
+{
+  "name": "@typix-editor/starter-kit",
+  "version": "0.0.0",
+  "description": "Starter kit extension for Typix — bundles common built-in extensions",
+  "keywords": [],
+  "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
+  "homepage": "https://typix.com",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:fast": "tsup",
+    "dev": "pnpm build:fast --watch",
+    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@lexical/extension": "^0.40.0",
+    "@lexical/rich-text": "^0.40.0",
+    "@lexical/list": "^0.40.0",
+    "@lexical/code": "^0.40.0",
+    "@lexical/link": "^0.40.0",
+    "@lexical/history": "^0.40.0",
+    "@lexical/selection": "^0.40.0",
+    "@lexical/utils": "^0.40.0",
+    "@typix-editor/core": "workspace:*",
+    "lexical": "^0.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0"
+  }
+}

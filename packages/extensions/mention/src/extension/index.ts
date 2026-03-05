@@ -1,7 +1,8 @@
 import { defineExtension, safeCast } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 import { MentionNode } from "../node";
 
-export interface MentionConfig {
+export interface MentionConfig extends TypixExtensionConfig {
   /** Character(s) that trigger the mention menu. @default '@' */
   trigger: string;
   /** Minimum number of characters after trigger before searching. @default 0 */
@@ -20,12 +21,8 @@ export interface MentionConfig {
   disabled: boolean;
 }
 
-export const MentionExtension = defineExtension({
-  name: "@typix/mention",
-
-  nodes: () => [MentionNode],
-
-  config: safeCast<MentionConfig>({
+export const MentionExtension = (userConfig: Partial<MentionConfig> = {}) => {
+  const resolvedConfig: MentionConfig = {
     trigger: "@",
     minLength: 0,
     maxLength: 75,
@@ -34,5 +31,18 @@ export const MentionExtension = defineExtension({
     debounceMs: 200,
     includeTrigger: true,
     disabled: false,
-  }),
-});
+    ...userConfig,
+  };
+
+  const lexicalExt = defineExtension({
+    name: "@typix/mention",
+    nodes: () => [MentionNode],
+    config: safeCast<MentionConfig>(resolvedConfig),
+  });
+
+  return defineTypixExtension({
+    name: "mention",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

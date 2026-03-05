@@ -2,7 +2,7 @@
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { createContext, type ReactNode, useContext, useMemo } from "react";
-import { TypixEditor } from "@typix-editor/core";
+import { TypixEditor, ExtensionRegistry, type TypixExtensionDefinition } from "@typix-editor/core";
 
 /**
  * Context shape for TypixEditor
@@ -19,11 +19,24 @@ const TypixEditorContext = createContext<TypixEditorContextValue | null>(null);
  * This must be used inside a LexicalComposer.
  * Typically you won't use this directly - EditorRoot sets it up automatically.
  */
-export function TypixEditorProvider({ children }: { children: ReactNode }) {
+export function TypixEditorProvider({
+  children,
+  extensions = [],
+}: {
+  children: ReactNode;
+  extensions?: TypixExtensionDefinition[];
+}) {
   const [lexicalEditor] = useLexicalComposerContext();
 
-  // Create TypixEditor instance once and memoize it
-  const editor = useMemo(() => new TypixEditor(lexicalEditor), [lexicalEditor]);
+  // Create TypixEditor instance with a populated registry so chain() commands work
+  const editor = useMemo(() => {
+    const registry = new ExtensionRegistry();
+    for (const ext of extensions) {
+      registry.register(ext);
+    }
+    return new TypixEditor(lexicalEditor, registry, "typix-react");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lexicalEditor]); // extensions should be stable (defined outside render or memoized)
 
   const value = useMemo(() => ({ editor }), [editor]);
 

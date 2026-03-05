@@ -1,0 +1,20 @@
+@use "../foundation/mixins" as *;
+
+.typix-quote {
+  margin: 0;
+  margin-bottom: 8px;
+  font-size: var(--typix-font-size);
+  color: var(--typix-color-quote-text);
+  background-color: var(--typix-quote-bg);
+  border-left: var(--typix-quote-border-width) solid
+    var(--typix-color-quote-border);
+  border-radius: var(--typix-quote-radius);
+  padding: 10px 16px;
+  font-style: italic;
+
+  @include dark-mode {
+    --typix-quote-bg: rgba(255, 255, 255, 0.04);
+    --typix-color-quote-border: rgb(80, 82, 86);
+    --typix-color-quote-text: rgb(160, 163, 168);
+  }
+}

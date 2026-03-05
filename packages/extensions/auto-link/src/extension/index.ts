@@ -7,6 +7,7 @@ import {
   registerAutoLink,
 } from "@lexical/link";
 import { defineExtension, safeCast } from "lexical";
+import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
 import { EMAIL_REGEX, URL_REGEX } from "../lib";
 
 export const MATCHERS: LinkMatcher[] = [
@@ -16,41 +17,55 @@ export const MATCHERS: LinkMatcher[] = [
   createLinkMatcherWithRegExp(EMAIL_REGEX, (text) => `mailto:${text}`),
 ];
 
-export interface AutoLinkConfig {
+export interface AutoLinkConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable auto-link detection. */
   disabled: boolean;
   matchers?: LinkMatcher[];
   onChange?: ChangeHandler;
 }
 
-export const AutoLinkExtension = defineExtension({
-  name: "@typix/auto-link",
+export const AutoLinkExtension = (userConfig: Partial<AutoLinkConfig> = {}) => {
+  const resolvedConfig: AutoLinkConfig = {
+    disabled: false,
+    matchers: MATCHERS,
+    ...userConfig,
+  };
 
-  nodes: () => [AutoLinkNode],
+  const lexicalExt = defineExtension({
+    name: "@typix/auto-link",
 
-  config: safeCast<AutoLinkConfig>({ disabled: false, matchers: MATCHERS }),
+    nodes: () => [AutoLinkNode],
 
-  build(_editor, config) {
-    return namedSignals(config);
-  },
+    config: safeCast<AutoLinkConfig>(resolvedConfig),
 
-  register(editor, _config, state) {
-    const { disabled, matchers, onChange } = state.getOutput();
+    build(_editor, config) {
+      return namedSignals(config);
+    },
 
-    return effect(() => {
-      if (disabled.value) return;
+    register(editor, _config, state) {
+      const { disabled, matchers, onChange } = state.getOutput();
 
-      const currentMatchers = matchers?.value ?? MATCHERS;
+      return effect(() => {
+        if (disabled.value) return;
 
-      // Stable wrapper reads onChange.value at call-time so callback updates
-      // don't trigger re-registration.
-      const stableOnChange: ChangeHandler = (...args) =>
-        onChange?.value?.(...args);
+        const currentMatchers = matchers?.value ?? MATCHERS;
 
-      return registerAutoLink(editor, {
-        matchers: currentMatchers,
-        changeHandlers: [stableOnChange],
+        // Stable wrapper reads onChange.value at call-time so callback updates
+        // don't trigger re-registration.
+        const stableOnChange: ChangeHandler = (...args) =>
+          onChange?.value?.(...args);
+
+        return registerAutoLink(editor, {
+          matchers: currentMatchers,
+          changeHandlers: [stableOnChange],
+        });
       });
-    });
-  },
-});
+    },
+  });
+
+  return defineTypixExtension({
+    name: "auto-link",
+    typix: lexicalExt,
+    config: resolvedConfig,
+  });
+};

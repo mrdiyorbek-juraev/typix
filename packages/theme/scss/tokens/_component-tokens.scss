@@ -1,0 +1,56 @@
+@use "sass:map";
+@use "../foundation/variables" as *;
+
+:root {
+  // Context Menu
+  --typix-context-menu-bg: #{map.get($typix-context-menu, "bg")};
+  --typix-context-menu-border: #{map.get($typix-context-menu, "border")};
+  --typix-context-menu-shadow: #{map.get($typix-context-menu, "shadow")};
+  --typix-context-menu-radius: #{map.get($typix-context-menu, "radius")};
+  --typix-context-menu-padding: #{map.get($typix-context-menu, "padding")};
+  --typix-context-menu-min-width: #{map.get($typix-context-menu, "min-width")};
+  --typix-context-menu-item-color: #{map.get($typix-context-menu, "item-color")};
+  --typix-context-menu-item-hover-bg: #{map.get($typix-context-menu, "item-hover-bg")};
+  --typix-context-menu-item-open-bg: #{map.get($typix-context-menu, "item-open-bg")};
+  --typix-context-menu-item-disabled-color: #{map.get($typix-context-menu, "item-disabled-color")};
+  --typix-context-menu-item-radius: #{map.get($typix-context-menu, "item-radius")};
+  --typix-context-menu-item-height: #{map.get($typix-context-menu, "item-height")};
+  --typix-context-menu-item-font-size: #{map.get($typix-context-menu, "item-font-size")};
+  --typix-context-menu-item-icon-color: #{map.get($typix-context-menu, "item-icon-color")};
+  --typix-context-menu-separator-color: #{map.get($typix-context-menu, "separator-color")};
+  --typix-context-menu-separator-margin: #{map.get($typix-context-menu, "separator-margin")};
+
+  // Mention
+  --typix-mention-bg: #{map.get($typix-mention, "bg")};
+  --typix-mention-bg-hover: #{map.get($typix-mention, "bg-hover")};
+  --typix-mention-color: #{map.get($typix-mention, "color")};
+  --typix-mention-menu-bg: #{map.get($typix-mention, "menu-bg")};
+  --typix-mention-menu-border: #{map.get($typix-mention, "menu-border")};
+  --typix-mention-menu-shadow: #{map.get($typix-mention, "menu-shadow")};
+  --typix-mention-menu-radius: #{map.get($typix-mention, "menu-radius")};
+  --typix-mention-menu-item-hover-bg: #{map.get($typix-mention, "menu-item-hover-bg")};
+  --typix-mention-menu-loading-color: #{map.get($typix-mention, "menu-loading-color")};
+  --typix-mention-menu-empty-color: #{map.get($typix-mention, "menu-empty-color")};
+  --typix-mention-menu-min-width: #{map.get($typix-mention, "menu-min-width")};
+  --typix-mention-avatar-size: #{map.get($typix-mention, "avatar-size")};
+  --typix-mention-avatar-bg: #{map.get($typix-mention, "avatar-bg")};
+  --typix-mention-avatar-color: #{map.get($typix-mention, "avatar-color")};
+  --typix-mention-avatar-radius: #{map.get($typix-mention, "avatar-radius")};
+  --typix-mention-avatar-font-size: #{map.get($typix-mention, "avatar-font-size")};
+  --typix-mention-avatar-font-weight: #{map.get($typix-mention, "avatar-font-weight")};
+  --typix-mention-item-subtitle-color: #{map.get($typix-mention, "item-subtitle-color")};
+  --typix-mention-item-subtitle-size: #{map.get($typix-mention, "item-subtitle-size")};
+
+  // Draggable Block
+  --typix-draggable-menu-hover-bg: #{map.get($typix-draggable, "menu-hover-bg")};
+  --typix-draggable-icon-color: #{map.get($typix-draggable, "icon-color")};
+  --typix-draggable-target-line-bg: #{map.get($typix-draggable, "target-line-bg")};
+
+  // Collapsible
+  --typix-collapsible-bg: #{map.get($typix-collapsible, "bg")};
+  --typix-collapsible-border: #{map.get($typix-collapsible, "border")};
+  --typix-collapsible-radius: #{map.get($typix-collapsible, "radius")};
+  --typix-collapsible-title-hover-bg: #{map.get($typix-collapsible, "title-hover-bg")};
+  --typix-collapsible-arrow-color: #{map.get($typix-collapsible, "arrow-color")};
+  --typix-collapsible-content-border: #{map.get($typix-collapsible, "content-border")};
+}

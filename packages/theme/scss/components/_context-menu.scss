@@ -1,0 +1,79 @@
+@use "../foundation/mixins" as *;
+
+.typix-context-menu {
+  outline: 0;
+  background: var(--typix-context-menu-bg);
+  border: 1px solid var(--typix-context-menu-border);
+  box-shadow: var(--typix-context-menu-shadow);
+  border-radius: var(--typix-context-menu-radius);
+  padding: var(--typix-context-menu-padding);
+  min-width: var(--typix-context-menu-min-width);
+
+  @include dark-mode {
+    --typix-context-menu-bg: #1c1c1e;
+    --typix-context-menu-border: #2d2d30;
+    --typix-context-menu-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+    --typix-context-menu-item-color: #e5e5e5;
+    --typix-context-menu-item-hover-bg: rgba(255, 255, 255, 0.08);
+    --typix-context-menu-item-open-bg: rgba(255, 255, 255, 0.12);
+    --typix-context-menu-item-disabled-color: #444;
+    --typix-context-menu-item-icon-color: rgba(255, 255, 255, 0.4);
+    --typix-context-menu-separator-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.typix-context-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: var(--typix-context-menu-item-height);
+  background-color: transparent;
+  color: var(--typix-context-menu-item-color);
+  border: 0;
+  border-radius: var(--typix-context-menu-item-radius);
+  font-size: var(--typix-context-menu-item-font-size);
+  text-align: left;
+  padding: 0 10px;
+  outline: 0;
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.typix-context-menu__item:hover,
+.typix-context-menu__item.open {
+  background: var(--typix-context-menu-item-hover-bg);
+}
+
+.typix-context-menu__item:focus {
+  background: var(--typix-context-menu-item-hover-bg);
+}
+
+.typix-context-menu__item:not([disabled]):active {
+  background: var(--typix-context-menu-item-open-bg);
+}
+
+.typix-context-menu__item:disabled {
+  color: var(--typix-context-menu-item-disabled-color);
+  cursor: not-allowed;
+}
+
+.typix-context-menu__item-icon,
+.typix-context-menu__item svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--typix-context-menu-item-icon-color);
+}
+
+.typix-context-menu__item:disabled svg {
+  color: var(--typix-context-menu-item-disabled-color);
+}
+
+.typix-context-menu__separator {
+  height: 1px;
+  background-color: var(--typix-context-menu-separator-color);
+  margin: var(--typix-context-menu-separator-margin);
+  border: none;
+}

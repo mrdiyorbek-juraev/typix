@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useSpeechToText } from "@typix-editor/extension-speech-to-text";
 import {
   sanitizeUrl,
   useActiveFormats,
@@ -71,7 +70,6 @@ const ToolbarButton = ({
 export function Toolbar() {
   const editor = useTypixEditor();
   const { isActive } = useActiveFormats();
-  const { isListening, isSupported, toggle } = useSpeechToText();
 
   return (
     <div className="flex items-center gap-1 rounded-lg border bg-card/50 backdrop-blur-sm px-3 py-2 shadow-sm overflow-x-auto mb-4">
@@ -229,30 +227,7 @@ export function Toolbar() {
         </ToolbarButton>
       </div>
 
-      {isSupported && (
-        <>
-          <ToolbarDivider />
-          <button
-            className={cn(
-              "rounded-md px-3 py-1.5 font-medium text-xs transition-all flex items-center gap-1.5",
-              "hover:opacity-80 active:scale-95",
-              isListening
-                ? "bg-red-500 text-white"
-                : "bg-muted hover:bg-muted/80"
-            )}
-            onClick={toggle}
-            title={isListening ? "Stop listening" : "Start speech-to-text"}
-            type="button"
-          >
-            {isListening ? (
-              <MicOff className="h-3.5 w-3.5" />
-            ) : (
-              <Mic className="h-3.5 w-3.5" />
-            )}
-            <span>{isListening ? "Stop" : "Mic"}</span>
-          </button>
-        </>
-      )}
+     
 
       <ToolbarDivider />
 

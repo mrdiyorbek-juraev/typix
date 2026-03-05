@@ -1,0 +1,19 @@
+@use "sass:map";
+@use "../foundation/variables" as *;
+
+:root {
+  // Code syntax tokens
+  --typix-token-comment: #{map.get($typix-code-tokens, "comment")};
+  --typix-token-punctuation: #{map.get($typix-code-tokens, "punctuation")};
+  --typix-token-property: #{map.get($typix-code-tokens, "property")};
+  --typix-token-selector: #{map.get($typix-code-tokens, "selector")};
+  --typix-token-operator: #{map.get($typix-code-tokens, "operator")};
+  --typix-token-attr: #{map.get($typix-code-tokens, "attr")};
+  --typix-token-variable: #{map.get($typix-code-tokens, "variable")};
+  --typix-token-function: #{map.get($typix-code-tokens, "function")};
+
+  // Diff tokens
+  --typix-token-deleted-gradient: linear-gradient(to right, #ffcecb 50%, #ffebe9 50%);
+  --typix-token-inserted-gradient: linear-gradient(to right, #aceebb 50%, #dafbe1 50%);
+  --typix-token-unchanged-gradient: linear-gradient(to right, #ddd 50%, rgb(240, 242, 245) 50%);
+}

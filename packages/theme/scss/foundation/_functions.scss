@@ -1,0 +1,11 @@
+// =============================================================================
+// Foundation: Functions
+// =============================================================================
+
+/// Shorthand for `var(--typix-#{$name})` with optional fallback.
+@function typix-var($name, $fallback: null) {
+  @if $fallback {
+    @return var(--typix-#{$name}, #{$fallback});
+  }
+  @return var(--typix-#{$name});
+}

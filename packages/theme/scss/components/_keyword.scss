@@ -1,0 +1,15 @@
+@use "../foundation/mixins" as *;
+
+.keyword {
+  background-color: var(--typix-keyword-bg);
+  color: var(--typix-keyword-color);
+  padding: var(--typix-keyword-padding);
+  border-radius: var(--typix-keyword-radius);
+  border: 1px solid var(--typix-keyword-border);
+  cursor: default;
+
+  @include dark-mode {
+    --typix-keyword-bg: rgba(251, 191, 36, 0.1);
+    --typix-keyword-border: rgba(251, 191, 36, 0.25);
+  }
+}

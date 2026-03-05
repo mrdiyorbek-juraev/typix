@@ -1,0 +1,31 @@
+@use "sass:map";
+@use "../foundation/variables" as *;
+
+:root {
+  // Indent
+  --typix-indent-base: #{map.get($typix-spacing, "indent-base")};
+
+  // Spacing
+  --typix-spacing-contenteditable-y: #{map.get($typix-spacing, "contenteditable-y")};
+  --typix-spacing-contenteditable-x: #{map.get($typix-spacing, "contenteditable-x")};
+  --typix-spacing-layout-gap: #{map.get($typix-spacing, "layout-gap")};
+
+  // List
+  --typix-list-item-margin: #{map.get($typix-list, "item-margin")};
+  --typix-checklist-checkbox-color: #{map.get($typix-list, "checklist-checkbox-color")};
+  --typix-checklist-checkbox-border: #{map.get($typix-list, "checklist-checkbox-border")};
+  --typix-checklist-focus-shadow: #{map.get($typix-list, "checklist-focus-shadow")};
+
+  // Table
+  --typix-table-cell-width: #{map.get($typix-table, "cell-width")};
+  --typix-table-cell-padding: #{map.get($typix-table, "cell-padding")};
+  --typix-table-cell-header-bg: #{map.get($typix-table, "cell-header-bg")};
+  --typix-table-frozen-td-bg: #{map.get($typix-table, "frozen-td-bg")};
+  --typix-table-frozen-th-bg: #{map.get($typix-table, "frozen-th-bg")};
+  --typix-table-row-striping-bg: #{map.get($typix-table, "row-striping-bg")};
+  --typix-table-add-btn-bg: #{map.get($typix-table, "add-btn-bg")};
+  --typix-table-add-btn-hover-bg: #{map.get($typix-table, "add-btn-hover-bg")};
+  --typix-table-action-btn-hover-bg: #{map.get($typix-table, "action-btn-hover-bg")};
+  --typix-table-action-btn-color: #{map.get($typix-table, "action-btn-color")};
+  --typix-table-scroll-shadow: #{map.get($typix-table, "scroll-shadow")};
+}
