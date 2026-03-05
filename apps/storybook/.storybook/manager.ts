@@ -47,7 +47,8 @@ const typixTheme = create({
   booleanSelectedBg: "#2383e2",
 
   // ── Typography ─────────────────────────────────────────────────────────
-  fontBase: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  fontBase:
+    '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   fontCode: 'ui-monospace, "Cascadia Code", Menlo, monospace',
 });
 

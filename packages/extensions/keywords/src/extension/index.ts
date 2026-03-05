@@ -1,7 +1,10 @@
 import { effect, namedSignals } from "@lexical/extension";
 import { registerLexicalTextEntity } from "@lexical/text";
 import { defineExtension, mergeRegister, safeCast } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 import { $createKeywordNode, KeywordNode } from "../node";
 
 // Use Unicode property escapes (\p{L}) instead of manually listing Unicode ranges.

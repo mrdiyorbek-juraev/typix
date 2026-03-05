@@ -18,7 +18,10 @@ import {
   KEY_ARROW_UP_COMMAND,
   safeCast,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 import {
   $createCollapsibleContainerNode,
@@ -45,7 +48,9 @@ export interface CollapsibleConfig extends TypixExtensionConfig {
   disabled: boolean;
 }
 
-export const CollapsibleExtension = (userConfig: Partial<CollapsibleConfig> = {}) => {
+export const CollapsibleExtension = (
+  userConfig: Partial<CollapsibleConfig> = {}
+) => {
   const resolvedConfig: CollapsibleConfig = {
     disabled: false,
     ...userConfig,
@@ -88,7 +93,8 @@ export const CollapsibleExtension = (userConfig: Partial<CollapsibleConfig> = {}
               if (
                 parent !== null &&
                 parent.getFirstChild() === container &&
-                selection.anchor.key === container.getFirstDescendant()?.getKey()
+                selection.anchor.key ===
+                  container.getFirstDescendant()?.getKey()
               ) {
                 container.insertBefore($createParagraphNode());
               }
@@ -143,7 +149,9 @@ export const CollapsibleExtension = (userConfig: Partial<CollapsibleConfig> = {}
           editor.registerNodeTransform(CollapsibleTitleNode, (node) => {
             const parent = node.getParent();
             if (!$isCollapsibleContainerNode(parent)) {
-              node.replace($createParagraphNode().append(...node.getChildren()));
+              node.replace(
+                $createParagraphNode().append(...node.getChildren())
+              );
             }
           }),
 
@@ -218,7 +226,9 @@ export const CollapsibleExtension = (userConfig: Partial<CollapsibleConfig> = {}
                 $insertNodeToNearestRoot(
                   $createCollapsibleContainerNode(true).append(
                     title.append(paragraph),
-                    $createCollapsibleContentNode().append($createParagraphNode())
+                    $createCollapsibleContentNode().append(
+                      $createParagraphNode()
+                    )
                   )
                 );
                 paragraph.select();

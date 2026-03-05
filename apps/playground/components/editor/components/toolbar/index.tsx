@@ -227,8 +227,6 @@ export function Toolbar() {
         </ToolbarButton>
       </div>
 
-     
-
       <ToolbarDivider />
 
       {/* Status */}

@@ -41,10 +41,18 @@ export const Default: Story = {
             <SelectValue placeholder="Select a fruit…" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="apple"><SelectItemText>Apple</SelectItemText></SelectItem>
-            <SelectItem value="banana"><SelectItemText>Banana</SelectItemText></SelectItem>
-            <SelectItem value="cherry"><SelectItemText>Cherry</SelectItemText></SelectItem>
-            <SelectItem value="date"><SelectItemText>Date</SelectItemText></SelectItem>
+            <SelectItem value="apple">
+              <SelectItemText>Apple</SelectItemText>
+            </SelectItem>
+            <SelectItem value="banana">
+              <SelectItemText>Banana</SelectItemText>
+            </SelectItem>
+            <SelectItem value="cherry">
+              <SelectItemText>Cherry</SelectItemText>
+            </SelectItem>
+            <SelectItem value="date">
+              <SelectItemText>Date</SelectItemText>
+            </SelectItem>
           </SelectContent>
         </SelectRoot>
       </div>
@@ -62,12 +70,20 @@ export const WithGroups: Story = {
         </SelectTrigger>
         <SelectContent>
           <SelectGroupLabel>Fruits</SelectGroupLabel>
-          <SelectItem value="apple"><SelectItemText>Apple</SelectItemText></SelectItem>
-          <SelectItem value="banana"><SelectItemText>Banana</SelectItemText></SelectItem>
+          <SelectItem value="apple">
+            <SelectItemText>Apple</SelectItemText>
+          </SelectItem>
+          <SelectItem value="banana">
+            <SelectItemText>Banana</SelectItemText>
+          </SelectItem>
           <SelectSeparator />
           <SelectGroupLabel>Vegetables</SelectGroupLabel>
-          <SelectItem value="carrot"><SelectItemText>Carrot</SelectItemText></SelectItem>
-          <SelectItem value="broccoli"><SelectItemText>Broccoli</SelectItemText></SelectItem>
+          <SelectItem value="carrot">
+            <SelectItemText>Carrot</SelectItemText>
+          </SelectItem>
+          <SelectItem value="broccoli">
+            <SelectItemText>Broccoli</SelectItemText>
+          </SelectItem>
         </SelectContent>
       </SelectRoot>
     </div>
@@ -82,7 +98,9 @@ export const Disabled: Story = {
           <SelectValue placeholder="Select…" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="apple"><SelectItemText>Apple</SelectItemText></SelectItem>
+          <SelectItem value="apple">
+            <SelectItemText>Apple</SelectItemText>
+          </SelectItem>
         </SelectContent>
       </SelectRoot>
     </div>
@@ -98,8 +116,12 @@ export const WithDisabledItem: Story = {
           <SelectValue placeholder="Choose a plan…" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="free"><SelectItemText>Free</SelectItemText></SelectItem>
-          <SelectItem value="pro"><SelectItemText>Pro</SelectItemText></SelectItem>
+          <SelectItem value="free">
+            <SelectItemText>Free</SelectItemText>
+          </SelectItem>
+          <SelectItem value="pro">
+            <SelectItemText>Pro</SelectItemText>
+          </SelectItem>
           <SelectItem value="enterprise" disabled>
             <SelectItemText>Enterprise (coming soon)</SelectItemText>
           </SelectItem>

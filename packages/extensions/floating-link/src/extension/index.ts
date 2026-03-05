@@ -20,7 +20,10 @@ import {
   type RangeSelection,
   type TextNode,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 export interface FloatingLinkConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable the floating link behavior. */
@@ -58,7 +61,9 @@ function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   return $isAtNodeEnd(anchor) ? anchorNode : focusNode;
 }
 
-export const FloatingLinkExtension = (userConfig: Partial<FloatingLinkConfig> = {}) => {
+export const FloatingLinkExtension = (
+  userConfig: Partial<FloatingLinkConfig> = {}
+) => {
   const resolvedConfig: FloatingLinkConfig = {
     disabled: false,
     ...userConfig,

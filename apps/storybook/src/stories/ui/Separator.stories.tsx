@@ -15,8 +15,7 @@ const meta: Meta<typeof Separator> = {
   parameters: {
     docs: {
       description: {
-        component:
-          "Visual divider in horizontal or vertical orientation.",
+        component: "Visual divider in horizontal or vertical orientation.",
       },
     },
   },
@@ -27,7 +26,13 @@ type Story = StoryObj<typeof Separator>;
 
 export const Horizontal: Story = {
   args: { orientation: "horizontal" },
-  decorators: [(Story) => <div style={{ width: 300 }}><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div style={{ width: 300 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const Vertical: Story = {

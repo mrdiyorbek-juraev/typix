@@ -33,7 +33,10 @@ function keyToCode(key: string): string {
   return special[key] ?? key;
 }
 
-function matchesShortcut(event: KeyboardEvent, shortcut: ShortcutDefinition): boolean {
+function matchesShortcut(
+  event: KeyboardEvent,
+  shortcut: ShortcutDefinition
+): boolean {
   const needsMod = shortcut.modifiers.includes("mod");
   const needsShift = shortcut.modifiers.includes("shift");
   const needsAlt = shortcut.modifiers.includes("alt");
@@ -71,7 +74,7 @@ export function ShortcutsPlugin() {
         }
         return false;
       },
-      COMMAND_PRIORITY_NORMAL,
+      COMMAND_PRIORITY_NORMAL
     );
   }, [lexicalEditor, typixEditor]);
 

@@ -31,7 +31,14 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 320 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 12,
+        maxWidth: 320,
+      }}
+    >
       <Input inputSize="sm" placeholder="Small" />
       <Input inputSize="md" placeholder="Medium (default)" />
       <Input inputSize="lg" placeholder="Large" />
@@ -41,10 +48,22 @@ export const Sizes: Story = {
 
 export const Ghost: Story = {
   args: { variant: "ghost", placeholder: "Ghost variant" },
-  decorators: [(Story) => <div style={{ maxWidth: 320 }}><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 320 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const Disabled: Story = {
   args: { placeholder: "Disabled input", disabled: true },
-  decorators: [(Story) => <div style={{ maxWidth: 320 }}><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 320 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };

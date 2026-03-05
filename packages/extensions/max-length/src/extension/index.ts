@@ -10,7 +10,10 @@ import {
   RootNode as RootNodeClass,
   safeCast,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 export interface MaxLengthConfig extends TypixExtensionConfig {
   /** Maximum number of characters allowed. Adjustable at runtime via signals. */
@@ -19,7 +22,9 @@ export interface MaxLengthConfig extends TypixExtensionConfig {
   disabled: boolean;
 }
 
-export const MaxLengthExtension = (userConfig: Partial<MaxLengthConfig> = {}) => {
+export const MaxLengthExtension = (
+  userConfig: Partial<MaxLengthConfig> = {}
+) => {
   const resolvedConfig: MaxLengthConfig = {
     maxLength: 500,
     disabled: false,

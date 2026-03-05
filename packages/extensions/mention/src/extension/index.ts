@@ -1,5 +1,8 @@
 import { defineExtension, safeCast } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 import { MentionNode } from "../node";
 
 export interface MentionConfig extends TypixExtensionConfig {

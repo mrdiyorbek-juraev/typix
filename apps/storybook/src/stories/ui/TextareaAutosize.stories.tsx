@@ -27,15 +27,33 @@ type Story = StoryObj<typeof TextareaAutosize>;
 
 export const Default: Story = {
   args: { placeholder: "Start typing..." },
-  decorators: [(Story) => <div style={{ maxWidth: 400 }}><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 400 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const WithRowLimits: Story = {
   args: { minRows: 3, maxRows: 6, placeholder: "Min 3 rows, max 6 rows" },
-  decorators: [(Story) => <div style={{ maxWidth: 400 }}><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 400 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const Disabled: Story = {
   args: { placeholder: "Disabled textarea", disabled: true },
-  decorators: [(Story) => <div style={{ maxWidth: 400 }}><Story /></div>],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 400 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };

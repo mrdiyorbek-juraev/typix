@@ -8,7 +8,10 @@ import {
   defineExtension,
   safeCast,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 export interface InsertImagePayload {
   src: string;
@@ -71,7 +74,9 @@ function validateFile(
   return { valid: true };
 }
 
-export const DragDropPasteExtension = (userConfig: Partial<DragDropPasteConfig> = {}) => {
+export const DragDropPasteExtension = (
+  userConfig: Partial<DragDropPasteConfig> = {}
+) => {
   const resolvedConfig: DragDropPasteConfig = {
     disabled: false,
     ...userConfig,

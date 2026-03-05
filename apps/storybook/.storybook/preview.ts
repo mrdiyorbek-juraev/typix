@@ -35,8 +35,8 @@ const preview: Preview = {
       toolbar: {
         icon: "sun",
         items: [
-          { value: "light", icon: "sun",  title: "Light" },
-          { value: "dark",  icon: "moon", title: "Dark"  },
+          { value: "light", icon: "sun", title: "Light" },
+          { value: "dark", icon: "moon", title: "Dark" },
         ],
         dynamicTitle: true,
         showName: false,
@@ -56,7 +56,15 @@ const preview: Preview = {
       storySort: {
         order: [
           "Design System",
-          ["Overview", "Colors", "Spacing", "Radius", "Typography", "Shadow", "*"],
+          [
+            "Overview",
+            "Colors",
+            "Spacing",
+            "Radius",
+            "Typography",
+            "Shadow",
+            "*",
+          ],
           "UI",
           "*",
         ],

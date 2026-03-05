@@ -80,7 +80,11 @@ export const InsideOverflow: Story = {
       }}
     >
       <Combobox items={FRUITS}>
-        <ComboboxInput placeholder="Search..." inputSize="sm" style={{ width: 200 }} />
+        <ComboboxInput
+          placeholder="Search..."
+          inputSize="sm"
+          style={{ width: 200 }}
+        />
         <ComboboxContent>
           <ComboboxList>
             {(fruit: string) => (

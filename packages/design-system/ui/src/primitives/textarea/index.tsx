@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import TextareaAutosizeComponent, { type TextareaAutosizeProps } from "react-textarea-autosize"
-import { cn } from "../../lib/utils"
+import * as React from "react";
+import TextareaAutosizeComponent, {
+  type TextareaAutosizeProps,
+} from "react-textarea-autosize";
+import { cn } from "../../lib/utils";
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaAutosizeProps>(
   ({ className, ...props }, ref) => (
@@ -15,7 +17,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaAutosizeProps>(
       {...props}
     />
   )
-)
-Textarea.displayName = "Textarea"
+);
+Textarea.displayName = "Textarea";
 
-export { Textarea }
+export { Textarea };

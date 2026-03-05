@@ -32,7 +32,10 @@ import {
   OUTDENT_CONTENT_COMMAND,
   safeCast,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 import {
   isCapitalize,
   isCenterAlign,
@@ -258,7 +261,9 @@ const NO_MODIFIER = IS_APPLE
   ? { metaKey: false, altKey: false, ctrlKey: false, shiftKey: false }
   : { ctrlKey: false, altKey: false, metaKey: false, shiftKey: false };
 
-export const ShortCutsExtension = (userConfig: Partial<ShortCutsConfig> = {}) => {
+export const ShortCutsExtension = (
+  userConfig: Partial<ShortCutsConfig> = {}
+) => {
   const resolvedConfig: ShortCutsConfig = {
     disabled: false,
     ...userConfig,
@@ -293,7 +298,9 @@ export const ShortCutsExtension = (userConfig: Partial<ShortCutsConfig> = {}) =>
             setParagraph(editor);
           } else if (isFormatHeading(event)) {
             const { code } = event;
-            const level = Number.parseInt(code[code.length - 1]) as HeadingLevel;
+            const level = Number.parseInt(
+              code[code.length - 1]
+            ) as HeadingLevel;
             if (level >= 1 && level <= 6) {
               toggleHeading(editor, level);
             }
@@ -355,7 +362,10 @@ export const ShortCutsExtension = (userConfig: Partial<ShortCutsConfig> = {}) =>
           else if (isInsertLink(event)) {
             isLinkEditMode = !isLinkEditMode;
             onLinkEditModeChange?.value?.(isLinkEditMode);
-            editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl("https://"));
+            editor.dispatchCommand(
+              TOGGLE_LINK_COMMAND,
+              sanitizeUrl("https://")
+            );
           }
           // No match
           else {

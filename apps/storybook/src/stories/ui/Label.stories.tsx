@@ -33,7 +33,14 @@ export const Required: Story = {
 
 export const WithInput: Story = {
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6, maxWidth: 320 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 6,
+        maxWidth: 320,
+      }}
+    >
       <Label htmlFor="demo-name">Name</Label>
       <Input id="demo-name" placeholder="Enter your name" />
     </div>
@@ -42,7 +49,14 @@ export const WithInput: Story = {
 
 export const RequiredWithInput: Story = {
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6, maxWidth: 320 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 6,
+        maxWidth: 320,
+      }}
+    >
       <Label htmlFor="demo-email" required>
         Email
       </Label>

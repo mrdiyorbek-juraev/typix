@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
-import { Avatar, AvatarImage, AvatarFallback, AvatarGroup } from "@typix-editor/ui";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  AvatarGroup,
+} from "@typix-editor/ui";
 
 const meta: Meta<typeof Avatar> = {
   title: "UI/Avatar",

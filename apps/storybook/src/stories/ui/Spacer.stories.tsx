@@ -40,7 +40,9 @@ export const AllSizes: Story = {
     >
       {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
         <React.Fragment key={size}>
-          <div style={{ fontSize: 13, color: "#666" }}>After "{size}" spacer:</div>
+          <div style={{ fontSize: 13, color: "#666" }}>
+            After "{size}" spacer:
+          </div>
           <Spacer size={size} />
           <div
             style={{

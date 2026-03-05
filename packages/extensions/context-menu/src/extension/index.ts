@@ -1,11 +1,16 @@
 import { defineExtension, safeCast } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 export interface ContextMenuConfig extends TypixExtensionConfig {
   disabled: boolean;
 }
 
-export const ContextMenuExtension = (userConfig: Partial<ContextMenuConfig> = {}) => {
+export const ContextMenuExtension = (
+  userConfig: Partial<ContextMenuConfig> = {}
+) => {
   const resolvedConfig: ContextMenuConfig = {
     disabled: false,
     ...userConfig,

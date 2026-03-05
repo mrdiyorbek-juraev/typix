@@ -30,12 +30,14 @@ export const Default: Story = {
         </TabsList>
         <TabsPanel value="overview">
           <p style={{ margin: 0, fontSize: 13, color: "#78716c" }}>
-            Overview content — project summary, key stats, and recent activity at a glance.
+            Overview content — project summary, key stats, and recent activity
+            at a glance.
           </p>
         </TabsPanel>
         <TabsPanel value="settings">
           <p style={{ margin: 0, fontSize: 13, color: "#78716c" }}>
-            Settings content — configure preferences, integrations, and permissions.
+            Settings content — configure preferences, integrations, and
+            permissions.
           </p>
         </TabsPanel>
         <TabsPanel value="activity">
@@ -56,7 +58,9 @@ export const WithDisabledTab: Story = {
         <TabsList>
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="billing">Billing</TabsTrigger>
-          <TabsTrigger value="security" disabled>Security (locked)</TabsTrigger>
+          <TabsTrigger value="security" disabled>
+            Security (locked)
+          </TabsTrigger>
         </TabsList>
         <TabsPanel value="general">
           <p style={{ margin: 0, fontSize: 13, color: "#78716c" }}>

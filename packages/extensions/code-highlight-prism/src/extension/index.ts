@@ -1,14 +1,19 @@
 import { effect, namedSignals } from "@lexical/extension";
 import { registerCodeHighlighting } from "@lexical/code";
 import { defineExtension, safeCast } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 export interface CodeHighlightPrismConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable code highlighting. */
   disabled: boolean;
 }
 
-export const CodeHighlightPrismExtension = (userConfig: Partial<CodeHighlightPrismConfig> = {}) => {
+export const CodeHighlightPrismExtension = (
+  userConfig: Partial<CodeHighlightPrismConfig> = {}
+) => {
   const resolvedConfig: CodeHighlightPrismConfig = {
     disabled: false,
     ...userConfig,

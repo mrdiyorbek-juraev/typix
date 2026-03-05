@@ -2,7 +2,11 @@
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { createContext, type ReactNode, useContext, useMemo } from "react";
-import { TypixEditor, ExtensionRegistry, type TypixExtensionDefinition } from "@typix-editor/core";
+import {
+  TypixEditor,
+  ExtensionRegistry,
+  type TypixExtensionDefinition,
+} from "@typix-editor/core";
 
 /**
  * Context shape for TypixEditor
@@ -35,7 +39,7 @@ export function TypixEditorProvider({
       registry.register(ext);
     }
     return new TypixEditor(lexicalEditor, registry, "typix-react");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lexicalEditor]); // extensions should be stable (defined outside render or memoized)
 
   const value = useMemo(() => ({ editor }), [editor]);

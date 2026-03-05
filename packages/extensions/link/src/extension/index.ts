@@ -6,7 +6,10 @@ import {
   TOGGLE_LINK_COMMAND,
 } from "@lexical/link";
 import { COMMAND_PRIORITY_EDITOR, defineExtension, safeCast } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 export interface LinkConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable link toggle handling. */
@@ -79,7 +82,9 @@ export const LinkExtension = (userConfig: Partial<LinkConfig> = {}) => {
     config: resolvedConfig,
     commands: {
       setLink: () => (ctx, attrs) => {
-        const url = (attrs as Record<string, unknown>)?.url as string | undefined;
+        const url = (attrs as Record<string, unknown>)?.url as
+          | string
+          | undefined;
         if (!url) return false;
         ctx.editor.dispatchCommand(TOGGLE_LINK_COMMAND, url);
         return true;

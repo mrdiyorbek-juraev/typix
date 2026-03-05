@@ -1,4 +1,3 @@
-
 import { $isAtNodeEnd } from "@lexical/selection";
 import { mergeRegister } from "@lexical/utils";
 import type { BaseSelection, NodeKey, TextNode } from "lexical";
@@ -17,7 +16,10 @@ import {
   defineExtension,
   safeCast,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 import DICTIONARY from "../dictionary";
 import { uuid } from "../lib";
@@ -168,7 +170,9 @@ class AutocompleteServer {
   }
 }
 
-export const AutocompleteExtension = (userConfig: Partial<AutocompleteConfig> = {}) => {
+export const AutocompleteExtension = (
+  userConfig: Partial<AutocompleteConfig> = {}
+) => {
   const resolvedConfig: AutocompleteConfig = {
     disabled: false,
     ...userConfig,
@@ -218,7 +222,11 @@ export const AutocompleteExtension = (userConfig: Partial<AutocompleteConfig> = 
         editor.update(() => {
           const selection = $getSelection();
           const [hasMatch, match] = $search(selection);
-          if (!hasMatch || match !== lastMatch || !$isRangeSelection(selection)) {
+          if (
+            !hasMatch ||
+            match !== lastMatch ||
+            !$isRangeSelection(selection)
+          ) {
             return;
           }
           const selectionCopy = selection.clone();

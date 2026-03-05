@@ -7,7 +7,10 @@ import {
   registerAutoLink,
 } from "@lexical/link";
 import { defineExtension, safeCast } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 import { EMAIL_REGEX, URL_REGEX } from "../lib";
 
 export const MATCHERS: LinkMatcher[] = [

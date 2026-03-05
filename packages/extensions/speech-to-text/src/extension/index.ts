@@ -12,7 +12,10 @@ import {
   type LexicalCommand,
   type LexicalEditor,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 import type {
   SpeechRecognitionResult,
@@ -143,7 +146,9 @@ export function getSpeechToTextOutput(
 // Extension
 // ============================================================================
 
-export const SpeechToTextExtension = (userConfig: Partial<SpeechToTextConfig> = {}) => {
+export const SpeechToTextExtension = (
+  userConfig: Partial<SpeechToTextConfig> = {}
+) => {
   const resolvedConfig: SpeechToTextConfig = {
     disabled: false,
     language: "en-US",

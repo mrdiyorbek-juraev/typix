@@ -84,8 +84,8 @@ const EditorRoot = ({
       theme,
       dependencies: extensions.map((e) => e.typix),
     });
-  // typixExtensions should be stable (module-level or memoized by caller)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // typixExtensions should be stable (module-level or memoized by caller)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extension, namespace, theme]);
 
   const changePlugin =

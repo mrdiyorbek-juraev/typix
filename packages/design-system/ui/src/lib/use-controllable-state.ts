@@ -39,7 +39,7 @@ export function useControllableState<T>({
         });
       }
     },
-    [isControlled, prop],
+    [isControlled, prop]
   );
 
   return [value, setValue];

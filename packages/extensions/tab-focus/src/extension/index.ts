@@ -9,7 +9,10 @@ import {
   mergeRegister,
   safeCast,
 } from "lexical";
-import { defineTypixExtension, type TypixExtensionConfig } from "@typix-editor/core";
+import {
+  defineTypixExtension,
+  type TypixExtensionConfig,
+} from "@typix-editor/core";
 
 const TAB_TO_FOCUS_INTERVAL = 100;
 
@@ -66,7 +69,8 @@ export const TabFocusExtension = (userConfig: Partial<TabFocusConfig> = {}) => {
               const selection = $getSelection();
               if (
                 $isRangeSelection(selection) &&
-                lastTabKeyDownTimestamp + TAB_TO_FOCUS_INTERVAL > event.timeStamp
+                lastTabKeyDownTimestamp + TAB_TO_FOCUS_INTERVAL >
+                  event.timeStamp
               ) {
                 $setSelection(selection.clone());
               }

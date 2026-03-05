@@ -1,24 +1,24 @@
 import {
-    defineExtension,
-    safeCast,
-    $getSelection,
-    $isRangeSelection,
-    $createParagraphNode,
-    LexicalEditor,
-} from 'lexical'
+  defineExtension,
+  safeCast,
+  $getSelection,
+  $isRangeSelection,
+  $createParagraphNode,
+  LexicalEditor,
+} from "lexical";
 import {
-    $createHeadingNode,
-    $isHeadingNode,
-    HeadingNode,
-    type HeadingTagType,
-} from '@lexical/rich-text'
-import { $setBlocksType } from '@lexical/selection'
-import { defineTypixExtension, TypixExtensionConfig } from '@typix-editor/core'
-import { namedSignals } from '@lexical/extension'
+  $createHeadingNode,
+  $isHeadingNode,
+  HeadingNode,
+  type HeadingTagType,
+} from "@lexical/rich-text";
+import { $setBlocksType } from "@lexical/selection";
+import { defineTypixExtension, TypixExtensionConfig } from "@typix-editor/core";
+import { namedSignals } from "@lexical/extension";
 
 export interface HeadingConfig extends TypixExtensionConfig {
-    levels: Array<1 | 2 | 3 | 4 | 5 | 6>
-    disabled?: boolean
+  levels: Array<1 | 2 | 3 | 4 | 5 | 6>;
+  disabled?: boolean;
 }
 
 /**
@@ -37,70 +37,96 @@ export interface HeadingConfig extends TypixExtensionConfig {
  * ```
  */
 export const HeadingExtension = (userConfig: Partial<HeadingConfig> = {}) => {
-    const resolvedConfig: HeadingConfig = {
-        levels: [1, 2, 3, 4, 5, 6],
-        ...userConfig,
-    }
+  const resolvedConfig: HeadingConfig = {
+    levels: [1, 2, 3, 4, 5, 6],
+    ...userConfig,
+  };
 
-    const lexicalExt = defineExtension({
-        name: '@typix/heading',
-        config: safeCast<HeadingConfig>(resolvedConfig),
-        mergeConfig(a: HeadingConfig, b: Partial<HeadingConfig>): HeadingConfig {
-            return { ...a, ...b }
-        },
-        nodes: () => [HeadingNode],
-        // Expose merged config as output so commands can read it
-        build(_editor: LexicalEditor, config: HeadingConfig) {
-            return namedSignals(config)
-        },
-    })
+  const lexicalExt = defineExtension({
+    name: "@typix/heading",
+    config: safeCast<HeadingConfig>(resolvedConfig),
+    mergeConfig(a: HeadingConfig, b: Partial<HeadingConfig>): HeadingConfig {
+      return { ...a, ...b };
+    },
+    nodes: () => [HeadingNode],
+    // Expose merged config as output so commands can read it
+    build(_editor: LexicalEditor, config: HeadingConfig) {
+      return namedSignals(config);
+    },
+  });
 
-    return defineTypixExtension<HeadingConfig>({
-        name: 'heading',
-        typix: lexicalExt,
-        config: resolvedConfig,
-        commands: {
-            toggleHeading: (resolvedConfig) => (ctx, attrs) => {
-                if (resolvedConfig.disabled) return false
-                const level = (attrs as any)?.level as 1 | 2 | 3 | 4 | 5 | 6 | undefined
-                if (!level) {
-                    console.warn('[Typix] toggleHeading requires a level, e.g. toggleHeading({ level: 2 })')
-                    return false
-                }
-                if (!resolvedConfig.levels.includes(level)) {
-                    console.warn(`[Typix] Heading level ${level} is not enabled. Enabled: ${resolvedConfig.levels}`)
-                    return false
-                }
-                const tag = `h${level}` as HeadingTagType
-                ctx.editor.update(() => {
-                    const selection = $getSelection()
-                    if (!$isRangeSelection(selection)) return
-                    const anchor = selection.anchor.getNode()
-                    const parent = anchor.getParent()
-                    const isAlready = $isHeadingNode(parent) && parent.getTag() === tag
-                    $setBlocksType(selection, () =>
-                        isAlready ? $createParagraphNode() : $createHeadingNode(tag),
-                    )
-                })
-                return true
-            },
+  return defineTypixExtension<HeadingConfig>({
+    name: "heading",
+    typix: lexicalExt,
+    config: resolvedConfig,
+    commands: {
+      toggleHeading: (resolvedConfig) => (ctx, attrs) => {
+        if (resolvedConfig.disabled) return false;
+        const level = (attrs as any)?.level as
+          | 1
+          | 2
+          | 3
+          | 4
+          | 5
+          | 6
+          | undefined;
+        if (!level) {
+          console.warn(
+            "[Typix] toggleHeading requires a level, e.g. toggleHeading({ level: 2 })"
+          );
+          return false;
+        }
+        if (!resolvedConfig.levels.includes(level)) {
+          console.warn(
+            `[Typix] Heading level ${level} is not enabled. Enabled: ${resolvedConfig.levels}`
+          );
+          return false;
+        }
+        const tag = `h${level}` as HeadingTagType;
+        ctx.editor.update(() => {
+          const selection = $getSelection();
+          if (!$isRangeSelection(selection)) return;
+          const anchor = selection.anchor.getNode();
+          const parent = anchor.getParent();
+          const isAlready = $isHeadingNode(parent) && parent.getTag() === tag;
+          $setBlocksType(selection, () =>
+            isAlready ? $createParagraphNode() : $createHeadingNode(tag)
+          );
+        });
+        return true;
+      },
 
-            setHeading: (resolvedConfig) => (ctx, attrs) => {
-                if (resolvedConfig.disabled) return false
-                const level = (attrs as any)?.level as 1 | 2 | 3 | 4 | 5 | 6
-                const tag = `h${level}` as HeadingTagType
-                ctx.editor.update(() => {
-                    const selection = $getSelection()
-                    if (!$isRangeSelection(selection)) return
-                    $setBlocksType(selection, () => $createHeadingNode(tag))
-                })
-                return true
-            },
-        },
-        shortcuts: [
-            { key: '1', modifiers: ['mod', 'alt'], command: 'toggleHeading', args: { level: 1 } },
-            { key: '2', modifiers: ['mod', 'alt'], command: 'toggleHeading', args: { level: 2 } },
-            { key: '3', modifiers: ['mod', 'alt'], command: 'toggleHeading', args: { level: 3 } },
-        ],
-    })
-}
+      setHeading: (resolvedConfig) => (ctx, attrs) => {
+        if (resolvedConfig.disabled) return false;
+        const level = (attrs as any)?.level as 1 | 2 | 3 | 4 | 5 | 6;
+        const tag = `h${level}` as HeadingTagType;
+        ctx.editor.update(() => {
+          const selection = $getSelection();
+          if (!$isRangeSelection(selection)) return;
+          $setBlocksType(selection, () => $createHeadingNode(tag));
+        });
+        return true;
+      },
+    },
+    shortcuts: [
+      {
+        key: "1",
+        modifiers: ["mod", "alt"],
+        command: "toggleHeading",
+        args: { level: 1 },
+      },
+      {
+        key: "2",
+        modifiers: ["mod", "alt"],
+        command: "toggleHeading",
+        args: { level: 2 },
+      },
+      {
+        key: "3",
+        modifiers: ["mod", "alt"],
+        command: "toggleHeading",
+        args: { level: 3 },
+      },
+    ],
+  });
+};

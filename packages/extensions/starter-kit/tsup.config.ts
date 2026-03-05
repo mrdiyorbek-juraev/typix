@@ -6,10 +6,6 @@ export default defineConfig((options: Options) => ({
   format: ["cjs", "esm"],
   dts: true,
   clean: true,
-  external: [
-    "lexical",
-    /^@lexical\/.*/,
-    /^@typix-editor\/.*/,
-  ],
+  external: ["lexical", /^@lexical\/.*/, /^@typix-editor\/.*/],
   ...options,
 }));

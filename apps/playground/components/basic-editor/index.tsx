@@ -10,8 +10,8 @@ export default function BasicEditor() {
       extensions={editorExtensions}
       namespace="typix-basic"
       theme={defaultTheme}
-      onChange={() => { }}
-      onContentChange={() => { }}
+      onChange={() => {}}
+      onContentChange={() => {}}
     >
       <div className="overflow-hidden rounded-xl border border-border bg-background shadow-sm">
         <Toolbar />
