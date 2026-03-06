@@ -95,6 +95,13 @@ export interface SpeechToTextConfig extends TypixExtensionConfig {
    * Return null to skip insertion
    */
   processTranscript?: (transcript: string) => string | null;
+
+  /**
+   * Minimum confidence score (0–1) required to accept a speech result.
+   * Results below this threshold are silently ignored.
+   * @default 0 (accept all results)
+   */
+  confidenceThreshold?: number;
 }
 
 /** @deprecated Use SpeechToTextConfig */

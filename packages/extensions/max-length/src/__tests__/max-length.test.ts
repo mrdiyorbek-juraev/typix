@@ -27,7 +27,7 @@ function countCharacters(
         try {
           const segmenter = new Intl.Segmenter();
           return [...segmenter.segment(processedText)].length;
-        } catch (e) {
+        } catch (e: unknown) {
           // Fallback
         }
       }

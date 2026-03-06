@@ -13,13 +13,13 @@ import {
   registerCodeHighlighting,
   $createCodeNode,
   $isCodeNode,
-} from "@lexical/code";
-import { $setBlocksType } from "@lexical/selection";
+} from "@typix-editor/core/lexical/code";
+import { $setBlocksType } from "@typix-editor/core/lexical/selection";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,
 } from "@typix-editor/core";
-import { namedSignals, effect } from "@lexical/extension";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
 export interface CodeConfig extends TypixExtensionConfig {
   /** Default language for new code blocks */

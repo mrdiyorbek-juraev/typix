@@ -1,5 +1,5 @@
-import { $isAtNodeEnd } from "@lexical/selection";
-import { mergeRegister } from "@lexical/utils";
+import { $isAtNodeEnd } from "@typix-editor/core/lexical/selection";
+import { mergeRegister } from "@typix-editor/core/lexical/utils";
 import type { BaseSelection, NodeKey, TextNode } from "lexical";
 import {
   $addUpdateTag,
@@ -29,11 +29,30 @@ import { $createAutocompleteNode, AutocompleteNode } from "../node";
 export interface AutocompleteConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable autocomplete. */
   disabled: boolean;
+  /**
+   * Custom word list used for autocomplete suggestions.
+   * When provided, replaces the built-in dictionary entirely.
+   */
+  dictionary?: string[];
+  /**
+   * Minimum number of characters the user must type before a search is run.
+   * @default 4
+   */
+  minSearchLength?: number;
+  /**
+   * Debounce delay in milliseconds before the dictionary is queried.
+   * Lower values make suggestions appear faster but may feel jittery.
+   * @default 200
+   */
+  queryLatencyMs?: number;
+  /**
+   * Called when the user accepts an autocomplete suggestion (via Tab or swipe).
+   * Receives the completed word that was inserted.
+   */
+  onAccept?: (word: string) => void;
 }
 
 const HISTORY_MERGE = { tag: HISTORY_MERGE_TAG };
-const MIN_SEARCH_LENGTH = 4;
-const QUERY_LATENCY_MS = 200;
 const MAX_CACHE_SIZE = 100;
 
 declare global {
@@ -94,9 +113,16 @@ function formatSuggestionText(suggestion: string): string {
 }
 
 class AutocompleteServer {
-  DATABASE = DICTIONARY;
-  LATENCY = QUERY_LATENCY_MS;
+  DATABASE: string[];
+  LATENCY: number;
+  MIN_SEARCH_LENGTH: number;
   private cache = new Map<string, string | null>();
+
+  constructor(database: string[], latency: number, minSearchLength: number) {
+    this.DATABASE = database;
+    this.LATENCY = latency;
+    this.MIN_SEARCH_LENGTH = minSearchLength;
+  }
 
   query = (searchText: string): SearchPromise => {
     if (this.cache.has(searchText)) {
@@ -135,7 +161,7 @@ class AutocompleteServer {
   private performSearch(searchText: string): string | null {
     const searchTextLength = searchText.length;
 
-    if (searchText === "" || searchTextLength < MIN_SEARCH_LENGTH) {
+    if (searchText === "" || searchTextLength < this.MIN_SEARCH_LENGTH) {
       return null;
     }
 
@@ -175,6 +201,8 @@ export const AutocompleteExtension = (
 ) => {
   const resolvedConfig: AutocompleteConfig = {
     disabled: false,
+    minSearchLength: 4,
+    queryLatencyMs: 200,
     ...userConfig,
   };
 
@@ -186,7 +214,11 @@ export const AutocompleteExtension = (
     config: safeCast<AutocompleteConfig>(resolvedConfig),
 
     register(editor) {
-      const server = new AutocompleteServer();
+      const server = new AutocompleteServer(
+        resolvedConfig.dictionary ?? DICTIONARY,
+        resolvedConfig.queryLatencyMs ?? 200,
+        resolvedConfig.minSearchLength ?? 4
+      );
 
       let autocompleteNodeKey: null | NodeKey = null;
       let lastMatch: null | string = null;
@@ -293,12 +325,14 @@ export const AutocompleteExtension = (
           return false;
         }
 
-        const textNode = $createTextNode(lastSuggestion).setStyle(
+        const accepted = lastSuggestion;
+        const textNode = $createTextNode(accepted).setStyle(
           `font-size: ${14}`
         );
         autocompleteNode.replace(textNode);
         textNode.selectNext();
         $clearSuggestion();
+        resolvedConfig.onAccept?.(accepted);
         return true;
       }
 

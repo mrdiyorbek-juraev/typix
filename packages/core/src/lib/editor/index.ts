@@ -4,7 +4,12 @@ import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { OverflowNode } from "@lexical/overflow";
 import { $createHeadingNode, HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { $setBlocksType } from "@lexical/selection";
+import {
+  $setBlocksType,
+  $getSelectionStyleValueForProperty,
+  $patchStyleText,
+  
+} from "@lexical/selection";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import {
   $createParagraphNode,
@@ -19,6 +24,7 @@ import {
   TextNode,
   defineExtension,
   safeCast,
+
 } from "lexical";
 
 export {
@@ -45,6 +51,8 @@ export {
   $getSelection,
   $isRangeSelection,
   $setBlocksType,
+  $getSelectionStyleValueForProperty,
+  $patchStyleText,
   $createHeadingNode,
   defineExtension,
   safeCast,

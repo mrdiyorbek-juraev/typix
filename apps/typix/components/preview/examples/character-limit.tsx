@@ -12,7 +12,7 @@ import {
 } from "@typix-editor/react";
 import { TailwindExtension } from "@lexical/tailwind";
 import { CharacterLimitExtension } from "@typix-editor/extension-character-limit";
-import { useCharacterCount } from "@typix-editor/react-character-limit";
+import { useCharacterCount } from "@typix-editor/ui";
 import {
   Bold,
   Code,
@@ -199,7 +199,7 @@ export const files = [
 import { defineExtension } from "lexical";
 import { TailwindExtension } from "@lexical/tailwind";
 import { CharacterLimitExtension } from "@typix-editor/extension-character-limit";
-import { useCharacterCount } from "@typix-editor/react-character-limit";
+import { useCharacterCount } from "@typix-editor/ui";
 import { Toolbar } from "./Toolbar";
 
 const MAX = 200;

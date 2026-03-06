@@ -1,52 +1,61 @@
 # @typix-editor/extension-context-menu
 
-Customizable right-click context menu for Typix editors.
+Headless right-click context menu hook for framework-specific rendering.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-context-menu
+# or
+pnpm add @typix-editor/extension-context-menu
 ```
 
 ## Usage
 
-```tsx
-import { ContextMenuExtension } from "@typix-editor/extension-context-menu";
-import type { TypixContextMenuItem } from "@typix-editor/extension-context-menu";
+```ts
+import { ContextMenuExtension } from "@typix-editor/extension-context-menu"
+import { createTypix } from "@typix-editor/core"
 
-const menuItems: TypixContextMenuItem[] = [
-  {
-    label: "Copy",
-    onSelect: (editor) => document.execCommand("copy"),
-  },
-  { type: "separator" },
-  {
-    label: "Delete",
-    onSelect: (editor, node) => {
-      editor.update(() => node?.remove());
-    },
-    disabled: (editor, node) => !node,
-  },
-];
-
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <ContextMenuExtension options={menuItems} />
-</EditorRoot>
+const editor = createTypix({
+  extensions: [
+    ContextMenuExtension(),
+  ],
+})
 ```
 
-## Props
+## Configuration
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `options` | `TypixContextMenuItem[]` | Menu items and separators |
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable context menu handling |
 
-Each menu item supports `label`, `onSelect`, `disabled`, and `visible` callbacks that receive the editor and target node.
+## API
 
-## Documentation
+### Exported Types
 
-[typix.com/docs/extensions/context-menu](https://typix.com/docs/extensions/context-menu)
+- **`ContextMenuConfig`** -- Extension configuration interface.
+- **`TypixContextMenuItem`** -- Discriminated union describing a menu item or separator.
 
-## License
+### `TypixContextMenuItem`
 
-MIT
+Each item is either an action item or a visual separator:
+
+```ts
+// Action item
+{
+  type: "item";
+  label: string;
+  icon?: unknown;
+  disabled?: boolean;
+  showOn?: (node: LexicalNode, editor: TypixEditor) => boolean;
+  onSelect: (editor: TypixEditor) => void;
+}
+
+// Separator
+{
+  type: "separator";
+  showOn?: (node: LexicalNode, editor: TypixEditor) => boolean;
+}
+```
+
+Use `showOn` to conditionally display items based on the right-clicked node.

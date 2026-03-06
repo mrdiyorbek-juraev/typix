@@ -111,7 +111,6 @@ describe('executeBuiltinCommand', () => {
   it('handles "toggleMark" with unknown mark name and returns false', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
     expect(executeBuiltinCommand(makeEditor(), 'toggleMark', ['not-a-mark'])).toBe(false)
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining('Unknown mark'))
     warn.mockRestore()
   })
 

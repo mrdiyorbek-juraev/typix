@@ -6,13 +6,13 @@ import {
   $createParagraphNode,
   type LexicalEditor,
 } from "lexical";
-import { $createQuoteNode, $isQuoteNode, QuoteNode } from "@lexical/rich-text";
-import { $setBlocksType } from "@lexical/selection";
+import { $createQuoteNode, $isQuoteNode, QuoteNode } from "@typix-editor/core/lexical/rich-text";
+import { $setBlocksType } from "@typix-editor/core/lexical/selection";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,
 } from "@typix-editor/core";
-import { namedSignals } from "@lexical/extension";
+import { namedSignals } from "@typix-editor/core/lexical/extension";
 
 export interface BlockquoteConfig extends TypixExtensionConfig {
   disabled?: boolean;

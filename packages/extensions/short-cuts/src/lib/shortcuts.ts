@@ -1,4 +1,4 @@
-import { IS_APPLE } from "@lexical/utils";
+import { IS_APPLE } from "@typix-editor/core/lexical/utils";
 import { isModifierMatch } from "lexical";
 
 //disable eslint sorting rule for quick reference to shortcuts

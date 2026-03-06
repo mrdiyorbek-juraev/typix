@@ -1,6 +1,6 @@
-import { effect, namedSignals } from "@lexical/extension";
-import { DRAG_DROP_PASTE } from "@lexical/rich-text";
-import { isMimeType, mediaFileReader } from "@lexical/utils";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
+import { DRAG_DROP_PASTE } from "@typix-editor/core/lexical/rich-text";
+import { isMimeType, mediaFileReader } from "@typix-editor/core/lexical/utils";
 import {
   COMMAND_PRIORITY_LOW,
   type CommandListenerPriority,
@@ -178,7 +178,7 @@ export const DragDropPasteExtension = (
                     editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
                   }
                 }
-              } catch (error) {
+              } catch (error: unknown) {
                 console.error("[DragDropPaste] Error processing files:", error);
                 const firstFile = files[0];
                 if (firstFile) {

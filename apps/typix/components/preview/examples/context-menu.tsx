@@ -10,7 +10,7 @@ import {
   useTypixEditor,
 } from "@typix-editor/react";
 import { TailwindExtension } from "@lexical/tailwind";
-import { ContextMenuUI } from "@typix-editor/react-context-menu";
+import { ContextMenuUI } from "@typix-editor/ui";
 import {
   ContextMenuExtension,
   type TypixContextMenuItem,
@@ -255,7 +255,7 @@ export const files = [
 } from "@typix-editor/react";
 import { defineExtension } from "lexical";
 import { TailwindExtension } from "@lexical/tailwind";
-import { ContextMenuUI } from "@typix-editor/react-context-menu";
+import { ContextMenuUI } from "@typix-editor/ui";
 import type { TypixContextMenuItem } from "@typix-editor/extension-context-menu";
 import {
   Bold, Italic, Underline, Code,

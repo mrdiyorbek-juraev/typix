@@ -1,6 +1,6 @@
-import { effect, namedSignals } from "@lexical/extension";
-import { $trimTextContentFromAnchor } from "@lexical/selection";
-import { $restoreEditorState } from "@lexical/utils";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
+import { $trimTextContentFromAnchor } from "@typix-editor/core/lexical/selection";
+import { $restoreEditorState } from "@typix-editor/core/lexical/utils";
 import {
   $getSelection,
   $isRangeSelection,
@@ -20,6 +20,17 @@ export interface MaxLengthConfig extends TypixExtensionConfig {
   maxLength: number;
   /** Set to true to temporarily disable the limit without removing the extension. */
   disabled: boolean;
+  /**
+   * - `"hard"` (default): prevent typing past the limit by restoring/trimming content.
+   * - `"soft"`: allow typing past the limit but fire `onExceed` so the UI can warn.
+   */
+  mode?: "hard" | "soft";
+  /**
+   * Called whenever the content exceeds (or returns to within) the limit.
+   * `current` is the actual character count; `max` is the configured limit.
+   * Called on every update, not just the first exceed.
+   */
+  onExceed?: (current: number, max: number) => void;
 }
 
 export const MaxLengthExtension = (
@@ -28,6 +39,7 @@ export const MaxLengthExtension = (
   const resolvedConfig: MaxLengthConfig = {
     maxLength: 500,
     disabled: false,
+    mode: "hard",
     ...userConfig,
   };
 
@@ -41,12 +53,13 @@ export const MaxLengthExtension = (
     },
 
     register(editor, _config, state) {
-      const { disabled, maxLength } = state.getOutput();
+      const { disabled, maxLength, mode } = state.getOutput();
 
       return effect(() => {
         if (disabled.value) return;
 
         const limit = maxLength.value;
+        const isSoft = mode?.value === "soft";
         let lastRestoredEditorState: EditorState | null = null;
 
         return editor.registerNodeTransform(
@@ -68,14 +81,18 @@ export const MaxLengthExtension = (
               const anchor = selection.anchor;
 
               if (delCount > 0) {
-                if (
-                  prevTextContentSize === limit &&
-                  lastRestoredEditorState !== prevEditorState
-                ) {
-                  lastRestoredEditorState = prevEditorState;
-                  $restoreEditorState(editor, prevEditorState);
-                } else {
-                  $trimTextContentFromAnchor(editor, anchor, delCount);
+                resolvedConfig.onExceed?.(textContentSize, limit);
+
+                if (!isSoft) {
+                  if (
+                    prevTextContentSize === limit &&
+                    lastRestoredEditorState !== prevEditorState
+                  ) {
+                    lastRestoredEditorState = prevEditorState;
+                    $restoreEditorState(editor, prevEditorState);
+                  } else {
+                    $trimTextContentFromAnchor(editor, anchor, delCount);
+                  }
                 }
               }
             }

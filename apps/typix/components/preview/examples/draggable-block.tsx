@@ -11,7 +11,7 @@ import {
   useTypixEditor,
 } from "@typix-editor/react";
 import { TailwindExtension } from "@lexical/tailwind";
-import { DraggableBlockUI } from "@typix-editor/react-draggable-block";
+import { DraggableBlockUI } from "@typix-editor/ui";
 import {
   Bold,
   Code,
@@ -170,7 +170,7 @@ export const files = [
 } from "@typix-editor/react";
 import { defineExtension } from "lexical";
 import { TailwindExtension } from "@lexical/tailwind";
-import { DraggableBlockUI } from "@typix-editor/react-draggable-block";
+import { DraggableBlockUI } from "@typix-editor/ui";
 import { Toolbar } from "./Toolbar";
 
 const extension = defineExtension({

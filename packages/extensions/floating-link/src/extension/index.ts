@@ -1,7 +1,7 @@
-import { $isAutoLinkNode, $isLinkNode } from "@lexical/link";
-import { effect, namedSignals, signal, type Signal } from "@lexical/extension";
-import { $findMatchingParent, mergeRegister } from "@lexical/utils";
-import { $isAtNodeEnd } from "@lexical/selection";
+import { $isAutoLinkNode, $isLinkNode } from "@typix-editor/core/lexical/link";
+import { effect, namedSignals, signal, type Signal } from "@typix-editor/core/lexical/extension";
+import { $findMatchingParent, mergeRegister } from "@typix-editor/core/lexical/utils";
+import { $isAtNodeEnd } from "@typix-editor/core/lexical/selection";
 import {
   $getSelection,
   $isLineBreakNode,
@@ -28,6 +28,12 @@ import {
 export interface FloatingLinkConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable the floating link behavior. */
   disabled: boolean;
+  /**
+   * When true, Ctrl/⌘+click on a link opens it in a new tab.
+   * Set to false to disable the modifier-click-to-open behavior entirely.
+   * @default true
+   */
+  openInNewTab?: boolean;
 }
 
 export interface FloatingLinkOutput {
@@ -66,6 +72,7 @@ export const FloatingLinkExtension = (
 ) => {
   const resolvedConfig: FloatingLinkConfig = {
     disabled: false,
+    openInNewTab: true,
     ...userConfig,
   };
 
@@ -75,16 +82,16 @@ export const FloatingLinkExtension = (
     config: safeCast<FloatingLinkConfig>(resolvedConfig),
 
     build(editor, config) {
-      const { disabled } = namedSignals(config);
+      const { disabled, openInNewTab } = namedSignals(config);
       const isLink = signal(false);
       const activeEditor = signal<LexicalEditor>(editor);
       const output: FloatingLinkOutput = { disabled, isLink, activeEditor };
       _outputByEditor.set(editor, output);
-      return output;
+      return { ...output, openInNewTab };
     },
 
     register(editor, _config, state) {
-      const { disabled, isLink, activeEditor } = state.getOutput();
+      const { disabled, isLink, activeEditor, openInNewTab } = state.getOutput();
 
       function $updateToolbar() {
         const selection = $getSelection();
@@ -156,7 +163,8 @@ export const FloatingLinkExtension = (
                 const linkNode = $findMatchingParent(node, $isLinkNode);
                 if (
                   $isLinkNode(linkNode) &&
-                  (payload.metaKey || payload.ctrlKey)
+                  (payload.metaKey || payload.ctrlKey) &&
+                  openInNewTab?.value !== false
                 ) {
                   window.open(linkNode.getURL(), "_blank");
                   return true;

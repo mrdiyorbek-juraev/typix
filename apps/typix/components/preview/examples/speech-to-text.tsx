@@ -15,7 +15,7 @@ import {
   SpeechToTextExtension,
   isSpeechRecognitionSupported,
 } from "@typix-editor/extension-speech-to-text";
-import { useSpeechToText } from "@typix-editor/react-speech-to-text";
+import { useSpeechToText } from "@typix-editor/ui";
 import {
   Bold,
   Code,
@@ -212,7 +212,7 @@ export default function SpeechToTextExample() {
     lang: "tsx",
     code: `import { useTypixEditor, useActiveFormats, useBlockType } from "@typix-editor/react";
 import { isSpeechRecognitionSupported } from "@typix-editor/extension-speech-to-text";
-import { useSpeechToText } from "@typix-editor/react-speech-to-text";
+import { useSpeechToText } from "@typix-editor/ui";
 import {
   Bold, Italic, Underline, Strikethrough, Code,
   Heading1, Heading2, Quote, List, ListOrdered,

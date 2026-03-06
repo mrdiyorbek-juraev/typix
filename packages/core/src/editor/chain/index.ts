@@ -1,7 +1,8 @@
 import type { LexicalEditor } from 'lexical'
-import type { ChainBuilder, BuiltinCommands, SerializedContent } from '../../types'
+import type { ChainBuilder, CanChainBuilder, BuiltinCommands, SerializedContent } from '../../types'
 import type { ExtensionRegistry } from '../extension'
 import { executeBuiltinCommand } from '../command'
+import { isKnownBuiltinCommand } from './can'
 
 type QueuedStep = {
     name: string
@@ -117,7 +118,7 @@ function dispatchCommand(
             const attrs = args[0] as Record<string, unknown> | undefined
             const result = handler({ editor, commands: builtins }, attrs)
             return result !== false
-        } catch (err) {
+        } catch (err: unknown) {
             console.error(`[Typix] Error executing command "${name}":`, err)
             return false
         } 
@@ -125,6 +126,106 @@ function dispatchCommand(
 
     // Fall back to built-in commands
     return executeBuiltinCommand(editor, name, args)
+}
+
+// ─────────────────────────────────────────────────────
+// Can chain builder — checks command availability without executing
+// ─────────────────────────────────────────────────────
+
+/**
+ * Creates a chainable command builder that checks whether commands **can** run
+ * without actually executing them.
+ *
+ * A command "can run" if it's either a registered extension command or a known
+ * built-in command.
+ *
+ * @example
+ * ```ts
+ * editor.can().toggleBold().run()   // → true if bold extension registered
+ * editor.can().nonexistent().run()  // → false
+ * ```
+ */
+export function createCanChainBuilder(
+    _lexicalEditor: LexicalEditor,
+    registry: ExtensionRegistry,
+): CanChainBuilder {
+    const queue: QueuedStep[] = []
+
+    let proxy: CanChainBuilder
+
+    const builder: CanChainBuilder = {
+        run(): boolean {
+            for (const step of queue) {
+                if (!canDispatchCommand(registry, step.name, step.args)) {
+                    queue.length = 0
+                    return false
+                }
+            }
+            queue.length = 0
+            return true
+        },
+
+        focus(_position = 'end'): CanChainBuilder {
+            queue.push({ name: 'focus', args: [_position] })
+            return proxy
+        },
+
+        blur(): CanChainBuilder {
+            queue.push({ name: 'blur', args: [] })
+            return proxy
+        },
+
+        setContent(_content: SerializedContent | string): CanChainBuilder {
+            queue.push({ name: 'setContent', args: [_content] })
+            return proxy
+        },
+
+        clearContent(): CanChainBuilder {
+            queue.push({ name: 'clearContent', args: [] })
+            return proxy
+        },
+
+        toggleMark(name: string, attrs?: Record<string, unknown>): CanChainBuilder {
+            queue.push({ name: 'toggleMark', args: [name, attrs] })
+            return proxy
+        },
+
+        toggleBlock(name: string, attrs?: Record<string, unknown>): CanChainBuilder {
+            queue.push({ name: 'toggleBlock', args: [name, attrs] })
+            return proxy
+        },
+    }
+
+    proxy = new Proxy(builder, {
+        get(target, prop: string) {
+            if (prop in target) {
+                return target[prop as keyof CanChainBuilder]
+            }
+
+            if (typeof prop === 'string') {
+                return (...args: unknown[]) => {
+                    queue.push({ name: prop, args })
+                    return proxy
+                }
+            }
+
+            return undefined
+        },
+    })
+
+    return proxy
+}
+
+/**
+ * Check if a named command can be dispatched (exists) without executing it.
+ */
+function canDispatchCommand(
+    registry: ExtensionRegistry,
+    name: string,
+    args: unknown[],
+): boolean {
+    if (registry.getCommand(name)) return true
+    return isKnownBuiltinCommand(name, args)
 }
 
 function makeBuiltinCommands(editor: LexicalEditor): BuiltinCommands {

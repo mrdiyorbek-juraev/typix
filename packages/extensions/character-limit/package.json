@@ -4,11 +4,11 @@
   "description": "Character limit extension for Typix — visual counter with overflow highlight and a useCharacterCount hook",
   "keywords": [
     "typix",
+    "editor",
     "lexical",
     "character-limit",
-    "editor",
     "rich-text",
-    "extension"
+    "wysiwyg"
   ],
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "homepage": "https://typix.com",
@@ -17,6 +17,18 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
   "sideEffects": false,
   "files": [
     "dist"
@@ -35,21 +47,18 @@
     "build": "tsup",
     "build:fast": "tsup",
     "dev": "pnpm build:fast --watch",
-    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
+    "clean": "rm -rf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
-  "dependencies": {
-    "@typix-editor/core": "workspace:*"
-  },
   "peerDependencies": {
-    "@lexical/extension": "^0.40.0",
-    "lexical": "^0.40.0"
+    "@typix-editor/core": "^4.1.0"
   },
   "devDependencies": {
-    "@lexical/extension": "^0.40.0",
-    "@types/node": "^22.15.3",
-    "lexical": "^0.40.0",
-    "tsup": "^8.4.0",
-    "typescript": "^5.8.2"
+    "@typix-editor/core": "workspace:*",
+    "@types/node": "^25.1.0",
+    "lexical": "^0.40.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

@@ -10,7 +10,7 @@
     "postinstall": "fumadocs-mdx",
     "lint": "biome check",
     "format": "biome format --write",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "clean": "rm -rf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
@@ -43,12 +43,7 @@
     "@typix-editor/core": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/theme": "workspace:*",
-    "@typix-editor/react-character-limit": "workspace:*",
-    "@typix-editor/react-context-menu": "workspace:*",
-    "@typix-editor/react-draggable-block": "workspace:*",
-    "@typix-editor/react-floating-link": "workspace:*",
-    "@typix-editor/react-mention": "workspace:*",
-    "@typix-editor/react-speech-to-text": "workspace:*",
+    "@typix-editor/ui": "workspace:*",
     "ai": "^6.0.77",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

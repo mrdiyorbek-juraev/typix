@@ -1,4 +1,9 @@
-export { MentionExtension, type MentionConfig } from "./extension";
+export {
+  MentionExtension,
+  getMentionOutput,
+  type MentionConfig,
+  type MentionOutput,
+} from "./extension";
 export type {
   CreateMentionNodeParams,
   MentionNodeOptions,

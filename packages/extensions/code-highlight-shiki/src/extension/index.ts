@@ -1,5 +1,5 @@
-import { effect, namedSignals } from "@lexical/extension";
-import { registerCodeHighlighting } from "@lexical/code-shiki";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
+import { registerCodeHighlighting } from "@typix-editor/core/lexical/code-shiki";
 import { defineExtension, safeCast } from "lexical";
 import {
   defineTypixExtension,
@@ -9,6 +9,12 @@ import {
 export interface CodeHighlightShikiConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable code highlighting. */
   disabled: boolean;
+  /**
+   * Default language to use when inserting a new code block.
+   * Consumers (toolbars, commands) should read this config to pre-select
+   * the correct language instead of defaulting to plain text.
+   */
+  defaultLanguage?: string;
 }
 
 export const CodeHighlightShikiExtension = (

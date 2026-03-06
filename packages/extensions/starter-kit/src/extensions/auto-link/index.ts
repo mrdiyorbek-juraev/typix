@@ -1,11 +1,11 @@
-import { effect, namedSignals } from "@lexical/extension";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import {
   AutoLinkNode,
   type ChangeHandler,
   createLinkMatcherWithRegExp,
   type LinkMatcher,
   registerAutoLink,
-} from "@lexical/link";
+} from "@typix-editor/core/lexical/link";
 import { defineExtension, safeCast } from "lexical";
 import {
   defineTypixExtension,

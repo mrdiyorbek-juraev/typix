@@ -5,12 +5,12 @@ import {
   REDO_COMMAND,
   type LexicalEditor,
 } from "lexical";
-import { registerHistory, createEmptyHistoryState } from "@lexical/history";
+import { registerHistory, createEmptyHistoryState } from "@typix-editor/core/lexical/history";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,
 } from "@typix-editor/core";
-import { namedSignals, effect } from "@lexical/extension";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
 export interface HistoryConfig extends TypixExtensionConfig {
   /** Delay in ms before consecutive edits merge into a single history entry */

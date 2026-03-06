@@ -99,16 +99,20 @@ describe('TypixEventEmitter', () => {
     })
 
     it('does not throw when a listener throws', () => {
+      const error = vi.spyOn(console, 'error').mockImplementation(() => {})
       emitter.on('focus', () => { throw new Error('listener boom') })
       expect(() => emitter.emit('focus', focusPayload)).not.toThrow()
+      error.mockRestore()
     })
 
     it('continues calling subsequent listeners after one throws', () => {
+      const error = vi.spyOn(console, 'error').mockImplementation(() => {})
       const good = vi.fn()
       emitter.on('focus', () => { throw new Error('oops') })
       emitter.on('focus', good)
       emitter.emit('focus', focusPayload)
       expect(good).toHaveBeenCalledOnce()
+      error.mockRestore()
     })
 
     it('does nothing when no listeners are registered for that event', () => {

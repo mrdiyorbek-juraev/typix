@@ -50,7 +50,7 @@ export class TypixEventEmitter {
         this.listeners.get(event)?.forEach((listener) => {
             try {
                 listener(payload as TypixEventMap[TypixEventName])
-            } catch (err) {
+            } catch (err: unknown) {
                 console.error(`[Typix] Error in "${event}" listener:`, err)
             }
         })

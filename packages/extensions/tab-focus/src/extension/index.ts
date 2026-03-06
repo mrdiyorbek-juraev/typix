@@ -1,4 +1,4 @@
-import { effect, namedSignals } from "@lexical/extension";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import {
   $getSelection,
   $isRangeSelection,
@@ -13,8 +13,6 @@ import {
   defineTypixExtension,
   type TypixExtensionConfig,
 } from "@typix-editor/core";
-
-const TAB_TO_FOCUS_INTERVAL = 100;
 
 let lastTabKeyDownTimestamp = 0;
 let hasRegisteredKeyDownListener = false;
@@ -32,11 +30,18 @@ function registerKeyTimestampTracker(): void {
 export interface TabFocusConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable tab-focus behavior. */
   disabled: boolean;
+  /**
+   * Time window in milliseconds after a Tab key press during which a FOCUS
+   * event is treated as keyboard-tab navigation (restoring the selection).
+   * @default 100
+   */
+  restoreWindowMs?: number;
 }
 
 export const TabFocusExtension = (userConfig: Partial<TabFocusConfig> = {}) => {
   const resolvedConfig: TabFocusConfig = {
     disabled: false,
+    restoreWindowMs: 100,
     ...userConfig,
   };
 
@@ -69,7 +74,7 @@ export const TabFocusExtension = (userConfig: Partial<TabFocusConfig> = {}) => {
               const selection = $getSelection();
               if (
                 $isRangeSelection(selection) &&
-                lastTabKeyDownTimestamp + TAB_TO_FOCUS_INTERVAL >
+                lastTabKeyDownTimestamp + (resolvedConfig.restoreWindowMs ?? 100) >
                   event.timeStamp
               ) {
                 $setSelection(selection.clone());

@@ -2,7 +2,6 @@ export type ExtensionEntry = {
   name: string;
   package: string;
   description: string;
-  reactPackage?: string;
 };
 
 export const extensionRegistry: Record<string, ExtensionEntry> = {
@@ -30,7 +29,6 @@ export const extensionRegistry: Record<string, ExtensionEntry> = {
     name: "character-limit",
     package: "@typix-editor/extension-character-limit",
     description: "Enforce character count limits with visual feedback",
-    reactPackage: "@typix-editor/react-character-limit",
   },
   collapsible: {
     name: "collapsible",
@@ -41,7 +39,6 @@ export const extensionRegistry: Record<string, ExtensionEntry> = {
     name: "context-menu",
     package: "@typix-editor/extension-context-menu",
     description: "Custom right-click context menu",
-    reactPackage: "@typix-editor/react-context-menu",
   },
   "drag-drop-paste": {
     name: "drag-drop-paste",
@@ -52,13 +49,11 @@ export const extensionRegistry: Record<string, ExtensionEntry> = {
     name: "draggable-block",
     package: "@typix-editor/extension-draggable-block",
     description: "Drag and drop reordering of editor blocks",
-    reactPackage: "@typix-editor/react-draggable-block",
   },
   "floating-link": {
     name: "floating-link",
     package: "@typix-editor/extension-floating-link",
     description: "Floating link editor toolbar",
-    reactPackage: "@typix-editor/react-floating-link",
   },
   keywords: {
     name: "keywords",
@@ -79,7 +74,6 @@ export const extensionRegistry: Record<string, ExtensionEntry> = {
     name: "mention",
     package: "@typix-editor/extension-mention",
     description: "@mention functionality with flexible configuration",
-    reactPackage: "@typix-editor/react-mention",
   },
   "short-cuts": {
     name: "short-cuts",
@@ -90,7 +84,6 @@ export const extensionRegistry: Record<string, ExtensionEntry> = {
     name: "speech-to-text",
     package: "@typix-editor/extension-speech-to-text",
     description: "Voice input via speech recognition",
-    reactPackage: "@typix-editor/react-speech-to-text",
   },
   "tab-focus": {
     name: "tab-focus",

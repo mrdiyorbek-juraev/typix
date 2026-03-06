@@ -6,6 +6,7 @@ import type {
     TypixEventListener,
     SerializedContent,
     ChainBuilder,
+    CanChainBuilder,
 } from '../../types'
 import { ExtensionRegistry } from '../extension'
 import {
@@ -17,11 +18,8 @@ import {
     executeBuiltinCommand,
     isBlockActive,
 } from '../command'
-import { createChainBuilder } from '../chain'
+import { createChainBuilder, createCanChainBuilder } from '../chain'
 import { TypixEventEmitter } from '../event'
-
-
-
 
 
 let _instanceCounter = 0
@@ -40,6 +38,9 @@ export class TypixEditor implements TypixEditorInstance {
     private _mounted = false
     private _disposers: Array<() => void> = []
     private _lexicalDispose?: () => void
+    private _currentRoot: HTMLElement | null = null
+    private _handleFocus: (() => void) | null = null
+    private _handleBlur: (() => void) | null = null
 
     constructor(
         lexicalEditor: LexicalEditor,
@@ -72,6 +73,8 @@ export class TypixEditor implements TypixEditorInstance {
 
     destroy(): void {
         this._emitter.emit('destroy', { editor: this })
+        // Remove DOM focus/blur listeners before unregistering the root listener
+        this._removeDomListeners()
         this._disposers.forEach((dispose) => dispose())
         this._disposers = []
         this._lexical.setRootElement(null)
@@ -138,6 +141,7 @@ export class TypixEditor implements TypixEditorInstance {
     }
 
     isFocused(): boolean {
+        if (typeof document === 'undefined') return false
         return this._lexical.getRootElement() === document.activeElement
     }
 
@@ -194,6 +198,10 @@ export class TypixEditor implements TypixEditorInstance {
 
     chain(): ChainBuilder {
         return createChainBuilder(this._lexical, this._registry)
+    }
+
+    can(): CanChainBuilder {
+        return createCanChainBuilder(this._lexical, this._registry)
     }
 
     run(command: string, ...args: unknown[]): boolean {
@@ -275,14 +283,18 @@ export class TypixEditor implements TypixEditorInstance {
             },
         )
 
-        // Focus/blur via root element mutation observer + focus events
-        const handleFocus = () => this._emitter.emit('focus', { editor: this });
-        const handleBlur = () => this._emitter.emit('blur', { editor: this });
+        // Focus/blur via root element listener
+        this._handleFocus = () => this._emitter.emit('focus', { editor: this })
+        this._handleBlur = () => this._emitter.emit('blur', { editor: this })
+
+        const handleFocus = this._handleFocus
+        const handleBlur = this._handleBlur
 
         // We attach focus/blur after mount since we need the root element
         const unregisterRoot = this._lexical.registerRootListener((root, prevRoot) => {
             prevRoot?.removeEventListener('focus', handleFocus)
             prevRoot?.removeEventListener('blur', handleBlur)
+            this._currentRoot = root
             root?.addEventListener('focus', handleFocus)
             root?.addEventListener('blur', handleBlur)
         })
@@ -297,6 +309,14 @@ export class TypixEditor implements TypixEditorInstance {
                     this._disposers.push(cleanup)
                 }
             }
+        }
+    }
+
+    private _removeDomListeners(): void {
+        if (this._currentRoot) {
+            if (this._handleFocus) this._currentRoot.removeEventListener('focus', this._handleFocus)
+            if (this._handleBlur) this._currentRoot.removeEventListener('blur', this._handleBlur)
+            this._currentRoot = null
         }
     }
 

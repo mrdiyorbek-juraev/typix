@@ -45,8 +45,31 @@ import {
   DragDropPasteExtension,
   type DragDropPasteConfig,
 } from "../extensions/drag-drop-paste";
+import {
+  FontSizeExtension,
+  type FontSizeConfig,
+} from "../extensions/font-size";
+import {
+  FontFamilyExtension,
+  type FontFamilyConfig,
+} from "../extensions/font-family";
+import {
+  DirectionExtension,
+  type DirectionConfig,
+} from "../extensions/direction";
 
 export interface StarterKitOptions extends TypixExtensionConfig {
+  /**
+   * Convenience preset that configures a sensible set of extensions.
+   * Individual options take precedence over the preset.
+   *
+   * - `"minimal"` — bold, italic, heading (h1–h3), history
+   * - `"blog"` — bold, italic, underline, strike, heading (h1–h3),
+   *              blockquote, list, link, autoLink, history
+   * - `"full"` — all extensions (same as omitting this option)
+   */
+  preset?: "minimal" | "blog" | "full";
+
   bold?: false | Partial<BoldConfig>;
   italic?: false | Partial<ItalicConfig>;
   underline?: false | Partial<UnderlineConfig>;
@@ -63,7 +86,45 @@ export interface StarterKitOptions extends TypixExtensionConfig {
   history?: false | Partial<HistoryConfig>;
   autoLink?: false | Partial<AutoLinkConfig>;
   dragDropPaste?: false | Partial<DragDropPasteConfig>;
+  fontSize?: false | Partial<FontSizeConfig>;
+  fontFamily?: false | Partial<FontFamilyConfig>;
+  direction?: false | Partial<DirectionConfig>;
 }
+
+// ─── Preset defaults ─────────────────────────────────────────────────────────
+
+type PresetDefaults = Omit<StarterKitOptions, "preset">;
+
+const PRESET_MINIMAL: PresetDefaults = {
+  subscript: false,
+  superscript: false,
+  highlight: false,
+  blockquote: false,
+  list: false,
+  code: false,
+  alignment: false,
+  link: false,
+  autoLink: false,
+  dragDropPaste: false,
+  fontSize: false,
+  fontFamily: false,
+  direction: false,
+  strike: false,
+  underline: false,
+};
+
+const PRESET_BLOG: PresetDefaults = {
+  subscript: false,
+  superscript: false,
+  highlight: false,
+  code: false,
+  alignment: false,
+  autoLink: false,
+  dragDropPaste: false,
+  fontSize: false,
+  fontFamily: false,
+  direction: false,
+};
 
 /**
  * StarterKit — a batteries-included bundle of the most common Typix extensions,
@@ -87,37 +148,55 @@ export interface StarterKitOptions extends TypixExtensionConfig {
 export const StarterKit = (
   options: StarterKitOptions = {}
 ): TypixExtensionDefinition<StarterKitOptions> => {
+  // Apply preset defaults, then let explicit options override them
+  const { preset, ...rest } = options;
+  const presetDefaults: PresetDefaults =
+    preset === "minimal"
+      ? PRESET_MINIMAL
+      : preset === "blog"
+        ? PRESET_BLOG
+        : {};
+
+  // Merge: preset first (lowest priority), explicit options win
+  const merged: StarterKitOptions = { ...presetDefaults, ...rest };
+
   // Build enabled sub-extensions
   const subExts: TypixExtensionDefinition<any>[] = [];
 
-  if (options.bold !== false) subExts.push(BoldExtension(options.bold ?? {}));
-  if (options.italic !== false)
-    subExts.push(ItalicExtension(options.italic ?? {}));
-  if (options.underline !== false)
-    subExts.push(UnderlineExtension(options.underline ?? {}));
-  if (options.strike !== false)
-    subExts.push(StrikeExtension(options.strike ?? {}));
-  if (options.subscript !== false)
-    subExts.push(SubscriptExtension(options.subscript ?? {}));
-  if (options.superscript !== false)
-    subExts.push(SuperscriptExtension(options.superscript ?? {}));
-  if (options.highlight !== false)
-    subExts.push(HighlightExtension(options.highlight ?? {}));
-  if (options.heading !== false)
-    subExts.push(HeadingExtension(options.heading ?? {}));
-  if (options.blockquote !== false)
-    subExts.push(BlockquoteExtension(options.blockquote ?? {}));
-  if (options.list !== false) subExts.push(ListExtension(options.list ?? {}));
-  if (options.code !== false) subExts.push(CodeExtension(options.code ?? {}));
-  if (options.alignment !== false)
-    subExts.push(AlignmentExtension(options.alignment ?? {}));
-  if (options.link !== false) subExts.push(LinkExtension(options.link ?? {}));
-  if (options.history !== false)
-    subExts.push(HistoryExtension(options.history ?? {}));
-  if (options.autoLink !== false)
-    subExts.push(AutoLinkExtension(options.autoLink ?? {}));
-  if (options.dragDropPaste !== false)
-    subExts.push(DragDropPasteExtension(options.dragDropPaste ?? {}));
+  if (merged.bold !== false) subExts.push(BoldExtension(merged.bold ?? {}));
+  if (merged.italic !== false)
+    subExts.push(ItalicExtension(merged.italic ?? {}));
+  if (merged.underline !== false)
+    subExts.push(UnderlineExtension(merged.underline ?? {}));
+  if (merged.strike !== false)
+    subExts.push(StrikeExtension(merged.strike ?? {}));
+  if (merged.subscript !== false)
+    subExts.push(SubscriptExtension(merged.subscript ?? {}));
+  if (merged.superscript !== false)
+    subExts.push(SuperscriptExtension(merged.superscript ?? {}));
+  if (merged.highlight !== false)
+    subExts.push(HighlightExtension(merged.highlight ?? {}));
+  if (merged.heading !== false)
+    subExts.push(HeadingExtension(merged.heading ?? {}));
+  if (merged.blockquote !== false)
+    subExts.push(BlockquoteExtension(merged.blockquote ?? {}));
+  if (merged.list !== false) subExts.push(ListExtension(merged.list ?? {}));
+  if (merged.code !== false) subExts.push(CodeExtension(merged.code ?? {}));
+  if (merged.alignment !== false)
+    subExts.push(AlignmentExtension(merged.alignment ?? {}));
+  if (merged.link !== false) subExts.push(LinkExtension(merged.link ?? {}));
+  if (merged.history !== false)
+    subExts.push(HistoryExtension(merged.history ?? {}));
+  if (merged.autoLink !== false)
+    subExts.push(AutoLinkExtension(merged.autoLink ?? {}));
+  if (merged.dragDropPaste !== false)
+    subExts.push(DragDropPasteExtension(merged.dragDropPaste ?? {}));
+  if (merged.fontSize !== false)
+    subExts.push(FontSizeExtension(merged.fontSize ?? {}));
+  if (merged.fontFamily !== false)
+    subExts.push(FontFamilyExtension(merged.fontFamily ?? {}));
+  if (merged.direction !== false)
+    subExts.push(DirectionExtension(merged.direction ?? {}));
 
   // Compose all Lexical extensions into one
   const typix = defineExtension({
@@ -146,7 +225,7 @@ export const StarterKit = (
   return defineTypixExtension({
     name: "starter-kit",
     typix,
-    config: options,
+    config: merged,
     commands,
     shortcuts,
   });

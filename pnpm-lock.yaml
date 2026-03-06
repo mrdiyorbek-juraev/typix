@@ -117,42 +117,72 @@ importers:
       '@typix-editor/extension-auto-complete':
         specifier: workspace:*
         version: link:../../packages/extensions/auto-complete
-      '@typix-editor/extension-auto-link':
+      '@typix-editor/extension-code-block':
         specifier: workspace:*
-        version: link:../../packages/extensions/auto-link
+        version: link:../../packages/extensions/code-block
+      '@typix-editor/extension-code-block-prettier':
+        specifier: workspace:*
+        version: link:../../packages/extensions/code-block-prettier
       '@typix-editor/extension-code-highlight-prism':
         specifier: workspace:*
         version: link:../../packages/extensions/code-highlight-prism
+      '@typix-editor/extension-code-highlight-shiki':
+        specifier: workspace:*
+        version: link:../../packages/extensions/code-highlight-shiki
       '@typix-editor/extension-collapsible':
         specifier: workspace:*
         version: link:../../packages/extensions/collapsible
-      '@typix-editor/extension-drag-drop-paste':
+      '@typix-editor/extension-context-menu':
         specifier: workspace:*
-        version: link:../../packages/extensions/drag-drop-paste
+        version: link:../../packages/extensions/context-menu
+      '@typix-editor/extension-floating-link':
+        specifier: workspace:*
+        version: link:../../packages/extensions/floating-link
+      '@typix-editor/extension-image':
+        specifier: workspace:*
+        version: link:../../packages/extensions/image
       '@typix-editor/extension-keywords':
         specifier: workspace:*
         version: link:../../packages/extensions/keywords
+      '@typix-editor/extension-markdown-shortcuts':
+        specifier: workspace:*
+        version: link:../../packages/extensions/markdown-shortcuts
       '@typix-editor/extension-mention':
         specifier: workspace:*
         version: link:../../packages/extensions/mention
       '@typix-editor/extension-speech-to-text':
         specifier: workspace:*
         version: link:../../packages/extensions/speech-to-text
+      '@typix-editor/extension-starter-kit':
+        specifier: workspace:*
+        version: link:../../packages/extensions/starter-kit
       '@typix-editor/extension-tab-focus':
         specifier: workspace:*
         version: link:../../packages/extensions/tab-focus
+      '@typix-editor/extension-table':
+        specifier: workspace:*
+        version: link:../../packages/extensions/table
+      '@typix-editor/extension-tailwind':
+        specifier: workspace:*
+        version: link:../../packages/extensions/tailwind
       '@typix-editor/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@typix-editor/starter-kit':
+      '@typix-editor/ui':
         specifier: workspace:*
-        version: link:../../packages/extensions/starter-kit
+        version: link:../../packages/design-system
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cmdk:
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
       lucide-react:
         specifier: ^0.563.0
         version: 0.563.0(react@19.2.3)
@@ -162,6 +192,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
       radix-ui:
         specifier: ^1.4.3
         version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -216,7 +249,7 @@ importers:
         version: link:../../packages/theme
       '@typix-editor/ui':
         specifier: workspace:*
-        version: link:../../packages/design-system/ui
+        version: link:../../packages/design-system
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -347,27 +380,12 @@ importers:
       '@typix-editor/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@typix-editor/react-character-limit':
-        specifier: workspace:*
-        version: link:../../packages/react-extensions/character-limit
-      '@typix-editor/react-context-menu':
-        specifier: workspace:*
-        version: link:../../packages/react-extensions/context-menu
-      '@typix-editor/react-draggable-block':
-        specifier: workspace:*
-        version: link:../../packages/react-extensions/draggable-block
-      '@typix-editor/react-floating-link':
-        specifier: workspace:*
-        version: link:../../packages/react-extensions/floating-link
-      '@typix-editor/react-mention':
-        specifier: workspace:*
-        version: link:../../packages/react-extensions/mention
-      '@typix-editor/react-speech-to-text':
-        specifier: workspace:*
-        version: link:../../packages/react-extensions/speech-to-text
       '@typix-editor/theme':
         specifier: workspace:*
         version: link:../../packages/theme
+      '@typix-editor/ui':
+        specifier: workspace:*
+        version: link:../../packages/design-system
       ai:
         specifier: ^6.0.77
         version: 6.0.77(zod@4.3.6)
@@ -549,11 +567,8 @@ importers:
         version: 5.9.3
 
   packages/core:
-    devDependencies:
+    dependencies:
       '@lexical/code':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/extension':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/hashtag':
@@ -574,9 +589,6 @@ importers:
       '@lexical/mark':
         specifier: ^0.40.0
         version: 0.40.0
-      '@lexical/markdown':
-        specifier: ^0.40.0
-        version: 0.40.0
       '@lexical/overflow':
         specifier: ^0.40.0
         version: 0.40.0
@@ -589,10 +601,23 @@ importers:
       '@lexical/table':
         specifier: ^0.40.0
         version: 0.40.0
-      '@lexical/text':
+      '@lexical/utils':
         specifier: ^0.40.0
         version: 0.40.0
-      '@lexical/utils':
+    devDependencies:
+      '@lexical/code-shiki':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/extension':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/history':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/markdown':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/text':
         specifier: ^0.40.0
         version: 0.40.0
       '@types/node':
@@ -608,7 +633,7 @@ importers:
         specifier: ^5.8.2
         version: 5.9.3
 
-  packages/design-system/ui:
+  packages/design-system:
     dependencies:
       '@radix-ui/react-avatar':
         specifier: ^1.1.3
@@ -619,6 +644,9 @@ importers:
       '@radix-ui/react-context-menu':
         specifier: ^2.2.6
         version: 2.2.16(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@radix-ui/react-dialog':
+        specifier: ^1.1.4
+        version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.1.6
         version: 2.1.16(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -628,12 +656,21 @@ importers:
       '@radix-ui/react-popover':
         specifier: ^1.1.6
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@radix-ui/react-radio-group':
+        specifier: ^1.2.2
+        version: 1.3.8(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@radix-ui/react-scroll-area':
+        specifier: ^1.2.3
+        version: 1.2.10(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@radix-ui/react-select':
         specifier: ^2.1.6
         version: 2.2.6(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@radix-ui/react-separator':
         specifier: ^1.1.3
         version: 1.1.7(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@radix-ui/react-slider':
+        specifier: ^1.2.2
+        version: 1.3.6(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@radix-ui/react-slot':
         specifier: ^1.1.2
         version: 1.2.4(@types/react@19.2.8)(react@19.2.3)
@@ -643,6 +680,12 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.1.3
         version: 1.1.13(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@radix-ui/react-toggle':
+        specifier: ^1.1.2
+        version: 1.1.10(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@radix-ui/react-toggle-group':
+        specifier: ^1.1.2
+        version: 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@radix-ui/react-toolbar':
         specifier: ^1.1.0
         version: 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -658,6 +701,9 @@ importers:
       cmdk:
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      lucide-react:
+        specifier: ^0.563.0
+        version: 0.563.0(react@19.2.3)
       react-day-picker:
         specifier: ^9.5.0
         version: 9.14.0(react@19.2.3)
@@ -668,6 +714,15 @@ importers:
         specifier: ^3.2.0
         version: 3.4.0
     devDependencies:
+      '@lexical/link':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/react':
+        specifier: ^0.40.0
+        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
+      '@lexical/utils':
+        specifier: ^0.40.0
+        version: 0.40.0
       '@tailwindcss/cli':
         specifier: ^4.1.4
         version: 4.2.1
@@ -677,9 +732,27 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.1
         version: 19.2.3(@types/react@19.2.8)
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../core
+      '@typix-editor/extension-floating-link':
+        specifier: workspace:*
+        version: link:../extensions/floating-link
+      '@typix-editor/extension-mention':
+        specifier: workspace:*
+        version: link:../extensions/mention
+      '@typix-editor/extension-speech-to-text':
+        specifier: workspace:*
+        version: link:../extensions/speech-to-text
+      '@typix-editor/react':
+        specifier: workspace:*
+        version: link:../react
       concurrently:
         specifier: ^9.1.2
         version: 9.2.1
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
       react:
         specifier: ^19.2.1
         version: 19.2.3
@@ -688,7 +761,7 @@ importers:
         version: 19.2.3(react@19.2.3)
       tailwindcss:
         specifier: ^4.1.4
-        version: 4.1.18
+        version: 4.2.1
       tsup:
         specifier: ^8.0.0
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
@@ -697,394 +770,299 @@ importers:
         version: 5.9.3
 
   packages/extensions/auto-complete:
-    dependencies:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/selection':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
 
   packages/extensions/auto-link:
-    dependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-    devDependencies:
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
 
   packages/extensions/character-limit:
-    dependencies:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.19.7
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      tsup:
-        specifier: ^8.4.0
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
+
+  packages/extensions/code-block:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+
+  packages/extensions/code-block-prettier:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
 
   packages/extensions/code-highlight-prism:
-    dependencies:
-      '@lexical/code':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-    devDependencies:
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
 
   packages/extensions/code-highlight-shiki:
-    dependencies:
-      '@lexical/code-shiki':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-    devDependencies:
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
 
   packages/extensions/collapsible:
-    dependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
+
+  packages/extensions/context-menu:
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
-
-  packages/extensions/context-menu:
-    dependencies:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
 
   packages/extensions/drag-drop-paste:
-    dependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/rich-text':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
+
+  packages/extensions/draggable-block:
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
-
-  packages/extensions/draggable-block:
-    dependencies:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
 
   packages/extensions/floating-link:
-    dependencies:
-      '@typix-editor/core':
-        specifier: workspace:*
-        version: link:../../core
     devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/selection':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+
+  packages/extensions/image:
+    dependencies:
+      '@typix-editor/extension-drag-drop-paste':
+        specifier: workspace:*
+        version: link:../drag-drop-paste
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
 
   packages/extensions/keywords:
-    dependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/text':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-    devDependencies:
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
 
   packages/extensions/link:
-    dependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
+
+  packages/extensions/markdown-shortcuts:
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
 
   packages/extensions/max-length:
-    dependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/selection':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-    devDependencies:
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
 
   packages/extensions/mention:
-    dependencies:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.19.7
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
-      tsup:
-        specifier: ^8.4.0
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
 
   packages/extensions/short-cuts:
-    dependencies:
-      '@lexical/code':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/list':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/rich-text':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/selection':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
+
+  packages/extensions/speech-to-text:
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
-
-  packages/extensions/speech-to-text:
-    dependencies:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
 
   packages/extensions/starter-kit:
-    dependencies:
-      '@lexical/code':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/history':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/list':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/rich-text':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/selection':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@typix-editor/core':
-        specifier: workspace:*
-        version: link:../../core
-      '@typix-editor/extension-auto-link':
-        specifier: workspace:*
-        version: link:../auto-link
-      '@typix-editor/extension-drag-drop-paste':
-        specifier: workspace:*
-        version: link:../drag-drop-paste
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
 
   packages/extensions/tab-focus:
-    dependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
       lexical:
         specifier: ^0.40.0
         version: 0.40.0
+
+  packages/extensions/table:
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+
+  packages/extensions/tailwind:
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      '@typix-editor/core':
+        specifier: workspace:*
+        version: link:../../core
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
 
   packages/next-config:
     dependencies:
@@ -1222,216 +1200,6 @@ importers:
       typescript:
         specifier: ^5.3.0
         version: 5.9.3
-
-  packages/react-extensions/character-limit:
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@lexical/text':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.19.7
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/extension-character-limit':
-        specifier: workspace:*
-        version: link:../../extensions/character-limit
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-      tsup:
-        specifier: ^8.4.0
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
-
-  packages/react-extensions/context-menu:
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/core':
-        specifier: workspace:*
-        version: link:../../core
-      '@typix-editor/extension-context-menu':
-        specifier: workspace:*
-        version: link:../../extensions/context-menu
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/react-extensions/draggable-block:
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/extension-draggable-block':
-        specifier: workspace:*
-        version: link:../../extensions/draggable-block
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../react
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/react-extensions/floating-link:
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@lexical/selection':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/utils':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/extension-floating-link':
-        specifier: workspace:*
-        version: link:../../extensions/floating-link
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-
-  packages/react-extensions/mention:
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.19.7
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/extension-mention':
-        specifier: workspace:*
-        version: link:../../extensions/mention
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
-      tsup:
-        specifier: ^8.4.0
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.9.3
-
-  packages/react-extensions/speech-to-text:
-    devDependencies:
-      '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/react':
-        specifier: ^0.40.0
-        version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@types/node':
-        specifier: ^25.1.0
-        version: 25.1.0
-      '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.8)
-      '@typix-editor/extension-speech-to-text':
-        specifier: workspace:*
-        version: link:../../extensions/speech-to-text
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
-      react:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3
-      react-dom:
-        specifier: ^18.2.0 || ^19.0.0-0
-        version: 19.2.3(react@19.2.3)
 
   packages/theme:
     devDependencies:
@@ -4953,9 +4721,6 @@ packages:
 
   '@types/node@20.19.31':
     resolution: {integrity: sha512-5jsi0wpncvTD33Sh1UCgacK37FFwDn+EG7wCmEvs62fCvBL+n8/76cAYDok21NF6+jaVWIqKwCZyX7Vbu8eB3A==}
-
-  '@types/node@22.19.7':
-    resolution: {integrity: sha512-MciR4AKGHWl7xwxkBa6xUGxQJ4VBOmPTF7sL+iGzuahOFaO0jHCsuEfS80pan1ef4gWId1oWOweIhrDEYLuaOw==}
 
   '@types/node@24.10.1':
     resolution: {integrity: sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==}
@@ -14841,10 +14606,6 @@ snapshots:
   '@types/node@12.20.55': {}
 
   '@types/node@20.19.31':
-    dependencies:
-      undici-types: 6.21.0
-
-  '@types/node@22.19.7':
     dependencies:
       undici-types: 6.21.0
 

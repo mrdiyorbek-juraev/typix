@@ -81,18 +81,18 @@ export const validateEditorState = async (
           lastUpdated: Date.now(),
         });
       } else {
-        console.log(`Editor state rejected for document ${documentId}`);
+        console.warn(`[Typix] Editor state rejected for document ${documentId}`);
         editor.setEditorState(prevEditorState);
       }
       return success;
     }
-    console.log(`Initial state set for document ${documentId}`);
+    console.debug(`[Typix] Initial state set for document ${documentId}`);
     documentStates.set(documentId, {
       editorState: sanitizedJSON,
       lastUpdated: Date.now(),
     });
     return true;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(`Validation error for document ${documentId}:`, error);
     editor.setEditorState(prevEditorState);
     return false;

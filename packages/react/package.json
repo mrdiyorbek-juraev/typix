@@ -48,7 +48,7 @@
     "build": "tsup",
     "build:fast": "tsup",
     "dev": "pnpm build:fast --watch",
-    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
+    "clean": "rm -rf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
@@ -108,5 +108,12 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "homepage": "https://typix.com",
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
   }
 }

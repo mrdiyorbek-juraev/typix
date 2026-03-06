@@ -14,14 +14,133 @@
       "require": "./dist/index.cjs"
     },
     "./lexical": {
-      "import": "./dist/lexical.js",
-      "require": "./dist/lexical.cjs"
+      "import": "./dist/lexical/index.js",
+      "require": "./dist/lexical/index.cjs"
+    },
+    "./lexical/code": {
+      "import": "./dist/lexical/code.js",
+      "require": "./dist/lexical/code.cjs"
+    },
+    "./lexical/code-shiki": {
+      "import": "./dist/lexical/code-shiki.js",
+      "require": "./dist/lexical/code-shiki.cjs"
+    },
+    "./lexical/extension": {
+      "import": "./dist/lexical/extension.js",
+      "require": "./dist/lexical/extension.cjs"
+    },
+    "./lexical/hashtag": {
+      "import": "./dist/lexical/hashtag.js",
+      "require": "./dist/lexical/hashtag.cjs"
+    },
+    "./lexical/headless": {
+      "import": "./dist/lexical/headless.js",
+      "require": "./dist/lexical/headless.cjs"
+    },
+    "./lexical/history": {
+      "import": "./dist/lexical/history.js",
+      "require": "./dist/lexical/history.cjs"
+    },
+    "./lexical/html": {
+      "import": "./dist/lexical/html.js",
+      "require": "./dist/lexical/html.cjs"
+    },
+    "./lexical/link": {
+      "import": "./dist/lexical/link.js",
+      "require": "./dist/lexical/link.cjs"
+    },
+    "./lexical/list": {
+      "import": "./dist/lexical/list.js",
+      "require": "./dist/lexical/list.cjs"
+    },
+    "./lexical/mark": {
+      "import": "./dist/lexical/mark.js",
+      "require": "./dist/lexical/mark.cjs"
+    },
+    "./lexical/markdown": {
+      "import": "./dist/lexical/markdown.js",
+      "require": "./dist/lexical/markdown.cjs"
+    },
+    "./lexical/overflow": {
+      "import": "./dist/lexical/overflow.js",
+      "require": "./dist/lexical/overflow.cjs"
+    },
+    "./lexical/rich-text": {
+      "import": "./dist/lexical/rich-text.js",
+      "require": "./dist/lexical/rich-text.cjs"
+    },
+    "./lexical/selection": {
+      "import": "./dist/lexical/selection.js",
+      "require": "./dist/lexical/selection.cjs"
+    },
+    "./lexical/table": {
+      "import": "./dist/lexical/table.js",
+      "require": "./dist/lexical/table.cjs"
+    },
+    "./lexical/text": {
+      "import": "./dist/lexical/text.js",
+      "require": "./dist/lexical/text.cjs"
+    },
+    "./lexical/utils": {
+      "import": "./dist/lexical/utils.js",
+      "require": "./dist/lexical/utils.cjs"
     }
   },
   "typesVersions": {
     "*": {
       "lexical": [
-        "./dist/lexical.d.ts"
+        "./dist/lexical/index.d.ts"
+      ],
+      "lexical/code": [
+        "./dist/lexical/code.d.ts"
+      ],
+      "lexical/code-shiki": [
+        "./dist/lexical/code-shiki.d.ts"
+      ],
+      "lexical/extension": [
+        "./dist/lexical/extension.d.ts"
+      ],
+      "lexical/hashtag": [
+        "./dist/lexical/hashtag.d.ts"
+      ],
+      "lexical/headless": [
+        "./dist/lexical/headless.d.ts"
+      ],
+      "lexical/history": [
+        "./dist/lexical/history.d.ts"
+      ],
+      "lexical/html": [
+        "./dist/lexical/html.d.ts"
+      ],
+      "lexical/link": [
+        "./dist/lexical/link.d.ts"
+      ],
+      "lexical/list": [
+        "./dist/lexical/list.d.ts"
+      ],
+      "lexical/mark": [
+        "./dist/lexical/mark.d.ts"
+      ],
+      "lexical/markdown": [
+        "./dist/lexical/markdown.d.ts"
+      ],
+      "lexical/overflow": [
+        "./dist/lexical/overflow.d.ts"
+      ],
+      "lexical/rich-text": [
+        "./dist/lexical/rich-text.d.ts"
+      ],
+      "lexical/selection": [
+        "./dist/lexical/selection.d.ts"
+      ],
+      "lexical/table": [
+        "./dist/lexical/table.d.ts"
+      ],
+      "lexical/text": [
+        "./dist/lexical/text.d.ts"
+      ],
+      "lexical/utils": [
+        "./dist/lexical/utils.d.ts"
       ]
     }
   },
@@ -29,6 +148,14 @@
   "files": [
     "dist"
   ],
+  "homepage": "https://typix.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -36,43 +163,54 @@
     "build": "tsup",
     "build:fast": "tsup",
     "dev": "pnpm build:fast --watch",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "clean": "rm -rf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
-    "@lexical/code": "^0.40.0",
+    "lexical": "^0.40.0",
+    "@lexical/code-shiki": "^0.40.0",
     "@lexical/extension": "^0.40.0",
+    "@lexical/history": "^0.40.0",
+    "@lexical/markdown": "^0.40.0",
+    "@lexical/text": "^0.40.0"
+  },
+  "peerDependenciesMeta": {
+    "@lexical/code-shiki": {
+      "optional": true
+    },
+    "@lexical/extension": {
+      "optional": true
+    },
+    "@lexical/history": {
+      "optional": true
+    },
+    "@lexical/markdown": {
+      "optional": true
+    },
+    "@lexical/text": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@lexical/code": "^0.40.0",
     "@lexical/hashtag": "^0.40.0",
     "@lexical/headless": "^0.40.0",
     "@lexical/html": "^0.40.0",
     "@lexical/link": "^0.40.0",
     "@lexical/list": "^0.40.0",
     "@lexical/mark": "^0.40.0",
-    "@lexical/markdown": "^0.40.0",
     "@lexical/overflow": "^0.40.0",
     "@lexical/rich-text": "^0.40.0",
     "@lexical/selection": "^0.40.0",
     "@lexical/table": "^0.40.0",
-    "@lexical/text": "^0.40.0",
-    "@lexical/utils": "^0.40.0",
-    "lexical": "^0.40.0"
+    "@lexical/utils": "^0.40.0"
   },
   "devDependencies": {
-    "@lexical/code": "^0.40.0",
+    "@lexical/code-shiki": "^0.40.0",
     "@lexical/extension": "^0.40.0",
-    "@lexical/hashtag": "^0.40.0",
-    "@lexical/headless": "^0.40.0",
-    "@lexical/html": "^0.40.0",
-    "@lexical/link": "^0.40.0",
-    "@lexical/list": "^0.40.0",
-    "@lexical/mark": "^0.40.0",
+    "@lexical/history": "^0.40.0",
     "@lexical/markdown": "^0.40.0",
-    "@lexical/overflow": "^0.40.0",
-    "@lexical/rich-text": "^0.40.0",
-    "@lexical/selection": "^0.40.0",
-    "@lexical/table": "^0.40.0",
     "@lexical/text": "^0.40.0",
-    "@lexical/utils": "^0.40.0",
     "@types/node": "^25.1.0",
     "lexical": "^0.40.0",
     "tsup": "^8.4.0",
@@ -85,5 +223,8 @@
     "lexical",
     "headless",
     "wysiwyg"
-  ]
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

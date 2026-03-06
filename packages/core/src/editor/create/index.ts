@@ -78,5 +78,10 @@ export function createTypix(options: CreateTypixOptions): TypixEditorInstance {
     // 4. Wrap in TypixEditor instance
     const typixEditor = new TypixEditor(lexicalEditor, registry, namespace, () => lexicalEditor.dispose())
 
+    // 5. Apply initial content if provided
+    if (content) {
+        setEditorContent(lexicalEditor, content)
+    }
+
     return typixEditor
 }

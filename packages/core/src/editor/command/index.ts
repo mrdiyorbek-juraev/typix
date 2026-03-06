@@ -225,7 +225,8 @@ export function isBlockActive(
         if (!$isRangeSelection(selection)) return false
 
         const anchorNode = selection.anchor.getNode()
-        const element = anchorNode.getTopLevelElementOrThrow()
+        const element = anchorNode.getTopLevelElement()
+        if (!element) return false
         const elementType = element.getType()
 
         if (blockType === 'bullet' || blockType === 'number' || blockType === 'check') {

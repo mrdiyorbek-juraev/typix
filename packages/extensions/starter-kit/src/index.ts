@@ -35,3 +35,22 @@ export {
 } from "./extensions/alignment";
 export { LinkExtension, type LinkConfig } from "./extensions/link";
 export { HistoryExtension, type HistoryConfig } from "./extensions/history";
+export {
+  FontSizeExtension,
+  type FontSizeConfig,
+  type FontSizeState,
+  getFontSizeState,
+} from "./extensions/font-size";
+export {
+  FontFamilyExtension,
+  type FontFamilyConfig,
+  type FontFamilyState,
+  getFontFamilyState,
+} from "./extensions/font-family";
+export {
+  DirectionExtension,
+  type DirectionConfig,
+  type DirectionValue,
+  type DirectionState,
+  getDirectionState,
+} from "./extensions/direction";

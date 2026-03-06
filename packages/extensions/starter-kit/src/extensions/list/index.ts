@@ -9,11 +9,11 @@ import {
   REMOVE_LIST_COMMAND,
   registerList,
   registerCheckList,
-} from "@lexical/list";
+} from "@typix-editor/core/lexical/list";
 import { $getSelection, $isRangeSelection } from "lexical";
-import { $getNearestNodeOfType } from "@lexical/utils";
+import { $getNearestNodeOfType } from "@typix-editor/core/lexical/utils";
 import { defineTypixExtension, TypixExtensionConfig } from "@typix-editor/core";
-import { namedSignals, effect } from "@lexical/extension";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
 export interface ListConfig extends TypixExtensionConfig {
   bullet: boolean;

@@ -7,5 +7,5 @@ export {
   type ChangeHandler,
   createLinkMatcherWithRegExp,
   type LinkMatcher,
-} from "@lexical/link";
+} from "@typix-editor/core/lexical/link";
 export { EMAIL_REGEX, URL_REGEX } from "./lib";

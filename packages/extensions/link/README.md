@@ -1,47 +1,60 @@
 # @typix-editor/extension-link
 
-Link extension for Typix editors. Wraps Lexical's LinkPlugin with optional custom URL validation.
+Link node with toggle commands and optional URL validation.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-link
+# or
+pnpm add @typix-editor/extension-link
 ```
 
 ## Usage
 
-```tsx
-import { LinkExtension } from "@typix-editor/extension-link";
+```ts
+import { LinkExtension } from "@typix-editor/extension-link"
+import { createTypix } from "@typix-editor/core"
 
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <LinkExtension />
-</EditorRoot>
+const editor = createTypix({
+  extensions: [
+    LinkExtension({
+      validateUrl: (url) => {
+        try {
+          new URL(url);
+          return true;
+        } catch {
+          return false;
+        }
+      },
+    }),
+  ],
+})
+
+// Toggle a link on the current selection
+editor.chain().setLink({ url: "https://example.com" }).run()
+
+// Remove the link
+editor.chain().unsetLink().run()
 ```
 
-### Custom URL Validation
+## Configuration
 
-```tsx
-<LinkExtension validateUrl={(url) => {
-  try {
-    const parsed = new URL(url);
-    return ["https:", "http:"].includes(parsed.protocol);
-  } catch {
-    return false;
-  }
-}} />
-```
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable link toggle handling |
+| `validateUrl` | `(url: string) => boolean` | -- | URL validation function; returning `false` prevents the link |
+| `attributes` | `LinkAttributes` | -- | Default HTML attributes applied to all created links |
 
-## Props
+## Commands
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `validateUrl` | `(url: string) => boolean` | Typix's built-in `validateUrl` | Custom URL validation function |
+| Command | Payload | Description |
+|---------|---------|-------------|
+| `setLink` | `{ url: string }` | Apply a link to the current selection |
+| `unsetLink` | -- | Remove the link from the current selection |
 
-## Documentation
+## API
 
-[typix.com/docs/extensions/link](https://typix.com/docs/extensions/link)
+### Exported Types
 
-## License
-
-MIT
+- **`LinkConfig`** -- Extension configuration interface.

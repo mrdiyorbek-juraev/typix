@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist"
+    "clean": "rm -rf .cache .turbo dist node_modules"
   },
   "dependencies": {
     "chalk": "^5.4.1",

@@ -1,0 +1,64 @@
+{
+  "name": "@typix-editor/extension-table",
+  "version": "4.1.0",
+  "description": "Table extension for Typix — full-featured tables with cell merge, scroll shadow, and rich commands",
+  "keywords": [
+    "typix",
+    "editor",
+    "lexical",
+    "table",
+    "rich-text",
+    "wysiwyg"
+  ],
+  "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
+  "homepage": "https://typix.com",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:fast": "tsup",
+    "dev": "pnpm build:fast --watch",
+    "clean": "rm -rf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "peerDependencies": {
+    "@typix-editor/core": "^4.1.0"
+  },
+  "devDependencies": {
+    "@typix-editor/core": "workspace:*",
+    "@types/node": "^25.1.0",
+    "lexical": "^0.40.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

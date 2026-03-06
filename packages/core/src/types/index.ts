@@ -11,6 +11,8 @@ import type {
 // ─────────────────────────────────────────────
 
 export interface TypixExtensionConfig {
+    /** Called when the extension encounters an unrecoverable error. */
+    onError?: (error: Error, context: string) => void
     [key: string]: unknown
 }
 
@@ -192,6 +194,8 @@ export interface TypixEditorInstance {
     // ── Commands ──────────────────────────────
     /** Start a chainable command sequence */
     chain(): ChainBuilder
+    /** Check if commands can run without executing them */
+    can(): CanChainBuilder
     /** Run a named command directly */
     run(command: string, ...args: unknown[]): boolean
 
@@ -241,6 +245,30 @@ export interface ChainBuilder {
     toggleMark(name: string, attrs?: Record<string, unknown>): ChainBuilder
     /** Toggle a block node — e.g. chain().toggleBlock('heading', { level: 2 }).run() */
     toggleBlock(name: string, attrs?: Record<string, unknown>): ChainBuilder
+    /** Allow calling any registered command by name */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [command: string]: any
+}
+
+// ─────────────────────────────────────────────
+// Can chain builder (availability check)
+// ─────────────────────────────────────────────
+
+export interface CanChainBuilder {
+    /** Check if all queued commands can run (exist). Returns true/false without executing. */
+    run(): boolean
+    /** Focus the editor */
+    focus(position?: 'start' | 'end' | 'all'): CanChainBuilder
+    /** Blur the editor */
+    blur(): CanChainBuilder
+    /** Set content */
+    setContent(content: SerializedContent | string): CanChainBuilder
+    /** Clear content */
+    clearContent(): CanChainBuilder
+    /** Toggle a mark */
+    toggleMark(name: string, attrs?: Record<string, unknown>): CanChainBuilder
+    /** Toggle a block node */
+    toggleBlock(name: string, attrs?: Record<string, unknown>): CanChainBuilder
     /** Allow calling any registered command by name */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [command: string]: any

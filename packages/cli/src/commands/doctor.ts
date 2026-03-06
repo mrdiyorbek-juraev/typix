@@ -4,7 +4,6 @@ import path from "node:path";
 import { logger } from "../utils/logger.js";
 import { getInstalledTypixExtensions } from "../utils/package-manager.js";
 import { getConfigPath } from "../utils/config.js";
-import { getAllExtensions } from "../utils/registry.js";
 
 function check(label: string, ok: boolean, hint?: string) {
   const icon = ok ? chalk.green("✔") : chalk.red("✖");
@@ -91,9 +90,7 @@ export async function doctorCommand() {
   // 6. Installed extensions are recognised in registry
   const installed = getInstalledTypixExtensions();
   const unknownExts = Object.keys(installed).filter(
-    (pkg) =>
-      !pkg.startsWith("@typix-editor/extension-") &&
-      !pkg.startsWith("@typix-editor/react-")
+    (pkg) => !pkg.startsWith("@typix-editor/extension-")
   );
   const hasUnknown = unknownExts.length > 0;
   check(
@@ -102,20 +99,6 @@ export async function doctorCommand() {
     hasUnknown ? `Unknown packages: ${unknownExts.join(", ")}` : undefined
   );
   if (hasUnknown) issues++;
-
-  // 7. React companion packages have their base extension installed
-  const allExtensions = getAllExtensions();
-  for (const ext of allExtensions) {
-    if (ext.reactPackage && installed[ext.reactPackage]) {
-      const hasBase = !!installed[ext.package];
-      check(
-        `${ext.reactPackage} has base extension installed`,
-        hasBase,
-        `Install the base extension: ${chalk.cyan(`typix add ${ext.name}`)}`
-      );
-      if (!hasBase) issues++;
-    }
-  }
 
   logger.break();
 

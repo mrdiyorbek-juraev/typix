@@ -1,33 +1,28 @@
 "use client";
 
-import { Mic, MicOff } from "lucide-react";
-import { useCallback, useState } from "react";
+import { Mic } from "lucide-react";
 import { ToolbarButton } from "../toolbar-button";
-import { useTypixEditorState } from "@typix-editor/react";
+import { useSpeechToText } from "@typix-editor/ui";
 
 export function SpeechGroup() {
-  const editor = useTypixEditorState();
-  const [isListening, setIsListening] = useState(false);
+  const { isListening, isSupported, toggle } = useSpeechToText();
 
-  const toggle = useCallback(() => {
-    const next = !isListening;
-    setIsListening(next);
-    editor.run("toggleSpeechToText");
-  }, [editor, isListening]);
+  if (!isSupported) return null;
 
   return (
-    <>
-      <ToolbarButton
-        onClick={toggle}
-        active={isListening}
-        title={isListening ? "Stop speech-to-text" : "Start speech-to-text"}
-      >
-        {isListening ? (
-          <MicOff className="size-3.5" />
-        ) : (
-          <Mic className="size-3.5" />
-        )}
-      </ToolbarButton>
-    </>
+    <ToolbarButton
+      onClick={toggle}
+      active={isListening}
+      title={isListening ? "Stop speech-to-text" : "Start speech-to-text"}
+    >
+      {isListening ? (
+        <span className="relative flex items-center justify-center">
+          <span className="absolute size-3.5 animate-ping rounded-full bg-destructive/30" />
+          <Mic className="relative size-3.5" />
+        </span>
+      ) : (
+        <Mic className="size-3.5" />
+      )}
+    </ToolbarButton>
   );
 }

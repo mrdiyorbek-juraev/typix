@@ -1,10 +1,10 @@
-import { effect, namedSignals } from "@lexical/extension";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import {
   $toggleLink,
   type LinkAttributes,
   LinkNode,
   TOGGLE_LINK_COMMAND,
-} from "@lexical/link";
+} from "@typix-editor/core/lexical/link";
 import { COMMAND_PRIORITY_EDITOR, defineExtension, safeCast } from "lexical";
 import {
   defineTypixExtension,

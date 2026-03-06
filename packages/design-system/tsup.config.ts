@@ -1,0 +1,26 @@
+import { defineConfig, type Options } from "tsup"
+
+export default defineConfig((options: Options) => ({
+  entry: ["src/index.ts"],
+  banner: { js: "'use client'" },
+  minify: true,
+  format: ["cjs", "esm"],
+  dts: true,
+  clean: true,
+  external: [
+    "react",
+    "react-dom",
+    "lexical",
+    /^@lexical\/.*/,
+    /^@typix-editor\/.*/,
+    /^@radix-ui\/.*/,
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge",
+    "cmdk",
+    "react-day-picker",
+    "react-textarea-autosize",
+    "lucide-react",
+  ],
+  ...options,
+}))

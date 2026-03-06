@@ -1,43 +1,51 @@
 # @typix-editor/extension-auto-complete
 
-Word auto-completion extension for Typix editors. Provides intelligent suggestions using a built-in dictionary with debouncing and caching.
+Inline text autocomplete suggestions with Tab or swipe-right to accept.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-auto-complete
+# or
+pnpm add @typix-editor/extension-auto-complete
 ```
 
 ## Usage
 
-```tsx
-import { AutocompleteExtension, AutocompleteNode } from "@typix-editor/extension-auto-complete";
+```ts
+import { AutocompleteExtension } from "@typix-editor/extension-auto-complete"
+import { createTypix } from "@typix-editor/core"
 
-const config = createEditorConfig({
-  namespace: "MyEditor",
-  extensionNodes: [...defaultExtensionNodes, AutocompleteNode],
-});
-
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <AutocompleteExtension />
-</EditorRoot>
+const editor = createTypix({
+  extensions: [
+    AutocompleteExtension({
+      minSearchLength: 3,
+      onAccept: (word) => console.log("Accepted:", word),
+    }),
+  ],
+})
 ```
 
-Accept suggestions with `Tab` or the right arrow key. Supports both keyboard and touch gestures.
+## Configuration
 
-## Exports
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable autocomplete |
+| `dictionary` | `string[]` | built-in | Custom word list (replaces built-in dictionary) |
+| `minSearchLength` | `number` | `4` | Minimum characters before a search runs |
+| `queryLatencyMs` | `number` | `200` | Debounce delay (ms) before querying the dictionary |
+| `onAccept` | `(word: string) => void` | - | Called when the user accepts a suggestion |
 
-| Export | Description |
-|--------|-------------|
-| `AutocompleteExtension` | Main extension component |
-| `AutocompleteNode` | Custom Lexical node for completions |
-| `$createAutocompleteNode` | Node factory function |
+## Nodes
 
-## Documentation
+| Node | Description |
+|------|-------------|
+| `AutocompleteNode` | Inline ghost-text node that renders the suggestion |
 
-[typix.com/docs/extensions/auto-complete](https://typix.com/docs/extensions/auto-complete)
+## API
 
-## License
-
-MIT
+| Export | Type | Description |
+|--------|------|-------------|
+| `AutocompleteExtension` | Function | Extension factory |
+| `AutocompleteConfig` | Type | Configuration interface |
+| `AutocompleteNode` | Class | Lexical node for autocomplete text |

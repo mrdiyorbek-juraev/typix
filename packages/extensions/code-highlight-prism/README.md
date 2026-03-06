@@ -1,34 +1,42 @@
 # @typix-editor/extension-code-highlight-prism
 
-Prism-based syntax highlighting for code blocks in Typix editors.
+Syntax highlighting for code blocks using Prism.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-code-highlight-prism
+# or
+pnpm add @typix-editor/extension-code-highlight-prism
 ```
 
 ## Usage
 
-```tsx
-import { CodeHighlightPrismExtension } from "@typix-editor/extension-code-highlight-prism";
+```ts
+import { CodeBlockExtension } from "@typix-editor/extension-code-block"
+import { CodeHighlightPrismExtension } from "@typix-editor/extension-code-highlight-prism"
+import { createTypix } from "@typix-editor/core"
 
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <CodeHighlightPrismExtension />
-</EditorRoot>
+const editor = createTypix({
+  extensions: [
+    CodeBlockExtension(),
+    CodeHighlightPrismExtension({
+      defaultLanguage: "typescript",
+    }),
+  ],
+})
 ```
 
-No configuration needed. Automatically highlights code blocks using PrismJS tokenization.
+## Configuration
 
-## See Also
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable syntax highlighting |
+| `defaultLanguage` | `string` | - | Default language for new code blocks |
 
-For higher-quality highlighting with tree-sitter, use [`@typix-editor/extension-code-highlight-shiki`](https://www.npmjs.com/package/@typix-editor/extension-code-highlight-shiki).
+## API
 
-## Documentation
-
-[typix.com/docs/extensions/code-highlight-prism](https://typix.com/docs/extensions/code-highlight-prism)
-
-## License
-
-MIT
+| Export | Type | Description |
+|--------|------|-------------|
+| `CodeHighlightPrismExtension` | Function | Extension factory |
+| `CodeHighlightPrismConfig` | Type | Configuration interface |

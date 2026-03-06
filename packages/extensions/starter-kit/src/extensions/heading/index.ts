@@ -11,10 +11,10 @@ import {
   $isHeadingNode,
   HeadingNode,
   type HeadingTagType,
-} from "@lexical/rich-text";
-import { $setBlocksType } from "@lexical/selection";
+} from "@typix-editor/core/lexical/rich-text";
+import { $setBlocksType } from "@typix-editor/core/lexical/selection";
 import { defineTypixExtension, TypixExtensionConfig } from "@typix-editor/core";
-import { namedSignals } from "@lexical/extension";
+import { namedSignals } from "@typix-editor/core/lexical/extension";
 
 export interface HeadingConfig extends TypixExtensionConfig {
   levels: Array<1 | 2 | 3 | 4 | 5 | 6>;

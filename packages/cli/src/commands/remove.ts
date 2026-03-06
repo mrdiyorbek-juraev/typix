@@ -1,26 +1,11 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { logger, spinner } from "../utils/logger.js";
-import { getAllExtensions, type ExtensionEntry } from "../utils/registry.js";
+import { getAllExtensions } from "../utils/registry.js";
 import {
   removePackages,
   getInstalledTypixExtensions,
 } from "../utils/package-manager.js";
-
-function appendReactCompanions(
-  packages: string[],
-  installed: Record<string, string>,
-  allExtensions: ExtensionEntry[]
-): string[] {
-  const result = [...packages];
-  for (const pkg of packages) {
-    const entry = allExtensions.find((e) => e.package === pkg);
-    if (entry?.reactPackage && installed[entry.reactPackage]) {
-      result.push(entry.reactPackage);
-    }
-  }
-  return result;
-}
 
 export async function removeCommand(
   extensions: string[],
@@ -124,8 +109,6 @@ export async function removeCommand(
 
     packages = picked;
   }
-
-  packages = appendReactCompanions(packages, installed, allExtensions);
 
   logger.break();
   const s = spinner("Removing extensions...").start();

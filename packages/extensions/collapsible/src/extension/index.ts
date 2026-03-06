@@ -1,11 +1,12 @@
-import { effect, namedSignals } from "@lexical/extension";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import {
   $findMatchingParent,
   $insertNodeToNearestRoot,
   mergeRegister,
-} from "@lexical/utils";
+} from "@typix-editor/core/lexical/utils";
 import {
   $createParagraphNode,
+  $getNodeByKey,
   $getSelection,
   $isRangeSelection,
   COMMAND_PRIORITY_LOW,
@@ -46,6 +47,16 @@ export const INSERT_COLLAPSIBLE_COMMAND = createCommand<void>(
 export interface CollapsibleConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable collapsible behavior. */
   disabled: boolean;
+  /**
+   * Whether newly inserted collapsible sections start in the open state.
+   * @default true
+   */
+  defaultOpen?: boolean;
+  /**
+   * Called whenever a collapsible container's open/closed state changes.
+   * `isOpen` reflects the new state after the toggle.
+   */
+  onToggle?: (isOpen: boolean) => void;
 }
 
 export const CollapsibleExtension = (
@@ -53,6 +64,7 @@ export const CollapsibleExtension = (
 ) => {
   const resolvedConfig: CollapsibleConfig = {
     disabled: false,
+    defaultOpen: true,
     ...userConfig,
   };
 
@@ -73,6 +85,9 @@ export const CollapsibleExtension = (
 
     register(editor, _config, state) {
       const { disabled } = state.getOutput();
+
+      // Track open states to detect changes; keyed by node key
+      const openStates = new Map<string, boolean>();
 
       return effect(() => {
         if (disabled.value) return;
@@ -134,6 +149,35 @@ export const CollapsibleExtension = (
         };
 
         return mergeRegister(
+          // onToggle: detect when a container's open state changes
+          ...(resolvedConfig.onToggle
+            ? [
+                editor.registerMutationListener(
+                  CollapsibleContainerNode,
+                  (mutations) => {
+                    editor.getEditorState().read(() => {
+                      for (const [key, mutation] of mutations) {
+                        if (mutation === "destroyed") {
+                          openStates.delete(key);
+                          continue;
+                        }
+                        const node = $getNodeByKey<CollapsibleContainerNode>(key);
+                        if (!$isCollapsibleContainerNode(node)) continue;
+                        const isOpen = node.getOpen();
+                        if (
+                          openStates.has(key) &&
+                          openStates.get(key) !== isOpen
+                        ) {
+                          resolvedConfig.onToggle!(isOpen);
+                        }
+                        openStates.set(key, isOpen);
+                      }
+                    });
+                  }
+                ),
+              ]
+            : []),
+
           // Structure-enforcing transforms — unwrap malformed collapsible nodes
           editor.registerNodeTransform(CollapsibleContentNode, (node) => {
             const parent = node.getParent();
@@ -224,7 +268,9 @@ export const CollapsibleExtension = (
                 const title = $createCollapsibleTitleNode();
                 const paragraph = $createParagraphNode();
                 $insertNodeToNearestRoot(
-                  $createCollapsibleContainerNode(true).append(
+                  $createCollapsibleContainerNode(
+                    resolvedConfig.defaultOpen ?? true
+                  ).append(
                     title.append(paragraph),
                     $createCollapsibleContentNode().append(
                       $createParagraphNode()

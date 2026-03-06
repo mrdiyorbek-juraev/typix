@@ -1,5 +1,5 @@
-import { signal, type Signal } from "@lexical/extension";
-import { mergeRegister } from "@lexical/utils";
+import { signal, type Signal } from "@typix-editor/core/lexical/extension";
+import { mergeRegister } from "@typix-editor/core/lexical/utils";
 import {
   $getSelection,
   $isRangeSelection,
@@ -196,6 +196,8 @@ export const SpeechToTextExtension = (
 
         const { transcript, confidence } = firstAlternative;
         const isFinal = resultItem.isFinal;
+
+        if (confidence < (config.confidenceThreshold ?? 0)) return;
 
         config.onResult?.({ transcript, confidence, isFinal });
 

@@ -9,12 +9,12 @@ import {
   LinkNode,
   AutoLinkNode,
   TOGGLE_LINK_COMMAND,
-} from "@lexical/link";
+} from "@typix-editor/core/lexical/link";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,
 } from "@typix-editor/core";
-import { namedSignals, effect } from "@lexical/extension";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
 export interface LinkConfig extends TypixExtensionConfig {
   /** Whether to register AutoLinkNode for URL auto-detection */

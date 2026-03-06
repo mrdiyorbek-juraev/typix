@@ -49,7 +49,8 @@ describe("validation", () => {
 
   beforeEach(() => {
     vi.spyOn(console, "error").mockImplementation(() => {});
-    vi.spyOn(console, "log").mockImplementation(() => {});
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    vi.spyOn(console, "debug").mockImplementation(() => {});
   });
 
   afterEach(() => {
@@ -109,8 +110,8 @@ describe("validation", () => {
       const editorState = createValidEditorState();
       await validateEditorState("test-doc", editorState, testNodes);
 
-      expect(console.log).toHaveBeenCalledWith(
-        "Initial state set for document test-doc"
+      expect(console.debug).toHaveBeenCalledWith(
+        "[Typix] Initial state set for document test-doc"
       );
     });
   });
@@ -168,8 +169,8 @@ describe("validation", () => {
       const editorState = createValidEditorState();
       await initializeDocumentState("test-doc", editorState, testNodes);
 
-      expect(console.log).toHaveBeenCalledWith(
-        "Initial state set for document test-doc"
+      expect(console.debug).toHaveBeenCalledWith(
+        "[Typix] Initial state set for document test-doc"
       );
     });
   });
@@ -187,8 +188,8 @@ describe("validation", () => {
       // Next validation should be treated as initial
       await validateEditorState("test-doc", editorState, testNodes);
 
-      expect(console.log).toHaveBeenCalledWith(
-        "Initial state set for document test-doc"
+      expect(console.debug).toHaveBeenCalledWith(
+        "[Typix] Initial state set for document test-doc"
       );
     });
 

@@ -14,7 +14,7 @@ import { TailwindExtension } from "@lexical/tailwind";
 import { LinkExtension } from "@typix-editor/extension-link";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
 import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
-import { FloatingLinkUI } from "@typix-editor/react-floating-link";
+import { FloatingLinkUI } from "@typix-editor/ui";
 import {
   Bold,
   Code,
@@ -247,7 +247,7 @@ export const files = [
 import { defineExtension } from "lexical";
 import { TailwindExtension } from "@lexical/tailwind";
 import { LinkExtension } from "@typix-editor/extension-link";
-import { FloatingLinkUI } from "@typix-editor/react-floating-link";
+import { FloatingLinkUI } from "@typix-editor/ui";
 import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
 import { Toolbar } from "./Toolbar";
 

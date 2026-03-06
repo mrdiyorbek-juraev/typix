@@ -26,7 +26,7 @@
     "build": "sass scss/typix.scss dist/typix.css --no-source-map && sass scss/typix.scss dist/typix.min.css --style=compressed --no-source-map",
     "build:fast": "sass scss/typix.scss dist/typix.css --no-source-map",
     "dev": "sass scss/typix.scss dist/typix.css --watch --no-source-map",
-    "clean": "git clean -xdf .cache .turbo dist node_modules"
+    "clean": "rm -rf .cache .turbo dist node_modules"
   },
   "devDependencies": {
     "sass": "^1.86.0"

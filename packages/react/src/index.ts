@@ -50,6 +50,8 @@ export {
 export {
   useEditorState,
   useTypixEditorState,
+  useSelectionStyle,
+  useSignal,
   useMouseListener,
   useRange,
 } from "./hooks";
@@ -65,6 +67,14 @@ export {
   focusNearestDescendant,
   isKeyboardInput,
 } from "./utils/focus-utils";
+
+// Lexical React plugins (re-exported for design system consumers)
+export { DraggableBlockPlugin_EXPERIMENTAL } from "@lexical/react/LexicalDraggableBlockPlugin";
+export {
+  LexicalTypeaheadMenuPlugin,
+  MenuOption,
+  type MenuTextMatch,
+} from "@lexical/react/LexicalTypeaheadMenuPlugin";
 
 // Extension API
 export {

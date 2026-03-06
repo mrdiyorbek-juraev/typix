@@ -1,51 +1,71 @@
 # @typix-editor/extension-collapsible
 
-Collapsible/accordion block extension for Typix editors. Creates expandable sections with a title and content area.
+Expandable/collapsible content sections with title and body.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-collapsible
+# or
+pnpm add @typix-editor/extension-collapsible
 ```
 
 ## Usage
 
-```tsx
-import { CollapsiblePlugin, CollapsibleContainerNode, CollapsibleTitleNode, CollapsibleContentNode } from "@typix-editor/extension-collapsible";
+```ts
+import { CollapsibleExtension } from "@typix-editor/extension-collapsible"
+import { createTypix } from "@typix-editor/core"
 
-const config = createEditorConfig({
-  namespace: "MyEditor",
-  extensionNodes: [...defaultExtensionNodes, CollapsibleContainerNode, CollapsibleTitleNode, CollapsibleContentNode],
-});
+const editor = createTypix({
+  extensions: [
+    CollapsibleExtension({
+      defaultOpen: true,
+      onToggle: (isOpen) => console.log("Toggled:", isOpen),
+    }),
+  ],
+})
 
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <CollapsiblePlugin />
-</EditorRoot>
+// Insert a collapsible section
+editor.chain().insertCollapsible().run()
 ```
 
-### Insert Programmatically
+## Configuration
 
-```tsx
-import { INSERT_COLLAPSIBLE_COMMAND } from "@typix-editor/extension-collapsible";
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable collapsible behavior |
+| `defaultOpen` | `boolean` | `true` | Whether new collapsible sections start open |
+| `onToggle` | `(isOpen: boolean) => void` | - | Called when a collapsible's open/closed state changes |
 
-editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined);
-```
+## Commands
 
-## Exports
+| Command | Payload | Description |
+|---------|---------|-------------|
+| `insertCollapsible` | - | Insert a new collapsible section at the current selection |
 
-| Export | Description |
-|--------|-------------|
-| `CollapsiblePlugin` | Main extension component |
-| `CollapsibleContainerNode` | Container node |
-| `CollapsibleTitleNode` | Title node |
-| `CollapsibleContentNode` | Content node |
-| `INSERT_COLLAPSIBLE_COMMAND` | Command to insert a collapsible block |
+The low-level Lexical command `INSERT_COLLAPSIBLE_COMMAND` is also exported for direct dispatch.
 
-## Documentation
+## Nodes
 
-[typix.com/docs/extensions/collapsible](https://typix.com/docs/extensions/collapsible)
+| Node | Description |
+|------|-------------|
+| `CollapsibleContainerNode` | Wrapper element that manages open/closed state |
+| `CollapsibleTitleNode` | The clickable title/header area |
+| `CollapsibleContentNode` | The body content revealed when open |
 
-## License
+## API
 
-MIT
+| Export | Type | Description |
+|--------|------|-------------|
+| `CollapsibleExtension` | Function | Extension factory |
+| `CollapsibleConfig` | Type | Configuration interface |
+| `INSERT_COLLAPSIBLE_COMMAND` | `LexicalCommand` | Lexical command for direct dispatch |
+| `CollapsibleContainerNode` | Class | Container node |
+| `CollapsibleTitleNode` | Class | Title node |
+| `CollapsibleContentNode` | Class | Content node |
+| `$createCollapsibleContainerNode` | Function | Create a container node |
+| `$createCollapsibleContentNode` | Function | Create a content node |
+| `$createCollapsibleTitleNode` | Function | Create a title node |
+| `$isCollapsibleContainerNode` | Function | Type guard for container node |
+| `$isCollapsibleContentNode` | Function | Type guard for content node |
+| `$isCollapsibleTitleNode` | Function | Type guard for title node |

@@ -8,7 +8,7 @@ import {
   defineTypixExtension,
   type TypixExtensionConfig,
 } from "@typix-editor/core";
-import { namedSignals } from "@lexical/extension";
+import { namedSignals } from "@typix-editor/core/lexical/extension";
 
 export interface BoldConfig extends TypixExtensionConfig {
   disabled?: boolean;

@@ -11,7 +11,7 @@ import {
 } from "@typix-editor/react";
 import { TailwindExtension } from "@lexical/tailwind";
 import { MentionNode } from "@typix-editor/extension-mention";
-import { MentionUI } from "@typix-editor/react-mention";
+import { MentionUI } from "@typix-editor/ui";
 import {
   Bold,
   Code,
@@ -202,7 +202,7 @@ export const files = [
 import { defineExtension } from "lexical";
 import { TailwindExtension } from "@lexical/tailwind";
 import { MentionNode } from "@typix-editor/extension-mention";
-import { MentionUI } from "@typix-editor/react-mention";
+import { MentionUI } from "@typix-editor/ui";
 import { Toolbar } from "./Toolbar";
 
 const extension = defineExtension({

@@ -12,7 +12,7 @@ export { defineTypixExtension, mergeTypixConfig, ExtensionRegistry, configExtens
 export { TypixEventEmitter } from './editor/event'
 
 // Chain builder (exposed for framework adapters and testing)
-export { createChainBuilder } from './editor/chain'
+export { createChainBuilder, createCanChainBuilder } from './editor/chain'
 
 // Low-level command helpers (useful when writing custom extensions)
 export {
@@ -54,6 +54,7 @@ export type {
 
   // Chain
   ChainBuilder,
+  CanChainBuilder,
 } from './types'
 
 // ─────────────────────────────────────────────────────
@@ -83,6 +84,8 @@ export {
   $getSelection,
   $isRangeSelection,
   $setBlocksType,
+  $getSelectionStyleValueForProperty,
+  $patchStyleText,
   $createHeadingNode,
   HeadingNode,
   ParagraphNode,

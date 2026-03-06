@@ -1,5 +1,5 @@
-import { effect, namedSignals } from "@lexical/extension";
-import { $createCodeNode, $isCodeNode } from "@lexical/code";
+import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
+import { $createCodeNode, $isCodeNode } from "@typix-editor/core/lexical/code";
 import {
   $isListNode,
   INSERT_CHECK_LIST_COMMAND,
@@ -7,15 +7,15 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
   ListNode,
   REMOVE_LIST_COMMAND,
-} from "@lexical/list";
-import { TOGGLE_LINK_COMMAND } from "@lexical/link";
+} from "@typix-editor/core/lexical/list";
+import { TOGGLE_LINK_COMMAND } from "@typix-editor/core/lexical/link";
 import {
   $createHeadingNode,
   $createQuoteNode,
   $isQuoteNode,
-} from "@lexical/rich-text";
-import { $patchStyleText, $setBlocksType } from "@lexical/selection";
-import { $getNearestNodeOfType, IS_APPLE } from "@lexical/utils";
+} from "@typix-editor/core/lexical/rich-text";
+import { $patchStyleText, $setBlocksType } from "@typix-editor/core/lexical/selection";
+import { $getNearestNodeOfType, IS_APPLE } from "@typix-editor/core/lexical/utils";
 import {
   $createParagraphNode,
   $getSelection,
@@ -65,6 +65,36 @@ import {
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
+/**
+ * Names of all built-in keyboard shortcuts.
+ * Set any name to `false` in `overrides` to disable that shortcut.
+ */
+export type ShortcutName =
+  | "formatParagraph"
+  | "formatHeading"
+  | "formatBulletList"
+  | "formatNumberedList"
+  | "formatCheckList"
+  | "formatCode"
+  | "formatQuote"
+  | "strikethrough"
+  | "lowercase"
+  | "uppercase"
+  | "capitalize"
+  | "subscript"
+  | "superscript"
+  | "insertCodeBlock"
+  | "indent"
+  | "outdent"
+  | "centerAlign"
+  | "leftAlign"
+  | "rightAlign"
+  | "justifyAlign"
+  | "increaseFontSize"
+  | "decreaseFontSize"
+  | "clearFormatting"
+  | "insertLink";
+
 export interface ShortCutsConfig extends TypixExtensionConfig {
   /** Set to true to temporarily disable all keyboard shortcuts. */
   disabled: boolean;
@@ -73,6 +103,15 @@ export interface ShortCutsConfig extends TypixExtensionConfig {
    * Use this to open/close your floating link toolbar.
    */
   onLinkEditModeChange?: (isLinkEditMode: boolean) => void;
+  /**
+   * Selectively disable individual built-in shortcuts.
+   * Set a shortcut name to `false` to prevent it from firing.
+   *
+   * @example
+   * // Disable the link shortcut and the quote shortcut
+   * overrides: { insertLink: false, formatQuote: false }
+   */
+  overrides?: Partial<Record<ShortcutName, false>>;
 }
 
 // ─── Inlined pure helpers ────────────────────────────────────────────────────
@@ -287,6 +326,8 @@ export const ShortCutsExtension = (
       return effect(() => {
         if (disabled.value) return;
 
+        const { overrides } = resolvedConfig;
+
         const keyboardShortcutsHandler = (event: KeyboardEvent): boolean => {
           // Short-circuit if no modifier is pressed
           if (isModifierMatch(event, NO_MODIFIER)) {
@@ -295,8 +336,10 @@ export const ShortCutsExtension = (
 
           // Block formatting
           if (isFormatParagraph(event)) {
+            if (overrides?.formatParagraph === false) return false;
             setParagraph(editor);
           } else if (isFormatHeading(event)) {
+            if (overrides?.formatHeading === false) return false;
             const { code } = event;
             const level = Number.parseInt(
               code[code.length - 1]
@@ -305,61 +348,83 @@ export const ShortCutsExtension = (
               toggleHeading(editor, level);
             }
           } else if (isFormatBulletList(event)) {
+            if (overrides?.formatBulletList === false) return false;
             toggleBulletList(editor);
           } else if (isFormatNumberedList(event)) {
+            if (overrides?.formatNumberedList === false) return false;
             toggleOrderedList(editor);
           } else if (isFormatCheckList(event)) {
+            if (overrides?.formatCheckList === false) return false;
             toggleCheckList(editor);
           } else if (isFormatCode(event)) {
+            if (overrides?.formatCode === false) return false;
             toggleCodeBlock(editor);
           } else if (isFormatQuote(event)) {
+            if (overrides?.formatQuote === false) return false;
             toggleQuote(editor);
           }
           // Text formatting
           else if (isStrikeThrough(event)) {
+            if (overrides?.strikethrough === false) return false;
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
           } else if (isLowercase(event)) {
+            if (overrides?.lowercase === false) return false;
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "lowercase");
           } else if (isUppercase(event)) {
+            if (overrides?.uppercase === false) return false;
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "uppercase");
           } else if (isCapitalize(event)) {
+            if (overrides?.capitalize === false) return false;
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "capitalize");
           } else if (isSubscript(event)) {
+            if (overrides?.subscript === false) return false;
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
           } else if (isSuperscript(event)) {
+            if (overrides?.superscript === false) return false;
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript");
           } else if (isInsertCodeBlock(event)) {
+            if (overrides?.insertCodeBlock === false) return false;
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
           }
           // Indentation
           else if (isIndent(event)) {
+            if (overrides?.indent === false) return false;
             editor.dispatchCommand(INDENT_CONTENT_COMMAND, undefined);
           } else if (isOutdent(event)) {
+            if (overrides?.outdent === false) return false;
             editor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined);
           }
           // Alignment
           else if (isCenterAlign(event)) {
+            if (overrides?.centerAlign === false) return false;
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
           } else if (isLeftAlign(event)) {
+            if (overrides?.leftAlign === false) return false;
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
           } else if (isRightAlign(event)) {
+            if (overrides?.rightAlign === false) return false;
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
           } else if (isJustifyAlign(event)) {
+            if (overrides?.justifyAlign === false) return false;
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
           }
           // Font size
           else if (isIncreaseFontSize(event)) {
+            if (overrides?.increaseFontSize === false) return false;
             incrementFontSize(editor, 2);
           } else if (isDecreaseFontSize(event)) {
+            if (overrides?.decreaseFontSize === false) return false;
             decrementFontSize(editor, 2);
           }
           // Clear formatting
           else if (isClearFormatting(event)) {
+            if (overrides?.clearFormatting === false) return false;
             clearFormatting(editor);
           }
           // Link — read onLinkEditModeChange.value in the handler (not effect body)
           // so callback changes don't trigger re-registration.
           else if (isInsertLink(event)) {
+            if (overrides?.insertLink === false) return false;
             isLinkEditMode = !isLinkEditMode;
             onLinkEditModeChange?.value?.(isLinkEditMode);
             editor.dispatchCommand(
