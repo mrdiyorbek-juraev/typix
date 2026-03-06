@@ -1,7 +1,14 @@
 "use client";
 
 import { defaultTheme, EditorContent, EditorRoot } from "@typix-editor/react";
-import { CharacterLimit, DraggableBlock, EditorContextMenu, FloatingLinkUI, MentionUI, type EditorContextMenuItem } from "@typix-editor/ui";
+import {
+  CharacterLimit,
+  DraggableBlock,
+  EditorContextMenu,
+  FloatingLinkUI,
+  MentionUI,
+  type EditorContextMenuItem,
+} from "@typix-editor/ui";
 import type { MentionItem } from "@typix-editor/extension-mention";
 import { Copy, Scissors, Clipboard, Trash2 } from "lucide-react";
 import {
@@ -56,21 +63,24 @@ const contextMenuItems: EditorContextMenuItem[] = [
     icon: <Clipboard />,
     shortcut: "Ctrl+V",
     onSelect: (editor) => {
-      navigator.clipboard.readText().then((text) => {
-        if (!text) return;
-        editor.lexical.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            selection.insertRawText(text);
-          } else {
-            const paragraph = $createParagraphNode();
-            paragraph.append($createTextNode(text));
-            $getRoot().append(paragraph);
-          }
+      navigator.clipboard
+        .readText()
+        .then((text) => {
+          if (!text) return;
+          editor.lexical.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              selection.insertRawText(text);
+            } else {
+              const paragraph = $createParagraphNode();
+              paragraph.append($createTextNode(text));
+              $getRoot().append(paragraph);
+            }
+          });
+        })
+        .catch(() => {
+          // clipboard-read permission denied — browser blocked it
         });
-      }).catch(() => {
-        // clipboard-read permission denied — browser blocked it
-      });
     },
   },
   { type: "separator" },
@@ -90,11 +100,46 @@ const contextMenuItems: EditorContextMenuItem[] = [
 ];
 
 const SAMPLE_USERS: MentionItem[] = [
-  { id: "1", name: "Alice Johnson", data: { username: "@alice", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Alice" } },
-  { id: "2", name: "Bob Smith", data: { username: "@bob", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Bob" } },
-  { id: "3", name: "Charlie Brown", data: { username: "@charlie", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Charlie" } },
-  { id: "4", name: "Diana Prince", data: { username: "@diana", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Diana" } },
-  { id: "5", name: "Edward Norton", data: { username: "@edward", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Edward" } },
+  {
+    id: "1",
+    name: "Alice Johnson",
+    data: {
+      username: "@alice",
+      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Alice",
+    },
+  },
+  {
+    id: "2",
+    name: "Bob Smith",
+    data: {
+      username: "@bob",
+      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Bob",
+    },
+  },
+  {
+    id: "3",
+    name: "Charlie Brown",
+    data: {
+      username: "@charlie",
+      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Charlie",
+    },
+  },
+  {
+    id: "4",
+    name: "Diana Prince",
+    data: {
+      username: "@diana",
+      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Diana",
+    },
+  },
+  {
+    id: "5",
+    name: "Edward Norton",
+    data: {
+      username: "@edward",
+      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=Edward",
+    },
+  },
 ];
 
 function searchMentions(query: string): MentionItem[] {
@@ -112,8 +157,8 @@ export default function BasicEditor() {
       extensions={editorExtensions}
       namespace="typix-basic"
       theme={defaultTheme}
-      onChange={() => { }}
-      onContentChange={() => { }}
+      onChange={() => {}}
+      onContentChange={() => {}}
     >
       <div className="overflow-hidden rounded-xl border border-border bg-background shadow-sm">
         <Toolbar />

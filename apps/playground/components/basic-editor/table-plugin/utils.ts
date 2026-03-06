@@ -6,7 +6,10 @@ import {
 } from "@typix-editor/extension-table";
 
 /** Look up the HTMLTableElement from a cell node key. */
-export function findTableElement(editor: TypixEditor, cellKey: string): HTMLTableElement | null {
+export function findTableElement(
+  editor: TypixEditor,
+  cellKey: string
+): HTMLTableElement | null {
   let result: HTMLTableElement | null = null;
   editor.lexical.read(() => {
     const node = $getNodeByKey(cellKey);

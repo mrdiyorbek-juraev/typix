@@ -1,7 +1,7 @@
-import { cn } from "../../../lib/utils"
-import type { CharacterLimitProps } from "../types"
-import { useCharacterCount } from "../hooks/use-character-count"
-import { CharacterLimitCounter } from "./character-limit-counter"
+import { cn } from "../../../lib/utils";
+import type { CharacterLimitProps } from "../types";
+import { useCharacterCount } from "../hooks/use-character-count";
+import { CharacterLimitCounter } from "./character-limit-counter";
 
 /**
  * Character limit component — shows a styled counter with circular progress
@@ -22,7 +22,7 @@ export function CharacterLimit({
   charset = "UTF-16",
   warningThreshold = 0.1,
 }: CharacterLimitProps) {
-  const { characters, words } = useCharacterCount({ charset })
+  const { characters, words } = useCharacterCount({ charset });
 
   return (
     <div className={cn("flex items-center justify-end px-3 py-1.5")}>
@@ -34,7 +34,7 @@ export function CharacterLimit({
         showWords
       />
     </div>
-  )
+  );
 }
 
-CharacterLimit.displayName = "Typix.CharacterLimit"
+CharacterLimit.displayName = "Typix.CharacterLimit";

@@ -225,14 +225,23 @@ export const PrettierFormatterExtension = (
         const mapping = LANG_MAP[snapshot.lang];
         if (!mapping) {
           const errs = new Map(output.errors.value);
-          errs.set(nodeKey, `No Prettier parser for language "${snapshot.lang}"`);
+          errs.set(
+            nodeKey,
+            `No Prettier parser for language "${snapshot.lang}"`
+          );
           output.errors.value = errs;
-          config.onError?.(new Error(`No Prettier parser for "${snapshot.lang}"`), nodeKey);
+          config.onError?.(
+            new Error(`No Prettier parser for "${snapshot.lang}"`),
+            nodeKey
+          );
           return false;
         }
 
         // Mark loading
-        output.formatting.value = new Set([...output.formatting.value, nodeKey]);
+        output.formatting.value = new Set([
+          ...output.formatting.value,
+          nodeKey,
+        ]);
 
         // Clear stale error
         if (output.errors.value.has(nodeKey)) {
@@ -250,8 +259,7 @@ export const PrettierFormatterExtension = (
 
             // Some plugins export as .default, others as the module itself
             const plugins = pluginModules.map(
-              (m: unknown) =>
-                (m as Record<string, unknown>).default ?? m
+              (m: unknown) => (m as Record<string, unknown>).default ?? m
             );
 
             const formatted = await (format as Function)(snapshot.code, {

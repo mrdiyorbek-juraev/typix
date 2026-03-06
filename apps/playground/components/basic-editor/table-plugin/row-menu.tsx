@@ -65,7 +65,9 @@ export const RowMenu = memo(function RowMenu({
       <DropdownMenuContent align="start" side="right" className="w-48">
         <DropdownMenuLabel>Row</DropdownMenuLabel>
 
-        <DropdownMenuItem onSelect={() => run(() => editor.chain().toggleHeaderRow().run())}>
+        <DropdownMenuItem
+          onSelect={() => run(() => editor.chain().toggleHeaderRow().run())}
+        >
           <AlignLeft />
           {isHeaderRow ? "Remove header" : "Header row"}
         </DropdownMenuItem>
@@ -91,11 +93,15 @@ export const RowMenu = memo(function RowMenu({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onSelect={() => run(() => $insertTableRowAtSelection(false))}>
+        <DropdownMenuItem
+          onSelect={() => run(() => $insertTableRowAtSelection(false))}
+        >
           <Rows3 />
           Insert above
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => run(() => $insertTableRowAtSelection(true))}>
+        <DropdownMenuItem
+          onSelect={() => run(() => $insertTableRowAtSelection(true))}
+        >
           <Rows3 />
           Insert below
         </DropdownMenuItem>

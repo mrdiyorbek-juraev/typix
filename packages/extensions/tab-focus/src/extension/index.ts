@@ -74,7 +74,8 @@ export const TabFocusExtension = (userConfig: Partial<TabFocusConfig> = {}) => {
               const selection = $getSelection();
               if (
                 $isRangeSelection(selection) &&
-                lastTabKeyDownTimestamp + (resolvedConfig.restoreWindowMs ?? 100) >
+                lastTabKeyDownTimestamp +
+                  (resolvedConfig.restoreWindowMs ?? 100) >
                   event.timeStamp
               ) {
                 $setSelection(selection.clone());

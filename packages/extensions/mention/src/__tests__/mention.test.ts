@@ -228,8 +228,7 @@ describe("MentionNodeConfig type", () => {
   it("supports custom styling", () => {
     const config: MentionNodeConfig = {
       className: "my-custom-mention",
-      style:
-        "background-color: #e1f5fe; padding: 2px 4px; border-radius: 4px;",
+      style: "background-color: #e1f5fe; padding: 2px 4px; border-radius: 4px;",
       includeTrigger: false,
     };
     expect(config.className).toBe("my-custom-mention");

@@ -1,9 +1,9 @@
-import type { JSX, ReactNode } from "react"
-import type { LexicalEditor } from "lexical"
-import { cn } from "../../../lib/utils"
-import { useFloatingLinkEditor } from "../hooks/use-floating-link-editor"
-import type { FloatingLinkRenderProps } from "../types"
-import { DefaultFloatingLinkUI } from "./default-ui"
+import type { JSX, ReactNode } from "react";
+import type { LexicalEditor } from "lexical";
+import { cn } from "../../../lib/utils";
+import { useFloatingLinkEditor } from "../hooks/use-floating-link-editor";
+import type { FloatingLinkRenderProps } from "../types";
+import { DefaultFloatingLinkUI } from "./default-ui";
 
 export function FloatingLinkEditorPortal({
   editor,
@@ -13,12 +13,12 @@ export function FloatingLinkEditorPortal({
   children,
   verticalOffset,
 }: {
-  editor: LexicalEditor
-  anchorElem: HTMLElement
-  isLink: boolean
-  setIsLink: (val: boolean) => void
-  children?: (props: FloatingLinkRenderProps) => ReactNode
-  verticalOffset: number
+  editor: LexicalEditor;
+  anchorElem: HTMLElement;
+  isLink: boolean;
+  setIsLink: (val: boolean) => void;
+  children?: (props: FloatingLinkRenderProps) => ReactNode;
+  verticalOffset: number;
 }): JSX.Element {
   const { editorRef, renderProps } = useFloatingLinkEditor({
     editor,
@@ -26,7 +26,7 @@ export function FloatingLinkEditorPortal({
     isLink,
     setIsLink,
     verticalOffset,
-  })
+  });
 
   return (
     <div
@@ -37,11 +37,11 @@ export function FloatingLinkEditorPortal({
         "rounded-lg border border-border bg-popover text-popover-foreground shadow-md",
         "text-[13px] antialiased",
         "transition-opacity duration-150 ease-out",
-        "empty:border-0 empty:bg-transparent empty:shadow-none empty:pointer-events-none",
+        "empty:border-0 empty:bg-transparent empty:shadow-none empty:pointer-events-none"
       )}
       onMouseDown={(e) => {
         if (e.target !== editorRef.current) {
-          e.preventDefault()
+          e.preventDefault();
         }
       }}
     >
@@ -51,5 +51,5 @@ export function FloatingLinkEditorPortal({
         <DefaultFloatingLinkUI {...renderProps} />
       )}
     </div>
-  )
+  );
 }

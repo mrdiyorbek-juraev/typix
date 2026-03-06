@@ -14,7 +14,11 @@ import {
 } from "lexical";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../../../lib/utils";
-import type { ImageAlignment, ImageComponentProps, ImageFeatureFlags } from "../types";
+import type {
+  ImageAlignment,
+  ImageComponentProps,
+  ImageFeatureFlags,
+} from "../types";
 import { ImageCaption } from "./image-caption";
 import { ImageContextMenu } from "./image-context-menu";
 import { ImageResizer } from "./image-resizer";
@@ -255,9 +259,7 @@ export function ImageComponent({
       const response = await fetch(src);
       const blob = await response.blob();
       const pngBlob =
-        blob.type === "image/png"
-          ? blob
-          : await convertToPng(blob);
+        blob.type === "image/png" ? blob : await convertToPng(blob);
       await navigator.clipboard.write([
         new ClipboardItem({ "image/png": pngBlob }),
       ]);
@@ -290,7 +292,11 @@ export function ImageComponent({
 
   const showToolbar = features.toolbar && isHovered && isEditable && !hasError;
   const showResizer =
-    features.resizable && isSelected && isEditable && !hasError && alignment !== "full-width";
+    features.resizable &&
+    isSelected &&
+    isEditable &&
+    !hasError &&
+    alignment !== "full-width";
 
   const content = (
     <div className={cn(alignmentClasses[alignment])}>

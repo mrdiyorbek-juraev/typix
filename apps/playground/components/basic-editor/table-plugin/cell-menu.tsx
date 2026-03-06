@@ -71,7 +71,10 @@ export const CellMiniMenu = memo(function CellMiniMenu({
 
   const toggleTableAttr = (attr: string) => {
     if (!tableEl) return;
-    tableEl.setAttribute(attr, tableEl.getAttribute(attr) === "true" ? "false" : "true");
+    tableEl.setAttribute(
+      attr,
+      tableEl.getAttribute(attr) === "true" ? "false" : "true"
+    );
   };
 
   const setVAlign = (align: string) => {
@@ -107,7 +110,9 @@ export const CellMiniMenu = memo(function CellMiniMenu({
           </DropdownMenuItem>
         )}
         {isMerged && (
-          <DropdownMenuItem onSelect={() => withCell(cellKey, () => $unmergeCell())}>
+          <DropdownMenuItem
+            onSelect={() => withCell(cellKey, () => $unmergeCell())}
+          >
             <TableCellsSplit className="size-4" />
             Unmerge cells
           </DropdownMenuItem>
@@ -122,7 +127,9 @@ export const CellMiniMenu = memo(function CellMiniMenu({
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="p-2">
             <ColorPicker
-              onSelect={(color) => withCell(cellKey, (cell) => cell.setBackgroundColor(color))}
+              onSelect={(color) =>
+                withCell(cellKey, (cell) => cell.setBackgroundColor(color))
+              }
             />
           </DropdownMenuSubContent>
         </DropdownMenuSub>
@@ -164,11 +171,19 @@ export const CellMiniMenu = memo(function CellMiniMenu({
         <DropdownMenuSeparator />
 
         {/* Insert rows */}
-        <DropdownMenuItem onSelect={() => withCell(cellKey, () => $insertTableRowAtSelection(false))}>
+        <DropdownMenuItem
+          onSelect={() =>
+            withCell(cellKey, () => $insertTableRowAtSelection(false))
+          }
+        >
           <Rows3 className="size-4" />
           Insert row above
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => withCell(cellKey, () => $insertTableRowAtSelection(true))}>
+        <DropdownMenuItem
+          onSelect={() =>
+            withCell(cellKey, () => $insertTableRowAtSelection(true))
+          }
+        >
           <Rows3 className="size-4" />
           Insert row below
         </DropdownMenuItem>
@@ -176,11 +191,19 @@ export const CellMiniMenu = memo(function CellMiniMenu({
         <DropdownMenuSeparator />
 
         {/* Insert columns */}
-        <DropdownMenuItem onSelect={() => withCell(cellKey, () => $insertTableColumnAtSelection(false))}>
+        <DropdownMenuItem
+          onSelect={() =>
+            withCell(cellKey, () => $insertTableColumnAtSelection(false))
+          }
+        >
           <Columns3 className="size-4" />
           Insert column left
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => withCell(cellKey, () => $insertTableColumnAtSelection(true))}>
+        <DropdownMenuItem
+          onSelect={() =>
+            withCell(cellKey, () => $insertTableColumnAtSelection(true))
+          }
+        >
           <Columns3 className="size-4" />
           Insert column right
         </DropdownMenuItem>
@@ -188,17 +211,29 @@ export const CellMiniMenu = memo(function CellMiniMenu({
         <DropdownMenuSeparator />
 
         {/* Delete actions */}
-        <DropdownMenuItem variant="destructive" onSelect={() => withCell(cellKey, () => $deleteTableColumnAtSelection())}>
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={() =>
+            withCell(cellKey, () => $deleteTableColumnAtSelection())
+          }
+        >
           <Trash2 className="size-4" />
           Delete column
         </DropdownMenuItem>
-        <DropdownMenuItem variant="destructive" onSelect={() => withCell(cellKey, () => $deleteTableRowAtSelection())}>
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={() => withCell(cellKey, () => $deleteTableRowAtSelection())}
+        >
           <Trash2 className="size-4" />
           Delete row
         </DropdownMenuItem>
         <DropdownMenuItem
           variant="destructive"
-          onSelect={() => withCell(cellKey, (cell) => { $getTableNodeFromLexicalNodeOrThrow(cell).remove(); })}
+          onSelect={() =>
+            withCell(cellKey, (cell) => {
+              $getTableNodeFromLexicalNodeOrThrow(cell).remove();
+            })
+          }
         >
           <Trash2 className="size-4" />
           Delete table
@@ -207,11 +242,19 @@ export const CellMiniMenu = memo(function CellMiniMenu({
         <DropdownMenuSeparator />
 
         {/* Header toggles */}
-        <DropdownMenuItem onSelect={() => withCell(cellKey, () => editor.chain().toggleHeaderRow().run())}>
+        <DropdownMenuItem
+          onSelect={() =>
+            withCell(cellKey, () => editor.chain().toggleHeaderRow().run())
+          }
+        >
           <AlignLeft className="size-4" />
           {isHeaderRow ? "Remove row header" : "Add row header"}
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => withCell(cellKey, () => editor.chain().toggleHeaderColumn().run())}>
+        <DropdownMenuItem
+          onSelect={() =>
+            withCell(cellKey, () => editor.chain().toggleHeaderColumn().run())
+          }
+        >
           <AlignLeft className="size-4" />
           {isHeaderCol ? "Remove column header" : "Add column header"}
         </DropdownMenuItem>

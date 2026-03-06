@@ -37,5 +37,7 @@ export const editorExtensions = [
   MarkdownShortcutsExtension(),
   TableExtension(),
   ImageExtension({ component: imageRenderer }),
-  PrettierFormatterExtension({ printOptions: { tabWidth: 2, singleQuote: true } }),
+  PrettierFormatterExtension({
+    printOptions: { tabWidth: 2, singleQuote: true },
+  }),
 ];

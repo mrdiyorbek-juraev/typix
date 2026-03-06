@@ -1,9 +1,5 @@
 import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
-import {
-  $getRoot,
-  defineExtension,
-  safeCast,
-} from "lexical";
+import { $getRoot, defineExtension, safeCast } from "lexical";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,

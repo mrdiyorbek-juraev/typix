@@ -1,6 +1,6 @@
-import * as React from "react"
-import { cn } from "../../../lib/utils"
-import type { CharacterLimitCounterProps } from "../types"
+import * as React from "react";
+import { cn } from "../../../lib/utils";
+import type { CharacterLimitCounterProps } from "../types";
 
 /**
  * Standalone counter display for character limits.
@@ -20,16 +20,17 @@ export function CharacterLimitCounter({
   showWords = false,
   className,
 }: CharacterLimitCounterProps) {
-  const remaining = maxLength - count
-  const isExceeded = remaining < 0
-  const isWarning = !isExceeded && remaining <= Math.ceil(maxLength * warningThreshold)
-  const percentage = Math.min((count / maxLength) * 100, 100)
+  const remaining = maxLength - count;
+  const isExceeded = remaining < 0;
+  const isWarning =
+    !isExceeded && remaining <= Math.ceil(maxLength * warningThreshold);
+  const percentage = Math.min((count / maxLength) * 100, 100);
 
   return (
     <div
       className={cn(
         "inline-flex items-center gap-2 text-xs tabular-nums select-none",
-        className,
+        className
       )}
     >
       {/* Circular progress indicator */}
@@ -58,7 +59,7 @@ export function CharacterLimitCounter({
                 ? "stroke-destructive"
                 : isWarning
                   ? "stroke-amber-500"
-                  : "stroke-primary",
+                  : "stroke-primary"
             )}
           />
         </svg>
@@ -72,7 +73,7 @@ export function CharacterLimitCounter({
             ? "text-destructive font-medium"
             : isWarning
               ? "text-amber-500"
-              : "text-muted-foreground",
+              : "text-muted-foreground"
         )}
       >
         {remaining}
@@ -87,7 +88,7 @@ export function CharacterLimitCounter({
         </>
       )}
     </div>
-  )
+  );
 }
 
-CharacterLimitCounter.displayName = "Typix.CharacterLimitCounter"
+CharacterLimitCounter.displayName = "Typix.CharacterLimitCounter";

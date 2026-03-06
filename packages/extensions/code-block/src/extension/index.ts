@@ -173,8 +173,6 @@ export const CodeBlockExtension = (
       return output;
     },
 
-    
-
     register(editor, _config, state) {
       if (resolvedConfig.disabled) return () => {};
 
@@ -227,9 +225,7 @@ export const CodeBlockExtension = (
             const topElement = anchor.getTopLevelElementOrThrow();
             const isAlreadyCode = $isCodeNode(topElement);
             $setBlocksType(selection, () =>
-              isAlreadyCode
-                ? $createParagraphNode()
-                : $createCodeNode(language)
+              isAlreadyCode ? $createParagraphNode() : $createCodeNode(language)
             );
           } else {
             // No selection — insert at nearest root

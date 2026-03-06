@@ -42,8 +42,10 @@ export function TableCellResizer() {
     el.style.width = `${h.width}px`;
     el.style.height = `${h.height}px`;
     el.style.cursor = h.direction === "column" ? "col-resize" : "row-resize";
-    el.style.borderRight = h.direction === "column" ? "2px solid hsl(var(--primary) / 0.7)" : "";
-    el.style.borderBottom = h.direction === "row" ? "2px solid hsl(var(--primary) / 0.7)" : "";
+    el.style.borderRight =
+      h.direction === "column" ? "2px solid hsl(var(--primary) / 0.7)" : "";
+    el.style.borderBottom =
+      h.direction === "row" ? "2px solid hsl(var(--primary) / 0.7)" : "";
   }, []);
 
   const showDragLine = useCallback((d: ResizeDragLine | null) => {
@@ -95,8 +97,10 @@ export function TableCellResizer() {
       }
 
       const rect = cellEl.getBoundingClientRect();
-      const nearRight = e.clientX > rect.right - EDGE_ZONE && e.clientX <= rect.right + 2;
-      const nearBottom = e.clientY > rect.bottom - EDGE_ZONE && e.clientY <= rect.bottom + 2;
+      const nearRight =
+        e.clientX > rect.right - EDGE_ZONE && e.clientX <= rect.right + 2;
+      const nearBottom =
+        e.clientY > rect.bottom - EDGE_ZONE && e.clientY <= rect.bottom + 2;
 
       if (!nearRight && !nearBottom) {
         if (currentCellEl) {
@@ -186,7 +190,12 @@ export function TableCellResizer() {
           }
 
           const r = cellEl.getBoundingClientRect();
-          showHandle({ ...handle, left: r.right - 2, top: r.top, height: r.height });
+          showHandle({
+            ...handle,
+            left: r.right - 2,
+            top: r.top,
+            height: r.height,
+          });
 
           showDragLine({
             direction: "column",
@@ -215,7 +224,11 @@ export function TableCellResizer() {
             if (!(node instanceof TableCellNode)) return;
 
             const tableNode = $getTableNodeFromLexicalNodeOrThrow(node);
-            const [tableMap] = $computeTableMapSkipCellCheck(tableNode, null, null);
+            const [tableMap] = $computeTableMapSkipCellCheck(
+              tableNode,
+              null,
+              null
+            );
             const colIdx = $getTableColumnIndexFromTableCellNode(node);
 
             const seen = new Set<string>();
@@ -240,7 +253,8 @@ export function TableCellResizer() {
         const startY = e.clientY;
         const rowEl = cellEl.closest("tr") as HTMLElement | null;
         const startHeight =
-          rowEl?.getBoundingClientRect().height ?? cellEl.getBoundingClientRect().height;
+          rowEl?.getBoundingClientRect().height ??
+          cellEl.getBoundingClientRect().height;
 
         const onMove = (ev: PointerEvent) => {
           const dy = ev.clientY - startY;

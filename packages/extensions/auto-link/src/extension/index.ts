@@ -52,7 +52,8 @@ export const AutoLinkExtension = (userConfig: Partial<AutoLinkConfig> = {}) => {
     },
 
     register(editor, _config, state) {
-      const { disabled, matchers, onChange, defaultAttributes } = state.getOutput();
+      const { disabled, matchers, onChange, defaultAttributes } =
+        state.getOutput();
 
       return effect(() => {
         if (disabled.value) return;
@@ -65,7 +66,10 @@ export const AutoLinkExtension = (userConfig: Partial<AutoLinkConfig> = {}) => {
           ? baseMatchers.map((matcher) => (text) => {
               const result = matcher(text);
               if (!result) return null;
-              return { ...result, attributes: { ...attrs, ...result.attributes } };
+              return {
+                ...result,
+                attributes: { ...attrs, ...result.attributes },
+              };
             })
           : baseMatchers;
 

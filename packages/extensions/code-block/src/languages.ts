@@ -13,7 +13,8 @@ import {
  * LANGUAGE_MAP['javascript'] // 'JavaScript'
  * LANGUAGE_MAP['typescript'] // 'TypeScript'
  */
-export const LANGUAGE_MAP: Record<string, string> = CODE_LANGUAGE_FRIENDLY_NAME_MAP;
+export const LANGUAGE_MAP: Record<string, string> =
+  CODE_LANGUAGE_FRIENDLY_NAME_MAP;
 
 /**
  * Sorted array of all supported language keys.
@@ -69,9 +70,7 @@ export function searchLanguages(
       seenLabels.add(labelLower);
 
       return (
-        q === "" ||
-        key.toLowerCase().includes(q) ||
-        labelLower.includes(q)
+        q === "" || key.toLowerCase().includes(q) || labelLower.includes(q)
       );
     });
 }

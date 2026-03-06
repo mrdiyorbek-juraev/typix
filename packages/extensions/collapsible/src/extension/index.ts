@@ -161,7 +161,8 @@ export const CollapsibleExtension = (
                           openStates.delete(key);
                           continue;
                         }
-                        const node = $getNodeByKey<CollapsibleContainerNode>(key);
+                        const node =
+                          $getNodeByKey<CollapsibleContainerNode>(key);
                         if (!$isCollapsibleContainerNode(node)) continue;
                         const isOpen = node.getOpen();
                         if (

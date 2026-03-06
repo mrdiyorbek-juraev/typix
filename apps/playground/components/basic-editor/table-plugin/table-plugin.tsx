@@ -177,7 +177,9 @@ export function TablePlugin() {
       }
     `;
     document.head.appendChild(style);
-    return () => { style.remove(); };
+    return () => {
+      style.remove();
+    };
   }, []);
 
   const portalHandlers = useMemo(
@@ -191,22 +193,25 @@ export function TablePlugin() {
 
   // ── Drag-to-reorder columns/rows ──────────────────────────────────────────
 
-  const showDragInd = useCallback((type: "column" | "row", x: number, y: number, size: number) => {
-    const el = dragIndicatorRef.current;
-    if (!el) return;
-    el.style.display = "block";
-    if (type === "row") {
-      el.style.left = `${x}px`;
-      el.style.top = `${y - 1}px`;
-      el.style.width = `${size}px`;
-      el.style.height = "2px";
-    } else {
-      el.style.left = `${x - 1}px`;
-      el.style.top = `${y}px`;
-      el.style.width = "2px";
-      el.style.height = `${size}px`;
-    }
-  }, []);
+  const showDragInd = useCallback(
+    (type: "column" | "row", x: number, y: number, size: number) => {
+      const el = dragIndicatorRef.current;
+      if (!el) return;
+      el.style.display = "block";
+      if (type === "row") {
+        el.style.left = `${x}px`;
+        el.style.top = `${y - 1}px`;
+        el.style.width = `${size}px`;
+        el.style.height = "2px";
+      } else {
+        el.style.left = `${x - 1}px`;
+        el.style.top = `${y}px`;
+        el.style.width = "2px";
+        el.style.height = `${size}px`;
+      }
+    },
+    []
+  );
 
   const hideDragInd = useCallback(() => {
     const el = dragIndicatorRef.current;
@@ -218,7 +223,7 @@ export function TablePlugin() {
       type: "column" | "row",
       sourceIndex: number,
       cellKey: string,
-      e: React.PointerEvent,
+      e: React.PointerEvent
     ) => {
       const startPos = type === "column" ? e.clientX : e.clientY;
       let dragging = false;
@@ -267,7 +272,12 @@ export function TablePlugin() {
           }
           const lastRect = cells[cells.length - 1].getBoundingClientRect();
           targetGap = cells.length;
-          showDragInd("column", lastRect.right, tableRect.top, tableRect.height);
+          showDragInd(
+            "column",
+            lastRect.right,
+            tableRect.top,
+            tableRect.height
+          );
         }
       };
 
@@ -282,8 +292,11 @@ export function TablePlugin() {
         // Prevent click from opening the dropdown after drag
         document.addEventListener(
           "click",
-          (evt) => { evt.stopPropagation(); evt.preventDefault(); },
-          { capture: true, once: true },
+          (evt) => {
+            evt.stopPropagation();
+            evt.preventDefault();
+          },
+          { capture: true, once: true }
         );
 
         // No-op if dropping in same position
@@ -325,7 +338,7 @@ export function TablePlugin() {
       document.addEventListener("pointermove", onMove, true);
       document.addEventListener("pointerup", onUp, true);
     },
-    [editor, showDragInd, hideDragInd],
+    [editor, showDragInd, hideDragInd]
   );
 
   if (!mounted || !hoverInfo) return null;
@@ -336,11 +349,15 @@ export function TablePlugin() {
   const COL_HANDLE_SIZE = 16;
   const ROW_HANDLE_SIZE = 16;
 
-  const colHandleLeft = Math.round(cellRect.left + cellRect.width / 2 - COL_HANDLE_SIZE / 2);
+  const colHandleLeft = Math.round(
+    cellRect.left + cellRect.width / 2 - COL_HANDLE_SIZE / 2
+  );
   const colHandleTop = Math.round(tableRect.top - COL_HANDLE_SIZE / 2);
 
   const rowHandleLeft = Math.round(tableRect.left - ROW_HANDLE_SIZE / 2);
-  const rowHandleTop = Math.round(rowRect.top + rowRect.height / 2 - ROW_HANDLE_SIZE / 2);
+  const rowHandleTop = Math.round(
+    rowRect.top + rowRect.height / 2 - ROW_HANDLE_SIZE / 2
+  );
 
   const cellMenuLeft = Math.round(cellRect.right - 22);
   const cellMenuTop = Math.round(cellRect.top + 3);
@@ -365,7 +382,9 @@ export function TablePlugin() {
       <div
         className="fixed z-50"
         style={{ left: colHandleLeft, top: colHandleTop }}
-        onPointerDown={(e) => handleGripDrag("column", hoverInfo.colIndex, hoverInfo.cellKey, e)}
+        onPointerDown={(e) =>
+          handleGripDrag("column", hoverInfo.colIndex, hoverInfo.cellKey, e)
+        }
         {...portalHandlers}
       >
         <ColumnMenu
@@ -380,7 +399,9 @@ export function TablePlugin() {
       <div
         className="fixed z-50"
         style={{ left: rowHandleLeft, top: rowHandleTop }}
-        onPointerDown={(e) => handleGripDrag("row", hoverInfo.rowIndex, hoverInfo.cellKey, e)}
+        onPointerDown={(e) =>
+          handleGripDrag("row", hoverInfo.rowIndex, hoverInfo.cellKey, e)
+        }
         {...portalHandlers}
       >
         <RowMenu
@@ -417,7 +438,11 @@ export function TablePlugin() {
             title="Add column"
             className="flex h-full w-5 cursor-pointer items-center justify-center rounded border border-border/60 bg-background/80 text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
             onMouseDown={(e) => e.preventDefault()}
-            onClick={() => withCell(hoverInfo.cellKey, () => $insertTableColumnAtSelection(true))}
+            onClick={() =>
+              withCell(hoverInfo.cellKey, () =>
+                $insertTableColumnAtSelection(true)
+              )
+            }
           >
             <Plus className="size-3" />
           </button>
@@ -435,7 +460,11 @@ export function TablePlugin() {
             title="Add row"
             className="flex h-5 w-full cursor-pointer items-center justify-center rounded border border-border/60 bg-background/80 text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
             onMouseDown={(e) => e.preventDefault()}
-            onClick={() => withCell(hoverInfo.cellKey, () => $insertTableRowAtSelection(true))}
+            onClick={() =>
+              withCell(hoverInfo.cellKey, () =>
+                $insertTableRowAtSelection(true)
+              )
+            }
           >
             <Plus className="size-3" />
           </button>

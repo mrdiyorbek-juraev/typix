@@ -117,81 +117,71 @@ export const ImageExtension = (userConfig: Partial<ImageConfig> = {}) => {
     typix: lexicalExt,
     config: resolvedConfig,
     commands: {
-      insertImage:
-        () =>
-          (ctx, attrs?: Record<string, unknown>) => {
-            ctx.editor.dispatchCommand(
-              INSERT_IMAGE_COMMAND,
-              attrs as unknown as InsertImagePayload
-            );
-            return true;
-          },
-      setImageAlignment:
-        () =>
-          (ctx, attrs?: Record<string, unknown>) => {
-            const payload = attrs as
-              | { nodeKey: string; alignment: ImageAlignment }
-              | undefined;
-            if (!payload) return false;
-            ctx.editor.update(() => {
-              const node = $getNodeByKey(payload.nodeKey);
-              if ($isImageNode(node)) {
-                node.setAlignment(payload.alignment);
-              }
+      insertImage: () => (ctx, attrs?: Record<string, unknown>) => {
+        ctx.editor.dispatchCommand(
+          INSERT_IMAGE_COMMAND,
+          attrs as unknown as InsertImagePayload
+        );
+        return true;
+      },
+      setImageAlignment: () => (ctx, attrs?: Record<string, unknown>) => {
+        const payload = attrs as
+          | { nodeKey: string; alignment: ImageAlignment }
+          | undefined;
+        if (!payload) return false;
+        ctx.editor.update(() => {
+          const node = $getNodeByKey(payload.nodeKey);
+          if ($isImageNode(node)) {
+            node.setAlignment(payload.alignment);
+          }
+        });
+        return true;
+      },
+      toggleImageCaption: () => (ctx, attrs?: Record<string, unknown>) => {
+        const payload = attrs as { nodeKey: string } | undefined;
+        if (!payload) return false;
+        ctx.editor.update(() => {
+          const node = $getNodeByKey(payload.nodeKey);
+          if ($isImageNode(node)) {
+            node.setShowCaption(!node.getShowCaption());
+          }
+        });
+        return true;
+      },
+      deleteImage: () => (ctx, attrs?: Record<string, unknown>) => {
+        const payload = attrs as { nodeKey: string } | undefined;
+        if (!payload) return false;
+        ctx.editor.update(() => {
+          const node = $getNodeByKey(payload.nodeKey);
+          if ($isImageNode(node)) {
+            const src = node.getSrc();
+            node.remove();
+            resolvedConfig.onDelete?.(src);
+          }
+        });
+        return true;
+      },
+      duplicateImage: () => (ctx, attrs?: Record<string, unknown>) => {
+        const payload = attrs as { nodeKey: string } | undefined;
+        if (!payload) return false;
+        ctx.editor.update(() => {
+          const node = $getNodeByKey(payload.nodeKey);
+          if ($isImageNode(node)) {
+            const clone = $createImageNode({
+              src: node.getSrc(),
+              altText: node.getAltText(),
+              width: node.__width,
+              height: node.__height,
+              maxWidth: node.__maxWidth,
+              showCaption: node.getShowCaption(),
+              caption: node.getCaption(),
+              alignment: node.getAlignment(),
             });
-            return true;
-          },
-      toggleImageCaption:
-        () =>
-          (ctx, attrs?: Record<string, unknown>) => {
-            const payload = attrs as { nodeKey: string } | undefined;
-            if (!payload) return false;
-            ctx.editor.update(() => {
-              const node = $getNodeByKey(payload.nodeKey);
-              if ($isImageNode(node)) {
-                node.setShowCaption(!node.getShowCaption());
-              }
-            });
-            return true;
-          },
-      deleteImage:
-        () =>
-          (ctx, attrs?: Record<string, unknown>) => {
-            const payload = attrs as { nodeKey: string } | undefined;
-            if (!payload) return false;
-            ctx.editor.update(() => {
-              const node = $getNodeByKey(payload.nodeKey);
-              if ($isImageNode(node)) {
-                const src = node.getSrc();
-                node.remove();
-                resolvedConfig.onDelete?.(src);
-              }
-            });
-            return true;
-          },
-      duplicateImage:
-        () =>
-          (ctx, attrs?: Record<string, unknown>) => {
-            const payload = attrs as { nodeKey: string } | undefined;
-            if (!payload) return false;
-            ctx.editor.update(() => {
-              const node = $getNodeByKey(payload.nodeKey);
-              if ($isImageNode(node)) {
-                const clone = $createImageNode({
-                  src: node.getSrc(),
-                  altText: node.getAltText(),
-                  width: node.__width,
-                  height: node.__height,
-                  maxWidth: node.__maxWidth,
-                  showCaption: node.getShowCaption(),
-                  caption: node.getCaption(),
-                  alignment: node.getAlignment(),
-                });
-                node.insertAfter(clone);
-              }
-            });
-            return true;
-          },
+            node.insertAfter(clone);
+          }
+        });
+        return true;
+      },
     },
   });
 };

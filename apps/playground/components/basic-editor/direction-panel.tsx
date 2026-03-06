@@ -1,7 +1,10 @@
 "use client";
 
 import { useTypixEditorState, useSignal } from "@typix-editor/react";
-import { getDirectionState, type DirectionValue } from "@typix-editor/extension-starter-kit";
+import {
+  getDirectionState,
+  type DirectionValue,
+} from "@typix-editor/extension-starter-kit";
 import { cn } from "@/lib/utils";
 
 const GLOBAL_DIRS: { label: string; value: DirectionValue }[] = [
@@ -56,7 +59,11 @@ export function DirectionPanel() {
               label={label}
               active={globalDir === value}
               onClick={() =>
-                editor.chain().focus().setGlobalDirection({ direction: value }).run()
+                editor
+                  .chain()
+                  .focus()
+                  .setGlobalDirection({ direction: value })
+                  .run()
               }
             />
           ))}

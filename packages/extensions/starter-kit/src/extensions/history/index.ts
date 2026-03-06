@@ -5,7 +5,10 @@ import {
   REDO_COMMAND,
   type LexicalEditor,
 } from "lexical";
-import { registerHistory, createEmptyHistoryState } from "@typix-editor/core/lexical/history";
+import {
+  registerHistory,
+  createEmptyHistoryState,
+} from "@typix-editor/core/lexical/history";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,

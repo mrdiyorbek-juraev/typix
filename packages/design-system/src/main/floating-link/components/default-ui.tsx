@@ -1,11 +1,11 @@
-import type { JSX } from "react"
-import * as React from "react"
-import { Check, ExternalLink, Link, Pencil, Trash2, X } from "lucide-react"
-import { sanitizeUrl } from "@typix-editor/react"
-import { cn } from "../../../lib/utils"
-import { Button } from "../../../primitives/button"
-import { Separator } from "../../../primitives/separator"
-import type { FloatingLinkRenderProps } from "../types"
+import type { JSX } from "react";
+import * as React from "react";
+import { Check, ExternalLink, Link, Pencil, Trash2, X } from "lucide-react";
+import { sanitizeUrl } from "@typix-editor/react";
+import { cn } from "../../../lib/utils";
+import { Button } from "../../../primitives/button";
+import { Separator } from "../../../primitives/separator";
+import type { FloatingLinkRenderProps } from "../types";
 
 export function DefaultFloatingLinkUI({
   isEditing,
@@ -21,13 +21,13 @@ export function DefaultFloatingLinkUI({
 }: FloatingLinkRenderProps): JSX.Element {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      event.preventDefault()
-      submitLink()
+      event.preventDefault();
+      submitLink();
     } else if (event.key === "Escape") {
-      event.preventDefault()
-      cancelEdit()
+      event.preventDefault();
+      cancelEdit();
     }
-  }
+  };
 
   if (isEditing) {
     return (
@@ -36,7 +36,7 @@ export function DefaultFloatingLinkUI({
           className={cn(
             "flex flex-1 items-center gap-1.5 rounded-md border border-input bg-background px-2 h-8 min-w-0",
             "transition-[border-color,box-shadow] duration-150 ease-out",
-            "focus-within:border-ring focus-within:ring-1 focus-within:ring-ring",
+            "focus-within:border-ring focus-within:ring-1 focus-within:ring-ring"
           )}
         >
           <Link className="size-3.5 shrink-0 text-muted-foreground" />
@@ -72,8 +72,8 @@ export function DefaultFloatingLinkUI({
             title="Apply"
             disabled={!isValidUrl}
             onClick={(e) => {
-              e.preventDefault()
-              submitLink()
+              e.preventDefault();
+              submitLink();
             }}
             onMouseDown={(e) => e.preventDefault()}
           >
@@ -81,7 +81,7 @@ export function DefaultFloatingLinkUI({
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -91,7 +91,7 @@ export function DefaultFloatingLinkUI({
           "inline-flex flex-1 items-center gap-1.5 min-w-0 rounded-md px-1.5 py-1",
           "text-[13px] leading-snug text-foreground no-underline",
           "transition-colors duration-150 ease-out",
-          "hover:bg-accent",
+          "hover:bg-accent"
         )}
         href={sanitizeUrl(linkUrl)}
         target="_blank"
@@ -109,8 +109,8 @@ export function DefaultFloatingLinkUI({
         aria-label="Edit link"
         title="Edit"
         onClick={(e) => {
-          e.preventDefault()
-          startEdit()
+          e.preventDefault();
+          startEdit();
         }}
         onMouseDown={(e) => e.preventDefault()}
       >
@@ -128,5 +128,5 @@ export function DefaultFloatingLinkUI({
         <Trash2 className="size-3.5" />
       </Button>
     </div>
-  )
+  );
 }

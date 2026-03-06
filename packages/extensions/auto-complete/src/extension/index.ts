@@ -326,9 +326,7 @@ export const AutocompleteExtension = (
         }
 
         const accepted = lastSuggestion;
-        const textNode = $createTextNode(accepted).setStyle(
-          `font-size: ${14}`
-        );
+        const textNode = $createTextNode(accepted).setStyle(`font-size: ${14}`);
         autocompleteNode.replace(textNode);
         textNode.selectNext();
         $clearSuggestion();

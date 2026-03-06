@@ -7,7 +7,11 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import { namedSignals, signal, type Signal } from "@typix-editor/core/lexical/extension";
+import {
+  namedSignals,
+  signal,
+  type Signal,
+} from "@typix-editor/core/lexical/extension";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,
@@ -73,7 +77,10 @@ export const DirectionExtension = (
   const lexicalExt = defineExtension({
     name: "@typix/direction",
     config: safeCast<DirectionConfig>(resolvedConfig),
-    mergeConfig(a: DirectionConfig, b: Partial<DirectionConfig>): DirectionConfig {
+    mergeConfig(
+      a: DirectionConfig,
+      b: Partial<DirectionConfig>
+    ): DirectionConfig {
       return { ...a, ...b };
     },
     build(editor: LexicalEditor) {
@@ -122,9 +129,7 @@ export const DirectionExtension = (
         globalDirection.value = dir;
         // Sync Lexical root node direction (ltr/rtl only — auto/null map to null)
         ctx.editor.update(() => {
-          $getRoot().setDirection(
-            dir === "ltr" || dir === "rtl" ? dir : null
-          );
+          $getRoot().setDirection(dir === "ltr" || dir === "rtl" ? dir : null);
         });
         return true;
       },

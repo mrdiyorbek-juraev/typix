@@ -1,41 +1,41 @@
-import type { JSX, ReactNode } from "react"
-import { useCallback, useEffect, useMemo, useState } from "react"
-import * as ReactDOM from "react-dom"
-import type { TextNode } from "lexical"
+import type { JSX, ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import * as ReactDOM from "react-dom";
+import type { TextNode } from "lexical";
 import {
   useTypixEditor,
   LexicalTypeaheadMenuPlugin,
   MenuOption,
   type MenuTextMatch,
-} from "@typix-editor/react"
+} from "@typix-editor/react";
 import {
   checkForMentionMatch,
   $createMentionNode,
   MentionNode,
-} from "@typix-editor/extension-mention"
+} from "@typix-editor/extension-mention";
 import type {
   MentionItem,
   MentionMenuItemProps,
-} from "@typix-editor/extension-mention"
-import { cn } from "../../../lib/utils"
-import { Skeleton } from "../../../primitives/skeleton"
-import { useDebouncedSearch } from "../hooks/use-debounced-search"
-import { DefaultMenuItem } from "./default-menu-item"
-import type { MentionMenuProps, MentionUIProps } from "../types"
+} from "@typix-editor/extension-mention";
+import { cn } from "../../../lib/utils";
+import { Skeleton } from "../../../primitives/skeleton";
+import { useDebouncedSearch } from "../hooks/use-debounced-search";
+import { DefaultMenuItem } from "./default-menu-item";
+import type { MentionMenuProps, MentionUIProps } from "../types";
 
 // Default values
-const DEFAULT_TRIGGER = "@"
-const DEFAULT_MIN_LENGTH = 0
-const DEFAULT_MAX_LENGTH = 75
-const DEFAULT_MAX_SUGGESTIONS = 10
-const DEFAULT_DEBOUNCE_MS = 200
+const DEFAULT_TRIGGER = "@";
+const DEFAULT_MIN_LENGTH = 0;
+const DEFAULT_MAX_LENGTH = 75;
+const DEFAULT_MAX_SUGGESTIONS = 10;
+const DEFAULT_DEBOUNCE_MS = 200;
 
 class MentionMenuOption extends MenuOption {
-  item: MentionItem
+  item: MentionItem;
 
   constructor(item: MentionItem) {
-    super(item.id)
-    this.item = item
+    super(item.id);
+    this.item = item;
   }
 }
 
@@ -75,24 +75,24 @@ export function MentionUI({
   menuClassName,
   disabled = false,
 }: MentionUIProps): JSX.Element | null {
-  const typixEditor = useTypixEditor()
-  const editor = typixEditor.lexical
-  const [queryString, setQueryString] = useState<string | null>(null)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const typixEditor = useTypixEditor();
+  const editor = typixEditor.lexical;
+  const [queryString, setQueryString] = useState<string | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!editor.hasNodes([MentionNode])) {
       throw new Error(
         "MentionUI: MentionNode is not registered in the editor. " +
           "Make sure to include MentionExtension() in your extensions array."
-      )
+      );
     }
-  }, [editor])
+  }, [editor]);
 
-  const trigger = triggerConfig.trigger ?? DEFAULT_TRIGGER
-  const minLength = triggerConfig.minLength ?? DEFAULT_MIN_LENGTH
-  const maxLength = triggerConfig.maxLength ?? DEFAULT_MAX_LENGTH
-  const allowSpaces = triggerConfig.allowSpaces ?? true
+  const trigger = triggerConfig.trigger ?? DEFAULT_TRIGGER;
+  const minLength = triggerConfig.minLength ?? DEFAULT_MIN_LENGTH;
+  const maxLength = triggerConfig.maxLength ?? DEFAULT_MAX_LENGTH;
+  const allowSpaces = triggerConfig.allowSpaces ?? true;
 
   const { results, isLoading } = useDebouncedSearch(
     queryString,
@@ -100,22 +100,22 @@ export function MentionUI({
     onSearch,
     debounceMs,
     maxSuggestions
-  )
+  );
 
   const options = useMemo(
     () => results.map((item) => new MentionMenuOption(item)),
     [results]
-  )
+  );
 
   useEffect(() => {
     if (results.length > 0 && !isMenuOpen) {
-      setIsMenuOpen(true)
-      onMenuOpen?.()
+      setIsMenuOpen(true);
+      onMenuOpen?.();
     } else if (results.length === 0 && isMenuOpen && !isLoading) {
-      setIsMenuOpen(false)
-      onMenuClose?.()
+      setIsMenuOpen(false);
+      onMenuClose?.();
     }
-  }, [results.length, isMenuOpen, isLoading, onMenuOpen, onMenuClose])
+  }, [results.length, isMenuOpen, isLoading, onMenuOpen, onMenuClose]);
 
   const onSelectOption = useCallback(
     (
@@ -129,27 +129,27 @@ export function MentionUI({
           name: selectedOption.item.name,
           trigger: includeTrigger ? trigger : "",
           data: selectedOption.item.data,
-        })
+        });
 
         if (nodeToReplace) {
-          nodeToReplace.replace(mentionNode)
+          nodeToReplace.replace(mentionNode);
         }
 
-        mentionNode.select()
-        closeMenu()
-      })
+        mentionNode.select();
+        closeMenu();
+      });
 
-      onSelect?.(selectedOption.item)
-      setIsMenuOpen(false)
-      onMenuClose?.()
+      onSelect?.(selectedOption.item);
+      setIsMenuOpen(false);
+      onMenuClose?.();
     },
     [editor, trigger, includeTrigger, onSelect, onMenuClose]
-  )
+  );
 
   const checkForTriggerMatch = useCallback(
     (text: string): MenuTextMatch | null => {
       if (disabled) {
-        return null
+        return null;
       }
       return checkForMentionMatch(
         text,
@@ -157,13 +157,13 @@ export function MentionUI({
         minLength,
         maxLength,
         allowSpaces
-      )
+      );
     },
     [disabled, trigger, minLength, maxLength, allowSpaces]
-  )
+  );
 
   if (disabled) {
-    return null
+    return null;
   }
 
   return (
@@ -172,10 +172,10 @@ export function MentionUI({
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }
       ) => {
-        const anchorElement = anchorElementRef.current
+        const anchorElement = anchorElementRef.current;
 
         if (!anchorElement || (results.length === 0 && !isLoading)) {
-          return null
+          return null;
         }
 
         const menuProps: MentionMenuProps = {
@@ -183,19 +183,19 @@ export function MentionUI({
           items: results,
           selectedIndex,
           onSelectItem: (index: number) => {
-            const option = options[index]
-            if (!option) return
-            setHighlightedIndex(index)
-            selectOptionAndCleanUp(option)
+            const option = options[index];
+            if (!option) return;
+            setHighlightedIndex(index);
+            selectOptionAndCleanUp(option);
           },
           onHighlightItem: setHighlightedIndex,
           isLoading,
           query: queryString,
           renderItem: renderMenuItem,
-        }
+        };
 
         if (renderMenu) {
-          return renderMenu(menuProps)
+          return renderMenu(menuProps);
         }
 
         return ReactDOM.createPortal(
@@ -204,7 +204,7 @@ export function MentionUI({
               "absolute z-50 max-h-[300px] min-w-[220px] overflow-y-auto",
               "rounded-lg border border-border bg-popover text-popover-foreground shadow-lg",
               "animate-in fade-in-0 zoom-in-95 duration-150",
-              menuClassName,
+              menuClassName
             )}
           >
             {isLoading && loadingContent ? (
@@ -225,14 +225,14 @@ export function MentionUI({
                     index,
                     isSelected: selectedIndex === index,
                     onClick: () => {
-                      setHighlightedIndex(index)
-                      selectOptionAndCleanUp(option)
+                      setHighlightedIndex(index);
+                      selectOptionAndCleanUp(option);
                     },
                     onMouseEnter: () => {
-                      setHighlightedIndex(index)
+                      setHighlightedIndex(index);
                     },
                     setRefElement: option.setRefElement,
-                  }
+                  };
 
                   if (renderMenuItem) {
                     return (
@@ -243,25 +243,25 @@ export function MentionUI({
                       >
                         {renderMenuItem(itemProps)}
                       </li>
-                    )
+                    );
                   }
 
                   return (
                     <DefaultMenuItem key={option.item.id} {...itemProps} />
-                  )
+                  );
                 })}
               </ul>
             )}
           </div>,
           anchorElement
-        )
+        );
       }}
       onQueryChange={setQueryString}
       onSelectOption={onSelectOption}
       options={options}
       triggerFn={checkForTriggerMatch}
     />
-  )
+  );
 }
 
-MentionUI.displayName = "Typix.MentionUI"
+MentionUI.displayName = "Typix.MentionUI";

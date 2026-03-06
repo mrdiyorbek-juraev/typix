@@ -19,16 +19,14 @@ export function InsertGroup() {
     <>
       <Popover open={imagePopoverOpen} onOpenChange={setImagePopoverOpen}>
         <PopoverTrigger asChild>
-            <ImageIcon className="size-3.5" />
+          <ImageIcon className="size-3.5" />
         </PopoverTrigger>
         <PopoverContent align="start" className="w-64">
           <ImageInsertPopover onClose={() => setImagePopoverOpen(false)} />
         </PopoverContent>
       </Popover>
       <ToolbarButton
-        onClick={() =>
-          editor.chain().focus().insertCodeBlock().run()
-        }
+        onClick={() => editor.chain().focus().insertCodeBlock().run()}
         title="Insert Code Block (Ctrl+Alt+`)"
       >
         <Code className="size-3.5" />

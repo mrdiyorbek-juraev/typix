@@ -6,13 +6,25 @@ import {
 import { cn } from "../../../lib/utils";
 import type { ImageAlignmentPopoverProps, ImageAlignment } from "../types";
 
-const alignmentOptions: { value: ImageAlignment; label: string; icon: React.ReactNode }[] = [
+const alignmentOptions: {
+  value: ImageAlignment;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
   {
     value: "left",
     label: "Left",
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="1" y="3" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <rect
+          x="1"
+          y="3"
+          width="10"
+          height="10"
+          rx="1.5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
       </svg>
     ),
   },
@@ -21,7 +33,15 @@ const alignmentOptions: { value: ImageAlignment; label: string; icon: React.Reac
     label: "Center",
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="3" y="3" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <rect
+          x="3"
+          y="3"
+          width="10"
+          height="10"
+          rx="1.5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
       </svg>
     ),
   },
@@ -30,7 +50,15 @@ const alignmentOptions: { value: ImageAlignment; label: string; icon: React.Reac
     label: "Full width",
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <rect
+          x="1"
+          y="3"
+          width="14"
+          height="10"
+          rx="1.5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
       </svg>
     ),
   },
@@ -67,4 +95,7 @@ export function ImageAlignmentPopover({
   );
 }
 
-export { Popover as AlignmentPopoverRoot, PopoverTrigger as AlignmentPopoverTrigger };
+export {
+  Popover as AlignmentPopoverRoot,
+  PopoverTrigger as AlignmentPopoverTrigger,
+};

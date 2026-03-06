@@ -1,6 +1,14 @@
 import { $isAutoLinkNode, $isLinkNode } from "@typix-editor/core/lexical/link";
-import { effect, namedSignals, signal, type Signal } from "@typix-editor/core/lexical/extension";
-import { $findMatchingParent, mergeRegister } from "@typix-editor/core/lexical/utils";
+import {
+  effect,
+  namedSignals,
+  signal,
+  type Signal,
+} from "@typix-editor/core/lexical/extension";
+import {
+  $findMatchingParent,
+  mergeRegister,
+} from "@typix-editor/core/lexical/utils";
 import { $isAtNodeEnd } from "@typix-editor/core/lexical/selection";
 import {
   $getSelection,
@@ -91,7 +99,8 @@ export const FloatingLinkExtension = (
     },
 
     register(editor, _config, state) {
-      const { disabled, isLink, activeEditor, openInNewTab } = state.getOutput();
+      const { disabled, isLink, activeEditor, openInNewTab } =
+        state.getOutput();
 
       function $updateToolbar() {
         const selection = $getSelection();

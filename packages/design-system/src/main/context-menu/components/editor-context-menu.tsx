@@ -1,4 +1,4 @@
-import { useTypixEditor } from "@typix-editor/react"
+import { useTypixEditor } from "@typix-editor/react";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -7,17 +7,17 @@ import {
   ContextMenuLabel,
   ContextMenuShortcut,
   ContextMenuTrigger,
-} from "../../../primitives/context-menu"
-import { cn } from "../../../lib/utils"
-import type { EditorContextMenuProps, EditorContextMenuItem } from "../types"
-import type { TypixEditor as TypixEditorType } from "@typix-editor/core"
+} from "../../../primitives/context-menu";
+import { cn } from "../../../lib/utils";
+import type { EditorContextMenuProps, EditorContextMenuItem } from "../types";
+import type { TypixEditor as TypixEditorType } from "@typix-editor/core";
 
 function resolveFlag(
   flag: boolean | ((editor: TypixEditorType) => boolean) | undefined,
-  editor: TypixEditorType,
+  editor: TypixEditorType
 ): boolean {
-  if (typeof flag === "function") return flag(editor)
-  return flag ?? false
+  if (typeof flag === "function") return flag(editor);
+  return flag ?? false;
 }
 
 /**
@@ -36,7 +36,7 @@ export function EditorContextMenu({
   className,
   children,
 }: EditorContextMenuProps) {
-  const editor = useTypixEditor()
+  const editor = useTypixEditor();
 
   return (
     <ContextMenu>
@@ -45,17 +45,17 @@ export function EditorContextMenu({
       </ContextMenuTrigger>
       <ContextMenuContent className={cn("w-56", className)}>
         {items.map((item, i) => {
-          if (resolveFlag(item.hidden, editor)) return null
+          if (resolveFlag(item.hidden, editor)) return null;
 
           if (item.type === "separator") {
-            return <ContextMenuSeparator key={i} />
+            return <ContextMenuSeparator key={i} />;
           }
 
           if (item.type === "label") {
-            return <ContextMenuLabel key={i}>{item.label}</ContextMenuLabel>
+            return <ContextMenuLabel key={i}>{item.label}</ContextMenuLabel>;
           }
 
-          const disabled = resolveFlag(item.disabled, editor)
+          const disabled = resolveFlag(item.disabled, editor);
 
           return (
             <ContextMenuItem
@@ -63,15 +63,21 @@ export function EditorContextMenu({
               disabled={disabled}
               onSelect={() => item.onSelect(editor)}
             >
-              {item.icon && <span className="size-4 shrink-0 [&_svg]:size-4">{item.icon}</span>}
+              {item.icon && (
+                <span className="size-4 shrink-0 [&_svg]:size-4">
+                  {item.icon}
+                </span>
+              )}
               {item.label}
-              {item.shortcut && <ContextMenuShortcut>{item.shortcut}</ContextMenuShortcut>}
+              {item.shortcut && (
+                <ContextMenuShortcut>{item.shortcut}</ContextMenuShortcut>
+              )}
             </ContextMenuItem>
-          )
+          );
         })}
       </ContextMenuContent>
     </ContextMenu>
-  )
+  );
 }
 
-EditorContextMenu.displayName = "Typix.EditorContextMenu"
+EditorContextMenu.displayName = "Typix.EditorContextMenu";

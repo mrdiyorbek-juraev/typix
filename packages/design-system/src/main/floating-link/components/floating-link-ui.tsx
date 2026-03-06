@@ -1,11 +1,11 @@
-import type { JSX } from "react"
-import { useCallback, useEffect, useState } from "react"
-import { createPortal } from "react-dom"
-import type { LexicalEditor } from "lexical"
-import { useTypixEditor } from "@typix-editor/react"
-import { getFloatingLinkOutput } from "@typix-editor/extension-floating-link"
-import { FloatingLinkEditorPortal } from "./portal"
-import type { FloatingLinkUIProps } from "../types"
+import type { JSX } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import type { LexicalEditor } from "lexical";
+import { useTypixEditor } from "@typix-editor/react";
+import { getFloatingLinkOutput } from "@typix-editor/extension-floating-link";
+import { FloatingLinkEditorPortal } from "./portal";
+import type { FloatingLinkUIProps } from "../types";
 
 /**
  * FloatingLinkUI
@@ -26,46 +26,46 @@ export function FloatingLinkUI({
   children,
   verticalOffset = 40,
 }: FloatingLinkUIProps = {}): JSX.Element | null {
-  const typixEditor = useTypixEditor()
-  const editor = typixEditor.lexical
-  const output = getFloatingLinkOutput(editor)
+  const typixEditor = useTypixEditor();
+  const editor = typixEditor.lexical;
+  const output = getFloatingLinkOutput(editor);
 
-  const [isLink, setIsLink] = useState(() => output?.isLink.value ?? false)
+  const [isLink, setIsLink] = useState(() => output?.isLink.value ?? false);
   const [activeEditor, setActiveEditor] = useState<LexicalEditor>(
     () => output?.activeEditor.value ?? editor
-  )
+  );
 
   // Defer document.body resolution to after hydration to avoid SSR mismatch.
-  const [defaultAnchor, setDefaultAnchor] = useState<HTMLElement | null>(null)
+  const [defaultAnchor, setDefaultAnchor] = useState<HTMLElement | null>(null);
   useEffect(() => {
     if (!anchorElem) {
-      setDefaultAnchor(document.body)
+      setDefaultAnchor(document.body);
     }
-  }, [anchorElem])
+  }, [anchorElem]);
 
   useEffect(() => {
-    if (!output) return
-    const unsubIsLink = output.isLink.subscribe(setIsLink)
-    const unsubActiveEditor = output.activeEditor.subscribe(setActiveEditor)
+    if (!output) return;
+    const unsubIsLink = output.isLink.subscribe(setIsLink);
+    const unsubActiveEditor = output.activeEditor.subscribe(setActiveEditor);
     return () => {
-      unsubIsLink()
-      unsubActiveEditor()
-    }
-  }, [output])
+      unsubIsLink();
+      unsubActiveEditor();
+    };
+  }, [output]);
 
   const handleSetIsLink = useCallback(
     (val: boolean) => {
       if (output) {
-        output.isLink.value = val
+        output.isLink.value = val;
       }
     },
     [output]
-  )
+  );
 
-  const resolvedAnchorElem = anchorElem ?? defaultAnchor
+  const resolvedAnchorElem = anchorElem ?? defaultAnchor;
 
   if (!resolvedAnchorElem) {
-    return null
+    return null;
   }
 
   return createPortal(
@@ -79,7 +79,7 @@ export function FloatingLinkUI({
       {children}
     </FloatingLinkEditorPortal>,
     resolvedAnchorElem
-  )
+  );
 }
 
-FloatingLinkUI.displayName = "Typix.FloatingLinkUI"
+FloatingLinkUI.displayName = "Typix.FloatingLinkUI";

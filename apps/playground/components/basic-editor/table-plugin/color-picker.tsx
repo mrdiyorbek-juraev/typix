@@ -1,7 +1,11 @@
 import { cn } from "@/lib/utils";
 import { CELL_COLORS } from "./constants";
 
-export function ColorPicker({ onSelect }: { onSelect: (color: string | null) => void }) {
+export function ColorPicker({
+  onSelect,
+}: {
+  onSelect: (color: string | null) => void;
+}) {
   return (
     <div className="grid grid-cols-5 gap-1 p-1">
       {CELL_COLORS.map((c) => (

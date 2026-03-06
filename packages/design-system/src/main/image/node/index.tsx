@@ -197,30 +197,45 @@ export class ImageNode extends DecoratorNode<unknown> {
 
   /** Returns null in the headless base. Override in framework-specific subclass. */
   decorate(): JSX.Element {
-    return <ImageComponent
-            nodeKey={this.getKey()}
-            src={this.__src}
-            altText={this.__altText}
-            width={this.__width}
-            height={this.__height}
-            maxWidth={this.__maxWidth}
-            showCaption={this.__showCaption}
-            caption={this.__caption}
-            alignment={this.__alignment}
-    />;
+    return (
+      <ImageComponent
+        nodeKey={this.getKey()}
+        src={this.__src}
+        altText={this.__altText}
+        width={this.__width}
+        height={this.__height}
+        maxWidth={this.__maxWidth}
+        showCaption={this.__showCaption}
+        caption={this.__caption}
+        alignment={this.__alignment}
+      />
+    );
   }
 
   // ─── Getters ─────────────────────────────────────────────────────────────
 
-  getSrc(): string { return this.__src; }
-  getAltText(): string { return this.__altText; }
-  getShowCaption(): boolean { return this.__showCaption; }
-  getCaption(): string { return this.__caption; }
-  getAlignment(): ImageAlignment { return this.__alignment; }
+  getSrc(): string {
+    return this.__src;
+  }
+  getAltText(): string {
+    return this.__altText;
+  }
+  getShowCaption(): boolean {
+    return this.__showCaption;
+  }
+  getCaption(): string {
+    return this.__caption;
+  }
+  getAlignment(): ImageAlignment {
+    return this.__alignment;
+  }
 
   // ─── Setters ─────────────────────────────────────────────────────────────
 
-  setWidthAndHeight(width: number | "inherit", height: number | "inherit"): void {
+  setWidthAndHeight(
+    width: number | "inherit",
+    height: number | "inherit"
+  ): void {
     const w = this.getWritable();
     w.__width = width;
     w.__height = height;
@@ -269,7 +284,17 @@ export function $createImageNode({
   key?: NodeKey;
 }): ImageNode {
   return $applyNodeReplacement(
-    new ImageNode(src, altText, width, height, maxWidth, showCaption, caption, alignment, key)
+    new ImageNode(
+      src,
+      altText,
+      width,
+      height,
+      maxWidth,
+      showCaption,
+      caption,
+      alignment,
+      key
+    )
   );
 }
 
@@ -278,5 +303,3 @@ export function $isImageNode(
 ): node is ImageNode {
   return node instanceof ImageNode;
 }
-
-

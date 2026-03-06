@@ -122,7 +122,9 @@ export const ColumnMenu = memo(function ColumnMenu({
       <DropdownMenuContent align="center" side="bottom" className="w-48">
         <DropdownMenuLabel>Column</DropdownMenuLabel>
 
-        <DropdownMenuItem onSelect={() => run(() => editor.chain().toggleHeaderColumn().run())}>
+        <DropdownMenuItem
+          onSelect={() => run(() => editor.chain().toggleHeaderColumn().run())}
+        >
           <AlignLeft />
           {isHeaderCol ? "Remove header" : "Header column"}
         </DropdownMenuItem>
@@ -138,7 +140,9 @@ export const ColumnMenu = memo(function ColumnMenu({
                 run((cell) => {
                   const colIdx = $getTableColumnIndexFromTableCellNode(cell);
                   const table = $getTableNodeFromLexicalNodeOrThrow(cell);
-                  for (const row of table.getChildren().filter($isTableRowNode)) {
+                  for (const row of table
+                    .getChildren()
+                    .filter($isTableRowNode)) {
                     const cells = row.getChildren().filter($isTableCellNode);
                     const c = cells[colIdx];
                     if (c) c.setBackgroundColor(color);
@@ -162,11 +166,15 @@ export const ColumnMenu = memo(function ColumnMenu({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onSelect={() => run(() => $insertTableColumnAtSelection(false))}>
+        <DropdownMenuItem
+          onSelect={() => run(() => $insertTableColumnAtSelection(false))}
+        >
           <Columns3 />
           Insert left
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => run(() => $insertTableColumnAtSelection(true))}>
+        <DropdownMenuItem
+          onSelect={() => run(() => $insertTableColumnAtSelection(true))}
+        >
           <Columns3 />
           Insert right
         </DropdownMenuItem>

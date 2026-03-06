@@ -6,7 +6,11 @@ import {
   $createParagraphNode,
   type LexicalEditor,
 } from "lexical";
-import { $createQuoteNode, $isQuoteNode, QuoteNode } from "@typix-editor/core/lexical/rich-text";
+import {
+  $createQuoteNode,
+  $isQuoteNode,
+  QuoteNode,
+} from "@typix-editor/core/lexical/rich-text";
 import { $setBlocksType } from "@typix-editor/core/lexical/selection";
 import {
   defineTypixExtension,

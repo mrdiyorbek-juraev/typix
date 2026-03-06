@@ -18,7 +18,7 @@ import type { ImageComponentProps } from "./types";
  * Hooks and throws "Invalid hook call".
  */
 export function imageRenderer(
-  props: Omit<ImageComponentProps, "features">,
+  props: Omit<ImageComponentProps, "features">
 ): React.ReactElement {
   return React.createElement(ImageComponent, props);
 }

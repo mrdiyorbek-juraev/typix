@@ -24,10 +24,7 @@ import { useTypixEditor } from "../../context/editor";
  * const family = useSelectionStyle("font-family", "");
  * ```
  */
-export function useSelectionStyle(
-  property: string,
-  defaultValue = ""
-): string {
+export function useSelectionStyle(property: string, defaultValue = ""): string {
   const editor = useTypixEditor();
   const lexicalEditor = editor.lexical;
   const [value, setValue] = useState(defaultValue);

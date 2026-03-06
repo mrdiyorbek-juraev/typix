@@ -83,7 +83,11 @@ export const MarkdownShortcutsExtension = (
       return namedSignals(config);
     },
 
-    register(editor: LexicalEditor, _config: MarkdownShortcutsConfig, state: any) {
+    register(
+      editor: LexicalEditor,
+      _config: MarkdownShortcutsConfig,
+      state: any
+    ) {
       const { disabled, transformers } = state.getOutput();
 
       return effect(() => {

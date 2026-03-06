@@ -83,7 +83,10 @@ describe("TailwindExtension", () => {
     });
 
     it("applies codeHighlight overrides", () => {
-      const highlights = { keyword: "text-purple-500", string: "text-green-500" };
+      const highlights = {
+        keyword: "text-purple-500",
+        string: "text-green-500",
+      };
       const ext = TailwindExtension({ codeHighlight: highlights });
       expect(ext.config?.codeHighlight).toEqual(highlights);
     });

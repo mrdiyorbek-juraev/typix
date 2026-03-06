@@ -1,10 +1,14 @@
-import type { JSX } from "react"
-import { Mic, MicOff } from "lucide-react"
-import { cn } from "../../../lib/utils"
-import { Button } from "../../../primitives/button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../../../primitives/tooltip"
-import { useSpeechToText } from "../hooks/use-speech-to-text"
-import type { SpeechToTextButtonProps } from "../types"
+import type { JSX } from "react";
+import { Mic, MicOff } from "lucide-react";
+import { cn } from "../../../lib/utils";
+import { Button } from "../../../primitives/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "../../../primitives/tooltip";
+import { useSpeechToText } from "../hooks/use-speech-to-text";
+import type { SpeechToTextButtonProps } from "../types";
 
 /**
  * Pre-built speech-to-text toggle button with shadcn styling.
@@ -29,10 +33,10 @@ export function SpeechToTextButton({
 }: SpeechToTextButtonProps): JSX.Element | null {
   const { isListening, isSupported, toggle } = useSpeechToText({
     onListeningChange,
-  })
+  });
 
   if (!isSupported) {
-    if (hideWhenUnsupported) return null
+    if (hideWhenUnsupported) return null;
 
     return (
       <Tooltip>
@@ -50,7 +54,7 @@ export function SpeechToTextButton({
           <p>Speech recognition is not supported in this browser</p>
         </TooltipContent>
       </Tooltip>
-    )
+    );
   }
 
   return (
@@ -65,7 +69,7 @@ export function SpeechToTextButton({
             isListening
               ? "text-destructive hover:text-destructive/80 hover:bg-destructive/10"
               : "text-muted-foreground hover:text-foreground",
-            className,
+            className
           )}
         >
           {isListening
@@ -82,7 +86,7 @@ export function SpeechToTextButton({
         <p>{isListening ? "Stop listening" : "Start voice input"}</p>
       </TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
-SpeechToTextButton.displayName = "Typix.SpeechToTextButton"
+SpeechToTextButton.displayName = "Typix.SpeechToTextButton";

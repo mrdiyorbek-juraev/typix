@@ -15,9 +15,7 @@ export const KEYWORDS_REGEX =
 
 function buildKeywordRegex(keywords: string[], caseSensitive: boolean): RegExp {
   // Escape special regex characters in each keyword
-  const escaped = keywords.map((k) =>
-    k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-  );
+  const escaped = keywords.map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
   const flags = caseSensitive ? "u" : "iu";
   return new RegExp(
     `(^|$|[^\\p{L}])(${escaped.join("|")})(^|$|[^\\p{L}])`,

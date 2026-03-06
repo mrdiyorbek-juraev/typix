@@ -43,8 +43,6 @@ export interface TailwindConfig extends TypixExtensionConfig {
   html?: HTMLConfig;
   /** Initial editor state. */
   $initialEditorState?: InitialEditorStateType;
-
-  
 }
 
 // ─────────────────────────────────────────────
@@ -151,7 +149,10 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function deepMerge<T extends Record<string, unknown>>(base: T, override: Partial<T>): T {
+function deepMerge<T extends Record<string, unknown>>(
+  base: T,
+  override: Partial<T>
+): T {
   const result = { ...base };
   for (const key of Object.keys(override) as (keyof T)[]) {
     const baseVal = base[key];
@@ -159,7 +160,7 @@ function deepMerge<T extends Record<string, unknown>>(base: T, override: Partial
     if (isPlainObject(baseVal) && isPlainObject(overrideVal)) {
       result[key] = deepMerge(
         baseVal as Record<string, unknown>,
-        overrideVal as Record<string, unknown>,
+        overrideVal as Record<string, unknown>
       ) as T[keyof T];
     } else if (overrideVal !== undefined) {
       result[key] = overrideVal as T[keyof T];
@@ -225,7 +226,7 @@ export const TailwindExtension = (userConfig: Partial<TailwindConfig> = {}) => {
 
   const theme = deepMerge(
     defaultTheme as Record<string, unknown>,
-    themeOverrides as Record<string, unknown>,
+    themeOverrides as Record<string, unknown>
   ) as EditorThemeClasses;
 
   const lexicalExt = defineExtension({

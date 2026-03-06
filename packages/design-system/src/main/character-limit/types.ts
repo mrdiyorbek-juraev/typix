@@ -1,10 +1,10 @@
-export type CharacterLimitCharset = "UTF-8" | "UTF-16"
+export type CharacterLimitCharset = "UTF-8" | "UTF-16";
 
 export interface CharacterCountStats {
   /** Character count in the chosen charset */
-  characters: number
+  characters: number;
   /** Word count */
-  words: number
+  words: number;
 }
 
 export interface UseCharacterCountOptions {
@@ -14,48 +14,48 @@ export interface UseCharacterCountOptions {
    * UTF-8 counts actual byte size (multi-byte for non-ASCII).
    * @default "UTF-16"
    */
-  charset?: CharacterLimitCharset
+  charset?: CharacterLimitCharset;
 }
 
 export interface CharacterLimitProps {
   /**
    * Maximum number of characters allowed.
    */
-  maxLength: number
+  maxLength: number;
 
   /**
    * Charset used for counting.
    * @default "UTF-16"
    */
-  charset?: CharacterLimitCharset
+  charset?: CharacterLimitCharset;
 
   /**
    * Warning threshold as a percentage of maxLength (0-1).
    * When remaining characters fall below this ratio, the counter enters warning state.
    * @default 0.1
    */
-  warningThreshold?: number
+  warningThreshold?: number;
 }
 
 export interface CharacterLimitCounterProps {
   /** Current character count */
-  count: number
+  count: number;
 
   /** Maximum characters allowed */
-  maxLength: number
+  maxLength: number;
 
   /** Word count */
-  words?: number
+  words?: number;
 
   /**
    * Warning threshold as a percentage of maxLength (0-1).
    * @default 0.1
    */
-  warningThreshold?: number
+  warningThreshold?: number;
 
   /** Show word count alongside character count */
-  showWords?: boolean
+  showWords?: boolean;
 
   /** Additional class name */
-  className?: string
+  className?: string;
 }

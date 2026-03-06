@@ -14,8 +14,14 @@ import {
   $createQuoteNode,
   $isQuoteNode,
 } from "@typix-editor/core/lexical/rich-text";
-import { $patchStyleText, $setBlocksType } from "@typix-editor/core/lexical/selection";
-import { $getNearestNodeOfType, IS_APPLE } from "@typix-editor/core/lexical/utils";
+import {
+  $patchStyleText,
+  $setBlocksType,
+} from "@typix-editor/core/lexical/selection";
+import {
+  $getNearestNodeOfType,
+  IS_APPLE,
+} from "@typix-editor/core/lexical/utils";
 import {
   $createParagraphNode,
   $getSelection,

@@ -100,7 +100,10 @@ export interface TableConfig extends TypixExtensionConfig {
 // so it works with any UI framework.
 
 /** Inner implementation — `root` is guaranteed non-null by the caller. */
-function _attachScrollShadow(root: HTMLElement, wrapperClass: string): () => void {
+function _attachScrollShadow(
+  root: HTMLElement,
+  wrapperClass: string
+): () => void {
   const SCROLL_RIGHT_CLASS = `${wrapperClass}--can-scroll-right`;
   const SCROLL_LEFT_CLASS = `${wrapperClass}--can-scroll-left`;
 
@@ -131,7 +134,9 @@ function _attachScrollShadow(root: HTMLElement, wrapperClass: string): () => voi
 
   // Initialise all already-present wrappers
   updateAll();
-  root.querySelectorAll<HTMLElement>(`.${wrapperClass}`).forEach(addScrollListener);
+  root
+    .querySelectorAll<HTMLElement>(`.${wrapperClass}`)
+    .forEach(addScrollListener);
 
   const resizeObserver = new ResizeObserver(updateAll);
 
@@ -177,7 +182,9 @@ function setupScrollShadow(
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 /** Clears all children from a cell and inserts an empty paragraph. */
-function _clearCell(cellNode: import("@typix-editor/core/lexical/table").TableCellNode): void {
+function _clearCell(
+  cellNode: import("@typix-editor/core/lexical/table").TableCellNode
+): void {
   cellNode.clear();
   cellNode.append($createParagraphNode());
 }
@@ -270,11 +277,8 @@ export const TableExtension = (userConfig: Partial<TableConfig> = {}) => {
     },
 
     register(editor: LexicalEditor, _config: TableConfig, state: any) {
-      const {
-        disabled,
-        scrollShadow,
-        scrollableWrapperClass,
-      } = state.getOutput();
+      const { disabled, scrollShadow, scrollableWrapperClass } =
+        state.getOutput();
 
       return effect(() => {
         if (disabled.value) return;
@@ -295,10 +299,14 @@ export const TableExtension = (userConfig: Partial<TableConfig> = {}) => {
        */
       insertTable: (config) => (ctx, attrs) => {
         const rows = String(
-          (attrs?.rows as number | string | undefined) ?? config.defaultRows ?? 3
+          (attrs?.rows as number | string | undefined) ??
+            config.defaultRows ??
+            3
         );
         const columns = String(
-          (attrs?.columns as number | string | undefined) ?? config.defaultColumns ?? 3
+          (attrs?.columns as number | string | undefined) ??
+            config.defaultColumns ??
+            3
         );
         const includeHeaders = (
           attrs?.includeHeaders !== undefined ? attrs.includeHeaders : true
@@ -404,9 +412,7 @@ export const TableExtension = (userConfig: Partial<TableConfig> = {}) => {
           const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
           const firstRow = tableNode.getFirstChild();
           if (!$isTableRowNode(firstRow)) return;
-          const cells = firstRow
-            .getChildren()
-            .filter($isTableCellNode);
+          const cells = firstRow.getChildren().filter($isTableCellNode);
           const isHeaderRow =
             cells.length > 0 &&
             cells.every((c) => c.hasHeaderState(TableCellHeaderStates.ROW));

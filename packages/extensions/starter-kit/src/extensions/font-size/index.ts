@@ -5,7 +5,12 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import { effect, namedSignals, signal, type Signal } from "@typix-editor/core/lexical/extension";
+import {
+  effect,
+  namedSignals,
+  signal,
+  type Signal,
+} from "@typix-editor/core/lexical/extension";
 import {
   $getSelectionStyleValueForProperty,
   $patchStyleText,
