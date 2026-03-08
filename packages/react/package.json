@@ -24,9 +24,7 @@
     "type": "git",
     "url": "https://github.com/mrdiyorbek-juraev/typix.git"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsup",
     "build:fast": "tsup",
@@ -36,8 +34,11 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.4.0"
+    "@typix-editor/utils": "workspace:*",
+    "@lexical/react": "^0.40.0",
+    "@lexical/extension": "^0.40.0",
+    "@lexical/text": "^0.40.0",
+    "@lexical/utils": "^0.40.0"
   },
   "peerDependencies": {
     "@typix-editor/core": "workspace:*",
@@ -46,30 +47,14 @@
   },
   "devDependencies": {
     "@typix-editor/core": "workspace:*",
-    "@lexical/code": "^0.40.0",
-    "@lexical/extension": "^0.40.0",
-    "@lexical/file": "^0.40.0",
-    "@lexical/hashtag": "^0.40.0",
+    "lexical": "^0.40.0",
     "@lexical/headless": "^0.40.0",
-    "@lexical/html": "^0.40.0",
-    "@lexical/link": "^0.40.0",
-    "@lexical/list": "^0.40.0",
     "@lexical/mark": "^0.40.0",
-    "@lexical/markdown": "^0.40.0",
-    "@lexical/overflow": "^0.40.0",
-    "@lexical/react": "^0.40.0",
-    "@lexical/rich-text": "^0.40.0",
-    "@lexical/selection": "^0.40.0",
-    "@lexical/table": "^0.40.0",
-    "@lexical/text": "^0.40.0",
-    "@lexical/utils": "^0.40.0",
-    "@lexical/yjs": "^0.40.0",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.1",
-    "lexical": "^0.40.0",
     "postcss": "^8.5.6",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
@@ -77,14 +62,7 @@
     "tsup": "^8.0.0",
     "typescript": "^5.3.0"
   },
-  "keywords": [
-    "typix",
-    "editor",
-    "rich-text",
-    "react",
-    "lexical",
-    "wysiwyg"
-  ],
+  "keywords": ["typix", "editor", "rich-text", "react", "lexical", "wysiwyg"],
   "sideEffects": false,
   "publishConfig": {
     "access": "public"

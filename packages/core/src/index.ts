@@ -105,23 +105,6 @@ export {
 } from './lib/editor'
 export type { Klass, LexicalNode, LexicalNodeReplacement } from './lib/editor'
 
-// ─────────────────────────────────────────────────────
-// Server-side utilities
-// ─────────────────────────────────────────────────────
-export { clearDocumentState, initializeDocumentState, validateEditorState } from './server/validation'
 
-// ─────────────────────────────────────────────────────
-// DOM / UI utilities
-// ─────────────────────────────────────────────────────
-export { getSelectedNode } from './utils/selected-node'
-export { sanitizeUrl, validateUrl } from './utils/url'
-export { getDOMRangeRect } from './utils/dom-range-rect'
-export { setFloatingElemPosition } from './utils/floating-element-position'
-export { setFloatingElemPositionForLinkEditor } from './utils/floating-element-position-for-link'
-export {
-  addSwipeDownListener,
-  addSwipeLeftListener,
-  addSwipeRightListener,
-  addSwipeUpListener,
-} from './utils/swipe'
-export { getThemeSelector } from './utils/theme-selector'
+
+

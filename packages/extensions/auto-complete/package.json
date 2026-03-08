@@ -51,14 +51,22 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
-    "@typix-editor/core": "^4.1.0"
+    "@typix-editor/core": "^4.1.0",
+    "lexical": "^0.40.0"
+  },
+  "dependencies": {
+    "@typix-editor/utils": "workspace:*"
   },
   "devDependencies": {
     "@typix-editor/core": "workspace:*",
-    "@types/node": "^25.1.0",
-    "lexical": "^0.40.0"
+    "@types/node": "^25.1.0"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "lexical": {
+      "optional": true
+    }
   }
 }

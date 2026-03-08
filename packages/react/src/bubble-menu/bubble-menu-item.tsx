@@ -9,7 +9,7 @@ import {
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { forwardRef, useEffect, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { cn } from "../lib/cn";
+import { cn } from "@typix-editor/utils";
 
 export interface EditorBubbleItemRenderProps {
   isActive: boolean;
@@ -18,8 +18,8 @@ export interface EditorBubbleItemRenderProps {
 
 export interface EditorBubbleItemProps {
   readonly children:
-    | ReactNode
-    | ((props: EditorBubbleItemRenderProps) => ReactNode);
+  | ReactNode
+  | ((props: EditorBubbleItemRenderProps) => ReactNode);
   readonly onSelect?: (editor: LexicalEditor) => void;
   readonly name: TextFormatType;
   readonly className?: string;
@@ -28,7 +28,7 @@ export interface EditorBubbleItemProps {
 export const EditorBubbleItem = forwardRef<
   HTMLDivElement,
   EditorBubbleItemProps &
-    Omit<ComponentPropsWithoutRef<"div">, "onSelect" | "children">
+  Omit<ComponentPropsWithoutRef<"div">, "onSelect" | "children">
 >(({ children, name, onSelect, className, ...rest }, ref) => {
   const [editor] = useLexicalComposerContext();
   const [isActive, setIsActive] = useState<boolean>(false);

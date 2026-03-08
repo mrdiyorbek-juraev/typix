@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useEditorCommand } from "./command-menu-context";
-import { cn } from "../lib/cn";
+import { cn } from "@typix-editor/utils";
 
 export interface EditorCommandEmptyProps {
   children: ReactNode;

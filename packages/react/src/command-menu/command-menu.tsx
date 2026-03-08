@@ -14,7 +14,7 @@ import {
 import { createPortal } from "react-dom";
 import { EditorCommandProvider } from "./command-menu-context";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { cn } from "../lib/cn";
+import { cn } from "@typix-editor/utils";
 
 export type CommandMenuItemConfig = {
   icon?: JSX.Element;

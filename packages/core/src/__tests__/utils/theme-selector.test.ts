@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { EditorThemeClasses } from 'lexical'
-import { getThemeSelector } from '../../utils/theme-selector'
+import { getThemeSelector } from '@typix-editor/utils/lexical'
 
 describe('getThemeSelector', () => {
   it('returns a single class selector', () => {

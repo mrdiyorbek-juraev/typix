@@ -23,7 +23,7 @@ import {
 
 import DICTIONARY from "../dictionary";
 import { uuid } from "../lib";
-import { addSwipeRightListener } from "../lib/swipe";
+import { addSwipeRightListener } from "@typix-editor/utils";
 import { $createAutocompleteNode, AutocompleteNode } from "../node";
 
 export interface AutocompleteConfig extends TypixExtensionConfig {

@@ -12,7 +12,7 @@ import {
   clearDocumentState,
   initializeDocumentState,
   validateEditorState,
-} from "@typix-editor/core";
+} from "@typix-editor/utils";
 
 const createValidEditorState = () => {
   const editor = createHeadlessEditor({

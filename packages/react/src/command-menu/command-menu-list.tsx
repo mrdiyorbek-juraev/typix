@@ -1,5 +1,5 @@
+import { cn } from "@typix-editor/utils";
 import type { ReactNode } from "react";
-import { cn } from "../lib/cn";
 
 export interface EditorCommandListProps {
   children: ReactNode;

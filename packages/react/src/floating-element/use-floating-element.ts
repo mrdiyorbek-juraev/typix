@@ -7,7 +7,7 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getDOMRangeRect, setFloatingElemPosition } from "@typix-editor/core";
+import { getDOMRangeRect, setFloatingElemPosition } from "@typix-editor/utils";
 import type { UseFloatingElementOptions } from "./types";
 
 export function useFloatingElement({

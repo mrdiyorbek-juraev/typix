@@ -4,7 +4,7 @@ import {
   addSwipeLeftListener,
   addSwipeRightListener,
   addSwipeUpListener,
-} from "@typix-editor/core";
+} from "@typix-editor/utils";
 
 const createTouchEvent = (
   type: string,

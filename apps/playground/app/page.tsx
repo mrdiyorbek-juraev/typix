@@ -1,5 +1,5 @@
-import { PlaygroundTabs } from "@/components/playground-tabs";
+import { PlaygroundEditor } from "@/components/editor";
 
 export default function Home() {
-  return <PlaygroundTabs />;
+  return <PlaygroundEditor />;
 }

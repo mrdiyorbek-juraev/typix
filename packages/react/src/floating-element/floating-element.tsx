@@ -1,11 +1,10 @@
 "use client";
-
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { createPortal } from "react-dom";
 import { useRootContext } from "../root-context";
-import { cn } from "../lib/cn";
 import { useFloatingElement } from "./use-floating-element";
 import type { FloatingElementProps } from "./types";
+import { cn } from "@typix-editor/utils";
 
 function FloatingElement({
   children,

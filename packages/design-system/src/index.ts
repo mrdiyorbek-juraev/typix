@@ -172,6 +172,12 @@ export type {
 } from "./main/context-menu";
 
 export {
+  CodeBlockToolbar,
+  useCodeBlockToolbar,
+} from "./main/code-block-toolbar";
+export type { CodeBlockToolbarProps } from "./main/code-block-toolbar";
+
+export {
   DraggableBlock,
   DraggableBlock as DraggableBlockUI,
 } from "./main/draggable-block";

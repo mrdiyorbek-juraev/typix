@@ -20,9 +20,9 @@ import type * as React from "react";
 import {
   sanitizeUrl,
   validateUrl,
-  getSelectedNode,
   setFloatingElemPositionForLinkEditor,
-} from "@typix-editor/core";
+} from "@typix-editor/utils";
+import { getSelectedNode } from "@typix-editor/utils/lexical";
 import type { FloatingLinkRenderProps } from "../types";
 
 export function useFloatingLinkEditor({

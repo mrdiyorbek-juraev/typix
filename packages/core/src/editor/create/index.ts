@@ -1,9 +1,9 @@
-import { buildEditorFromExtensions } from '@lexical/extension'
-import { defineExtension } from 'lexical'
-import { CreateTypixOptions, TypixEditorInstance } from '../../types'
-import { ExtensionRegistry } from '../extension'
-import { setEditorContent } from '../command'
-import { TypixEditor } from '../editor'
+import { buildEditorFromExtensions } from '@lexical/extension';
+import { defineExtension } from 'lexical';
+import { CreateTypixOptions, TypixEditorInstance } from '../../types';
+import { ExtensionRegistry } from '../extension';
+import { setEditorContent } from '../command';
+import { TypixEditor } from '../editor';
 
 
 /**

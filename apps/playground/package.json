@@ -31,6 +31,8 @@
     "@typix-editor/extension-table": "workspace:*",
     "@typix-editor/extension-context-menu": "workspace:*",
     "@typix-editor/extension-floating-link": "workspace:*",
+    "@typix-editor/extension-draggable-block": "workspace:*",
+    "@typix-editor/extension-max-length": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/extension-starter-kit": "workspace:*",
     "@typix-editor/ui": "workspace:*",

@@ -1,5 +1,5 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $findMatchingParent, mergeRegister } from "@lexical/utils";
+import { mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isRangeSelection,
@@ -11,11 +11,10 @@ import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   getDOMRangeRect,
-  getSelectedNode,
   setFloatingElemPosition,
-} from "@typix-editor/core";
+} from "@typix-editor/utils";
 import { useRootContext } from "../root-context";
-import { cn } from "../lib/cn";
+import { cn } from "@typix-editor/utils";
 
 interface EditorBubbleMenuProps {
   children?: React.ReactNode;

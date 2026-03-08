@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useEditorCommand } from "./command-menu-context";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { cn } from "../lib/cn";
+import { cn } from "@typix-editor/utils";
 
 export interface EditorCommandItemRenderProps {
   isSelected: boolean;

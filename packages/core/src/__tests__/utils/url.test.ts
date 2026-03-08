@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { sanitizeUrl, validateUrl } from '../../utils/url'
+import { sanitizeUrl, validateUrl } from '@typix-editor/utils'
 
 describe('sanitizeUrl', () => {
   it.each([

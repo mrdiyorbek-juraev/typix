@@ -135,6 +135,9 @@ importers:
       '@typix-editor/extension-context-menu':
         specifier: workspace:*
         version: link:../../packages/extensions/context-menu
+      '@typix-editor/extension-draggable-block':
+        specifier: workspace:*
+        version: link:../../packages/extensions/draggable-block
       '@typix-editor/extension-floating-link':
         specifier: workspace:*
         version: link:../../packages/extensions/floating-link
@@ -147,6 +150,9 @@ importers:
       '@typix-editor/extension-markdown-shortcuts':
         specifier: workspace:*
         version: link:../../packages/extensions/markdown-shortcuts
+      '@typix-editor/extension-max-length':
+        specifier: workspace:*
+        version: link:../../packages/extensions/max-length
       '@typix-editor/extension-mention':
         specifier: workspace:*
         version: link:../../packages/extensions/mention
@@ -607,6 +613,12 @@ importers:
       '@lexical/utils':
         specifier: ^0.40.0
         version: 0.40.0
+      '@typix-editor/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@lexical/code-shiki':
         specifier: ^0.40.0
@@ -626,9 +638,6 @@ importers:
       '@types/node':
         specifier: ^25.1.0
         version: 25.1.0
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
       tsup:
         specifier: ^8.4.0
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
@@ -738,6 +747,12 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../core
+      '@typix-editor/extension-code-block':
+        specifier: workspace:*
+        version: link:../extensions/code-block
+      '@typix-editor/extension-code-block-prettier':
+        specifier: workspace:*
+        version: link:../extensions/code-block-prettier
       '@typix-editor/extension-floating-link':
         specifier: workspace:*
         version: link:../extensions/floating-link
@@ -753,6 +768,9 @@ importers:
       '@typix-editor/react':
         specifier: workspace:*
         version: link:../react
+      '@typix-editor/utils':
+        specifier: workspace:*
+        version: link:../utils
       concurrently:
         specifier: ^9.1.2
         version: 9.2.1
@@ -776,6 +794,13 @@ importers:
         version: 5.9.3
 
   packages/extensions/auto-complete:
+    dependencies:
+      '@typix-editor/utils':
+        specifier: workspace:*
+        version: link:../../utils
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -783,11 +808,12 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/auto-link:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -795,9 +821,6 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/character-limit:
     devDependencies:
@@ -839,6 +862,10 @@ importers:
         version: 3.8.1
 
   packages/extensions/code-highlight-prism:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -846,11 +873,12 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/code-highlight-shiki:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -858,11 +886,12 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/collapsible:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -870,9 +899,6 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/context-menu:
     devDependencies:
@@ -887,6 +913,10 @@ importers:
         version: 0.40.0
 
   packages/extensions/drag-drop-paste:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -894,9 +924,6 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/draggable-block:
     devDependencies:
@@ -939,6 +966,10 @@ importers:
         version: 0.40.0
 
   packages/extensions/keywords:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -946,11 +977,12 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/link:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -958,9 +990,6 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/markdown-shortcuts:
     devDependencies:
@@ -975,6 +1004,10 @@ importers:
         version: 0.40.0
 
   packages/extensions/max-length:
+    dependencies:
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -982,9 +1015,6 @@ importers:
       '@typix-editor/core':
         specifier: workspace:*
         version: link:../../core
-      lexical:
-        specifier: ^0.40.0
-        version: 0.40.0
 
   packages/extensions/mention:
     devDependencies:
@@ -1106,70 +1136,31 @@ importers:
 
   packages/react:
     dependencies:
-      '@radix-ui/react-slot':
-        specifier: ^1.2.4
-        version: 1.2.4(@types/react@19.2.8)(react@19.2.3)
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      tailwind-merge:
-        specifier: ^3.4.0
-        version: 3.4.0
-    devDependencies:
-      '@lexical/code':
-        specifier: ^0.40.0
-        version: 0.40.0
       '@lexical/extension':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/file':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/hashtag':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/headless':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/html':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/link':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/list':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/mark':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/markdown':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/overflow':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/react':
         specifier: ^0.40.0
         version: 0.40.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yjs@13.6.29)
-      '@lexical/rich-text':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/selection':
-        specifier: ^0.40.0
-        version: 0.40.0
-      '@lexical/table':
-        specifier: ^0.40.0
-        version: 0.40.0
       '@lexical/text':
         specifier: ^0.40.0
         version: 0.40.0
       '@lexical/utils':
         specifier: ^0.40.0
         version: 0.40.0
-      '@lexical/yjs':
+      '@radix-ui/react-slot':
+        specifier: ^1.2.4
+        version: 1.2.4(@types/react@19.2.8)(react@19.2.3)
+      '@typix-editor/utils':
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      '@lexical/headless':
         specifier: ^0.40.0
-        version: 0.40.0(yjs@13.6.29)
+        version: 0.40.0
+      '@lexical/mark':
+        specifier: ^0.40.0
+        version: 0.40.0
       '@tailwindcss/postcss':
         specifier: ^4.1.17
         version: 4.1.18
@@ -1217,6 +1208,40 @@ importers:
         version: 1.97.3
 
   packages/typescript-config: {}
+
+  packages/utils:
+    dependencies:
+      '@lexical/headless':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/mark':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/selection':
+        specifier: ^0.40.0
+        version: 0.40.0
+      '@lexical/utils':
+        specifier: ^0.40.0
+        version: 0.40.0
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      tailwind-merge:
+        specifier: ^3.4.0
+        version: 3.4.0
+    devDependencies:
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
+      lexical:
+        specifier: ^0.40.0
+        version: 0.40.0
+      tsup:
+        specifier: ^8.4.0
+        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2)
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
 
 packages:
 
@@ -2511,9 +2536,6 @@ packages:
 
   '@lexical/extension@0.40.0':
     resolution: {integrity: sha512-kipdm0f+xe8ctxHt9S3NPZazMX3ILqIk5xMWxX2svdsRc7qIeMkl+5SLWnBqQA+e5ztLJqa7GSA4WMqu/dBZDQ==}
-
-  '@lexical/file@0.40.0':
-    resolution: {integrity: sha512-7UUT0G+0S2j4Ot3w3Q2Df4rvgOibrxWtsSyRePQFfxDDARcZqUNAcFGOpOjkbA60dcX6rPX/GSfZ6ZIC37xXgg==}
 
   '@lexical/hashtag@0.40.0':
     resolution: {integrity: sha512-k4PKWa8xyMHnnh+ewUboeFr8wKemk1GoMZ6LKN4qnqNKGCHANyJKeHRVUzyLjbiSwcXTrBqtUTV4ZrJXGRIkEw==}
@@ -12264,10 +12286,6 @@ snapshots:
       '@preact/signals-core': 1.12.1
       lexical: 0.40.0
 
-  '@lexical/file@0.40.0':
-    dependencies:
-      lexical: 0.40.0
-
   '@lexical/hashtag@0.40.0':
     dependencies:
       '@lexical/text': 0.40.0
@@ -16335,8 +16353,8 @@ snapshots:
       '@next/eslint-plugin-next': 16.1.6
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-react: 7.37.5(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.2(jiti@2.6.1))
@@ -16358,7 +16376,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.3
@@ -16369,22 +16387,22 @@ snapshots:
       tinyglobby: 0.2.15
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -16395,7 +16413,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3

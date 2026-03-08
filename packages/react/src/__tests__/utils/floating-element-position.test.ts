@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { setFloatingElemPosition } from "@typix-editor/core";
+import { setFloatingElemPosition } from "@typix-editor/utils";
 
 const createMockRect = (
   top: number,

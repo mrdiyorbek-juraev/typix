@@ -1,0 +1,84 @@
+{
+  "name": "@typix-editor/utils",
+  "version": "1.0.0",
+  "description": "Shared utilities for the Typix editor framework",
+  "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./lexical": {
+      "import": {
+        "types": "./dist/lexical.d.ts",
+        "default": "./dist/lexical.js"
+      },
+      "require": {
+        "types": "./dist/lexical.d.ts",
+        "default": "./dist/lexical.cjs"
+      }
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "lexical": [
+        "./dist/lexical.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "clean": "rm -rf .cache .turbo dist node_modules"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0",
+    "@lexical/selection": "^0.40.0",
+    "@lexical/utils": "^0.40.0",
+    "@lexical/headless": "^0.40.0",
+    "@lexical/mark": "^0.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "lexical": "^0.40.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "typix",
+    "editor",
+    "utils",
+    "lexical"
+  ],
+  "homepage": "https://typix.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

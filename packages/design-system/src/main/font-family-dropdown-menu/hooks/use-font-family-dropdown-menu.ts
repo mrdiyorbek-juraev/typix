@@ -7,8 +7,7 @@ import type {
 } from "../types";
 
 const DEFAULT_FAMILIES: FontFamilyItem[] = [
-  { label: "Default", value: "" },
-  { label: "Inter", value: "Inter" },
+  { label: "Inter", value: "" },
   { label: "Arial", value: "Arial" },
   { label: "Georgia", value: "Georgia" },
   { label: "Times New Roman", value: "Times New Roman" },
@@ -26,7 +25,7 @@ export function useFontFamilyDropdownMenu(
   const items = options?.families ?? DEFAULT_FAMILIES;
 
   const activeItem = items.find((item) => item.value === currentFamily);
-  const currentLabel = activeItem?.label ?? (currentFamily || "Default");
+  const currentLabel = activeItem?.label ?? (currentFamily || "Inter");
 
   const isVisible = !options?.hideWhenUnavailable || !!state;
 
