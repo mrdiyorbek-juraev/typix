@@ -1,72 +1,87 @@
-// ─── Core re-export (backward compat — consumers get all core APIs from react) ─
-export * from "@typix-editor/core";
+// ─── React-specific ──────────────────────────────────────────────────────────
 
-// ─── React-specific ───────────────────────────────────────────────────────────
-export {
-  type CommandConfig,
-  type CreateEditorConfigOptions,
-  createCommand,
-  createEditorConfig,
-} from "./config";
-
+// Editor shell
+export { EditorRoot, type EditorRootProps } from "./editor-root";
 export {
   type ContextShape,
-  type EditorCommandContextValue,
-  EditorCommandProvider,
-  RootContext,
-  type RootContextShape,
   SharedHistoryContext,
+  useSharedHistoryContext,
+} from "./editor-root/history-context";
+
+// Editor content
+export { EditorContent, type EditorContentProps } from "./editor-content";
+
+// Contexts
+export {
   TypixEditorContext,
   type TypixEditorContextValue,
   TypixEditorProvider,
-  useEditorCommand,
-  useRootContext,
-  useSharedHistoryContext,
   useTypixEditor,
-} from "./context";
-
+} from "./editor-context";
 export {
-  type CommandMenuItemConfig,
-  type CommandMenuOption,
-  EditorBubbleItem,
-  type EditorBubbleItemProps,
+  RootContext,
+  type RootContextShape,
+  useRootContext,
+} from "./root-context";
+
+// Floating element
+export {
+  FloatingElement,
+  type FloatingElementProps,
+  useFloatingElement,
+  type UseFloatingElementOptions,
+} from "./floating-element";
+
+// Bubble menu
+export {
   EditorBubbleMenu,
   type EditorBubbleMenuProps,
+  EditorBubbleItem,
+  type EditorBubbleItemProps,
+} from "./bubble-menu";
+
+// Command menu
+export {
+  type CommandConfig,
+  type CommandMenuItemConfig,
+  type CommandMenuOption,
+  createCommand,
   EditorCommand,
-  EditorCommandEmpty,
-  type EditorCommandEmptyProps,
+  type EditorCommandProps,
   EditorCommandItem,
   type EditorCommandItemBaseProps,
   type EditorCommandItemRenderProps,
   EditorCommandList,
   type EditorCommandListProps,
-  type EditorCommandProps,
-  EditorContent,
-  type EditorContentProps,
-  EditorRoot,
-  type EditorRootProps,
-} from "./core";
+  EditorCommandEmpty,
+  type EditorCommandEmptyProps,
+  type EditorCommandContextValue,
+  EditorCommandProvider,
+  useEditorCommand,
+} from "./command-menu";
 
+// Suggestion menu
 export {
-  useEditorState,
-  useTypixEditorState,
-  useSelectionStyle,
-  useSignal,
-  useMouseListener,
-  useRange,
-} from "./hooks";
+  SuggestionMenu,
+  useSuggestionItems,
+  filterSuggestionItems,
+  buildSuggestionTriggerFn,
+  type SuggestionItem,
+  type SuggestionMenuProps,
+  type SuggestionMenuRenderProps,
+  type SuggestionSelectProps,
+} from "./suggestion-menu";
 
-export { defaultExtensionNodes } from "./shared";
+// Hooks
+export { useEditorState } from "./hooks/use-editor-state";
+export { useTypixEditorState } from "./hooks/use-typix-editor-state";
+export { useSelectionStyle } from "./hooks/use-selection-style";
+export { useSignal } from "./hooks/use-signal";
+export { useMouseListener } from "./hooks/use-mouse-listener";
+export { useRange } from "./hooks/use-range";
+
+// Theme
 export { defaultTheme } from "./theme";
-export type { TypixExtension } from "./types";
-
-// React-only utilities not in core
-export { cn } from "./utils/classnames";
-export {
-  findFirstFocusableDescendant,
-  focusNearestDescendant,
-  isKeyboardInput,
-} from "./utils/focus-utils";
 
 // Lexical React plugins (re-exported for design system consumers)
 export { DraggableBlockPlugin_EXPERIMENTAL } from "@lexical/react/LexicalDraggableBlockPlugin";
@@ -81,10 +96,4 @@ export {
   LexicalExtensionComposer,
   type LexicalExtensionComposerProps,
 } from "@lexical/react/LexicalExtensionComposer";
-export {
-  configExtension,
-  declarePeerDependency,
-  defineExtension,
-  safeCast,
-} from "lexical";
 export { buildEditorFromExtensions } from "@lexical/extension";

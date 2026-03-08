@@ -1,5 +1,5 @@
 import type { JSX, ReactNode } from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as ReactDOM from "react-dom";
 import type { TextNode } from "lexical";
 import {
@@ -162,6 +162,12 @@ export function MentionUI({
     [disabled, trigger, minLength, maxLength, allowSpaces]
   );
 
+  // Only animate on the first render after menu opens — Lexical's typeahead
+  // plugin detaches/re-attaches the anchor element on every keystroke, which
+  // restarts CSS animations and causes a visible flicker.
+  const hasAnimatedRef = useRef(false);
+  const wasVisibleRef = useRef(false);
+
   if (disabled) {
     return null;
   }
@@ -175,8 +181,17 @@ export function MentionUI({
         const anchorElement = anchorElementRef.current;
 
         if (!anchorElement || (results.length === 0 && !isLoading)) {
+          wasVisibleRef.current = false;
+          hasAnimatedRef.current = false;
           return null;
         }
+
+        if (!wasVisibleRef.current) {
+          hasAnimatedRef.current = false;
+        }
+        wasVisibleRef.current = true;
+        const shouldAnimate = !hasAnimatedRef.current;
+        hasAnimatedRef.current = true;
 
         const menuProps: MentionMenuProps = {
           anchorElement: menuPortalTarget ?? anchorElement,
@@ -203,7 +218,7 @@ export function MentionUI({
             className={cn(
               "absolute z-50 max-h-[300px] min-w-[220px] overflow-y-auto",
               "rounded-lg border border-border bg-popover text-popover-foreground shadow-lg",
-              "animate-in fade-in-0 zoom-in-95 duration-150",
+              shouldAnimate && "animate-in fade-in-0 zoom-in-95 duration-150",
               menuClassName
             )}
           >

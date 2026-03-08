@@ -54,6 +54,10 @@ import {
   type FontFamilyConfig,
 } from "../extensions/font-family";
 import {
+  TextColorExtension,
+  type TextColorConfig,
+} from "../extensions/text-color";
+import {
   DirectionExtension,
   type DirectionConfig,
 } from "../extensions/direction";
@@ -88,6 +92,7 @@ export interface StarterKitOptions extends TypixExtensionConfig {
   dragDropPaste?: false | Partial<DragDropPasteConfig>;
   fontSize?: false | Partial<FontSizeConfig>;
   fontFamily?: false | Partial<FontFamilyConfig>;
+  textColor?: false | Partial<TextColorConfig>;
   direction?: false | Partial<DirectionConfig>;
 }
 
@@ -108,6 +113,7 @@ const PRESET_MINIMAL: PresetDefaults = {
   dragDropPaste: false,
   fontSize: false,
   fontFamily: false,
+  textColor: false,
   direction: false,
   strike: false,
   underline: false,
@@ -123,6 +129,7 @@ const PRESET_BLOG: PresetDefaults = {
   dragDropPaste: false,
   fontSize: false,
   fontFamily: false,
+  textColor: false,
   direction: false,
 };
 
@@ -195,6 +202,8 @@ export const StarterKit = (
     subExts.push(FontSizeExtension(merged.fontSize ?? {}));
   if (merged.fontFamily !== false)
     subExts.push(FontFamilyExtension(merged.fontFamily ?? {}));
+  if (merged.textColor !== false)
+    subExts.push(TextColorExtension(merged.textColor ?? {}));
   if (merged.direction !== false)
     subExts.push(DirectionExtension(merged.direction ?? {}));
 

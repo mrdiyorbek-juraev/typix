@@ -48,6 +48,10 @@ export {
   getFontFamilyState,
 } from "./extensions/font-family";
 export {
+  TextColorExtension,
+  type TextColorConfig,
+} from "./extensions/text-color";
+export {
   DirectionExtension,
   type DirectionConfig,
   type DirectionValue,

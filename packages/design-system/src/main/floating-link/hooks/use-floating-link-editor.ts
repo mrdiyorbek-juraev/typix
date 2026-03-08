@@ -18,11 +18,11 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import type * as React from "react";
 import {
-  getSelectedNode,
   sanitizeUrl,
-  setFloatingElemPositionForLinkEditor,
   validateUrl,
-} from "@typix-editor/react";
+  getSelectedNode,
+  setFloatingElemPositionForLinkEditor,
+} from "@typix-editor/core";
 import type { FloatingLinkRenderProps } from "../types";
 
 export function useFloatingLinkEditor({
@@ -79,7 +79,7 @@ export function useFloatingLinkEditor({
     } else if ($isNodeSelection(selection)) {
       const nodes = selection.getNodes();
       if (nodes.length > 0) {
-        const node = nodes[0];
+        const node = nodes[0]!;
         const parent = node.getParent();
         if ($isLinkNode(parent)) {
           currentUrl = parent.getURL();
@@ -106,7 +106,7 @@ export function useFloatingLinkEditor({
       if ($isNodeSelection(selection)) {
         const nodes = selection.getNodes();
         if (nodes.length > 0) {
-          const element = editor.getElementByKey(nodes[0].getKey());
+          const element = editor.getElementByKey(nodes[0]!.getKey());
           if (element) {
             domRect = element.getBoundingClientRect();
           }

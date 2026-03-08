@@ -18,23 +18,6 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.cjs"
       }
-    },
-    "./lexical": {
-      "import": {
-        "types": "./dist/lexical.d.ts",
-        "default": "./dist/lexical.js"
-      },
-      "require": {
-        "types": "./dist/lexical.d.ts",
-        "default": "./dist/lexical.cjs"
-      }
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "lexical": [
-        "./dist/lexical.d.ts"
-      ]
     }
   },
   "repository": {
@@ -52,10 +35,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.1.6",
-    "@lexical/tailwind": "^0.40.0",
     "@radix-ui/react-slot": "^1.2.4",
-    "@typix-editor/theme": "workspace:*",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.4.0"
   },

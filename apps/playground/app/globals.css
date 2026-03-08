@@ -97,7 +97,7 @@
   --typix-color-text: rgb(5, 5, 5);
   --typix-color-text-muted: rgb(101, 103, 107);
   --typix-color-placeholder: #999;
-  --typix-color-caret: #444;
+  --typix-color-caret: #22c55e;
   --typix-color-link: rgb(33, 111, 219);
   --typix-color-selection: rgb(60, 132, 244);
   --typix-color-hashtag-bg: rgba(88, 144, 255, 0.15);
@@ -234,7 +234,7 @@
   /* ---- Draggable Block (Light Mode) ---- */
   --typix-draggable-menu-hover-bg: rgba(0, 0, 0, 0.08);
   --typix-draggable-icon-color: currentColor;
-  --typix-draggable-target-line-bg: #5742b3;
+  --typix-draggable-target-line-bg: #22c55e;
 
   /* Typix Collapsible (Light Mode)*/
   --typix-collapsible-bg: #f9fafb;
@@ -282,7 +282,7 @@
   --typix-color-text: rgb(235, 235, 235);
   --typix-color-text-muted: rgb(160, 160, 160);
   --typix-color-placeholder: #666;
-  --typix-color-caret: #eee;
+  --typix-color-caret: #4ade80;
   --typix-color-link: rgb(100, 160, 255);
   --typix-color-selection: rgb(80, 140, 220);
   --typix-color-hashtag-bg: rgba(88, 144, 255, 0.25);
@@ -400,13 +400,23 @@
 
   /* ---- Draggable Block (Dark Mode) ---- */
   --typix-draggable-menu-hover-bg: rgba(255, 255, 255, 0.1);
-  --typix-draggable-target-line-bg: #8b7ad5;
+  --typix-draggable-target-line-bg: #4ade80;
 
   --typix-collapsible-bg: #1c1c1e;
   --typix-collapsible-border: #2d2d30;
   --typix-collapsible-title-hover-bg: rgba(255, 255, 255, 0.05);
   --typix-collapsible-arrow-color: #6b7280;
   --typix-collapsible-content-border: #2d2d30;
+}
+
+::selection {
+  background: #d4f5d4;
+  color: black;
+}
+
+:is(.dark *) ::selection {
+  background: rgba(118, 245, 79, 0.336);
+  color: white;
 }
 
 @layer base {

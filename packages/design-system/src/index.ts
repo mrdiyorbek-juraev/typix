@@ -110,6 +110,18 @@ export { ToggleGroup, ToggleGroupItem } from "./primitives/toggle-group";
 export { Skeleton } from "./primitives/skeleton";
 export { RadioGroup, RadioGroupItem } from "./primitives/radio-group";
 export { Slider } from "./primitives/slider";
+export { ColorSelector, type ColorSelectorProps } from "./primitives/color-selector";
+export {
+  Toolbar,
+  ToolbarGroup,
+  ToolbarSeparator,
+  ToolbarSpacer,
+  ToolbarButton,
+  ToolbarToggleGroup,
+  ToolbarToggleItem,
+  ToolbarLink,
+  toolbarVariants,
+} from "./primitives/toolbar";
 
 // Main editor components
 export {
@@ -177,3 +189,169 @@ export type {
   UseSpeechToTextReturn,
   SpeechToTextButtonProps,
 } from "./main/speech-to-text";
+
+export { useBlockquote, BlockquoteButton } from "./main/blockquote-button";
+export type {
+  UseBlockquoteOptions,
+  UseBlockquoteReturn,
+  BlockquoteButtonProps,
+} from "./main/blockquote-button";
+
+export { useCodeBlock, CodeBlockButton } from "./main/code-block-button";
+export type {
+  UseCodeBlockOptions,
+  UseCodeBlockReturn,
+  CodeBlockButtonProps,
+} from "./main/code-block-button";
+
+export {
+  useColorHighlight,
+  HIGHLIGHT_COLORS,
+  HIGHLIGHT_COLOR_VALUES,
+  ColorHighlightButton,
+} from "./main/color-highlight-button";
+export type {
+  HighlightColorKey,
+  UseColorHighlightOptions,
+  UseColorHighlightReturn,
+  ColorHighlightButtonProps,
+} from "./main/color-highlight-button";
+
+export {
+  useColorText,
+  TEXT_COLORS as TEXT_COLORS_TEXT,
+  TEXT_COLOR_VALUES,
+  ColorTextButton,
+} from "./main/color-text-button";
+export type {
+  TextColorKey,
+  UseColorTextOptions,
+  UseColorTextReturn,
+  ColorTextButtonProps,
+} from "./main/color-text-button";
+
+export { SlashDropdownMenu, useSlashDropdownMenu } from "./main/slash-command";
+export type {
+  SlashDropdownMenuProps,
+  SlashMenuConfig,
+  SlashMenuItem,
+  SlashMenuItemType,
+  UseSlashDropdownMenuReturn,
+} from "./main/slash-command";
+
+export {
+  useMark,
+  isMarkActive,
+  canToggleMark,
+  toggleMark,
+  MarkButton,
+} from "./main/mark-button";
+export type {
+  MarkType,
+  UseMarkOptions,
+  UseMarkReturn,
+  MarkButtonProps,
+} from "./main/mark-button";
+
+export {
+  useList,
+  isListActive,
+  canToggleList,
+  toggleList,
+  ListButton,
+} from "./main/list-button";
+export type {
+  ListType,
+  UseListOptions,
+  UseListReturn,
+  ListButtonProps,
+} from "./main/list-button";
+
+export {
+  useListDropdownMenu,
+  isAnyListActive,
+  canToggleAnyList,
+  getActiveListType,
+  ListDropdownMenu,
+} from "./main/list-dropdown-menu";
+export type {
+  UseListDropdownMenuOptions,
+  UseListDropdownMenuReturn,
+  ListItemConfig,
+  ListDropdownMenuProps,
+} from "./main/list-dropdown-menu";
+
+export {
+  useTextAlign,
+  canSetTextAlign,
+  setTextAlign,
+  TextAlignButton,
+} from "./main/text-align-button";
+export type {
+  TextAlign,
+  UseTextAlignOptions,
+  UseTextAlignReturn,
+  TextAlignButtonProps,
+} from "./main/text-align-button";
+
+export {
+  useHeading,
+  isHeadingActive,
+  canToggleHeading,
+  toggleHeading,
+  HeadingButton,
+} from "./main/heading-button";
+export type {
+  HeadingLevel,
+  UseHeadingOptions,
+  UseHeadingReturn,
+  HeadingButtonProps,
+} from "./main/heading-button";
+
+export {
+  useFontFamilyDropdownMenu,
+  FontFamilyDropdownMenu,
+} from "./main/font-family-dropdown-menu";
+export type {
+  FontFamilyItem,
+  UseFontFamilyDropdownMenuOptions,
+  UseFontFamilyDropdownMenuReturn,
+  FontFamilyDropdownMenuProps,
+} from "./main/font-family-dropdown-menu";
+
+export {
+  useUndoRedo,
+  canExecuteUndoRedo,
+  executeUndoRedo,
+  UndoRedoButton,
+} from "./main/undo-redo-button";
+export type {
+  UndoRedoAction,
+  UseUndoRedoOptions,
+  UseUndoRedoReturn,
+  UndoRedoButtonProps,
+} from "./main/undo-redo-button";
+
+export {
+  useFontSize,
+  getFontSize,
+  setFontSize,
+  increaseFontSize,
+  decreaseFontSize,
+  FontSizeInput,
+} from "./main/font-size-input";
+export type {
+  UseFontSizeOptions,
+  UseFontSizeReturn,
+  FontSizeInputProps,
+} from "./main/font-size-input";
+
+export {
+  useClearFormatting,
+  ClearFormattingButton,
+} from "./main/clear-formatting-button";
+export type {
+  UseClearFormattingOptions,
+  UseClearFormattingReturn,
+  ClearFormattingButtonProps,
+} from "./main/clear-formatting-button";

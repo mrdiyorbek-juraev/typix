@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import * as React from "react";
 import { Check, ExternalLink, Link, Pencil, Trash2, X } from "lucide-react";
-import { sanitizeUrl } from "@typix-editor/react";
+import { sanitizeUrl } from "@typix-editor/core";
 import { cn } from "../../../lib/utils";
 import { Button } from "../../../primitives/button";
 import { Separator } from "../../../primitives/separator";
