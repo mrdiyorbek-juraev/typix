@@ -56,12 +56,7 @@ export function useColorHighlight(
       HIGHLIGHT_COLOR_VALUES[selectedColor] ?? HIGHLIGHT_COLOR_VALUES.yellow;
 
     if (isActive) {
-      editor
-        .chain()
-        .focus()
-        .toggleHighlight()
-        .removeHighlightColor()
-        .run();
+      editor.chain().focus().toggleHighlight().removeHighlightColor().run();
     } else {
       editor
         .chain()
@@ -81,11 +76,7 @@ export function useColorHighlight(
 
       if (isActive) {
         // Update color on already-highlighted text
-        editor
-          .chain()
-          .focus()
-          .setHighlightColor({ color: colorValue })
-          .run();
+        editor.chain().focus().setHighlightColor({ color: colorValue }).run();
       } else {
         // Apply highlight with the selected color
         editor
@@ -102,12 +93,7 @@ export function useColorHighlight(
 
   const handleRemoveHighlight = useCallback(() => {
     if (isActive) {
-      editor
-        .chain()
-        .focus()
-        .toggleHighlight()
-        .removeHighlightColor()
-        .run();
+      editor.chain().focus().toggleHighlight().removeHighlightColor().run();
     }
   }, [editor, isActive]);
 

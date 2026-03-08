@@ -110,7 +110,10 @@ export { ToggleGroup, ToggleGroupItem } from "./primitives/toggle-group";
 export { Skeleton } from "./primitives/skeleton";
 export { RadioGroup, RadioGroupItem } from "./primitives/radio-group";
 export { Slider } from "./primitives/slider";
-export { ColorSelector, type ColorSelectorProps } from "./primitives/color-selector";
+export {
+  ColorSelector,
+  type ColorSelectorProps,
+} from "./primitives/color-selector";
 export {
   Toolbar,
   ToolbarGroup,

@@ -18,7 +18,7 @@ interface UseSuggestionItemsResult<T> {
 }
 
 export function useSuggestionItems<T = unknown>(
-  options: UseSuggestionItemsOptions<T>,
+  options: UseSuggestionItemsOptions<T>
 ): UseSuggestionItemsResult<T> {
   const { query, editor, itemsFn, debounceMs } = options;
   const [items, setItems] = useState<SuggestionItem<T>[]>([]);

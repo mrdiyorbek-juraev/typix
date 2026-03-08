@@ -84,7 +84,7 @@ const MARK_CONFIG: Record<MarkType, MarkConfig> = {
 
 export function useMark(
   type: MarkType,
-  options?: UseMarkOptions,
+  options?: UseMarkOptions
 ): UseMarkReturn {
   const editor = useTypixEditorState();
   const isApple = useIsApple();

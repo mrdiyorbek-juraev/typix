@@ -55,10 +55,9 @@ describe("useSignal", () => {
     const sig1 = signal("first");
     const sig2 = signal("second");
 
-    const { result, rerender } = renderHook(
-      ({ sig }) => useSignal(sig),
-      { initialProps: { sig: sig1 } },
-    );
+    const { result, rerender } = renderHook(({ sig }) => useSignal(sig), {
+      initialProps: { sig: sig1 },
+    });
 
     expect(result.current).toBe("first");
 

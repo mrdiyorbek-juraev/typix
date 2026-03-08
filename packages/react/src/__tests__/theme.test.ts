@@ -33,7 +33,7 @@ describe("defaultTheme", () => {
         const fullPath = path ? `${path}.${key}` : key;
         if (typeof value === "string") {
           expect(value, `${fullPath} should start with "typix-"`).toMatch(
-            /^typix-/,
+            /^typix-/
           );
         } else if (
           typeof value === "object" &&
@@ -45,7 +45,7 @@ describe("defaultTheme", () => {
           for (const item of value) {
             if (typeof item === "string") {
               expect(item, `${fullPath}[] should start with "typix-"`).toMatch(
-                /^typix-/,
+                /^typix-/
               );
             }
           }

@@ -21,7 +21,9 @@ import { useSlashDropdownMenu } from "../hooks/use-slash-dropdown-menu";
 
 // ─── Group items by their group label ────────────────────────────────────────
 
-function groupItems(items: SuggestionItem<SlashMenuItem>[]): Map<string, SuggestionItem<SlashMenuItem>[]> {
+function groupItems(
+  items: SuggestionItem<SlashMenuItem>[]
+): Map<string, SuggestionItem<SlashMenuItem>[]> {
   const map = new Map<string, SuggestionItem<SlashMenuItem>[]>();
   for (const item of items) {
     const g = item.group ?? "Other";
@@ -37,7 +39,8 @@ function groupItems(items: SuggestionItem<SlashMenuItem>[]): Map<string, Suggest
 
 // ─── Inner UI component ─────────────────────────────────────────────────────
 
-interface SlashDropdownUIProps extends SuggestionMenuRenderProps<SlashMenuItem> {
+interface SlashDropdownUIProps
+  extends SuggestionMenuRenderProps<SlashMenuItem> {
   className?: string;
   showGroups: boolean;
   onItemSelect?: (item: SlashMenuItem) => void;
@@ -56,10 +59,7 @@ function SlashDropdownUI({
   animate = true,
 }: SlashDropdownUIProps) {
   const groupedEntries = useMemo(
-    () =>
-      showGroups
-        ? Array.from(groupItems(items).entries())
-        : null,
+    () => (showGroups ? Array.from(groupItems(items).entries()) : null),
     [items, showGroups]
   );
 
@@ -168,7 +168,8 @@ export function SlashDropdownMenu({
   onClose,
   emptyContent,
 }: SlashDropdownMenuProps): JSX.Element | null {
-  const { getSuggestionItems, config: resolvedConfig } = useSlashDropdownMenu(userConfig);
+  const { getSuggestionItems, config: resolvedConfig } =
+    useSlashDropdownMenu(userConfig);
 
   // Track open/close via render prop calls
   const wasOpenRef = useRef(false);
@@ -201,7 +202,14 @@ export function SlashDropdownMenu({
         />
       );
     },
-    [className, resolvedConfig.showGroups, onSelect, onOpen, onClose, emptyContent]
+    [
+      className,
+      resolvedConfig.showGroups,
+      onSelect,
+      onOpen,
+      onClose,
+      emptyContent,
+    ]
   );
 
   return (
@@ -232,7 +240,9 @@ const SlashMenuItemRow = memo(function SlashMenuItemRow({
   isHighlighted,
   onSelect,
 }: SlashMenuItemRowProps) {
-  const Icon = item.badge as React.ComponentType<{ className?: string; size?: number }> | undefined;
+  const Icon = item.badge as
+    | React.ComponentType<{ className?: string; size?: number }>
+    | undefined;
   return (
     <CommandItem
       data-highlighted={isHighlighted}

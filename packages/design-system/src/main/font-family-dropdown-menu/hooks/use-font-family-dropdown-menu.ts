@@ -17,7 +17,7 @@ const DEFAULT_FAMILIES: FontFamilyItem[] = [
 ];
 
 export function useFontFamilyDropdownMenu(
-  options?: UseFontFamilyDropdownMenuOptions,
+  options?: UseFontFamilyDropdownMenuOptions
 ): UseFontFamilyDropdownMenuReturn {
   const editor = useTypixEditorState();
   const state = getFontFamilyState(editor.lexical);

@@ -48,7 +48,7 @@ export function HeadingButton({
             aria-pressed={isActive}
             className={cn(
               "hover:[&_svg]:text-emerald-400 data-[active]:[&_svg]:text-emerald-500",
-              className,
+              className
             )}
           >
             <Icon />

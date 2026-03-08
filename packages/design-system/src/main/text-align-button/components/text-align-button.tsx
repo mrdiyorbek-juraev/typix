@@ -37,10 +37,7 @@ export function TextAlignButton({
           <ToolbarButton
             onClick={handleTextAlign}
             disabled={!canAlign}
-            className={cn(
-              "hover:[&_svg]:text-emerald-400",
-              className,
-            )}
+            className={cn("hover:[&_svg]:text-emerald-400", className)}
           >
             <Icon />
             {text && <span>{text}</span>}

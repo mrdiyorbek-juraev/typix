@@ -8,16 +8,17 @@ import {
   $createHeadingNode,
   $createQuoteNode,
 } from "@typix-editor/core/lexical/rich-text";
-import {
-  $createCodeNode,
-} from "@typix-editor/core/lexical/code";
+import { $createCodeNode } from "@typix-editor/core/lexical/code";
 import {
   $createListNode,
   $createListItemNode,
 } from "@typix-editor/core/lexical/list";
 import { $setBlocksType } from "@typix-editor/core/lexical/selection";
 import type { LexicalEditor } from "lexical";
-import type { SuggestionItem, SuggestionSelectProps } from "@typix-editor/react";
+import type {
+  SuggestionItem,
+  SuggestionSelectProps,
+} from "@typix-editor/react";
 import {
   AlignLeft,
   Heading1,
@@ -206,7 +207,10 @@ function toSuggestionItem(item: SlashMenuItem): SuggestionItem<SlashMenuItem> {
     group: item.group,
     keywords: item.aliases,
     context: item,
-    onSelect: ({ editor, nodeToRemove }: SuggestionSelectProps<SlashMenuItem>) => {
+    onSelect: ({
+      editor,
+      nodeToRemove,
+    }: SuggestionSelectProps<SlashMenuItem>) => {
       if (nodeToRemove) nodeToRemove.remove();
       item.onSelect({ editor });
     },
@@ -229,17 +233,9 @@ function matchesQuery(item: SlashMenuItem, query: string): boolean {
 export function useSlashDropdownMenu(
   config: SlashMenuConfig = {}
 ): UseSlashDropdownMenuReturn {
-  const {
-    enabledItems,
-    customItems,
-    itemGroups,
-    showGroups = true,
-  } = config;
+  const { enabledItems, customItems, itemGroups, showGroups = true } = config;
 
-  const allBuiltIn = useMemo(
-    () => buildBuiltInItems(itemGroups),
-    [itemGroups]
-  );
+  const allBuiltIn = useMemo(() => buildBuiltInItems(itemGroups), [itemGroups]);
 
   const visibleBuiltIn = useMemo(() => {
     if (!enabledItems) return allBuiltIn;
@@ -250,7 +246,10 @@ export function useSlashDropdownMenu(
 
   // FIX: pre-concat once so getSlashMenuItems never spreads on every call
   const allItems = useMemo(
-    () => (customItems?.length ? [...visibleBuiltIn, ...customItems] : visibleBuiltIn),
+    () =>
+      customItems?.length
+        ? [...visibleBuiltIn, ...customItems]
+        : visibleBuiltIn,
     [visibleBuiltIn, customItems]
   );
 
@@ -263,7 +262,12 @@ export function useSlashDropdownMenu(
   );
 
   const getSuggestionItems = useCallback(
-    ({ query }: { query: string; editor: LexicalEditor }): SuggestionItem<SlashMenuItem>[] => {
+    ({
+      query,
+    }: {
+      query: string;
+      editor: LexicalEditor;
+    }): SuggestionItem<SlashMenuItem>[] => {
       return getSlashMenuItems(query).map(toSuggestionItem);
     },
     [getSlashMenuItems]

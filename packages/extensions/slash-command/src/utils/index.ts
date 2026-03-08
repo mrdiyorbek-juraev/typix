@@ -31,7 +31,9 @@ export function canInsertSlashCommand(
     const anchorNode = anchor.getNode();
 
     if ($isTextNode(anchorNode)) {
-      const textBeforeCursor = anchorNode.getTextContent().slice(0, anchor.offset);
+      const textBeforeCursor = anchorNode
+        .getTextContent()
+        .slice(0, anchor.offset);
       result = textBeforeCursor.trim() === "";
     } else if ($isElementNode(anchorNode)) {
       result = anchorNode.getChildrenSize() === 0;

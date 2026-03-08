@@ -2,7 +2,10 @@ import { useCallback } from "react";
 import { useTypixEditorState } from "@typix-editor/react";
 import { RemoveFormatting } from "lucide-react";
 import { useIsApple } from "../../../lib/use-is-apple";
-import type { UseClearFormattingOptions, UseClearFormattingReturn } from "../types";
+import type {
+  UseClearFormattingOptions,
+  UseClearFormattingReturn,
+} from "../types";
 
 const MAC_KEYS = ["⌘", "\\"];
 const WIN_KEYS = ["Ctrl", "\\"];
@@ -19,7 +22,7 @@ const MARK_NAMES = [
 ] as const;
 
 export function useClearFormatting(
-  options?: UseClearFormattingOptions,
+  options?: UseClearFormattingOptions
 ): UseClearFormattingReturn {
   const editor = useTypixEditorState();
   const isApple = useIsApple();

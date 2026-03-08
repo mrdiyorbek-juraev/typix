@@ -6,9 +6,7 @@ import {
   FORMAT_TEXT_COMMAND,
   type LexicalEditor,
 } from "lexical";
-import {
-  $patchStyleText,
-} from "@typix-editor/core/lexical/selection";
+import { $patchStyleText } from "@typix-editor/core/lexical/selection";
 import {
   defineTypixExtension,
   type TypixExtensionConfig,

@@ -106,7 +106,10 @@ export function useFloatingElement({
         (e.buttons === 1 || e.buttons === 3) &&
         elemRef.current.style.pointerEvents !== "none"
       ) {
-        const elementUnderMouse = document.elementFromPoint(e.clientX, e.clientY);
+        const elementUnderMouse = document.elementFromPoint(
+          e.clientX,
+          e.clientY
+        );
         if (!elemRef.current.contains(elementUnderMouse)) {
           elemRef.current.style.pointerEvents = "none";
         }

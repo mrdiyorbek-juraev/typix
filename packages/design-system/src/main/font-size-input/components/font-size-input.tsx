@@ -58,7 +58,7 @@ export function FontSizeInput({
         setDirty(false);
       }
     },
-    [apply, currentSize],
+    [apply, currentSize]
   );
 
   if (!isVisible) return null;

@@ -44,11 +44,16 @@ export function FontFamilyDropdownMenu({
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <ToolbarButton
-                className={cn("gap-0.5 min-w-[5rem] justify-between", className)}
+                className={cn(
+                  "gap-0.5 min-w-[5rem] justify-between",
+                  className
+                )}
               >
                 <span
                   className="truncate text-xs"
-                  style={currentFamily ? { fontFamily: currentFamily } : undefined}
+                  style={
+                    currentFamily ? { fontFamily: currentFamily } : undefined
+                  }
                 >
                   {currentLabel}
                 </span>
@@ -71,7 +76,7 @@ export function FontFamilyDropdownMenu({
             style={item.value ? { fontFamily: item.value } : undefined}
             className={cn(
               "gap-2",
-              item.value === currentFamily && "bg-accent text-accent-foreground",
+              item.value === currentFamily && "bg-accent text-accent-foreground"
             )}
           >
             <span className="flex-1">{item.label}</span>

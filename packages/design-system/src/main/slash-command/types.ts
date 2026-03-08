@@ -78,7 +78,10 @@ export interface UseSlashDropdownMenuReturn {
   /** Returns all visible menu items, respecting config, filtered by query. */
   getSlashMenuItems: (query: string | null) => SlashMenuItem[];
   /** Returns SuggestionItem-compatible items for use with SuggestionMenu. */
-  getSuggestionItems: (props: { query: string; editor: LexicalEditor }) => SuggestionItem<SlashMenuItem>[];
+  getSuggestionItems: (props: {
+    query: string;
+    editor: LexicalEditor;
+  }) => SuggestionItem<SlashMenuItem>[];
   /** The resolved config. */
   config: {
     enabledItems: SlashMenuItemType[] | undefined;

@@ -8,9 +8,7 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import {
-  defineTypixExtension,
-} from "@typix-editor/core";
+import { defineTypixExtension } from "@typix-editor/core";
 import type { SlashCommandConfig, SlashCommandOutput } from "../types";
 
 // ─── Output store ────────────────────────────────────────────────────────────

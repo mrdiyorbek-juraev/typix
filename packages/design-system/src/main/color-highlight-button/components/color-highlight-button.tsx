@@ -49,13 +49,19 @@ export function ColorHighlightButton({
     label,
     Icon,
     highlightColors,
-  } = useColorHighlight({ defaultColor, hideWhenUnavailable, onToggled, onColorSelected });
+  } = useColorHighlight({
+    defaultColor,
+    hideWhenUnavailable,
+    onToggled,
+    onColorSelected,
+  });
 
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   if (!isVisible) return null;
 
-  const swatchColor = colorSwatchMap[selectedColor] ?? "var(--color-yellow-400)";
+  const swatchColor =
+    colorSwatchMap[selectedColor] ?? "var(--color-yellow-400)";
 
   return (
     <TooltipProvider delayDuration={300}>

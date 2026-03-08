@@ -30,7 +30,7 @@ export function useFontSize(options?: UseFontSizeOptions): UseFontSizeReturn {
       editor.chain().focus().setFontSize({ size }).run();
       options?.onChanged?.(size);
     },
-    [editor, options],
+    [editor, options]
   );
 
   const handleIncrease = useCallback(() => {

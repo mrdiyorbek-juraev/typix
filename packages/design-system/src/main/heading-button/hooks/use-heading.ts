@@ -72,7 +72,7 @@ const HEADING_CONFIG: Record<HeadingLevel, HeadingConfig> = {
 
 export function useHeading(
   level: HeadingLevel,
-  options?: UseHeadingOptions,
+  options?: UseHeadingOptions
 ): UseHeadingReturn {
   const editor = useTypixEditorState();
   const isApple = useIsApple();
@@ -102,21 +102,18 @@ export function useHeading(
 
 export function isHeadingActive(
   editor: TypixEditor,
-  level: HeadingLevel,
+  level: HeadingLevel
 ): boolean {
   return editor.isActive(HEADING_CONFIG[level].activeName);
 }
 
 export function canToggleHeading(
   editor: TypixEditor,
-  level: HeadingLevel,
+  level: HeadingLevel
 ): boolean {
   return (editor.can() as any).toggleHeading({ level }).run();
 }
 
-export function toggleHeading(
-  editor: TypixEditor,
-  level: HeadingLevel,
-): void {
+export function toggleHeading(editor: TypixEditor, level: HeadingLevel): void {
   (editor.chain().focus() as any).toggleHeading({ level }).run();
 }

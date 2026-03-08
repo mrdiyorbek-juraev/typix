@@ -3,7 +3,7 @@ import type { LexicalEditor } from "lexical";
 
 export type TriggerFn = (
   text: string,
-  editor: LexicalEditor,
+  editor: LexicalEditor
 ) => MenuTextMatch | null;
 
 interface TriggerOptions {
@@ -51,9 +51,7 @@ export function buildSuggestionTriggerFn(options: TriggerOptions): TriggerFn {
     : `[^${escapedChar}${PUNCTUATION}\\s]`;
 
   const queryBody = `${validChars}{0,${maxLength}}`;
-  const pattern = new RegExp(
-    `${prefixGroup}(${escapedChar}(${queryBody}))$`,
-  );
+  const pattern = new RegExp(`${prefixGroup}(${escapedChar}(${queryBody}))$`);
 
   return (text: string): MenuTextMatch | null => {
     const match = pattern.exec(text);

@@ -48,7 +48,7 @@ describe("SlashCommandExtension", () => {
             modifiers: ["mod"],
             command: "insertSlashCommand",
           }),
-        ]),
+        ])
       );
     });
   });
@@ -106,7 +106,7 @@ describe("canInsertSlashCommand", () => {
           paragraph = $createParagraphNode();
           $getRoot().append(paragraph);
         },
-        { discrete: true },
+        { discrete: true }
       );
 
       const result = canInsertSlashCommand(editor, paragraph);
@@ -123,7 +123,7 @@ describe("canInsertSlashCommand", () => {
           paragraph.append($createTextNode("hello"));
           $getRoot().append(paragraph);
         },
-        { discrete: true },
+        { discrete: true }
       );
 
       const result = canInsertSlashCommand(editor, paragraph);
@@ -141,7 +141,7 @@ describe("canInsertSlashCommand", () => {
           paragraph.append(text);
           $getRoot().append(paragraph);
         },
-        { discrete: true },
+        { discrete: true }
       );
 
       const result = canInsertSlashCommand(editor, text);
@@ -160,7 +160,7 @@ describe("canInsertSlashCommand", () => {
           $getRoot().append(paragraph);
           paragraph.select(0, 0);
         },
-        { discrete: true },
+        { discrete: true }
       );
 
       editor.getEditorState().read(() => {
@@ -182,7 +182,7 @@ describe("canInsertSlashCommand", () => {
           $getRoot().append(paragraph);
           text.select(0, 0);
         },
-        { discrete: true },
+        { discrete: true }
       );
 
       editor.getEditorState().read(() => {
@@ -204,7 +204,7 @@ describe("canInsertSlashCommand", () => {
           $getRoot().append(paragraph);
           text.select(5, 5);
         },
-        { discrete: true },
+        { discrete: true }
       );
 
       editor.getEditorState().read(() => {
@@ -229,14 +229,14 @@ describe("insertSlashCommand", () => {
         $getRoot().append(paragraph);
         paragraph.select(0, 0);
       },
-      { discrete: true },
+      { discrete: true }
     );
 
     editor.update(
       () => {
         returnValue = insertSlashCommand(editor);
       },
-      { discrete: true },
+      { discrete: true }
     );
 
     expect(returnValue).toBe(true);
@@ -252,14 +252,14 @@ describe("insertSlashCommand", () => {
         $getRoot().append(paragraph);
         paragraph.select(0, 0);
       },
-      { discrete: true },
+      { discrete: true }
     );
 
     editor.update(
       () => {
         insertSlashCommand(editor);
       },
-      { discrete: true },
+      { discrete: true }
     );
 
     editor.getEditorState().read(() => {
@@ -279,14 +279,14 @@ describe("insertSlashCommand", () => {
         $getRoot().append(paragraph);
         paragraph.select(0, 0);
       },
-      { discrete: true },
+      { discrete: true }
     );
 
     editor.update(
       () => {
         insertSlashCommand(editor, "!");
       },
-      { discrete: true },
+      { discrete: true }
     );
 
     editor.getEditorState().read(() => {
@@ -306,7 +306,7 @@ describe("insertSlashCommand", () => {
         $getRoot().append(paragraph);
         insertSlashCommand(editor, "/", paragraph);
       },
-      { discrete: true },
+      { discrete: true }
     );
 
     editor.getEditorState().read(() => {

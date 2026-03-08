@@ -7,19 +7,16 @@ import { cn } from "../../lib/utils";
 /*  Toolbar (root)                                                     */
 /* ------------------------------------------------------------------ */
 
-const toolbarVariants = cva(
-  "flex items-center gap-0.5 p-1",
-  {
-    variants: {
-      variant: {
-        default: "border-b border-border bg-muted/30",
-        floating:
-          "w-auto rounded-lg border border-border bg-background shadow-md",
-      },
+const toolbarVariants = cva("flex items-center gap-0.5 p-1", {
+  variants: {
+    variant: {
+      default: "border-b border-border bg-muted/30",
+      floating:
+        "w-auto rounded-lg border border-border bg-background shadow-md",
     },
-    defaultVariants: { variant: "default" },
-  }
-);
+  },
+  defaultVariants: { variant: "default" },
+});
 
 const Toolbar = React.forwardRef<
   React.ElementRef<typeof ToolbarPrimitive.Root>,

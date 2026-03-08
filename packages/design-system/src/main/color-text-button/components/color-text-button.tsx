@@ -78,8 +78,7 @@ export function ColorTextButton({
 
   if (!isVisible) return null;
 
-  const swatchColor =
-    TEXT_COLOR_VALUES[selectedColor] ?? "var(--foreground)";
+  const swatchColor = TEXT_COLOR_VALUES[selectedColor] ?? "var(--foreground)";
 
   const pickTextColor = (color: string) => {
     handleColorSelected(color);
@@ -259,7 +258,8 @@ function HighlightColorSwatch({
   isSelected: boolean;
   onClick: () => void;
 }) {
-  const fillValue = HIGHLIGHT_GRID_VALUES[color] ?? HIGHLIGHT_GRID_VALUES.yellow;
+  const fillValue =
+    HIGHLIGHT_GRID_VALUES[color] ?? HIGHLIGHT_GRID_VALUES.yellow;
   const borderValue = highlightBorderMap[color] ?? highlightBorderMap.yellow;
   return (
     <button

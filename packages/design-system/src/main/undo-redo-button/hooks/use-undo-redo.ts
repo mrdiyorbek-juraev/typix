@@ -37,7 +37,7 @@ const UNDO_REDO_CONFIG: Record<UndoRedoAction, UndoRedoConfig> = {
 
 export function useUndoRedo(
   action: UndoRedoAction,
-  options?: UseUndoRedoOptions,
+  options?: UseUndoRedoOptions
 ): UseUndoRedoReturn {
   const editor = useTypixEditorState();
   const isApple = useIsApple();
@@ -65,14 +65,14 @@ export function useUndoRedo(
 
 export function canExecuteUndoRedo(
   editor: TypixEditor,
-  action: UndoRedoAction,
+  action: UndoRedoAction
 ): boolean {
   return (editor.can() as any)[UNDO_REDO_CONFIG[action].cmd]().run();
 }
 
 export function executeUndoRedo(
   editor: TypixEditor,
-  action: UndoRedoAction,
+  action: UndoRedoAction
 ): void {
   (editor.chain().focus() as any)[UNDO_REDO_CONFIG[action].cmd]().run();
 }

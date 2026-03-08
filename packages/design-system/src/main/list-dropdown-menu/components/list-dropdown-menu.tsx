@@ -49,7 +49,7 @@ export function ListDropdownMenu({
                 aria-pressed={isActive}
                 className={cn(
                   "gap-0.5 hover:[&_svg]:text-emerald-400 data-[active]:[&_svg]:text-emerald-500",
-                  className,
+                  className
                 )}
               >
                 <Icon />
@@ -72,7 +72,7 @@ export function ListDropdownMenu({
             }}
             className={cn(
               "gap-2",
-              item.isActive && "bg-accent text-accent-foreground",
+              item.isActive && "bg-accent text-accent-foreground"
             )}
           >
             <span className="[&_svg]:size-4">

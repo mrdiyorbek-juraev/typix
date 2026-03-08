@@ -14,7 +14,7 @@ import type {
 const ALL_TYPES: ListType[] = ["bullet", "ordered", "check"];
 
 export function useListDropdownMenu(
-  options?: UseListDropdownMenuOptions,
+  options?: UseListDropdownMenuOptions
 ): UseListDropdownMenuReturn {
   const editor = useTypixEditorState();
   const isApple = useIsApple();
@@ -60,14 +60,14 @@ export function useListDropdownMenu(
 
 export function isAnyListActive(
   editor: TypixEditor,
-  types: ListType[] = ALL_TYPES,
+  types: ListType[] = ALL_TYPES
 ): boolean {
   return types.some((type) => editor.isActive(LIST_CONFIG[type].activeName));
 }
 
 export function canToggleAnyList(
   editor: TypixEditor,
-  types: ListType[] = ALL_TYPES,
+  types: ListType[] = ALL_TYPES
 ): boolean {
   return types.some((type) => {
     const cmd = LIST_CONFIG[type].toggleCmd;
@@ -77,7 +77,9 @@ export function canToggleAnyList(
 
 export function getActiveListType(
   editor: TypixEditor,
-  types: ListType[] = ALL_TYPES,
+  types: ListType[] = ALL_TYPES
 ): ListType | null {
-  return types.find((type) => editor.isActive(LIST_CONFIG[type].activeName)) ?? null;
+  return (
+    types.find((type) => editor.isActive(LIST_CONFIG[type].activeName)) ?? null
+  );
 }

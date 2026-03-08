@@ -94,7 +94,8 @@ export function useColorText(
 
   const handleHighlightSelected = useCallback(
     (color: string) => {
-      const colorValue = HIGHLIGHT_GRID_VALUES[color] ?? HIGHLIGHT_GRID_VALUES.yellow;
+      const colorValue =
+        HIGHLIGHT_GRID_VALUES[color] ?? HIGHLIGHT_GRID_VALUES.yellow;
       if (isHighlightActive) {
         editor.chain().focus().setHighlightColor({ color: colorValue }).run();
       } else {

@@ -72,7 +72,7 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
       startOfLine,
       minLength,
       maxLength,
-    ],
+    ]
   );
 
   const triggerFn = useCallback(
@@ -80,7 +80,7 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
       if (disabled) return null;
       return cachedTrigger(text, editor);
     },
-    [disabled, cachedTrigger, editor],
+    [disabled, cachedTrigger, editor]
   );
 
   // Stable ref for itemsFn so debounce isn't defeated by inline arrow functions
@@ -88,7 +88,7 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
   itemsFnRef.current = itemsFn;
   const stableItemsFn = useCallback(
     (p: { query: string; editor: typeof editor }) => itemsFnRef.current(p),
-    [],
+    []
   );
 
   const { items, isLoading } = useSuggestionItems<T>({
@@ -100,7 +100,7 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
 
   const options = useMemo(
     () => items.map((item, i) => new SuggestionMenuOption<T>(item, i)),
-    [items],
+    [items]
   );
 
   const onSelectOption = useCallback(
@@ -110,7 +110,7 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
         Parameters<typeof LexicalTypeaheadMenuPlugin>[0]["onSelectOption"]
       >[1],
       closeMenu: () => void,
-      matchingString: string,
+      matchingString: string
     ) => {
       editor.update(() => {
         selectedOption.item.onSelect({
@@ -122,7 +122,7 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
         closeMenu();
       });
     },
-    [editor],
+    [editor]
   );
 
   // Stable refs for menuRenderFn closure — avoids re-creating the render function
@@ -147,7 +147,7 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
         selectOptionAndCleanUp: (option: SuggestionMenuOption<T>) => void;
         setHighlightedIndex: (index: number) => void;
       },
-      matchingString: string | null,
+      matchingString: string | null
     ) => {
       const anchor = anchorElementRef.current;
       const currentItems = itemsRef.current;
@@ -175,10 +175,10 @@ function SuggestionMenu<T = unknown>(props: SuggestionMenuProps<T>) {
 
       return createPortal(
         <div onMouseDown={(e) => e.preventDefault()}>{rendered}</div>,
-        anchor,
+        anchor
       );
     },
-    [],
+    []
   );
 
   return (

@@ -18,14 +18,8 @@ export function ClearFormattingButton({
   onCleared,
   className,
 }: ClearFormattingButtonProps): JSX.Element | null {
-  const {
-    isVisible,
-    canClear,
-    handleClear,
-    label,
-    shortcutKeys,
-    Icon,
-  } = useClearFormatting({ hideWhenUnavailable, onCleared });
+  const { isVisible, canClear, handleClear, label, shortcutKeys, Icon } =
+    useClearFormatting({ hideWhenUnavailable, onCleared });
 
   if (!isVisible) return null;
 
@@ -42,10 +36,7 @@ export function ClearFormattingButton({
           <ToolbarButton
             onClick={handleClear}
             disabled={!canClear}
-            className={cn(
-              "hover:[&_svg]:text-emerald-400",
-              className,
-            )}
+            className={cn("hover:[&_svg]:text-emerald-400", className)}
           >
             <Icon />
             {text && <span>{text}</span>}

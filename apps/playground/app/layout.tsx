@@ -5,8 +5,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/provider";
 import Layout from "@/components/layout";
 
-
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],

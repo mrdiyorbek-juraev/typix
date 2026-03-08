@@ -44,7 +44,7 @@ export const LIST_CONFIG: Record<ListType, ListConfig> = {
 
 export function useList(
   type: ListType,
-  options?: UseListOptions,
+  options?: UseListOptions
 ): UseListReturn {
   const editor = useTypixEditorState();
   const isApple = useIsApple();

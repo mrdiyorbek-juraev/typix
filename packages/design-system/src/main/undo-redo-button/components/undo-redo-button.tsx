@@ -19,14 +19,8 @@ export function UndoRedoButton({
   onExecuted,
   className,
 }: UndoRedoButtonProps): JSX.Element | null {
-  const {
-    isVisible,
-    canExecute,
-    handleAction,
-    label,
-    shortcutKeys,
-    Icon,
-  } = useUndoRedo(action, { hideWhenUnavailable, onExecuted });
+  const { isVisible, canExecute, handleAction, label, shortcutKeys, Icon } =
+    useUndoRedo(action, { hideWhenUnavailable, onExecuted });
 
   if (!isVisible) return null;
 
@@ -43,10 +37,7 @@ export function UndoRedoButton({
           <ToolbarButton
             onClick={handleAction}
             disabled={!canExecute}
-            className={cn(
-              "hover:[&_svg]:text-emerald-400",
-              className,
-            )}
+            className={cn("hover:[&_svg]:text-emerald-400", className)}
           >
             <Icon />
             {text && <span>{text}</span>}

@@ -3,7 +3,11 @@ import type { TypixEditor } from "@typix-editor/core";
 import { useTypixEditorState } from "@typix-editor/react";
 import { AlignLeft, AlignCenter, AlignRight, AlignJustify } from "lucide-react";
 import { useIsApple } from "../../../lib/use-is-apple";
-import type { TextAlign, UseTextAlignOptions, UseTextAlignReturn } from "../types";
+import type {
+  TextAlign,
+  UseTextAlignOptions,
+  UseTextAlignReturn,
+} from "../types";
 import type { FC } from "react";
 
 interface AlignConfig {
@@ -47,7 +51,7 @@ const ALIGN_CONFIG: Record<TextAlign, AlignConfig> = {
 
 export function useTextAlign(
   align: TextAlign,
-  options?: UseTextAlignOptions,
+  options?: UseTextAlignOptions
 ): UseTextAlignReturn {
   const editor = useTypixEditorState();
   const isApple = useIsApple();
@@ -76,7 +80,10 @@ export function useTextAlign(
 
 // --- Utility functions ---
 
-export function canSetTextAlign(editor: TypixEditor, align: TextAlign): boolean {
+export function canSetTextAlign(
+  editor: TypixEditor,
+  align: TextAlign
+): boolean {
   const cmd = ALIGN_CONFIG[align].alignCmd;
   return editor.can()[cmd]().run();
 }
