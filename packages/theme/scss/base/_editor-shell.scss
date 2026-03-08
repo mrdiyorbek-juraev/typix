@@ -21,6 +21,9 @@
   min-height: 150px;
   resize: none;
   font-size: var(--typix-font-size);
+  line-height: var(--typix-line-height);
+  letter-spacing: var(--typix-letter-spacing);
+  color: var(--typix-color-text);
   caret-color: var(--typix-color-caret);
   position: relative;
   tab-size: 1;

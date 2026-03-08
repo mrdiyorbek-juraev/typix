@@ -4,6 +4,8 @@
 :root {
   --typix-font-family: #{map.get($typix-typography, "font-family")};
   --typix-font-size: #{map.get($typix-typography, "font-size")};
+  --typix-line-height: #{map.get($typix-typography, "line-height")};
+  --typix-letter-spacing: #{map.get($typix-typography, "letter-spacing")};
   --typix-font-size-code: #{map.get($typix-typography, "font-size-code")};
   --typix-font-size-inline-code: #{map.get($typix-typography, "font-size-inline-code")};
   --typix-font-family-code: #{map.get($typix-typography, "font-family-code")};
@@ -15,5 +17,6 @@
     --typix-heading-#{$level}-weight: #{map.get($typix-headings, "#{$level}-weight")};
     --typix-heading-#{$level}-color: #{map.get($typix-headings, "#{$level}-color")};
     --typix-heading-#{$level}-line-height: #{map.get($typix-headings, "#{$level}-line-height")};
+    --typix-heading-#{$level}-letter-spacing: #{map.get($typix-headings, "#{$level}-letter-spacing")};
   }
 }

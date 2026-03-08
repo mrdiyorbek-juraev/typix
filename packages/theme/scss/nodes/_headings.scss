@@ -6,17 +6,23 @@
     font-weight: var(--typix-heading-#{$level}-weight);
     color: var(--typix-heading-#{$level}-color);
     line-height: var(--typix-heading-#{$level}-line-height);
+    letter-spacing: var(--typix-heading-#{$level}-letter-spacing);
     margin: 0;
   }
 }
 
+// H6: uppercase for visual hierarchy at small size
+.typix-heading--h6 {
+  text-transform: uppercase;
+}
+
 @each $level, $color in (
-  "h1": #f4f4f5,
-  "h2": #e4e4e7,
-  "h3": #d4d4d8,
-  "h4": #a1a1aa,
-  "h5": #71717a,
-  "h6": #52525b,
+  "h1": #f9fafb,
+  "h2": #f3f4f6,
+  "h3": #e5e7eb,
+  "h4": #d1d5db,
+  "h5": #9ca3af,
+  "h6": #6b7280,
 ) {
   .typix-heading--#{$level} {
     @include dark-mode {
