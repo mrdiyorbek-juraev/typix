@@ -1,8 +1,5 @@
 import { useRef } from "react";
-import {
-  DraggableBlockPlugin,
-  useRootContext,
-} from "@typix-editor/react";
+import { DraggableBlockPlugin, useRootContext } from "@typix-editor/react";
 import { GripVertical } from "lucide-react";
 import type { DraggableBlockProps } from "../types";
 

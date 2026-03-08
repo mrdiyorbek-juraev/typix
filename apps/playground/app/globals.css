@@ -8,6 +8,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Prevent document-level scroll — main element is the sole scroll owner */
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -102,8 +108,8 @@
   --typix-color-selection: rgb(60, 132, 244);
   --typix-color-hashtag-bg: rgba(88, 144, 255, 0.15);
   --typix-color-hashtag-border: rgba(88, 144, 255, 0.3);
-  --typix-color-highlight-bg: rgba(255, 212, 0, 0.14);
-  --typix-color-highlight-border: rgba(255, 212, 0, 0.3);
+  --typix-color-highlight-bg: rgba(30, 255, 0, 0.342);
+  --typix-color-highlight-border: rgba(255, 212, 0, 0.6);
   --typix-color-highlight-selected-bg: rgba(255, 212, 0, 0.5);
   --typix-color-highlight-selected-border: rgba(255, 212, 0, 1);
   --typix-color-mark-bg: rgba(255, 212, 0, 0.14);
@@ -284,13 +290,13 @@
   --typix-color-placeholder: #666;
   --typix-color-caret: #4ade80;
   --typix-color-link: rgb(100, 160, 255);
-  --typix-color-selection: rgb(80, 140, 220);
-  --typix-color-hashtag-bg: rgba(88, 144, 255, 0.25);
+  --typix-color-selection: rgba(151, 255, 124, 0.404);
+  --typix-color-hashtag-bg: rgba(70, 230, 131, 0.25);
   --typix-color-hashtag-border: rgba(88, 144, 255, 0.4);
-  --typix-color-highlight-bg: rgba(255, 212, 0, 0.2);
-  --typix-color-highlight-border: rgba(255, 212, 0, 0.4);
-  --typix-color-highlight-selected-bg: rgba(255, 212, 0, 0.3);
-  --typix-color-highlight-selected-border: rgba(255, 212, 0, 0.6);
+  --typix-color-highlight-bg: rgba(150, 255, 124, 0.582);
+  --typix-color-highlight-border: rgba(255, 212, 0, 0.5);
+  --typix-color-highlight-selected-bg: rgba(255, 212, 0, 0.5);
+  --typix-color-highlight-selected-border: rgba(255, 212, 0, 0.8);
   --typix-color-mark-bg: rgba(255, 212, 0, 0.2);
   --typix-color-mark-border: rgba(255, 212, 0, 0.4);
   --typix-color-mark-overlap-bg: rgba(255, 212, 0, 0.35);
@@ -595,7 +601,6 @@
 
 .typix-text--highlight {
   background: var(--typix-color-highlight-bg);
-  border-bottom: 2px solid var(--typix-color-highlight-border);
 }
 
 .typix-text--lowercase {

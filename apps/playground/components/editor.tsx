@@ -6,7 +6,7 @@ import { TypixLogo } from "./logo";
 
 export function PlaygroundEditor() {
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className="flex h-full flex-col overflow-hidden">
       <header className="flex shrink-0 items-center justify-between border-b bg-background/95 px-4 py-2 backdrop-blur">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
@@ -21,7 +21,7 @@ export function PlaygroundEditor() {
           All features enabled
         </span>
       </header>
-      <main className="flex flex-1 flex-col overflow-hidden h-[calc(100vh-3rem)] overflow-y-auto">
+      <main className="flex-1 overflow-y-auto">
         <FullEditor />
       </main>
     </div>

@@ -6,21 +6,21 @@ import { getCodeBlockOutput } from "@typix-editor/extension-code-block";
 import { CodeBlockToolbar } from "./code-block-toolbar";
 
 export function CodeBlockUI() {
-    const editor = useTypixEditorState();
-    const [mounted, setMounted] = useState(false);
+  const editor = useTypixEditorState();
+  const [mounted, setMounted] = useState(false);
 
-    useEffect(() => setMounted(true), []);
+  useEffect(() => setMounted(true), []);
 
-    const output = getCodeBlockOutput(editor.lexical);
-    const nodeKeys = useSignal(output!.nodeKeys);
+  const output = getCodeBlockOutput(editor.lexical);
+  const nodeKeys = useSignal(output!.nodeKeys);
 
-    if (!mounted || !output) return null;
+  if (!mounted || !output) return null;
 
-    return (
-        <>
-            {[...nodeKeys].map((key) => (
-                <CodeBlockToolbar key={key} nodeKey={key} />
-            ))}
-        </>
-    );
+  return (
+    <>
+      {[...nodeKeys].map((key) => (
+        <CodeBlockToolbar key={key} nodeKey={key} />
+      ))}
+    </>
+  );
 }
