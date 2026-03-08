@@ -9,10 +9,7 @@ import {
 } from "lexical";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import {
-  getDOMRangeRect,
-  setFloatingElemPosition,
-} from "@typix-editor/utils";
+import { getDOMRangeRect, setFloatingElemPosition } from "@typix-editor/utils";
 import { useRootContext } from "../root-context";
 import { cn } from "@typix-editor/utils";
 

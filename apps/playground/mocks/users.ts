@@ -56,6 +56,6 @@ export function searchMentions(query: string): MentionItem[] {
   return MOCK_USERS.filter(
     (u) =>
       u.name.toLowerCase().includes(q) ||
-      (u.data?.username as string)?.toLowerCase().includes(q),
+      (u.data?.username as string)?.toLowerCase().includes(q)
   );
 }

@@ -18,5 +18,3 @@ export {
   initializeDocumentState,
   validateEditorState,
 } from "./server/validation";
-
-

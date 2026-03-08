@@ -24,7 +24,9 @@
     "type": "git",
     "url": "https://github.com/mrdiyorbek-juraev/typix.git"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "build:fast": "tsup",
@@ -62,7 +64,14 @@
     "tsup": "^8.0.0",
     "typescript": "^5.3.0"
   },
-  "keywords": ["typix", "editor", "rich-text", "react", "lexical", "wysiwyg"],
+  "keywords": [
+    "typix",
+    "editor",
+    "rich-text",
+    "react",
+    "lexical",
+    "wysiwyg"
+  ],
   "sideEffects": false,
   "publishConfig": {
     "access": "public"

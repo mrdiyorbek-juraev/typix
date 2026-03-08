@@ -177,6 +177,9 @@ importers:
       '@typix-editor/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@typix-editor/theme':
+        specifier: workspace:*
+        version: link:../../packages/theme
       '@typix-editor/ui':
         specifier: workspace:*
         version: link:../../packages/design-system
@@ -765,6 +768,9 @@ importers:
       '@typix-editor/extension-starter-kit':
         specifier: workspace:*
         version: link:../extensions/starter-kit
+      '@typix-editor/extension-table':
+        specifier: workspace:*
+        version: link:../extensions/table
       '@typix-editor/react':
         specifier: workspace:*
         version: link:../react

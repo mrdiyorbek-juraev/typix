@@ -1,6 +1,12 @@
 import { createHeadlessEditor } from "@lexical/headless";
 import { $isMarkNode, $unwrapMarkNode } from "@lexical/mark";
-import { $getRoot, $isElementNode, type Klass, type LexicalNode, type LexicalNodeReplacement } from "lexical";
+import {
+  $getRoot,
+  $isElementNode,
+  type Klass,
+  type LexicalNode,
+  type LexicalNodeReplacement,
+} from "lexical";
 
 type EditorNodes =
   | ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>
@@ -24,7 +30,9 @@ const getOrCreateEditor = (documentId: string, nodes: EditorNodes) => {
   if (!editorInstances.has(documentId)) {
     const editor = createHeadlessEditor({
       namespace: `validation-${documentId}`,
-      nodes: (nodes ?? undefined) as NonNullable<Parameters<typeof createHeadlessEditor>[0]>["nodes"],
+      nodes: (nodes ?? undefined) as NonNullable<
+        Parameters<typeof createHeadlessEditor>[0]
+      >["nodes"],
       onError: (error) => console.error(error),
     });
     editorInstances.set(documentId, editor);
@@ -81,7 +89,9 @@ export const validateEditorState = async (
           lastUpdated: Date.now(),
         });
       } else {
-        console.warn(`[Typix] Editor state rejected for document ${documentId}`);
+        console.warn(
+          `[Typix] Editor state rejected for document ${documentId}`
+        );
         editor.setEditorState(prevEditorState);
       }
       return success;

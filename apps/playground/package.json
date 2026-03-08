@@ -29,6 +29,7 @@
     "@typix-editor/extension-tab-focus": "workspace:*",
     "@typix-editor/extension-tailwind": "workspace:*",
     "@typix-editor/extension-table": "workspace:*",
+    "@typix-editor/theme": "workspace:*",
     "@typix-editor/extension-context-menu": "workspace:*",
     "@typix-editor/extension-floating-link": "workspace:*",
     "@typix-editor/extension-draggable-block": "workspace:*",

@@ -88,28 +88,66 @@
   },
   "typesVersions": {
     "*": {
-      "lexical": ["./dist/lexical/index.d.ts"],
-      "lexical/code": ["./dist/lexical/code.d.ts"],
-      "lexical/code-shiki": ["./dist/lexical/code-shiki.d.ts"],
-      "lexical/extension": ["./dist/lexical/extension.d.ts"],
-      "lexical/hashtag": ["./dist/lexical/hashtag.d.ts"],
-      "lexical/headless": ["./dist/lexical/headless.d.ts"],
-      "lexical/history": ["./dist/lexical/history.d.ts"],
-      "lexical/html": ["./dist/lexical/html.d.ts"],
-      "lexical/link": ["./dist/lexical/link.d.ts"],
-      "lexical/list": ["./dist/lexical/list.d.ts"],
-      "lexical/mark": ["./dist/lexical/mark.d.ts"],
-      "lexical/markdown": ["./dist/lexical/markdown.d.ts"],
-      "lexical/overflow": ["./dist/lexical/overflow.d.ts"],
-      "lexical/rich-text": ["./dist/lexical/rich-text.d.ts"],
-      "lexical/selection": ["./dist/lexical/selection.d.ts"],
-      "lexical/table": ["./dist/lexical/table.d.ts"],
-      "lexical/text": ["./dist/lexical/text.d.ts"],
-      "lexical/utils": ["./dist/lexical/utils.d.ts"]
+      "lexical": [
+        "./dist/lexical/index.d.ts"
+      ],
+      "lexical/code": [
+        "./dist/lexical/code.d.ts"
+      ],
+      "lexical/code-shiki": [
+        "./dist/lexical/code-shiki.d.ts"
+      ],
+      "lexical/extension": [
+        "./dist/lexical/extension.d.ts"
+      ],
+      "lexical/hashtag": [
+        "./dist/lexical/hashtag.d.ts"
+      ],
+      "lexical/headless": [
+        "./dist/lexical/headless.d.ts"
+      ],
+      "lexical/history": [
+        "./dist/lexical/history.d.ts"
+      ],
+      "lexical/html": [
+        "./dist/lexical/html.d.ts"
+      ],
+      "lexical/link": [
+        "./dist/lexical/link.d.ts"
+      ],
+      "lexical/list": [
+        "./dist/lexical/list.d.ts"
+      ],
+      "lexical/mark": [
+        "./dist/lexical/mark.d.ts"
+      ],
+      "lexical/markdown": [
+        "./dist/lexical/markdown.d.ts"
+      ],
+      "lexical/overflow": [
+        "./dist/lexical/overflow.d.ts"
+      ],
+      "lexical/rich-text": [
+        "./dist/lexical/rich-text.d.ts"
+      ],
+      "lexical/selection": [
+        "./dist/lexical/selection.d.ts"
+      ],
+      "lexical/table": [
+        "./dist/lexical/table.d.ts"
+      ],
+      "lexical/text": [
+        "./dist/lexical/text.d.ts"
+      ],
+      "lexical/utils": [
+        "./dist/lexical/utils.d.ts"
+      ]
     }
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "homepage": "https://typix.com",
   "repository": {
     "type": "git",
@@ -136,11 +174,21 @@
     "@lexical/text": "^0.40.0"
   },
   "peerDependenciesMeta": {
-    "@lexical/code-shiki": { "optional": true },
-    "@lexical/extension": { "optional": true },
-    "@lexical/history": { "optional": true },
-    "@lexical/markdown": { "optional": true },
-    "@lexical/text": { "optional": true }
+    "@lexical/code-shiki": {
+      "optional": true
+    },
+    "@lexical/extension": {
+      "optional": true
+    },
+    "@lexical/history": {
+      "optional": true
+    },
+    "@lexical/markdown": {
+      "optional": true
+    },
+    "@lexical/text": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@typix-editor/utils": "workspace:*",
@@ -168,7 +216,14 @@
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   },
-  "keywords": ["typix", "editor", "rich-text", "lexical", "headless", "wysiwyg"],
+  "keywords": [
+    "typix",
+    "editor",
+    "rich-text",
+    "lexical",
+    "headless",
+    "wysiwyg"
+  ],
   "engines": {
     "node": ">=18.0.0"
   }

@@ -84,7 +84,7 @@ export { useRange } from "./hooks/use-range";
 export { defaultTheme } from "./theme";
 
 // Lexical React plugins (re-exported for design system consumers)
-export { DraggableBlockPlugin_EXPERIMENTAL } from "@lexical/react/LexicalDraggableBlockPlugin";
+export { DraggableBlockPlugin_EXPERIMENTAL as DraggableBlockPlugin } from "@lexical/react/LexicalDraggableBlockPlugin";
 export {
   LexicalTypeaheadMenuPlugin,
   MenuOption,

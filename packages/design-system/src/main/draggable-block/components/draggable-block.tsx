@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import {
-  DraggableBlockPlugin_EXPERIMENTAL,
+  DraggableBlockPlugin,
   useRootContext,
 } from "@typix-editor/react";
 import { GripVertical } from "lucide-react";
@@ -51,7 +51,7 @@ export function DraggableBlock({
   if (!resolvedAnchorElem) return null;
 
   return (
-    <DraggableBlockPlugin_EXPERIMENTAL
+    <DraggableBlockPlugin
       anchorElem={resolvedAnchorElem}
       isOnMenu={isOnMenu}
       menuComponent={

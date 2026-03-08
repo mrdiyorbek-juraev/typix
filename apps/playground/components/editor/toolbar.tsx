@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ImagePlus, Moon, Sun, Table } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useTypixEditor } from "@typix-editor/react";
@@ -41,8 +41,11 @@ import {
 
 export function EditorToolbar() {
   const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const editor = useTypixEditor();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => setMounted(true), []);
 
   const handleImageUpload = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,7 +142,10 @@ export function EditorToolbar() {
               <ToolbarButton
                 aria-label="Insert table"
                 onClick={() =>
-                  editor.chain().insertTable({ rows: 3, columns: 3, includeHeaders: true }).run()
+                  editor
+                    .chain()
+                    .insertTable({ rows: 3, columns: 3, includeHeaders: true })
+                    .run()
                 }
               >
                 <Table />
@@ -183,7 +189,7 @@ export function EditorToolbar() {
           aria-label="Toggle theme"
           onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
         >
-          {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+          {mounted ? resolvedTheme === "dark" ? <Sun /> : <Moon /> : <Sun />}
         </ToolbarButton>
       </ToolbarGroup>
     </Toolbar>

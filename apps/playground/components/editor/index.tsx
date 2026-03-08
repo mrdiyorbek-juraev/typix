@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { EditorRoot, EditorContent, defaultTheme } from "@typix-editor/react";
 import { StarterKit } from "@typix-editor/extension-starter-kit";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
@@ -18,11 +19,13 @@ import {
   EditorContextMenu,
   imageRenderer,
   MentionUI,
-  CodeBlockToolbar,
+  CodeBlockUI,
+  TableUI,
 } from "@typix-editor/ui";
 import { EditorToolbar } from "./toolbar";
 import { contextMenuItems } from "./context-menu-items";
 import { searchMentions } from "@/mocks/users";
+import { CodeBlockExtension } from "@typix-editor/extensions/code-block";
 
 const extensions = [
   StarterKit(),
@@ -36,6 +39,7 @@ const extensions = [
   MarkdownShortcutsExtension(),
   TabFocusExtension(),
   TableExtension(),
+  CodeBlockExtension(),
 ];
 
 export function FullEditor() {
@@ -60,8 +64,9 @@ export function FullEditor() {
         <FloatingLinkUI />
         <DraggableBlock />
         <SlashDropdownMenu />
+        <CodeBlockUI />
+        <TableUI />
         <MentionUI onSearch={searchMentions} />
-        <CodeBlockToolbar />
         <div className="fixed bottom-0 right-0 left-0 z-40 dark:bg-muted-foreground/10 border-t">
           <CharacterLimit maxLength={10000} />
         </div>

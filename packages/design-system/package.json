@@ -75,6 +75,7 @@
     "@typix-editor/extension-mention": "workspace:*",
     "@typix-editor/extension-speech-to-text": "workspace:*",
     "@typix-editor/extension-starter-kit": "workspace:*",
+    "@typix-editor/extension-table": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/utils": "workspace:*",
     "lexical": "^0.40.0",
@@ -112,6 +113,9 @@
     "@typix-editor/extension-starter-kit": {
       "optional": true
     },
+    "@typix-editor/extension-table": {
+      "optional": true
+    },
     "@typix-editor/react": {
       "optional": true
     },
@@ -133,6 +137,7 @@
     "@typix-editor/extension-mention": "workspace:*",
     "@typix-editor/extension-speech-to-text": "workspace:*",
     "@typix-editor/extension-starter-kit": "workspace:*",
+    "@typix-editor/extension-table": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/utils": "workspace:*",
     "@types/react": "^19.2.7",

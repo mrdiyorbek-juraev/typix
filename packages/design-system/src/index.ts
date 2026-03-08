@@ -171,11 +171,11 @@ export type {
   EditorContextMenuItem,
 } from "./main/context-menu";
 
-export {
-  CodeBlockToolbar,
-  useCodeBlockToolbar,
-} from "./main/code-block-toolbar";
-export type { CodeBlockToolbarProps } from "./main/code-block-toolbar";
+export { CodeBlockUI } from "./main/code-block";
+export type { CodeBlockUIProps } from "./main/code-block";
+
+export { TableUI, TableCellResizer } from "./main/table";
+export type { TableHoverInfo } from "./main/table";
 
 export {
   DraggableBlock,
