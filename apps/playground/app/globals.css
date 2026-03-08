@@ -9,7 +9,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Prevent document-level scroll — main element is the sole scroll owner */
-html, body {
+html,
+body {
   overflow: hidden;
   height: 100%;
 }

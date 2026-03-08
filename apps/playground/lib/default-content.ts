@@ -113,10 +113,7 @@ const codeBlock = (code: string, language: string) => ({
 });
 
 // Table helpers
-const tableCell = (
-  children: object[],
-  headerState: 0 | 1 = 0,
-) => ({
+const tableCell = (children: object[], headerState: 0 | 1 = 0) => ({
   children,
   direction: "ltr" as const,
   format: "" as const,
@@ -148,16 +145,13 @@ const table = (...rows: object[]) => ({
 });
 
 // Shorthand: header cell with plain text
-const hCell = (text: string) =>
-  tableCell([paragraph(t(text, BOLD))], 1);
+const hCell = (text: string) => tableCell([paragraph(t(text, BOLD))], 1);
 
 // Shorthand: body cell with plain text
-const cell = (text: string) =>
-  tableCell([paragraph(t(text))], 0);
+const cell = (text: string) => tableCell([paragraph(t(text))], 0);
 
 // Shorthand: body cell with code-formatted text
-const codeCell = (text: string) =>
-  tableCell([paragraph(t(text, CODE))], 0);
+const codeCell = (text: string) => tableCell([paragraph(t(text, CODE))], 0);
 
 // Image node (DecoratorNode — no children/direction/indent)
 const image = (
@@ -170,7 +164,7 @@ const image = (
     showCaption?: boolean;
     caption?: string;
     alignment?: "left" | "center" | "right" | "full-width";
-  },
+  }
 ) => ({
   type: "image" as const,
   version: 1,
@@ -199,15 +193,16 @@ export const defaultContent = {
         t("open source", BOLD),
         t(" UI components and Typix extensions licensed under "),
         t("MIT", BOLD),
-        t(". Everything you see here is built with the same primitives you get when you install Typix."),
+        t(
+          ". Everything you see here is built with the same primitives you get when you install Typix."
+        )
       ),
 
       paragraph(
         t("Get started by reading the "),
         link("Typix documentation", "https://typix.dev"),
-        t(" or install via CLI:"),
+        t(" or install via CLI:")
       ),
-
 
       codeBlock("npx @typix-editor/cli init", "bash"),
 
@@ -217,7 +212,6 @@ export const defaultContent = {
         caption: "Typix Editor — a modern, extensible rich-text editor",
         alignment: "center",
       }),
-
 
       emptyParagraph(),
 
@@ -235,13 +229,13 @@ export const defaultContent = {
         t("inline code", CODE),
         t(", and "),
         t("highlighted text", HIGHLIGHT),
-        t(" freely within any paragraph."),
+        t(" freely within any paragraph.")
       ),
 
       quote(
         t("The best way to predict the future is to "),
         t("invent", ITALIC),
-        t(" it. — Alan Kay"),
+        t(" it. — Alan Kay")
       ),
 
       bulletList(
@@ -256,7 +250,7 @@ export const defaultContent = {
             t("2", SUBSCRIPT),
             t("O) for scientific and mathematical notation."),
           ],
-          1,
+          1
         ),
         listItem(
           [
@@ -265,7 +259,7 @@ export const defaultContent = {
             t("->", CODE),
             t(" to get an arrow →."),
           ],
-          2,
+          2
         ),
         listItem(
           [
@@ -278,8 +272,8 @@ export const defaultContent = {
             t("-", CODE),
             t(" for lists."),
           ],
-          3,
-        ),
+          3
+        )
       ),
 
       emptyParagraph(),
@@ -288,7 +282,7 @@ export const defaultContent = {
       heading("Keyboard Shortcuts"),
 
       paragraph(
-        t("Use these shortcuts to format text without leaving the keyboard:"),
+        t("Use these shortcuts to format text without leaving the keyboard:")
       ),
 
       table(
@@ -298,7 +292,7 @@ export const defaultContent = {
         tableRow(codeCell("⌘ + U"), cell("Underline")),
         tableRow(codeCell("⌘ + K"), cell("Insert link")),
         tableRow(codeCell("⌘ + Shift + S"), cell("Strikethrough")),
-        tableRow(codeCell("⌘ + Shift + H"), cell("Highlight")),
+        tableRow(codeCell("⌘ + Shift + H"), cell("Highlight"))
       ),
 
       emptyParagraph(),
@@ -306,21 +300,19 @@ export const defaultContent = {
       // ── Section 4: Make it your own ─────────────────────────────
       heading("Make it your own"),
 
-
       paragraph(
-        t("Switch between light and dark modes, and tailor the editor\u2019s appearance with "),
+        t(
+          "Switch between light and dark modes, and tailor the editor\u2019s appearance with "
+        ),
         t("customizable themes", HIGHLIGHT),
         t(" to match your style. Every component is designed to be "),
         t("composable", BOLD),
         t(" and "),
         t("extensible", BOLD),
-        t(" — build exactly the editor you need."),
+        t(" — build exactly the editor you need.")
       ),
 
-      paragraph(
-        t("→ "),
-        link("Learn more", "https://typix.dev"),
-      ),
+      paragraph(t("→ "), link("Learn more", "https://typix.dev")),
     ],
     direction: "ltr",
     format: "",

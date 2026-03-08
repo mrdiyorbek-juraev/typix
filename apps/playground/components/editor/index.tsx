@@ -51,7 +51,6 @@ const rootExtension = defineExtension({
 });
 
 export function FullEditor() {
-
   return (
     <div className="mt-[30px]">
       <EditorRoot extension={rootExtension} extensions={extensions}>
