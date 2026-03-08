@@ -75,7 +75,7 @@ export function FullEditor() {
         <CodeBlockUI />
         <TableUI />
         <MentionUI onSearch={searchMentions} />
-        <div className="fixed bottom-0 right-0 left-0 z-40 bg-white shadow-md dark:bg-muted-foreground/10 border-t">
+        <div className="fixed bottom-0 right-0 left-0 z-50 bg-white shadow-md dark:bg-muted-foreground/10 border-t">
           <CharacterLimit maxLength={10000} />
         </div>
       </EditorRoot>
