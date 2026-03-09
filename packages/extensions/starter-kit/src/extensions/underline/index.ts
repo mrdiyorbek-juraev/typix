@@ -2,57 +2,50 @@ import {
   defineExtension,
   safeCast,
   FORMAT_TEXT_COMMAND,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
-import { namedSignals } from "@typix-editor/core/lexical/extension";
+import { registerTypixMeta } from "@typix-editor/core";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
-export interface UnderlineConfig extends TypixExtensionConfig {
+export interface UnderlineConfig {
   disabled?: boolean;
 }
 
-/**
- * UnderlineExtension — toggles underline formatting on the current selection.
- *
- * @example
- * ```ts
- * createTypix({ extensions: [UnderlineExtension()] })
- *
- * editor.chain().toggleUnderline().run()
- * ```
- */
-export const UnderlineExtension = (
-  userConfig: Partial<UnderlineConfig> = {}
-) => {
-  const resolvedConfig: UnderlineConfig = { ...userConfig };
-  const lexicalExt = defineExtension({
-    name: "@typix/underline",
-    config: safeCast<UnderlineConfig>(resolvedConfig),
-    mergeConfig(
-      a: UnderlineConfig,
-      b: Partial<UnderlineConfig>
-    ): UnderlineConfig {
-      return { ...a, ...b };
-    },
-    build(_editor: LexicalEditor, config: UnderlineConfig) {
-      return namedSignals(config);
-    },
-  });
+export const TYPIX_TOGGLE_UNDERLINE = createCommand<void>(
+  "TYPIX_TOGGLE_UNDERLINE"
+);
 
-  return defineTypixExtension<UnderlineConfig>({
-    name: "underline",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      toggleUnderline: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-        return true;
-      },
-    },
-    shortcuts: [{ key: "u", modifiers: ["mod"], command: "toggleUnderline" }],
-  });
-};
+export const UnderlineExtension = defineExtension({
+  name: "@typix/underline",
+  config: safeCast<UnderlineConfig>({ disabled: false }),
+  mergeConfig(
+    a: UnderlineConfig,
+    b: Partial<UnderlineConfig>
+  ): UnderlineConfig {
+    return { ...a, ...b };
+  },
+  build(_editor: LexicalEditor, config: UnderlineConfig) {
+    return namedSignals(config);
+  },
+  register(editor: LexicalEditor, _config: UnderlineConfig, state: any) {
+    const { disabled } = state.getOutput();
+    return effect(() => {
+      if (disabled?.value) return;
+      return editor.registerCommand(
+        TYPIX_TOGGLE_UNDERLINE,
+        () => {
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+    });
+  },
+});
+
+registerTypixMeta(UnderlineExtension, {
+  commands: { toggleUnderline: TYPIX_TOGGLE_UNDERLINE },
+  shortcuts: [{ key: "u", modifiers: ["mod"], command: "toggleUnderline" }],
+});

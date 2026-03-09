@@ -4,29 +4,26 @@ import {
   $isRangeSelection,
   $isTextNode,
   $isElementNode,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   defineExtension,
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import { defineTypixExtension } from "@typix-editor/core";
+import {
+  registerTypixMeta,
+  registerExtensionOutput,
+} from "@typix-editor/core";
 import type { SlashCommandConfig, SlashCommandOutput } from "../types";
 
-// ─── Output store ────────────────────────────────────────────────────────────
+// ─── Commands ────────────────────────────────────────────────────────────────
 
-const _outputByEditor = new WeakMap<LexicalEditor, SlashCommandOutput>();
-
-export function getSlashCommandOutput(
-  editor: LexicalEditor
-): SlashCommandOutput | undefined {
-  return _outputByEditor.get(editor);
-}
+export const TYPIX_INSERT_SLASH_COMMAND = createCommand<{
+  trigger?: string;
+} | void>("TYPIX_INSERT_SLASH_COMMAND");
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-/**
- * Returns the slash query (text after trigger) if the cursor is positioned
- * right after the trigger at the start of a block, otherwise null.
- */
 function getSlashQuery(trigger: string): { query: string } | null {
   const selection = $getSelection();
   if (!$isRangeSelection(selection) || !selection.isCollapsed()) return null;
@@ -34,21 +31,17 @@ function getSlashQuery(trigger: string): { query: string } | null {
   const anchor = selection.anchor;
   if (anchor.type !== "text") return null;
 
-  // FIX: early-exit before any string allocation when cursor is too close to
-  // start or the first character clearly isn't the trigger
   if (anchor.offset < trigger.length) return null;
 
   const node = anchor.getNode();
   if (!$isTextNode(node)) return null;
 
   const text = node.getTextContent();
-  // Fast char check before slicing — avoids string alloc in the common case
   if (text[0] !== trigger[0]) return null;
 
   const textBeforeCursor = text.slice(0, anchor.offset);
   if (!textBeforeCursor.startsWith(trigger)) return null;
 
-  // The node must be the first child of its parent (no sibling nodes before it)
   const parent = node.getParent();
   if (!parent || !$isElementNode(parent)) return null;
   const firstChild = parent.getFirstChild();
@@ -59,58 +52,49 @@ function getSlashQuery(trigger: string): { query: string } | null {
 
 // ─── Extension ───────────────────────────────────────────────────────────────
 
-export const SlashCommandExtension = (
-  userConfig: Partial<SlashCommandConfig> = {}
-) => {
-  const resolvedConfig: SlashCommandConfig = {
+export const SlashCommandExtension = defineExtension({
+  name: "@typix/slash-command",
+
+  config: safeCast<SlashCommandConfig>({
     trigger: "/",
     disabled: false,
-    ...userConfig,
-  };
+  }),
 
-  const lexicalExt = defineExtension({
-    name: "@typix/slash-command",
+  mergeConfig(a: SlashCommandConfig, b: Partial<SlashCommandConfig>): SlashCommandConfig {
+    return { ...a, ...b };
+  },
 
-    config: safeCast<SlashCommandConfig>(resolvedConfig),
+  build(editor: LexicalEditor) {
+    const isActive = signal(false);
+    const query = signal<string | null>(null);
+    const output: SlashCommandOutput = { isActive, query };
+    registerExtensionOutput(editor, SlashCommandExtension, output);
+    return output;
+  },
 
-    build(editor) {
-      const isActive = signal(false);
-      const query = signal<string | null>(null);
-      const output: SlashCommandOutput = { isActive, query };
-      _outputByEditor.set(editor, output);
-      return output;
-    },
+  register(editor: LexicalEditor, _config: SlashCommandConfig, state: any) {
+    const { isActive, query } = state.getOutput();
+    const { trigger } = _config;
 
-    register(editor, _config, state) {
-      const { isActive, query } = state.getOutput();
-      const { trigger } = resolvedConfig;
+    const d0 = editor.registerUpdateListener(({ editorState }) => {
+      editorState.read(() => {
+        const result = getSlashQuery(trigger);
+        const prevQuery = query.value;
+        const nextQuery = result ? result.query : null;
 
-      return editor.registerUpdateListener(({ editorState }) => {
-        editorState.read(() => {
-          const result = getSlashQuery(trigger);
-          const prevQuery = query.value;
-          const nextQuery = result ? result.query : null;
-
-          if (nextQuery !== prevQuery) {
-            query.value = nextQuery;
-            isActive.value = nextQuery !== null;
-          }
-        });
+        if (nextQuery !== prevQuery) {
+          query.value = nextQuery;
+          isActive.value = nextQuery !== null;
+        }
       });
-    },
-  });
+    });
 
-  return defineTypixExtension<SlashCommandConfig>({
-    name: "slash-command",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      insertSlashCommand: (config) => (ctx, attrs) => {
-        if (config.disabled) return false;
-        const triggerChar =
-          (attrs as { trigger?: string } | undefined)?.trigger ??
-          config.trigger;
-        ctx.editor.update(() => {
+    const d1 = editor.registerCommand(
+      TYPIX_INSERT_SLASH_COMMAND,
+      (payload) => {
+        if (_config.disabled) return false;
+        const triggerChar = payload?.trigger ?? _config.trigger;
+        editor.update(() => {
           const sel = $getSelection();
           if ($isRangeSelection(sel)) {
             sel.insertText(triggerChar);
@@ -118,13 +102,26 @@ export const SlashCommandExtension = (
         });
         return true;
       },
+      COMMAND_PRIORITY_EDITOR
+    );
+
+    return () => {
+      d0();
+      d1();
+    };
+  },
+});
+
+registerTypixMeta(SlashCommandExtension, {
+  commands: {
+    insertSlashCommand: TYPIX_INSERT_SLASH_COMMAND,
+  },
+  shortcuts: [
+    {
+      key: "/",
+      modifiers: ["mod"],
+      command: "insertSlashCommand",
     },
-    shortcuts: [
-      {
-        key: "/",
-        modifiers: ["mod"],
-        command: "insertSlashCommand",
-      },
-    ],
-  });
-};
+  ],
+});
+

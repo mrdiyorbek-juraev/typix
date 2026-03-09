@@ -1,12 +1,8 @@
 import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import { registerCodeHighlighting } from "@typix-editor/core/lexical/code";
 import { defineExtension, safeCast } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
-export interface CodeHighlightPrismConfig extends TypixExtensionConfig {
+export interface CodeHighlightPrismConfig {
   /** Set to true to temporarily disable code highlighting. */
   disabled: boolean;
   /**
@@ -45,9 +41,5 @@ export const CodeHighlightPrismExtension = (
     },
   });
 
-  return defineTypixExtension({
-    name: "code-highlight-prism",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

@@ -3,7 +3,13 @@
     "allow": [
       "Bash(pnpm --filter @typix-editor/extension-floating-link build:*)",
       "Bash(ls:*)",
-      "Bash(pnpm exec lint-staged:*)"
+      "Bash(pnpm exec lint-staged:*)",
+      "Bash(pnpm turbo:*)",
+      "Bash(tail:*)",
+      "Bash(head:*)",
+      "Bash(grep:*)",
+      "Bash(cd:*)",
+      "Bash(node:*)"
     ]
   }
 }

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { KEY_DOWN_COMMAND, COMMAND_PRIORITY_NORMAL } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import type { ShortcutDefinition } from "@typix-editor/core";
+import type { TypixShortcut } from "@typix-editor/core";
 import { useTypixEditor } from "../editor-context";
 
 /**
@@ -35,7 +35,7 @@ function keyToCode(key: string): string {
 
 function matchesShortcut(
   event: KeyboardEvent,
-  shortcut: ShortcutDefinition
+  shortcut: TypixShortcut
 ): boolean {
   const needsMod = shortcut.modifiers.includes("mod");
   const needsShift = shortcut.modifiers.includes("shift");

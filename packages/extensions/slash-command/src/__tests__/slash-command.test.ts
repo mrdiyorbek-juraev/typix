@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { SlashCommandExtension, getSlashCommandOutput } from "../extension";
+import { configExtension } from "lexical";
+import { getTypixMeta, getExtensionOutput } from "@typix-editor/core";
+import { SlashCommandExtension } from "../extension";
 import { canInsertSlashCommand, insertSlashCommand } from "../utils";
 import {
   createEditor,
   $getRoot,
   $createParagraphNode,
   $createTextNode,
-  $getSelection,
-  $isRangeSelection,
   ParagraphNode,
 } from "lexical";
 
@@ -23,25 +23,23 @@ function createTestEditor() {
   });
 }
 
-// ─── Extension factory ───────────────────────────────────────────────────────
+// ─── Static extension ────────────────────────────────────────────────────────
 
 describe("SlashCommandExtension", () => {
-  describe("factory", () => {
-    it("returns a valid extension definition", () => {
-      const ext = SlashCommandExtension();
-      expect(ext.name).toBe("slash-command");
-      expect(ext.typix).toBeDefined();
-      expect(ext.config).toBeDefined();
+  describe("static extension", () => {
+    it("is a valid extension definition", () => {
+      expect(SlashCommandExtension.name).toBe("@typix/slash-command");
+      expect(SlashCommandExtension.config).toBeDefined();
     });
 
     it("includes insertSlashCommand command", () => {
-      const ext = SlashCommandExtension();
-      expect(ext.commands).toHaveProperty("insertSlashCommand");
+      expect(getTypixMeta(SlashCommandExtension)?.commands).toHaveProperty(
+        "insertSlashCommand"
+      );
     });
 
     it("includes Mod+/ shortcut", () => {
-      const ext = SlashCommandExtension();
-      expect(ext.shortcuts).toEqual(
+      expect(getTypixMeta(SlashCommandExtension)?.shortcuts).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             key: "/",
@@ -55,41 +53,46 @@ describe("SlashCommandExtension", () => {
 
   describe("config defaults", () => {
     it("sets trigger to '/' by default", () => {
-      const ext = SlashCommandExtension();
-      expect(ext.config?.trigger).toBe("/");
+      expect(SlashCommandExtension.config?.trigger).toBe("/");
     });
 
     it("sets disabled to false by default", () => {
-      const ext = SlashCommandExtension();
-      expect(ext.config?.disabled).toBe(false);
+      expect(SlashCommandExtension.config?.disabled).toBe(false);
     });
   });
 
-  describe("config overrides", () => {
+  describe("config overrides via configExtension", () => {
     it("accepts custom trigger", () => {
-      const ext = SlashCommandExtension({ trigger: "!" });
-      expect(ext.config?.trigger).toBe("!");
+      const [, override] = configExtension(SlashCommandExtension, {
+        trigger: "!",
+      });
+      expect(override.trigger).toBe("!");
     });
 
     it("accepts disabled override", () => {
-      const ext = SlashCommandExtension({ disabled: true });
-      expect(ext.config?.disabled).toBe(true);
+      const [, override] = configExtension(SlashCommandExtension, {
+        disabled: true,
+      });
+      expect(override.disabled).toBe(true);
     });
 
-    it("merges partial config with defaults", () => {
-      const ext = SlashCommandExtension({ trigger: "#" });
-      expect(ext.config?.trigger).toBe("#");
-      expect(ext.config?.disabled).toBe(false);
+    it("merges partial config with defaults via mergeConfig", () => {
+      const merged = SlashCommandExtension.mergeConfig!(
+        SlashCommandExtension.config!,
+        { trigger: "#" }
+      );
+      expect(merged.trigger).toBe("#");
+      expect(merged.disabled).toBe(false);
     });
   });
 });
 
-// ─── getSlashCommandOutput ───────────────────────────────────────────────────
+// ─── getExtensionOutput ───────────────────────────────────────────────────────
 
-describe("getSlashCommandOutput", () => {
+describe("getExtensionOutput (SlashCommandExtension)", () => {
   it("returns undefined for an editor not registered with the extension", () => {
     const editor = createTestEditor();
-    expect(getSlashCommandOutput(editor)).toBeUndefined();
+    expect(getExtensionOutput(editor, SlashCommandExtension)).toBeUndefined();
   });
 });
 

@@ -5,6 +5,8 @@ import {
   $isElementNode,
   defineExtension,
   safeCast,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
 } from "lexical";
 import {
@@ -12,15 +14,12 @@ import {
   signal,
   type Signal,
 } from "@typix-editor/core/lexical/extension";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
+import { registerTypixMeta } from "@typix-editor/core";
 
 /** Text direction value. `null` removes explicit direction (browser default / auto-detect). */
 export type DirectionValue = "ltr" | "rtl" | "auto" | null;
 
-export interface DirectionConfig extends TypixExtensionConfig {
+export interface DirectionConfig {
   /** Initial global direction applied to the editor root element. Default: null (browser default). */
   defaultGlobalDirection: DirectionValue;
   disabled?: boolean;
@@ -41,132 +40,120 @@ export function getDirectionState(
   return _stateByEditor.get(editor);
 }
 
-/**
- * DirectionExtension — provides RTL/LTR text direction support.
- *
- * - **Global direction**: Sets the `dir` attribute on the editor root element,
- *   affecting all content. Supports `ltr`, `rtl`, `auto`, and `null` (browser default).
- * - **Per-node direction**: Overrides direction on individual block nodes within
- *   the current selection, enabling bidirectional content.
- *
- * @example
- * ```ts
- * // Global direction
- * editor.chain().setGlobalDirection({ direction: 'rtl' }).run()
- *
- * // Per-node direction
- * editor.chain().setLTR().run()
- * editor.chain().setRTL().run()
- * editor.chain().setAutoDirection().run()
- * editor.chain().unsetDirection().run()
- * ```
- */
-export const DirectionExtension = (
-  userConfig: Partial<DirectionConfig> = {}
-) => {
-  const resolvedConfig: DirectionConfig = {
+export const TYPIX_SET_GLOBAL_DIRECTION = createCommand<{
+  direction: DirectionValue;
+}>("TYPIX_SET_GLOBAL_DIRECTION");
+export const TYPIX_SET_LTR = createCommand<void>("TYPIX_SET_LTR");
+export const TYPIX_SET_RTL = createCommand<void>("TYPIX_SET_RTL");
+export const TYPIX_SET_AUTO_DIRECTION = createCommand<void>(
+  "TYPIX_SET_AUTO_DIRECTION"
+);
+export const TYPIX_UNSET_DIRECTION = createCommand<void>(
+  "TYPIX_UNSET_DIRECTION"
+);
+
+export const DirectionExtension = defineExtension({
+  name: "@typix/direction",
+  config: safeCast<DirectionConfig>({
     defaultGlobalDirection: null,
-    ...userConfig,
-  };
+    disabled: false,
+  }),
+  mergeConfig(
+    a: DirectionConfig,
+    b: Partial<DirectionConfig>
+  ): DirectionConfig {
+    return { ...a, ...b };
+  },
+  build(editor: LexicalEditor, config: DirectionConfig) {
+    const globalDirection = signal<DirectionValue>(config.defaultGlobalDirection);
+    _stateByEditor.set(editor, { globalDirection });
+    return { ...namedSignals(config), globalDirection };
+  },
+  register(editor: LexicalEditor, _config: DirectionConfig, state) {
+    const { disabled, globalDirection } = state.getOutput();
 
-  // Shared by closure between register() and commands — no WeakMap lookup needed
-  const globalDirection = signal<DirectionValue>(
-    resolvedConfig.defaultGlobalDirection
-  );
+    const applyGlobalDir = () => {
+      if (disabled?.value) return;
+      const dir = globalDirection.value;
+      const rootEl = editor.getRootElement();
+      if (!rootEl) return;
+      if (dir === null) {
+        rootEl.removeAttribute("dir");
+      } else {
+        rootEl.setAttribute("dir", dir);
+      }
+    };
 
-  const lexicalExt = defineExtension({
-    name: "@typix/direction",
-    config: safeCast<DirectionConfig>(resolvedConfig),
-    mergeConfig(
-      a: DirectionConfig,
-      b: Partial<DirectionConfig>
-    ): DirectionConfig {
-      return { ...a, ...b };
-    },
-    build(editor: LexicalEditor) {
-      _stateByEditor.set(editor, { globalDirection });
-      return { ...namedSignals(resolvedConfig), globalDirection };
-    },
-    register(editor: LexicalEditor, _config: DirectionConfig, state) {
-      const { disabled } = state.getOutput();
+    const cleanups: Array<() => void> = [
+      globalDirection.subscribe(() => applyGlobalDir()),
+      editor.registerRootListener((rootEl) => {
+        if (rootEl) applyGlobalDir();
+      }),
+      editor.registerCommand(
+        TYPIX_SET_GLOBAL_DIRECTION,
+        ({ direction }) => {
+          if (disabled?.value) return false;
+          globalDirection.value = direction;
+          editor.update(() => {
+            $getRoot().setDirection(
+              direction === "ltr" || direction === "rtl" ? direction : null
+            );
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      ),
+      editor.registerCommand(
+        TYPIX_SET_LTR,
+        () => {
+          if (disabled?.value) return false;
+          editor.update(() => $applyDirectionToSelection("ltr"));
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      ),
+      editor.registerCommand(
+        TYPIX_SET_RTL,
+        () => {
+          if (disabled?.value) return false;
+          editor.update(() => $applyDirectionToSelection("rtl"));
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      ),
+      editor.registerCommand(
+        TYPIX_SET_AUTO_DIRECTION,
+        () => {
+          if (disabled?.value) return false;
+          editor.update(() => $applyDirectionToSelection(null));
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      ),
+      editor.registerCommand(
+        TYPIX_UNSET_DIRECTION,
+        () => {
+          if (disabled?.value) return false;
+          editor.update(() => $applyDirectionToSelection(null));
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      ),
+    ];
 
-      const applyGlobalDir = () => {
-        if (disabled?.value) return;
-        const dir = globalDirection.value;
-        const rootEl = editor.getRootElement();
-        if (!rootEl) return;
-        if (dir === null) {
-          rootEl.removeAttribute("dir");
-        } else {
-          rootEl.setAttribute("dir", dir);
-        }
-      };
+    return () => cleanups.forEach((fn) => fn());
+  },
+});
 
-      const cleanups = [
-        globalDirection.subscribe(() => applyGlobalDir()),
-        editor.registerRootListener((rootEl) => {
-          if (rootEl) applyGlobalDir();
-        }),
-      ];
-
-      return () => cleanups.forEach((fn) => fn());
-    },
-  });
-
-  return defineTypixExtension<DirectionConfig>({
-    name: "direction",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      /**
-       * Set the global text direction for the entire editor.
-       * Applies `dir` attribute to the editor root element.
-       * @param attrs.direction - 'ltr' | 'rtl' | 'auto' | null (removes attribute)
-       */
-      setGlobalDirection: (cfg) => (ctx, attrs) => {
-        if (cfg.disabled) return false;
-        const dir = (attrs?.direction ?? null) as DirectionValue;
-        globalDirection.value = dir;
-        // Sync Lexical root node direction (ltr/rtl only — auto/null map to null)
-        ctx.editor.update(() => {
-          $getRoot().setDirection(dir === "ltr" || dir === "rtl" ? dir : null);
-        });
-        return true;
-      },
-
-      /** Set LTR direction on all block nodes in the current selection. */
-      setLTR: (cfg) => (ctx) => {
-        if (cfg.disabled) return false;
-        ctx.editor.update(() => $applyDirectionToSelection("ltr"));
-        return true;
-      },
-
-      /** Set RTL direction on all block nodes in the current selection. */
-      setRTL: (cfg) => (ctx) => {
-        if (cfg.disabled) return false;
-        ctx.editor.update(() => $applyDirectionToSelection("rtl"));
-        return true;
-      },
-
-      /**
-       * Remove explicit direction from selected block nodes.
-       * Lexical will auto-detect direction from content (first strong directional char).
-       */
-      setAutoDirection: (cfg) => (ctx) => {
-        if (cfg.disabled) return false;
-        ctx.editor.update(() => $applyDirectionToSelection(null));
-        return true;
-      },
-
-      /** Alias for setAutoDirection — removes explicit direction from selection. */
-      unsetDirection: (cfg) => (ctx) => {
-        if (cfg.disabled) return false;
-        ctx.editor.update(() => $applyDirectionToSelection(null));
-        return true;
-      },
-    },
-  });
-};
+registerTypixMeta(DirectionExtension, {
+  commands: {
+    setGlobalDirection: TYPIX_SET_GLOBAL_DIRECTION,
+    setLTR: TYPIX_SET_LTR,
+    setRTL: TYPIX_SET_RTL,
+    setAutoDirection: TYPIX_SET_AUTO_DIRECTION,
+    unsetDirection: TYPIX_UNSET_DIRECTION,
+  },
+});
 
 /** @internal Apply direction to all top-level block nodes in the current selection. */
 function $applyDirectionToSelection(direction: "ltr" | "rtl" | null): void {

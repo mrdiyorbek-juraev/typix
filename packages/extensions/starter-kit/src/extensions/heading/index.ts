@@ -4,6 +4,8 @@ import {
   $getSelection,
   $isRangeSelection,
   $createParagraphNode,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   LexicalEditor,
 } from "lexical";
 import {
@@ -13,120 +15,107 @@ import {
   type HeadingTagType,
 } from "@typix-editor/core/lexical/rich-text";
 import { $setBlocksType } from "@typix-editor/core/lexical/selection";
-import { defineTypixExtension, TypixExtensionConfig } from "@typix-editor/core";
-import { namedSignals } from "@typix-editor/core/lexical/extension";
+import { registerTypixMeta } from "@typix-editor/core";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
-export interface HeadingConfig extends TypixExtensionConfig {
+export interface HeadingConfig {
   levels: Array<1 | 2 | 3 | 4 | 5 | 6>;
   disabled?: boolean;
 }
 
-/**
- * HeadingExtension — converts selected blocks to heading nodes.
- *
- * Config lives in the Lexical extension so configExtension() can override it.
- * The merged config is exposed via build() output and flows into commands.
- *
- * @example
- * ```ts
- * // Direct use
- * HeadingExtension({ levels: [1, 2, 3] })
- *
- * // Via configExtension() — e.g. from a MarkdownExtension peer
- * configExtension(HeadingExtension().lexical, { levels: [1, 2] })
- * ```
- */
-export const HeadingExtension = (userConfig: Partial<HeadingConfig> = {}) => {
-  const resolvedConfig: HeadingConfig = {
-    levels: [1, 2, 3, 4, 5, 6],
-    ...userConfig,
-  };
+export const TYPIX_TOGGLE_HEADING = createCommand<{
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+}>("TYPIX_TOGGLE_HEADING");
 
-  const lexicalExt = defineExtension({
-    name: "@typix/heading",
-    config: safeCast<HeadingConfig>(resolvedConfig),
-    mergeConfig(a: HeadingConfig, b: Partial<HeadingConfig>): HeadingConfig {
-      return { ...a, ...b };
-    },
-    nodes: () => [HeadingNode],
-    // Expose merged config as output so commands can read it
-    build(_editor: LexicalEditor, config: HeadingConfig) {
-      return namedSignals(config);
-    },
-  });
+export const TYPIX_SET_HEADING = createCommand<{
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+}>("TYPIX_SET_HEADING");
 
-  return defineTypixExtension<HeadingConfig>({
-    name: "heading",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      toggleHeading: (resolvedConfig) => (ctx, attrs) => {
-        if (resolvedConfig.disabled) return false;
-        const level = (attrs as any)?.level as
-          | 1
-          | 2
-          | 3
-          | 4
-          | 5
-          | 6
-          | undefined;
-        if (!level) {
-          console.warn(
-            "[Typix] toggleHeading requires a level, e.g. toggleHeading({ level: 2 })"
-          );
-          return false;
-        }
-        if (!resolvedConfig.levels.includes(level)) {
-          console.warn(
-            `[Typix] Heading level ${level} is not enabled. Enabled: ${resolvedConfig.levels}`
-          );
-          return false;
-        }
-        const tag = `h${level}` as HeadingTagType;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!$isRangeSelection(selection)) return;
-          const anchor = selection.anchor.getNode();
-          const parent = anchor.getParent();
-          const isAlready = $isHeadingNode(parent) && parent.getTag() === tag;
-          $setBlocksType(selection, () =>
-            isAlready ? $createParagraphNode() : $createHeadingNode(tag)
-          );
-        });
-        return true;
-      },
+export const HeadingExtension = defineExtension({
+  name: "@typix/heading",
+  config: safeCast<HeadingConfig>({ levels: [1, 2, 3, 4, 5, 6], disabled: false }),
+  mergeConfig(a: HeadingConfig, b: Partial<HeadingConfig>): HeadingConfig {
+    return { ...a, ...b };
+  },
+  nodes: () => [HeadingNode],
+  build(_editor: LexicalEditor, config: HeadingConfig) {
+    return namedSignals(config);
+  },
+  register(editor: LexicalEditor, _config: HeadingConfig, state: any) {
+    const { disabled, levels } = state.getOutput();
+    return effect(() => {
+      if (disabled?.value) return;
+      const d1 = editor.registerCommand(
+        TYPIX_TOGGLE_HEADING,
+        ({ level }) => {
+          const enabledLevels: Array<1 | 2 | 3 | 4 | 5 | 6> =
+            levels?.value ?? [1, 2, 3, 4, 5, 6];
+          if (!enabledLevels.includes(level)) {
+            console.warn(
+              `[Typix] Heading level ${level} is not enabled. Enabled: ${enabledLevels}`
+            );
+            return false;
+          }
+          const tag = `h${level}` as HeadingTagType;
+          editor.update(() => {
+            const selection = $getSelection();
+            if (!$isRangeSelection(selection)) return;
+            const anchor = selection.anchor.getNode();
+            const parent = anchor.getParent();
+            const isAlready =
+              $isHeadingNode(parent) && parent.getTag() === tag;
+            $setBlocksType(selection, () =>
+              isAlready ? $createParagraphNode() : $createHeadingNode(tag)
+            );
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d2 = editor.registerCommand(
+        TYPIX_SET_HEADING,
+        ({ level }) => {
+          const tag = `h${level}` as HeadingTagType;
+          editor.update(() => {
+            const selection = $getSelection();
+            if (!$isRangeSelection(selection)) return;
+            $setBlocksType(selection, () => $createHeadingNode(tag));
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+      return () => {
+        d1();
+        d2();
+      };
+    });
+  },
+});
 
-      setHeading: (resolvedConfig) => (ctx, attrs) => {
-        if (resolvedConfig.disabled) return false;
-        const level = (attrs as any)?.level as 1 | 2 | 3 | 4 | 5 | 6;
-        const tag = `h${level}` as HeadingTagType;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!$isRangeSelection(selection)) return;
-          $setBlocksType(selection, () => $createHeadingNode(tag));
-        });
-        return true;
-      },
+registerTypixMeta(HeadingExtension, {
+  commands: {
+    toggleHeading: TYPIX_TOGGLE_HEADING,
+    setHeading: TYPIX_SET_HEADING,
+  },
+  shortcuts: [
+    {
+      key: "1",
+      modifiers: ["mod", "alt"],
+      command: "toggleHeading",
+      args: { level: 1 },
     },
-    shortcuts: [
-      {
-        key: "1",
-        modifiers: ["mod", "alt"],
-        command: "toggleHeading",
-        args: { level: 1 },
-      },
-      {
-        key: "2",
-        modifiers: ["mod", "alt"],
-        command: "toggleHeading",
-        args: { level: 2 },
-      },
-      {
-        key: "3",
-        modifiers: ["mod", "alt"],
-        command: "toggleHeading",
-        args: { level: 3 },
-      },
-    ],
-  });
-};
+    {
+      key: "2",
+      modifiers: ["mod", "alt"],
+      command: "toggleHeading",
+      args: { level: 2 },
+    },
+    {
+      key: "3",
+      modifiers: ["mod", "alt"],
+      command: "toggleHeading",
+      args: { level: 3 },
+    },
+  ],
+});

@@ -8,10 +8,6 @@ import {
   defineExtension,
   safeCast,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
 export interface InsertImagePayload {
   src: string;
@@ -24,7 +20,7 @@ export interface InsertImagePayload {
   key?: string;
 }
 
-export interface DragDropPasteConfig extends TypixExtensionConfig {
+export interface DragDropPasteConfig {
   disabled: boolean;
   acceptedTypes?: string[];
   maxFileSize?: number;
@@ -73,117 +69,108 @@ function validateFile(
   return { valid: true };
 }
 
-export const DragDropPasteExtension = (
-  userConfig: Partial<DragDropPasteConfig> = {}
-) => {
-  const resolvedConfig: DragDropPasteConfig = {
-    disabled: false,
-    ...userConfig,
-  };
+export const DragDropPasteExtension = defineExtension({
+  name: "@typix/drag-drop-paste",
+  config: safeCast<DragDropPasteConfig>({ disabled: false }),
+  mergeConfig(
+    a: DragDropPasteConfig,
+    b: Partial<DragDropPasteConfig>
+  ): DragDropPasteConfig {
+    return { ...a, ...b };
+  },
+  build(_editor, config) {
+    return namedSignals(config);
+  },
+  register(editor, _config, state) {
+    const {
+      disabled,
+      priority,
+      acceptedTypes,
+      maxFileSize,
+      onFilesAdded,
+      onValidationError,
+      transformResult,
+      debug,
+    } = state.getOutput();
 
-  const lexicalExt = defineExtension({
-    name: "@typix/drag-drop-paste",
-    config: safeCast<DragDropPasteConfig>(resolvedConfig),
-    build(_editor, config) {
-      return namedSignals(config);
-    },
-    register(editor, _config, state) {
-      const {
-        disabled,
-        priority,
-        acceptedTypes,
-        maxFileSize,
-        onFilesAdded,
-        onValidationError,
-        transformResult,
-        debug,
-      } = state.getOutput();
+    return effect(() => {
+      if (disabled.value) return;
 
-      return effect(() => {
-        if (disabled.value) return;
+      const currentPriority = priority?.value ?? COMMAND_PRIORITY_LOW;
 
-        const currentPriority = priority?.value ?? COMMAND_PRIORITY_LOW;
+      return editor.registerCommand(
+        DRAG_DROP_PASTE,
+        (files) => {
+          (async () => {
+            try {
+              const currentAcceptedTypes =
+                acceptedTypes?.value ?? DEFAULT_ACCEPTED_TYPES;
+              const currentMaxFileSize =
+                maxFileSize?.value ?? DEFAULT_MAX_FILE_SIZE;
+              const currentDebug = debug?.value ?? false;
+              const log = (...args: unknown[]) => {
+                if (currentDebug) console.log("[DragDropPaste]", ...args);
+              };
 
-        return editor.registerCommand(
-          DRAG_DROP_PASTE,
-          (files) => {
-            (async () => {
-              try {
-                const currentAcceptedTypes =
-                  acceptedTypes?.value ?? DEFAULT_ACCEPTED_TYPES;
-                const currentMaxFileSize =
-                  maxFileSize?.value ?? DEFAULT_MAX_FILE_SIZE;
-                const currentDebug = debug?.value ?? false;
-                const log = (...args: unknown[]) => {
-                  if (currentDebug) console.log("[DragDropPaste]", ...args);
-                };
+              log("Processing files:", files);
 
-                log("Processing files:", files);
-
-                const validFiles: File[] = [];
-                for (const file of files) {
-                  const validation = validateFile(
-                    file,
-                    currentAcceptedTypes,
-                    currentMaxFileSize
-                  );
-                  if (validation.valid) {
-                    validFiles.push(file);
-                  } else {
-                    log("Validation failed:", file.name, validation.reason);
-                    onValidationError?.value?.(
-                      file,
-                      validation.reason ?? "Unknown error"
-                    );
-                  }
-                }
-
-                if (validFiles.length === 0) return;
-
-                const currentOnFilesAdded = onFilesAdded?.value;
-                if (currentOnFilesAdded) {
-                  const payloads = await currentOnFilesAdded(validFiles);
-                  for (const payload of payloads) {
-                    editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
-                  }
-                  return;
-                }
-
-                const filesResult = await mediaFileReader(
-                  validFiles,
-                  currentAcceptedTypes
+              const validFiles: File[] = [];
+              for (const file of files) {
+                const validation = validateFile(
+                  file,
+                  currentAcceptedTypes,
+                  currentMaxFileSize
                 );
-                for (const { file, result } of filesResult) {
-                  if (isMimeType(file, currentAcceptedTypes)) {
-                    const currentTransformResult = transformResult?.value;
-                    const payload: InsertImagePayload = currentTransformResult
-                      ? currentTransformResult(file, result)
-                      : { src: result, altText: file.name };
-                    editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
-                  }
-                }
-              } catch (error: unknown) {
-                console.error("[DragDropPaste] Error processing files:", error);
-                const firstFile = files[0];
-                if (firstFile) {
+                if (validation.valid) {
+                  validFiles.push(file);
+                } else {
+                  log("Validation failed:", file.name, validation.reason);
                   onValidationError?.value?.(
-                    firstFile,
-                    error instanceof Error ? error.message : "Unknown error"
+                    file,
+                    validation.reason ?? "Unknown error"
                   );
                 }
               }
-            })();
-            return true;
-          },
-          currentPriority
-        );
-      });
-    },
-  });
 
-  return defineTypixExtension({
-    name: "drag-drop-paste",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
-};
+              if (validFiles.length === 0) return;
+
+              const currentOnFilesAdded = onFilesAdded?.value;
+              if (currentOnFilesAdded) {
+                const payloads = await currentOnFilesAdded(validFiles);
+                for (const payload of payloads) {
+                  editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
+                }
+                return;
+              }
+
+              const filesResult = await mediaFileReader(
+                validFiles,
+                currentAcceptedTypes
+              );
+              for (const { file, result } of filesResult) {
+                if (isMimeType(file, currentAcceptedTypes)) {
+                  const currentTransformResult = transformResult?.value;
+                  const payload: InsertImagePayload = currentTransformResult
+                    ? currentTransformResult(file, result)
+                    : { src: result, altText: file.name };
+                  editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
+                }
+              }
+            } catch (error: unknown) {
+              console.error("[DragDropPaste] Error processing files:", error);
+              const firstFile = files[0];
+              if (firstFile) {
+                onValidationError?.value?.(
+                  firstFile,
+                  error instanceof Error ? error.message : "Unknown error"
+                );
+              }
+            }
+          })();
+          return true;
+        },
+        currentPriority
+      );
+    });
+  },
+});

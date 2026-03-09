@@ -2,56 +2,49 @@ import {
   defineExtension,
   safeCast,
   FORMAT_TEXT_COMMAND,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
-import { namedSignals } from "@typix-editor/core/lexical/extension";
+import { registerTypixMeta } from "@typix-editor/core";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
-export interface SubscriptConfig extends TypixExtensionConfig {
+export interface SubscriptConfig {
   disabled?: boolean;
 }
 
-/**
- * SubscriptExtension — toggles subscript formatting on the current selection.
- *
- * @example
- * ```ts
- * createTypix({ extensions: [SubscriptExtension()] })
- *
- * editor.chain().toggleSubscript().run()
- * ```
- */
-export const SubscriptExtension = (
-  userConfig: Partial<SubscriptConfig> = {}
-) => {
-  const resolvedConfig: SubscriptConfig = { ...userConfig };
-  const lexicalExt = defineExtension({
-    name: "@typix/subscript",
-    config: safeCast<SubscriptConfig>(resolvedConfig),
-    mergeConfig(
-      a: SubscriptConfig,
-      b: Partial<SubscriptConfig>
-    ): SubscriptConfig {
-      return { ...a, ...b };
-    },
-    build(_editor: LexicalEditor, config: SubscriptConfig) {
-      return namedSignals(config);
-    },
-  });
+export const TYPIX_TOGGLE_SUBSCRIPT = createCommand<void>(
+  "TYPIX_TOGGLE_SUBSCRIPT"
+);
 
-  return defineTypixExtension<SubscriptConfig>({
-    name: "subscript",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      toggleSubscript: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
-        return true;
-      },
-    },
-  });
-};
+export const SubscriptExtension = defineExtension({
+  name: "@typix/subscript",
+  config: safeCast<SubscriptConfig>({ disabled: false }),
+  mergeConfig(
+    a: SubscriptConfig,
+    b: Partial<SubscriptConfig>
+  ): SubscriptConfig {
+    return { ...a, ...b };
+  },
+  build(_editor: LexicalEditor, config: SubscriptConfig) {
+    return namedSignals(config);
+  },
+  register(editor: LexicalEditor, _config: SubscriptConfig, state: any) {
+    const { disabled } = state.getOutput();
+    return effect(() => {
+      if (disabled?.value) return;
+      return editor.registerCommand(
+        TYPIX_TOGGLE_SUBSCRIPT,
+        () => {
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+    });
+  },
+});
+
+registerTypixMeta(SubscriptExtension, {
+  commands: { toggleSubscript: TYPIX_TOGGLE_SUBSCRIPT },
+});

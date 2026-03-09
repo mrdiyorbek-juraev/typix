@@ -1,5 +1,4 @@
 import type { LexicalEditor, RangeSelection } from "lexical";
-import type { TypixExtensionConfig } from "@typix-editor/core";
 
 export type VoiceCommandHandler = (context: {
   editor: LexicalEditor;
@@ -25,7 +24,7 @@ export interface SpeechToTextState {
   lastTranscript: string | null;
 }
 
-export interface SpeechToTextConfig extends TypixExtensionConfig {
+export interface SpeechToTextConfig {
   /** Set to true to temporarily disable the speech-to-text behavior. */
   disabled: boolean;
 

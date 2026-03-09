@@ -8,10 +8,11 @@ import { useTypixEditorState, useSignal } from "@typix-editor/react";
 import { Copy, Trash2, Check, Wand2, AlertCircle } from "lucide-react";
 import { LanguageSelector } from "./language-selector";
 import {
-  getPrettierOutput,
   canFormatWithPrettier,
+  PrettierFormatterExtension,
+  type PrettierOutput,
 } from "@typix-editor/extension-code-block-prettier";
-import { type TypixEditor } from "@typix-editor/core";
+import { getExtensionOutput, type TypixEditor } from "@typix-editor/core";
 
 // ─── Prettier button ──────────────────────────────────────────────────────────
 
@@ -24,7 +25,7 @@ function PrettierButton({
   language: string;
   editor: TypixEditor;
 }) {
-  const output = getPrettierOutput(editor.lexical)!;
+  const output = getExtensionOutput<PrettierOutput>(editor.lexical, PrettierFormatterExtension)!;
   const formatting = useSignal(output.formatting);
   const errors = useSignal(output.errors);
 
@@ -85,7 +86,7 @@ export function CodeBlockToolbar({ nodeKey }: CodeBlockToolbarProps) {
   const [language, setLanguage] = useState("javascript");
   const [copied, setCopied] = useState(false);
 
-  const hasPrettier = !!getPrettierOutput(editor.lexical);
+  const hasPrettier = !!getExtensionOutput<PrettierOutput>(editor.lexical, PrettierFormatterExtension);
 
   useEffect(() => {
     const sync = () => {

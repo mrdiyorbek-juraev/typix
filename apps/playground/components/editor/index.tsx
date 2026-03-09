@@ -1,6 +1,6 @@
 "use client";
 import { EditorRoot, EditorContent, defaultTheme } from "@typix-editor/react";
-import { defineExtension } from "lexical";
+import { configExtension, defineExtension } from "lexical";
 import { StarterKit } from "@typix-editor/extension-starter-kit";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
 import { ImageExtension } from "@typix-editor/extension-image";
@@ -29,24 +29,24 @@ import { defaultContent } from "@/lib/default-content";
 
 const extensions = [
   StarterKit(),
-  FloatingLinkExtension(),
-  ImageExtension({ component: imageRenderer }),
-  MentionExtension({ trigger: "@" }),
-  PrettierFormatterExtension({
+  FloatingLinkExtension,
+  configExtension(ImageExtension, { component: imageRenderer })[0],
+  configExtension(MentionExtension, { trigger: "@" })[0],
+  configExtension(PrettierFormatterExtension, {
     printOptions: { tabWidth: 2, semi: true, singleQuote: true },
-  }),
-  SpeechToTextExtension(),
-  MarkdownShortcutsExtension(),
-  TabFocusExtension(),
-  TableExtension(),
-  CodeBlockExtension(),
+  })[0],
+  SpeechToTextExtension,
+  MarkdownShortcutsExtension,
+  TabFocusExtension,
+  TableExtension,
+  CodeBlockExtension,
 ];
 
 const rootExtension = defineExtension({
   name: "typix/playground",
   namespace: "playground",
   theme: defaultTheme,
-  dependencies: extensions.map((e) => e.typix),
+  dependencies: extensions,
   $initialEditorState: JSON.stringify(defaultContent),
 });
 

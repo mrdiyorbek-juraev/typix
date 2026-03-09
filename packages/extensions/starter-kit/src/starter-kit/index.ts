@@ -1,9 +1,9 @@
 import { defineExtension } from "lexical";
 import {
-  defineTypixExtension,
-  type TypixExtensionDefinition,
-  type TypixExtensionConfig,
-  type CommandFunction,
+  registerTypixMeta,
+  mergeTypixMeta,
+  configExtension,
+  type AnyLexicalExtension,
 } from "@typix-editor/core";
 import { BoldExtension, type BoldConfig } from "../extensions/bold";
 import { ItalicExtension, type ItalicConfig } from "../extensions/italic";
@@ -62,7 +62,7 @@ import {
   type DirectionConfig,
 } from "../extensions/direction";
 
-export interface StarterKitOptions extends TypixExtensionConfig {
+export interface StarterKitOptions {
   /**
    * Convenience preset that configures a sensible set of extensions.
    * Individual options take precedence over the preset.
@@ -133,9 +133,20 @@ const PRESET_BLOG: PresetDefaults = {
   direction: false,
 };
 
+type ExtOrTuple = AnyLexicalExtension | [AnyLexicalExtension, ...unknown[]];
+
+function withConfig<C extends object>(
+  ext: AnyLexicalExtension,
+  cfg: Partial<C> | undefined
+): ExtOrTuple {
+  return cfg && Object.keys(cfg).length > 0
+    ? configExtension(ext, cfg)
+    : ext;
+}
+
 /**
  * StarterKit — a batteries-included bundle of the most common Typix extensions,
- * returned as a single `TypixExtensionDefinition`.
+ * returned as a single native Lexical extension with merged Typix metadata.
  *
  * Pass `false` to disable an extension, or an options object to configure it.
  *
@@ -152,9 +163,7 @@ const PRESET_BLOG: PresetDefaults = {
  * })]}
  * ```
  */
-export const StarterKit = (
-  options: StarterKitOptions = {}
-): TypixExtensionDefinition<StarterKitOptions> => {
+export const StarterKit = (options: StarterKitOptions = {}) => {
   // Apply preset defaults, then let explicit options override them
   const { preset, ...rest } = options;
   const presetDefaults: PresetDefaults =
@@ -167,75 +176,38 @@ export const StarterKit = (
   // Merge: preset first (lowest priority), explicit options win
   const merged: StarterKitOptions = { ...presetDefaults, ...rest };
 
-  // Build enabled sub-extensions
-  const subExts: TypixExtensionDefinition<any>[] = [];
+  // Build enabled sub-extensions (all are native Lexical extensions now)
+  const subExts: ExtOrTuple[] = [];
 
-  if (merged.bold !== false) subExts.push(BoldExtension(merged.bold ?? {}));
-  if (merged.italic !== false)
-    subExts.push(ItalicExtension(merged.italic ?? {}));
-  if (merged.underline !== false)
-    subExts.push(UnderlineExtension(merged.underline ?? {}));
-  if (merged.strike !== false)
-    subExts.push(StrikeExtension(merged.strike ?? {}));
-  if (merged.subscript !== false)
-    subExts.push(SubscriptExtension(merged.subscript ?? {}));
-  if (merged.superscript !== false)
-    subExts.push(SuperscriptExtension(merged.superscript ?? {}));
-  if (merged.highlight !== false)
-    subExts.push(HighlightExtension(merged.highlight ?? {}));
-  if (merged.heading !== false)
-    subExts.push(HeadingExtension(merged.heading ?? {}));
-  if (merged.blockquote !== false)
-    subExts.push(BlockquoteExtension(merged.blockquote ?? {}));
-  if (merged.list !== false) subExts.push(ListExtension(merged.list ?? {}));
-  if (merged.code !== false) subExts.push(CodeExtension(merged.code ?? {}));
-  if (merged.alignment !== false)
-    subExts.push(AlignmentExtension(merged.alignment ?? {}));
-  if (merged.link !== false) subExts.push(LinkExtension(merged.link ?? {}));
-  if (merged.history !== false)
-    subExts.push(HistoryExtension(merged.history ?? {}));
-  if (merged.autoLink !== false)
-    subExts.push(AutoLinkExtension(merged.autoLink ?? {}));
-  if (merged.dragDropPaste !== false)
-    subExts.push(DragDropPasteExtension(merged.dragDropPaste ?? {}));
-  if (merged.fontSize !== false)
-    subExts.push(FontSizeExtension(merged.fontSize ?? {}));
-  if (merged.fontFamily !== false)
-    subExts.push(FontFamilyExtension(merged.fontFamily ?? {}));
-  if (merged.textColor !== false)
-    subExts.push(TextColorExtension(merged.textColor ?? {}));
-  if (merged.direction !== false)
-    subExts.push(DirectionExtension(merged.direction ?? {}));
+  if (merged.bold !== false) subExts.push(withConfig(BoldExtension, merged.bold));
+  if (merged.italic !== false) subExts.push(withConfig(ItalicExtension, merged.italic));
+  if (merged.underline !== false) subExts.push(withConfig(UnderlineExtension, merged.underline));
+  if (merged.strike !== false) subExts.push(withConfig(StrikeExtension, merged.strike));
+  if (merged.subscript !== false) subExts.push(withConfig(SubscriptExtension, merged.subscript));
+  if (merged.superscript !== false) subExts.push(withConfig(SuperscriptExtension, merged.superscript));
+  if (merged.highlight !== false) subExts.push(withConfig(HighlightExtension, merged.highlight));
+  if (merged.heading !== false) subExts.push(withConfig(HeadingExtension, merged.heading));
+  if (merged.blockquote !== false) subExts.push(withConfig(BlockquoteExtension, merged.blockquote));
+  if (merged.list !== false) subExts.push(withConfig(ListExtension, merged.list));
+  if (merged.code !== false) subExts.push(withConfig(CodeExtension, merged.code));
+  if (merged.alignment !== false) subExts.push(withConfig(AlignmentExtension, merged.alignment));
+  if (merged.link !== false) subExts.push(withConfig(LinkExtension, merged.link));
+  if (merged.history !== false) subExts.push(withConfig(HistoryExtension, merged.history));
+  if (merged.autoLink !== false) subExts.push(withConfig(AutoLinkExtension, merged.autoLink));
+  if (merged.dragDropPaste !== false) subExts.push(withConfig(DragDropPasteExtension, merged.dragDropPaste));
+  if (merged.fontSize !== false) subExts.push(withConfig(FontSizeExtension, merged.fontSize));
+  if (merged.fontFamily !== false) subExts.push(withConfig(FontFamilyExtension, merged.fontFamily));
+  if (merged.textColor !== false) subExts.push(withConfig(TextColorExtension, merged.textColor));
+  if (merged.direction !== false) subExts.push(withConfig(DirectionExtension, merged.direction));
 
   // Compose all Lexical extensions into one
-  const typix = defineExtension({
+  const lexicalExt = defineExtension({
     name: "@typix/starter-kit",
-    dependencies: subExts.map((e) => e.typix),
+    dependencies: subExts as AnyLexicalExtension[],
   });
 
-  // Merge commands — pre-bind each with its own sub-extension config,
-  // then wrap to accept StarterKitOptions (which is ignored at call time)
-  const commands: Record<string, CommandFunction<StarterKitOptions>> = {};
-  for (const ext of subExts) {
-    if (ext.commands) {
-      const extConfig = (ext.config ?? {}) as TypixExtensionConfig;
-      for (const [name, fn] of Object.entries(ext.commands)) {
-        const handler = (fn as CommandFunction<TypixExtensionConfig>)(
-          extConfig
-        );
-        commands[name] = () => handler;
-      }
-    }
-  }
+  // Merge all sub-extension metadata (commands + shortcuts) into StarterKit
+  registerTypixMeta(lexicalExt, mergeTypixMeta(subExts));
 
-  // Merge shortcuts
-  const shortcuts = subExts.flatMap((e) => e.shortcuts ?? []);
-
-  return defineTypixExtension({
-    name: "starter-kit",
-    typix,
-    config: merged,
-    commands,
-    shortcuts,
-  });
+  return lexicalExt;
 };

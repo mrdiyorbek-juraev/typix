@@ -5,8 +5,7 @@ describe("DraggableBlockExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = DraggableBlockExtension();
-      expect(ext.name).toBe("draggable-block");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/draggable-block");
       expect(ext.config).toBeDefined();
     });
   });

@@ -4,85 +4,91 @@ import {
   defineExtension,
   safeCast,
   FORMAT_TEXT_COMMAND,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
 } from "lexical";
 import { $patchStyleText } from "@typix-editor/core/lexical/selection";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
-import { namedSignals } from "@typix-editor/core/lexical/extension";
+import { registerTypixMeta } from "@typix-editor/core";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
-export interface HighlightConfig extends TypixExtensionConfig {
+export interface HighlightConfig {
   disabled?: boolean;
 }
 
-/**
- * HighlightExtension — toggles highlight formatting on the current selection.
- *
- * @example
- * ```ts
- * createTypix({ extensions: [HighlightExtension()] })
- *
- * editor.chain().toggleHighlight().run()
- * editor.chain().setHighlightColor({ color: 'var(--color-pink-200)' }).run()
- * editor.chain().removeHighlightColor().run()
- * ```
- */
-export const HighlightExtension = (
-  userConfig: Partial<HighlightConfig> = {}
-) => {
-  const resolvedConfig: HighlightConfig = { ...userConfig };
-  const lexicalExt = defineExtension({
-    name: "@typix/highlight",
-    config: safeCast<HighlightConfig>(resolvedConfig),
-    mergeConfig(
-      a: HighlightConfig,
-      b: Partial<HighlightConfig>
-    ): HighlightConfig {
-      return { ...a, ...b };
-    },
-    build(_editor: LexicalEditor, config: HighlightConfig) {
-      return namedSignals(config);
-    },
-  });
+export const TYPIX_TOGGLE_HIGHLIGHT = createCommand<void>(
+  "TYPIX_TOGGLE_HIGHLIGHT"
+);
+export const TYPIX_SET_HIGHLIGHT_COLOR = createCommand<{ color: string }>(
+  "TYPIX_SET_HIGHLIGHT_COLOR"
+);
+export const TYPIX_REMOVE_HIGHLIGHT_COLOR = createCommand<void>(
+  "TYPIX_REMOVE_HIGHLIGHT_COLOR"
+);
 
-  return defineTypixExtension<HighlightConfig>({
-    name: "highlight",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      toggleHighlight: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_TEXT_COMMAND, "highlight");
-        return true;
-      },
+export const HighlightExtension = defineExtension({
+  name: "@typix/highlight",
+  config: safeCast<HighlightConfig>({ disabled: false }),
+  mergeConfig(
+    a: HighlightConfig,
+    b: Partial<HighlightConfig>
+  ): HighlightConfig {
+    return { ...a, ...b };
+  },
+  build(_editor: LexicalEditor, config: HighlightConfig) {
+    return namedSignals(config);
+  },
+  register(editor: LexicalEditor, _config: HighlightConfig, state: any) {
+    const { disabled } = state.getOutput();
+    return effect(() => {
+      if (disabled?.value) return;
+      const d1 = editor.registerCommand(
+        TYPIX_TOGGLE_HIGHLIGHT,
+        () => {
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "highlight");
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d2 = editor.registerCommand(
+        TYPIX_SET_HIGHLIGHT_COLOR,
+        ({ color }) => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { "background-color": color });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d3 = editor.registerCommand(
+        TYPIX_REMOVE_HIGHLIGHT_COLOR,
+        () => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { "background-color": "" });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+      return () => {
+        d1();
+        d2();
+        d3();
+      };
+    });
+  },
+});
 
-      /** Apply an inline background-color to the current selection. */
-      setHighlightColor: (resolvedConfig) => (ctx, attrs) => {
-        if (resolvedConfig.disabled) return false;
-        const color = attrs?.color as string | undefined;
-        if (!color) return false;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { "background-color": color });
-          }
-        });
-        return true;
-      },
-
-      /** Remove inline background-color from the current selection. */
-      removeHighlightColor: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { "background-color": "" });
-          }
-        });
-        return true;
-      },
-    },
-  });
-};
+registerTypixMeta(HighlightExtension, {
+  commands: {
+    toggleHighlight: TYPIX_TOGGLE_HIGHLIGHT,
+    setHighlightColor: TYPIX_SET_HIGHLIGHT_COLOR,
+    removeHighlightColor: TYPIX_REMOVE_HIGHLIGHT_COLOR,
+  },
+});

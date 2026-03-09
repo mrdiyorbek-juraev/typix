@@ -5,65 +5,7 @@ import type {
     AnyLexicalExtension,
     LexicalNode
 } from 'lexical'
-
-// ─────────────────────────────────────────────
-// Extension types
-// ─────────────────────────────────────────────
-
-export interface TypixExtensionConfig {
-    /** Called when the extension encounters an unrecoverable error. */
-    onError?: (error: Error, context: string) => void
-    [key: string]: unknown
-}
-
-export type CommandFunction<
-    TConfig extends TypixExtensionConfig = TypixExtensionConfig,
-> = (config: TConfig) => CommandHandler
-
-export type CommandHandler = (context: CommandContext, attrs?: Record<string, unknown>) => boolean | void
-
-export interface CommandContext {
-    editor: LexicalEditor
-    commands: BuiltinCommands
-}
-
-export interface BuiltinCommands {
-    toggleMark: (type: string, attrs?: Record<string, unknown>) => boolean
-    toggleBlock: (type: string, attrs?: Record<string, unknown>) => boolean
-    setContent: (content: SerializedContent) => boolean
-    clearContent: () => boolean
-    focus: () => boolean
-    blur: () => boolean
-}
-
-export interface TypixExtensionDefinition<
-    TConfig extends TypixExtensionConfig = TypixExtensionConfig,
-> {
-    /** Unique extension name, e.g. 'bold', 'heading' */
-    name: string
-
-    /** The underlying Lexical extension */
-    typix: AnyLexicalExtension
-
-    /** Default config values for this extension */
-    config?: TConfig
-
-    /** Commands this extension exposes on the editor instance */
-    commands?: Record<string, CommandFunction<TConfig>>
-
-    /** Called after editor is created — useful for side-effects */
-    onCreated?: (editor: LexicalEditor, config: TConfig) => (() => void) | void
-
-    /** Keyboard shortcut definitions */
-    shortcuts?: ShortcutDefinition[]
-}
-
-export interface ShortcutDefinition {
-    key: string
-    modifiers: Array<'mod' | 'shift' | 'alt'>
-    command: string
-    args?: unknown
-}
+import type { TypixShortcut } from '../meta'
 
 // ─────────────────────────────────────────────
 // Editor creation options
@@ -71,7 +13,7 @@ export interface ShortcutDefinition {
 
 export interface CreateTypixOptions {
     /** Extensions to include */
-    extensions: TypixExtensionDefinition[]
+    extensions: AnyLexicalExtension[]
 
     /** Whether the editor starts editable */
     editable?: boolean
@@ -218,12 +160,8 @@ export interface TypixEditorInstance {
     readonly lexical: LexicalEditor
 
     // ── Extensions ────────────────────────────
-    /** Check if an extension is registered */
-    hasExtension(name: string): boolean
-    /** Get a registered extension by name */
-    getExtension<T extends TypixExtensionDefinition>(name: string): T | undefined
     /** Get all registered keyboard shortcuts */
-    getShortcuts(): ShortcutDefinition[]
+    getShortcuts(): TypixShortcut[]
 }
 
 // ─────────────────────────────────────────────

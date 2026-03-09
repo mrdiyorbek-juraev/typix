@@ -10,12 +10,8 @@ import {
   RootNode as RootNodeClass,
   safeCast,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
-export interface MaxLengthConfig extends TypixExtensionConfig {
+export interface MaxLengthConfig {
   /** Maximum number of characters allowed. Adjustable at runtime via signals. */
   maxLength: number;
   /** Set to true to temporarily disable the limit without removing the extension. */
@@ -102,9 +98,5 @@ export const MaxLengthExtension = (
     },
   });
 
-  return defineTypixExtension({
-    name: "max-length",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

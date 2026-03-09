@@ -1,7 +1,6 @@
-import type { TypixExtensionConfig } from "@typix-editor/core";
 import type { Signal } from "@typix-editor/core/lexical/extension";
 
-export interface SlashCommandConfig extends TypixExtensionConfig {
+export interface SlashCommandConfig {
   /** Trigger character(s) that activate slash command mode. @default '/' */
   trigger: string;
   /** Whether the extension is disabled. @default false */

@@ -1,10 +1,12 @@
 import { afterEach, describe, expect, it } from "vitest";
+import { configExtension } from "lexical";
+import { getExtensionOutput } from "@typix-editor/core";
 import {
   configureMentionNode,
   MentionNode,
   resetMentionNodeConfig,
 } from "../node";
-import { MentionExtension, getMentionOutput } from "../extension";
+import { MentionExtension } from "../extension";
 import type {
   MentionItem,
   MentionNodeConfig,
@@ -12,58 +14,48 @@ import type {
 } from "../types";
 
 describe("MentionExtension", () => {
-  describe("factory", () => {
-    it("returns a valid extension definition", () => {
-      const ext = MentionExtension();
-      expect(ext.name).toBe("mention");
-      expect(ext.typix).toBeDefined();
-      expect(ext.config).toBeDefined();
+  describe("static extension", () => {
+    it("is a valid extension definition", () => {
+      expect(MentionExtension.name).toBe("@typix/mention");
+      expect(MentionExtension.config).toBeDefined();
     });
   });
 
   describe("config defaults", () => {
     it("sets trigger to @ by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.trigger).toBe("@");
+      expect(MentionExtension.config?.trigger).toBe("@");
     });
 
     it("sets minLength to 0 by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.minLength).toBe(0);
+      expect(MentionExtension.config?.minLength).toBe(0);
     });
 
     it("sets maxLength to 75 by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.maxLength).toBe(75);
+      expect(MentionExtension.config?.maxLength).toBe(75);
     });
 
     it("sets allowSpaces to true by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.allowSpaces).toBe(true);
+      expect(MentionExtension.config?.allowSpaces).toBe(true);
     });
 
     it("sets maxSuggestions to 10 by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.maxSuggestions).toBe(10);
+      expect(MentionExtension.config?.maxSuggestions).toBe(10);
     });
 
     it("sets debounceMs to 200 by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.debounceMs).toBe(200);
+      expect(MentionExtension.config?.debounceMs).toBe(200);
     });
 
     it("sets includeTrigger to true by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.includeTrigger).toBe(true);
+      expect(MentionExtension.config?.includeTrigger).toBe(true);
     });
 
     it("sets disabled to false by default", () => {
-      const ext = MentionExtension();
-      expect(ext.config?.disabled).toBe(false);
+      expect(MentionExtension.config?.disabled).toBe(false);
     });
 
-    it("accepts user overrides", () => {
-      const ext = MentionExtension({
+    it("accepts user overrides via configExtension", () => {
+      const [, override] = configExtension(MentionExtension, {
         trigger: "#",
         minLength: 2,
         maxLength: 50,
@@ -73,20 +65,31 @@ describe("MentionExtension", () => {
         includeTrigger: false,
         disabled: true,
       });
-      expect(ext.config?.trigger).toBe("#");
-      expect(ext.config?.minLength).toBe(2);
-      expect(ext.config?.maxLength).toBe(50);
-      expect(ext.config?.allowSpaces).toBe(false);
-      expect(ext.config?.maxSuggestions).toBe(5);
-      expect(ext.config?.debounceMs).toBe(300);
-      expect(ext.config?.includeTrigger).toBe(false);
-      expect(ext.config?.disabled).toBe(true);
+      expect(override.trigger).toBe("#");
+      expect(override.minLength).toBe(2);
+      expect(override.maxLength).toBe(50);
+      expect(override.allowSpaces).toBe(false);
+      expect(override.maxSuggestions).toBe(5);
+      expect(override.debounceMs).toBe(300);
+      expect(override.includeTrigger).toBe(false);
+      expect(override.disabled).toBe(true);
+    });
+
+    it("merges partial config with defaults via mergeConfig", () => {
+      const merged = MentionExtension.mergeConfig!(MentionExtension.config!, {
+        trigger: "#",
+        minLength: 2,
+      });
+      expect(merged.trigger).toBe("#");
+      expect(merged.minLength).toBe(2);
+      expect(merged.maxLength).toBe(75);
+      expect(merged.disabled).toBe(false);
     });
   });
 
-  describe("getMentionOutput", () => {
+  describe("getExtensionOutput", () => {
     it("returns undefined for an unregistered editor", () => {
-      const result = getMentionOutput({} as any);
+      const result = getExtensionOutput({} as any, MentionExtension);
       expect(result).toBeUndefined();
     });
   });

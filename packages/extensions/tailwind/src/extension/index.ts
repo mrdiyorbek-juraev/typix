@@ -6,12 +6,8 @@ import {
   type InitialEditorStateType,
 } from "lexical";
 import { namedSignals } from "@typix-editor/core/lexical/extension";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
-export interface TailwindConfig extends TypixExtensionConfig {
+export interface TailwindConfig {
   disabled: boolean;
 
   // ── Theme overrides ──────────────────────────
@@ -180,7 +176,6 @@ export const TailwindExtension = (userConfig: Partial<TailwindConfig> = {}) => {
   const {
     // Ignored in destructure (handled by Typix / signals)
     disabled: _disabled,
-    onError: _onError,
     // Theme overrides
     heading,
     text,
@@ -243,9 +238,5 @@ export const TailwindExtension = (userConfig: Partial<TailwindConfig> = {}) => {
     },
   });
 
-  return defineTypixExtension({
-    name: "tailwind",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

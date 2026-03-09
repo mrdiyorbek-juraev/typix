@@ -1,11 +1,7 @@
 import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import { $getRoot, defineExtension, safeCast } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
-export interface CharacterLimitConfig extends TypixExtensionConfig {
+export interface CharacterLimitConfig {
   /** Maximum number of characters allowed. */
   maxLength: number;
   /**
@@ -81,9 +77,5 @@ export const CharacterLimitExtension = (
     },
   });
 
-  return defineTypixExtension({
-    name: "character-limit",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

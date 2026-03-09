@@ -29,11 +29,10 @@ import {
   type TextNode,
 } from "lexical";
 import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
+  registerExtensionOutput,
 } from "@typix-editor/core";
 
-export interface FloatingLinkConfig extends TypixExtensionConfig {
+export interface FloatingLinkConfig {
   /** Set to true to temporarily disable the floating link behavior. */
   disabled: boolean;
   /**
@@ -52,14 +51,6 @@ export interface FloatingLinkOutput {
   activeEditor: Signal<LexicalEditor>;
 }
 
-const _outputByEditor = new WeakMap<LexicalEditor, FloatingLinkOutput>();
-
-export function getFloatingLinkOutput(
-  editor: LexicalEditor
-): FloatingLinkOutput | undefined {
-  return _outputByEditor.get(editor);
-}
-
 function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   const anchor = selection.anchor;
   const focus = selection.focus;
@@ -75,134 +66,126 @@ function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   return $isAtNodeEnd(anchor) ? anchorNode : focusNode;
 }
 
-export const FloatingLinkExtension = (
-  userConfig: Partial<FloatingLinkConfig> = {}
-) => {
-  const resolvedConfig: FloatingLinkConfig = {
+export const FloatingLinkExtension = defineExtension({
+  name: "@typix/floating-link",
+
+  config: safeCast<FloatingLinkConfig>({
     disabled: false,
     openInNewTab: true,
-    ...userConfig,
-  };
+  }),
 
-  const lexicalExt = defineExtension({
-    name: "@typix/floating-link",
+  mergeConfig(a: FloatingLinkConfig, b: Partial<FloatingLinkConfig>): FloatingLinkConfig {
+    return { ...a, ...b };
+  },
 
-    config: safeCast<FloatingLinkConfig>(resolvedConfig),
+  build(editor: LexicalEditor, config: FloatingLinkConfig) {
+    const { disabled, openInNewTab } = namedSignals(config);
+    const isLink = signal(false);
+    const activeEditor = signal<LexicalEditor>(editor);
+    const output: FloatingLinkOutput = { disabled, isLink, activeEditor };
+    registerExtensionOutput(editor, FloatingLinkExtension, output);
+    return { ...output, openInNewTab };
+  },
 
-    build(editor, config) {
-      const { disabled, openInNewTab } = namedSignals(config);
-      const isLink = signal(false);
-      const activeEditor = signal<LexicalEditor>(editor);
-      const output: FloatingLinkOutput = { disabled, isLink, activeEditor };
-      _outputByEditor.set(editor, output);
-      return { ...output, openInNewTab };
-    },
+  register(editor: LexicalEditor, _config: FloatingLinkConfig, state: any) {
+    const { disabled, isLink, activeEditor, openInNewTab } =
+      state.getOutput();
 
-    register(editor, _config, state) {
-      const { disabled, isLink, activeEditor, openInNewTab } =
-        state.getOutput();
-
-      function $updateToolbar() {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection)) {
-          const focusNode = getSelectedNode(selection);
-          const focusLinkNode = $findMatchingParent(focusNode, $isLinkNode);
-          const focusAutoLinkNode = $findMatchingParent(
-            focusNode,
-            $isAutoLinkNode
-          );
-          if (!(focusLinkNode || focusAutoLinkNode)) {
-            isLink.value = false;
-            return;
-          }
-          const badNode = selection
-            .getNodes()
-            .filter((node) => !$isLineBreakNode(node))
-            .find((node) => {
-              const linkNode = $findMatchingParent(node, $isLinkNode);
-              const autoLinkNode = $findMatchingParent(node, $isAutoLinkNode);
-              return (
-                (focusLinkNode && !focusLinkNode.is(linkNode)) ||
-                (linkNode && !linkNode.is(focusLinkNode)) ||
-                (focusAutoLinkNode && !focusAutoLinkNode.is(autoLinkNode)) ||
-                (autoLinkNode &&
-                  (!autoLinkNode.is(focusAutoLinkNode) ||
-                    autoLinkNode.getIsUnlinked()))
-              );
-            });
-          isLink.value = !badNode;
-        } else if ($isNodeSelection(selection)) {
-          const nodes = selection.getNodes();
-          if (nodes.length === 0) {
-            isLink.value = false;
-            return;
-          }
-          const node = nodes[0];
-          const parent = node.getParent();
-          isLink.value = $isLinkNode(parent) || $isLinkNode(node);
+    function $updateToolbar() {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
+        const focusNode = getSelectedNode(selection);
+        const focusLinkNode = $findMatchingParent(focusNode, $isLinkNode);
+        const focusAutoLinkNode = $findMatchingParent(
+          focusNode,
+          $isAutoLinkNode
+        );
+        if (!(focusLinkNode || focusAutoLinkNode)) {
+          isLink.value = false;
+          return;
         }
+        const badNode = selection
+          .getNodes()
+          .filter((node) => !$isLineBreakNode(node))
+          .find((node) => {
+            const linkNode = $findMatchingParent(node, $isLinkNode);
+            const autoLinkNode = $findMatchingParent(node, $isAutoLinkNode);
+            return (
+              (focusLinkNode && !focusLinkNode.is(linkNode)) ||
+              (linkNode && !linkNode.is(focusLinkNode)) ||
+              (focusAutoLinkNode && !focusAutoLinkNode.is(autoLinkNode)) ||
+              (autoLinkNode &&
+                (!autoLinkNode.is(focusAutoLinkNode) ||
+                  autoLinkNode.getIsUnlinked()))
+            );
+          });
+        isLink.value = !badNode;
+      } else if ($isNodeSelection(selection)) {
+        const nodes = selection.getNodes();
+        if (nodes.length === 0) {
+          isLink.value = false;
+          return;
+        }
+        const node = nodes[0];
+        const parent = node.getParent();
+        isLink.value = $isLinkNode(parent) || $isLinkNode(node);
       }
+    }
 
-      return effect(() => {
-        if (disabled.value) return;
+    return effect(() => {
+      if (disabled.value) return;
 
-        return mergeRegister(
-          editor.registerUpdateListener(({ editorState }) => {
-            editorState.read(() => {
-              $updateToolbar();
-            });
-          }),
+      return mergeRegister(
+        editor.registerUpdateListener(({ editorState }) => {
+          editorState.read(() => {
+            $updateToolbar();
+          });
+        }),
 
-          editor.registerCommand(
-            SELECTION_CHANGE_COMMAND,
-            (_payload, newEditor) => {
-              $updateToolbar();
-              activeEditor.value = newEditor;
-              return false;
-            },
-            COMMAND_PRIORITY_CRITICAL
-          ),
+        editor.registerCommand(
+          SELECTION_CHANGE_COMMAND,
+          (_payload, newEditor) => {
+            $updateToolbar();
+            activeEditor.value = newEditor;
+            return false;
+          },
+          COMMAND_PRIORITY_CRITICAL
+        ),
 
-          editor.registerCommand(
-            CLICK_COMMAND,
-            (payload) => {
-              const selection = $getSelection();
-              if ($isRangeSelection(selection)) {
-                const node = getSelectedNode(selection);
-                const linkNode = $findMatchingParent(node, $isLinkNode);
-                if (
-                  $isLinkNode(linkNode) &&
-                  (payload.metaKey || payload.ctrlKey) &&
-                  openInNewTab?.value !== false
-                ) {
-                  window.open(linkNode.getURL(), "_blank");
-                  return true;
-                }
-              }
-              return false;
-            },
-            COMMAND_PRIORITY_LOW
-          ),
-
-          editor.registerCommand(
-            KEY_ESCAPE_COMMAND,
-            () => {
-              if (isLink.value) {
-                isLink.value = false;
+        editor.registerCommand(
+          CLICK_COMMAND,
+          (payload) => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              const node = getSelectedNode(selection);
+              const linkNode = $findMatchingParent(node, $isLinkNode);
+              if (
+                $isLinkNode(linkNode) &&
+                (payload.metaKey || payload.ctrlKey) &&
+                openInNewTab?.value !== false
+              ) {
+                window.open(linkNode.getURL(), "_blank");
                 return true;
               }
-              return false;
-            },
-            COMMAND_PRIORITY_HIGH
-          )
-        );
-      });
-    },
-  });
+            }
+            return false;
+          },
+          COMMAND_PRIORITY_LOW
+        ),
 
-  return defineTypixExtension({
-    name: "floating-link",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
-};
+        editor.registerCommand(
+          KEY_ESCAPE_COMMAND,
+          () => {
+            if (isLink.value) {
+              isLink.value = false;
+              return true;
+            }
+            return false;
+          },
+          COMMAND_PRIORITY_HIGH
+        )
+      );
+    });
+  },
+});
+

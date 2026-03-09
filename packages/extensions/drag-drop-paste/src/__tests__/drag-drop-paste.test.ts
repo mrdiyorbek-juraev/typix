@@ -5,8 +5,7 @@ describe("DragDropPasteExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = DragDropPasteExtension();
-      expect(ext.name).toBe("drag-drop-paste");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/drag-drop-paste");
       expect(ext.config).toBeDefined();
     });
   });

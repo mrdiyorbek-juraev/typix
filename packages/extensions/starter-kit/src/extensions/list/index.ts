@@ -1,5 +1,13 @@
 // List extension — bullet list, ordered list, check list
-import { defineExtension, safeCast, LexicalEditor } from "lexical";
+import {
+  defineExtension,
+  safeCast,
+  $getSelection,
+  $isRangeSelection,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
+  LexicalEditor,
+} from "lexical";
 import {
   ListNode,
   ListItemNode,
@@ -10,12 +18,11 @@ import {
   registerList,
   registerCheckList,
 } from "@typix-editor/core/lexical/list";
-import { $getSelection, $isRangeSelection } from "lexical";
 import { $getNearestNodeOfType } from "@typix-editor/core/lexical/utils";
-import { defineTypixExtension, TypixExtensionConfig } from "@typix-editor/core";
+import { registerTypixMeta } from "@typix-editor/core";
 import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
-export interface ListConfig extends TypixExtensionConfig {
+export interface ListConfig {
   bullet: boolean;
   ordered: boolean;
   checklist: boolean;
@@ -36,72 +43,99 @@ function getActiveListType(editor: any): ListType {
   return listType;
 }
 
-export const ListExtension = (userConfig: Partial<ListConfig> = {}) => {
-  const resolvedConfig: ListConfig = {
+export const TYPIX_TOGGLE_BULLET_LIST = createCommand<void>(
+  "TYPIX_TOGGLE_BULLET_LIST"
+);
+export const TYPIX_TOGGLE_ORDERED_LIST = createCommand<void>(
+  "TYPIX_TOGGLE_ORDERED_LIST"
+);
+export const TYPIX_TOGGLE_CHECK_LIST = createCommand<void>(
+  "TYPIX_TOGGLE_CHECK_LIST"
+);
+
+export const ListExtension = defineExtension({
+  name: "@typix/list",
+  config: safeCast<ListConfig>({
     bullet: true,
     ordered: true,
     checklist: true,
     disabled: false,
-    ...userConfig,
-  };
+  }),
+  mergeConfig(a: ListConfig, b: Partial<ListConfig>): ListConfig {
+    return { ...a, ...b };
+  },
+  nodes: () => [ListNode, ListItemNode],
+  build(_editor: LexicalEditor, config: ListConfig) {
+    return namedSignals(config);
+  },
+  register(editor: LexicalEditor, _config: ListConfig, state: any) {
+    const { disabled, checklist, bullet, ordered } = state.getOutput();
+    return effect(() => {
+      if (disabled.value) return;
+      const disposers: Array<() => void> = [];
+      disposers.push(registerList(editor));
+      if (checklist.value) disposers.push(registerCheckList(editor));
 
-  const lexicalExt = defineExtension({
-    name: "@typix/list",
-    config: safeCast<ListConfig>(resolvedConfig),
-    mergeConfig(a: ListConfig, b: Partial<ListConfig>): ListConfig {
-      return { ...a, ...b };
-    },
-    nodes: () => [ListNode, ListItemNode],
-    build(_editor: LexicalEditor, config: ListConfig, state: any) {
-      return namedSignals(config);
-    },
-    register(editor: LexicalEditor, _config: ListConfig, state: any) {
-      const { disabled, checklist } = state.getOutput();
-      return effect(() => {
-        if (disabled.value) return;
-        const disposers: Array<() => void> = [];
-        disposers.push(registerList(editor));
-        if (checklist.value) disposers.push(registerCheckList(editor));
-        return () => disposers.forEach((d) => d());
-      });
-    },
-  });
+      if (bullet.value) {
+        disposers.push(
+          editor.registerCommand(
+            TYPIX_TOGGLE_BULLET_LIST,
+            () => {
+              const isActive = getActiveListType(editor) === "bullet";
+              editor.dispatchCommand(
+                isActive ? REMOVE_LIST_COMMAND : INSERT_UNORDERED_LIST_COMMAND,
+                undefined
+              );
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          )
+        );
+      }
 
-  return defineTypixExtension<ListConfig>({
-    name: "list",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      toggleBulletList: (config) => (ctx) => {
-        if (config.disabled) return false;
-        if (!config.bullet) return false;
-        const isActive = getActiveListType(ctx.editor) === "bullet";
-        ctx.editor.dispatchCommand(
-          isActive ? REMOVE_LIST_COMMAND : INSERT_UNORDERED_LIST_COMMAND,
-          undefined
+      if (ordered.value) {
+        disposers.push(
+          editor.registerCommand(
+            TYPIX_TOGGLE_ORDERED_LIST,
+            () => {
+              const isActive = getActiveListType(editor) === "number";
+              editor.dispatchCommand(
+                isActive ? REMOVE_LIST_COMMAND : INSERT_ORDERED_LIST_COMMAND,
+                undefined
+              );
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          )
         );
-        return true;
-      },
-      toggleOrderedList: (config) => (ctx) => {
-        if (config.disabled) return false;
-        if (!config.ordered) return false;
-        const isActive = getActiveListType(ctx.editor) === "number";
-        ctx.editor.dispatchCommand(
-          isActive ? REMOVE_LIST_COMMAND : INSERT_ORDERED_LIST_COMMAND,
-          undefined
+      }
+
+      if (checklist.value) {
+        disposers.push(
+          editor.registerCommand(
+            TYPIX_TOGGLE_CHECK_LIST,
+            () => {
+              const isActive = getActiveListType(editor) === "check";
+              editor.dispatchCommand(
+                isActive ? REMOVE_LIST_COMMAND : INSERT_CHECK_LIST_COMMAND,
+                undefined
+              );
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          )
         );
-        return true;
-      },
-      toggleCheckList: (config) => (ctx) => {
-        if (config.disabled) return false;
-        if (!config.checklist) return false;
-        const isActive = getActiveListType(ctx.editor) === "check";
-        ctx.editor.dispatchCommand(
-          isActive ? REMOVE_LIST_COMMAND : INSERT_CHECK_LIST_COMMAND,
-          undefined
-        );
-        return true;
-      },
-    },
-  });
-};
+      }
+
+      return () => disposers.forEach((d) => d());
+    });
+  },
+});
+
+registerTypixMeta(ListExtension, {
+  commands: {
+    toggleBulletList: TYPIX_TOGGLE_BULLET_LIST,
+    toggleOrderedList: TYPIX_TOGGLE_ORDERED_LIST,
+    toggleCheckList: TYPIX_TOGGLE_CHECK_LIST,
+  },
+});

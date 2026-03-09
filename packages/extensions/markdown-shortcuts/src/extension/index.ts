@@ -5,14 +5,10 @@ import {
   TRANSFORMERS,
   type Transformer,
 } from "@typix-editor/core/lexical/markdown";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-export interface MarkdownShortcutsConfig extends TypixExtensionConfig {
+export interface MarkdownShortcutsConfig {
   /** Set to true to temporarily disable all markdown shortcuts. */
   disabled: boolean;
   /**
@@ -101,9 +97,5 @@ export const MarkdownShortcutsExtension = (
     },
   });
 
-  return defineTypixExtension<MarkdownShortcutsConfig>({
-    name: "markdown-shortcuts",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

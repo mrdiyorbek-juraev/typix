@@ -5,8 +5,7 @@ describe("TabFocusExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = TabFocusExtension();
-      expect(ext.name).toBe("tab-focus");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/tab-focus");
       expect(ext.config).toBeDefined();
     });
   });

@@ -2,14 +2,13 @@ import {
   defineExtension,
   safeCast,
   FORMAT_ELEMENT_COMMAND,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
   type ElementFormatType,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
-import { namedSignals } from "@typix-editor/core/lexical/extension";
+import { registerTypixMeta } from "@typix-editor/core";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
 export type AlignmentValue =
   | "left"
@@ -19,114 +18,123 @@ export type AlignmentValue =
   | "start"
   | "end";
 
-export interface AlignmentConfig extends TypixExtensionConfig {
+export interface AlignmentConfig {
   /** Which alignments to allow. Defaults to all. */
   alignments: AlignmentValue[];
   disabled?: boolean;
 }
 
-/**
- * AlignmentExtension — aligns selected block elements.
- *
- * @example
- * ```ts
- * createTypix({ extensions: [AlignmentExtension()] })
- *
- * editor.chain().setAlignment({ alignment: 'center' }).run()
- * editor.chain().alignLeft().run()
- * ```
- */
-export const AlignmentExtension = (
-  userConfig: Partial<AlignmentConfig> = {}
-) => {
-  const resolvedConfig: AlignmentConfig = {
+export const TYPIX_SET_ALIGNMENT = createCommand<{ alignment: AlignmentValue }>(
+  "TYPIX_SET_ALIGNMENT"
+);
+export const TYPIX_ALIGN_LEFT = createCommand<void>("TYPIX_ALIGN_LEFT");
+export const TYPIX_ALIGN_CENTER = createCommand<void>("TYPIX_ALIGN_CENTER");
+export const TYPIX_ALIGN_RIGHT = createCommand<void>("TYPIX_ALIGN_RIGHT");
+export const TYPIX_ALIGN_JUSTIFY = createCommand<void>("TYPIX_ALIGN_JUSTIFY");
+export const TYPIX_ALIGN_START = createCommand<void>("TYPIX_ALIGN_START");
+export const TYPIX_ALIGN_END = createCommand<void>("TYPIX_ALIGN_END");
+
+export const AlignmentExtension = defineExtension({
+  name: "@typix/alignment",
+  config: safeCast<AlignmentConfig>({
     alignments: ["left", "center", "right", "justify", "start", "end"],
-    ...userConfig,
-  };
-
-  const lexicalExt = defineExtension({
-    name: "@typix/alignment",
-    config: safeCast<AlignmentConfig>(resolvedConfig),
-    mergeConfig(
-      a: AlignmentConfig,
-      b: Partial<AlignmentConfig>
-    ): AlignmentConfig {
-      return { ...a, ...b };
-    },
-    build(_editor: LexicalEditor, config: AlignmentConfig) {
-      return namedSignals(config);
-    },
-  });
-
-  return defineTypixExtension<AlignmentConfig>({
-    name: "alignment",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      /** Generic — pass `{ alignment: 'center' }` as attrs */
-      setAlignment: (resolvedConfig) => (ctx, attrs) => {
-        if (resolvedConfig.disabled) return false;
-        const alignment = (attrs as any)?.alignment as
-          | AlignmentValue
-          | undefined;
-        if (!alignment) {
-          console.warn(
-            '[Typix] setAlignment requires an alignment attr, e.g. { alignment: "center" }'
-          );
-          return false;
-        }
-        if (!resolvedConfig.alignments.includes(alignment)) {
+    disabled: false,
+  }),
+  mergeConfig(
+    a: AlignmentConfig,
+    b: Partial<AlignmentConfig>
+  ): AlignmentConfig {
+    return { ...a, ...b };
+  },
+  build(_editor: LexicalEditor, config: AlignmentConfig) {
+    return namedSignals(config);
+  },
+  register(editor: LexicalEditor, _config: AlignmentConfig, state: any) {
+    const { disabled, alignments } = state.getOutput();
+    return effect(() => {
+      if (disabled?.value) return;
+      const dispatch = (alignment: AlignmentValue) => {
+        const enabled: AlignmentValue[] = alignments?.value ?? [
+          "left",
+          "center",
+          "right",
+          "justify",
+          "start",
+          "end",
+        ];
+        if (!enabled.includes(alignment)) {
           console.warn(`[Typix] Alignment "${alignment}" is not enabled.`);
           return false;
         }
-        ctx.editor.dispatchCommand(
+        editor.dispatchCommand(
           FORMAT_ELEMENT_COMMAND,
           alignment as ElementFormatType
         );
         return true;
-      },
+      };
 
-      alignLeft: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
-        return true;
-      },
+      const d1 = editor.registerCommand(
+        TYPIX_SET_ALIGNMENT,
+        ({ alignment }) => dispatch(alignment),
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d2 = editor.registerCommand(
+        TYPIX_ALIGN_LEFT,
+        () => dispatch("left"),
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d3 = editor.registerCommand(
+        TYPIX_ALIGN_CENTER,
+        () => dispatch("center"),
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d4 = editor.registerCommand(
+        TYPIX_ALIGN_RIGHT,
+        () => dispatch("right"),
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d5 = editor.registerCommand(
+        TYPIX_ALIGN_JUSTIFY,
+        () => dispatch("justify"),
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d6 = editor.registerCommand(
+        TYPIX_ALIGN_START,
+        () => dispatch("start"),
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d7 = editor.registerCommand(
+        TYPIX_ALIGN_END,
+        () => dispatch("end"),
+        COMMAND_PRIORITY_EDITOR
+      );
+      return () => {
+        d1();
+        d2();
+        d3();
+        d4();
+        d5();
+        d6();
+        d7();
+      };
+    });
+  },
+});
 
-      alignCenter: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-        return true;
-      },
-
-      alignRight: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-        return true;
-      },
-
-      alignJustify: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-        return true;
-      },
-
-      alignStart: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "start");
-        return true;
-      },
-
-      alignEnd: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "end");
-        return true;
-      },
-    },
-    shortcuts: [
-      { key: "l", modifiers: ["mod", "shift"], command: "alignLeft" },
-      { key: "e", modifiers: ["mod", "shift"], command: "alignCenter" },
-      { key: "r", modifiers: ["mod", "shift"], command: "alignRight" },
-      { key: "j", modifiers: ["mod", "shift"], command: "alignJustify" },
-    ],
-  });
-};
+registerTypixMeta(AlignmentExtension, {
+  commands: {
+    setAlignment: TYPIX_SET_ALIGNMENT,
+    alignLeft: TYPIX_ALIGN_LEFT,
+    alignCenter: TYPIX_ALIGN_CENTER,
+    alignRight: TYPIX_ALIGN_RIGHT,
+    alignJustify: TYPIX_ALIGN_JUSTIFY,
+    alignStart: TYPIX_ALIGN_START,
+    alignEnd: TYPIX_ALIGN_END,
+  },
+  shortcuts: [
+    { key: "l", modifiers: ["mod", "shift"], command: "alignLeft" },
+    { key: "e", modifiers: ["mod", "shift"], command: "alignCenter" },
+    { key: "r", modifiers: ["mod", "shift"], command: "alignRight" },
+    { key: "j", modifiers: ["mod", "shift"], command: "alignJustify" },
+  ],
+});

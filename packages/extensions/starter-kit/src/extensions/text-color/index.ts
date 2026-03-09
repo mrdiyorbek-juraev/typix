@@ -3,80 +3,78 @@ import {
   $isRangeSelection,
   defineExtension,
   safeCast,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
 } from "lexical";
 import { $patchStyleText } from "@typix-editor/core/lexical/selection";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
-import { namedSignals } from "@typix-editor/core/lexical/extension";
+import { registerTypixMeta } from "@typix-editor/core";
+import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
-export interface TextColorConfig extends TypixExtensionConfig {
+export interface TextColorConfig {
   disabled?: boolean;
 }
 
-/**
- * TextColorExtension — applies an inline `color` style to the current selection.
- *
- * Uses `$patchStyleText` (no Lexical format bit needed).
- *
- * @example
- * ```ts
- * createTypix({ extensions: [TextColorExtension()] })
- *
- * editor.chain().setTextColor({ color: 'var(--color-red-500)' }).run()
- * editor.chain().removeTextColor().run()
- * ```
- */
-export const TextColorExtension = (
-  userConfig: Partial<TextColorConfig> = {}
-) => {
-  const resolvedConfig: TextColorConfig = { ...userConfig };
-  const lexicalExt = defineExtension({
-    name: "@typix/text-color",
-    config: safeCast<TextColorConfig>(resolvedConfig),
-    mergeConfig(
-      a: TextColorConfig,
-      b: Partial<TextColorConfig>
-    ): TextColorConfig {
-      return { ...a, ...b };
-    },
-    build(_editor: LexicalEditor, config: TextColorConfig) {
-      return namedSignals(config);
-    },
-  });
+export const TYPIX_SET_TEXT_COLOR = createCommand<{ color: string }>(
+  "TYPIX_SET_TEXT_COLOR"
+);
+export const TYPIX_REMOVE_TEXT_COLOR = createCommand<void>(
+  "TYPIX_REMOVE_TEXT_COLOR"
+);
 
-  return defineTypixExtension<TextColorConfig>({
-    name: "text-color",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      /** Apply an inline color to the current selection. */
-      setTextColor: (resolvedConfig) => (ctx, attrs) => {
-        if (resolvedConfig.disabled) return false;
-        const color = attrs?.color as string | undefined;
-        if (!color) return false;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { color });
-          }
-        });
-        return true;
-      },
+export const TextColorExtension = defineExtension({
+  name: "@typix/text-color",
+  config: safeCast<TextColorConfig>({ disabled: false }),
+  mergeConfig(
+    a: TextColorConfig,
+    b: Partial<TextColorConfig>
+  ): TextColorConfig {
+    return { ...a, ...b };
+  },
+  build(_editor: LexicalEditor, config: TextColorConfig) {
+    return namedSignals(config);
+  },
+  register(editor: LexicalEditor, _config: TextColorConfig, state: any) {
+    const { disabled } = state.getOutput();
+    return effect(() => {
+      if (disabled?.value) return;
+      const d1 = editor.registerCommand(
+        TYPIX_SET_TEXT_COLOR,
+        ({ color }) => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { color });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+      const d2 = editor.registerCommand(
+        TYPIX_REMOVE_TEXT_COLOR,
+        () => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { color: "" });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+      return () => {
+        d1();
+        d2();
+      };
+    });
+  },
+});
 
-      /** Remove inline color from the current selection. */
-      removeTextColor: (resolvedConfig) => (ctx) => {
-        if (resolvedConfig.disabled) return false;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { color: "" });
-          }
-        });
-        return true;
-      },
-    },
-  });
-};
+registerTypixMeta(TextColorExtension, {
+  commands: {
+    setTextColor: TYPIX_SET_TEXT_COLOR,
+    removeTextColor: TYPIX_REMOVE_TEXT_COLOR,
+  },
+});

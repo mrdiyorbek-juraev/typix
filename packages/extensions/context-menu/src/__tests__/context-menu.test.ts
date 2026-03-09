@@ -5,8 +5,7 @@ describe("ContextMenuExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = ContextMenuExtension();
-      expect(ext.name).toBe("context-menu");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/context-menu");
       expect(ext.config).toBeDefined();
     });
   });

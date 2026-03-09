@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useTypixEditorState, useSignal } from "@typix-editor/react";
-import { getCodeBlockOutput } from "@typix-editor/extension-code-block";
+import { getExtensionOutput } from "@typix-editor/core";
+import { CodeBlockExtension, type CodeBlockOutput } from "@typix-editor/extension-code-block";
 import { CodeBlockToolbar } from "./code-block-toolbar";
 
 export function CodeBlockUI() {
@@ -11,7 +12,7 @@ export function CodeBlockUI() {
 
   useEffect(() => setMounted(true), []);
 
-  const output = getCodeBlockOutput(editor.lexical);
+  const output = getExtensionOutput<CodeBlockOutput>(editor.lexical, CodeBlockExtension);
   const nodeKeys = useSignal(output!.nodeKeys);
 
   if (!mounted || !output) return null;

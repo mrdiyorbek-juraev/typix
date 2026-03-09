@@ -5,8 +5,7 @@ describe("CodeHighlightPrismExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = CodeHighlightPrismExtension();
-      expect(ext.name).toBe("code-highlight-prism");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/code-highlight-prism");
       expect(ext.config).toBeDefined();
     });
   });

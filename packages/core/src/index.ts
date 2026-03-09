@@ -6,7 +6,7 @@
 export { createTypix } from './editor/create'
 
 // Extension primitives
-export { defineTypixExtension, mergeTypixConfig, ExtensionRegistry, configExtension } from './editor/extension'
+export { ExtensionRegistry, configExtension } from './editor/extension'
 
 // Event emitter (useful for framework adapters)
 export { TypixEventEmitter } from './editor/event'
@@ -30,15 +30,6 @@ export type {
   TypixEditorInstance,
   CreateTypixOptions,
 
-  // Extensions
-  TypixExtensionDefinition,
-  TypixExtensionConfig,
-  CommandFunction,
-  CommandHandler,
-  CommandContext,
-  BuiltinCommands,
-  ShortcutDefinition,
-
   // Content
   SerializedContent,
   SerializedRootNode,
@@ -56,6 +47,18 @@ export type {
   ChainBuilder,
   CanChainBuilder,
 } from './types'
+
+// Typix metadata system (for native Lexical extensions)
+export {
+  registerTypixMeta,
+  getTypixMeta,
+  resolveTypixMeta,
+  mergeTypixMeta,
+  typixExtension,
+  registerExtensionOutput,
+  getExtensionOutput,
+} from './meta'
+export type { TypixMeta, TypixCommandMap, TypixShortcut } from './meta'
 
 // ─────────────────────────────────────────────────────
 // Editor class + constants

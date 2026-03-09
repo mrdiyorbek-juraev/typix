@@ -1,6 +1,5 @@
 export {
   CodeBlockExtension,
-  getCodeBlockOutput,
   type CodeBlockConfig,
   type CodeBlockOutput,
 } from "./extension";

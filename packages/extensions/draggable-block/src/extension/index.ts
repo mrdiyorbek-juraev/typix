@@ -1,10 +1,6 @@
 import { defineExtension, safeCast } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
-export interface DraggableBlockConfig extends TypixExtensionConfig {
+export interface DraggableBlockConfig {
   disabled: boolean;
 }
 
@@ -21,9 +17,5 @@ export const DraggableBlockExtension = (
     config: safeCast<DraggableBlockConfig>(resolvedConfig),
   });
 
-  return defineTypixExtension({
-    name: "draggable-block",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

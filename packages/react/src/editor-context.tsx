@@ -5,7 +5,7 @@ import { createContext, type ReactNode, useContext, useMemo } from "react";
 import {
   TypixEditor,
   ExtensionRegistry,
-  type TypixExtensionDefinition,
+  type AnyLexicalExtension,
 } from "@typix-editor/core";
 
 /**
@@ -28,7 +28,7 @@ export function TypixEditorProvider({
   extensions = [],
 }: {
   children: ReactNode;
-  extensions?: TypixExtensionDefinition[];
+  extensions?: AnyLexicalExtension[];
 }) {
   const [lexicalEditor] = useLexicalComposerContext();
 

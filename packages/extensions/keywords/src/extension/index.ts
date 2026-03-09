@@ -1,10 +1,6 @@
 import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import { registerLexicalTextEntity } from "@typix-editor/core/lexical/text";
 import { defineExtension, mergeRegister, safeCast } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 import { $createKeywordNode, KeywordNode } from "../node";
 
 // Use Unicode property escapes (\p{L}) instead of manually listing Unicode ranges.
@@ -35,7 +31,7 @@ function makeGetKeywordMatch(regex: RegExp) {
   };
 }
 
-export interface KeywordsConfig extends TypixExtensionConfig {
+export interface KeywordsConfig {
   /** Set to true to temporarily disable keyword detection. */
   disabled: boolean;
   /**
@@ -98,9 +94,5 @@ export const KeywordsExtension = (userConfig: Partial<KeywordsConfig> = {}) => {
     },
   });
 
-  return defineTypixExtension({
-    name: "keywords",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

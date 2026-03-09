@@ -1,5 +1,5 @@
 import type { LexicalEditor } from 'lexical'
-import type { ChainBuilder, CanChainBuilder, BuiltinCommands, SerializedContent } from '../../types'
+import type { ChainBuilder, CanChainBuilder, SerializedContent } from '../../types'
 import type { ExtensionRegistry } from '../extension'
 import { executeBuiltinCommand } from '../command'
 import { isKnownBuiltinCommand } from './can'
@@ -102,7 +102,7 @@ export function createChainBuilder(
 
 /**
  * Dispatch a single named command against the editor.
- * Checks extension commands first, then falls back to built-in commands.
+ * Checks extension Lexical commands first, then falls back to built-in commands.
  */
 function dispatchCommand(
     editor: LexicalEditor,
@@ -110,18 +110,14 @@ function dispatchCommand(
     name: string,
     args: unknown[],
 ): boolean {
-    // Try extension-registered commands first (config is pre-bound at registration)
-    const handler = registry.getCommand(name)
-    if (handler) {
+    const lexicalCmd = registry.getLexicalCommand(name)
+    if (lexicalCmd) {
         try {
-            const builtins = makeBuiltinCommands(editor)
-            const attrs = args[0] as Record<string, unknown> | undefined
-            const result = handler({ editor, commands: builtins }, attrs)
-            return result !== false
+            return editor.dispatchCommand(lexicalCmd, args[0])
         } catch (err: unknown) {
-            console.error(`[Typix] Error executing command "${name}":`, err)
+            console.error(`[Typix] Error dispatching "${name}":`, err)
             return false
-        } 
+        }
     }
 
     // Fall back to built-in commands
@@ -224,20 +220,6 @@ function canDispatchCommand(
     name: string,
     args: unknown[],
 ): boolean {
-    if (registry.getCommand(name)) return true
+    if (registry.hasCommand(name)) return true
     return isKnownBuiltinCommand(name, args)
-}
-
-function makeBuiltinCommands(editor: LexicalEditor): BuiltinCommands {
-    return {
-        toggleMark: (type: string, attrs?: Record<string, unknown>) =>
-            executeBuiltinCommand(editor, 'toggleMark', [type, attrs]),
-        toggleBlock: (type: string, attrs?: Record<string, unknown>) =>
-            executeBuiltinCommand(editor, 'toggleBlock', [type, attrs]),
-        setContent: (content: SerializedContent) =>
-            executeBuiltinCommand(editor, 'setContent', [content]),
-        clearContent: () => executeBuiltinCommand(editor, 'clearContent', []),
-        focus: () => executeBuiltinCommand(editor, 'focus', []),
-        blur: () => executeBuiltinCommand(editor, 'blur', []),
-    }
 }

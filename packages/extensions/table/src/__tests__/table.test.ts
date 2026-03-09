@@ -1,70 +1,73 @@
 import { describe, expect, it } from "vitest";
+import { configExtension } from "lexical";
+import { getTypixMeta } from "@typix-editor/core";
 import { TableExtension } from "../extension";
 
 describe("TableExtension", () => {
-  describe("factory", () => {
-    it("returns a valid extension definition", () => {
-      const ext = TableExtension();
-      expect(ext.name).toBe("table");
-      expect(ext.typix).toBeDefined();
-      expect(ext.config).toBeDefined();
+  describe("static extension", () => {
+    it("is a valid extension definition", () => {
+      expect(TableExtension.name).toBe("@typix/table");
+      expect(TableExtension.config).toBeDefined();
     });
   });
 
   describe("config defaults", () => {
     it("sets disabled to false", () => {
-      const ext = TableExtension();
-      expect(ext.config?.disabled).toBe(false);
+      expect(TableExtension.config?.disabled).toBe(false);
     });
 
     it("enables cell merge by default", () => {
-      const ext = TableExtension();
-      expect(ext.config?.hasCellMerge).toBe(true);
+      expect(TableExtension.config?.hasCellMerge).toBe(true);
     });
 
     it("enables cell background color by default", () => {
-      const ext = TableExtension();
-      expect(ext.config?.hasCellBackgroundColor).toBe(true);
+      expect(TableExtension.config?.hasCellBackgroundColor).toBe(true);
     });
 
     it("enables tab handler by default", () => {
-      const ext = TableExtension();
-      expect(ext.config?.hasTabHandler).toBe(true);
+      expect(TableExtension.config?.hasTabHandler).toBe(true);
     });
 
     it("enables horizontal scroll by default", () => {
-      const ext = TableExtension();
-      expect(ext.config?.hasHorizontalScroll).toBe(true);
+      expect(TableExtension.config?.hasHorizontalScroll).toBe(true);
     });
 
     it("disables nested tables by default", () => {
-      const ext = TableExtension();
-      expect(ext.config?.hasNestedTables).toBe(false);
+      expect(TableExtension.config?.hasNestedTables).toBe(false);
     });
 
     it("enables scroll shadow by default", () => {
-      const ext = TableExtension();
-      expect(ext.config?.scrollShadow).toBe(true);
+      expect(TableExtension.config?.scrollShadow).toBe(true);
     });
 
     it("uses correct default scrollable wrapper class", () => {
-      const ext = TableExtension();
-      expect(ext.config?.scrollableWrapperClass).toBe(
+      expect(TableExtension.config?.scrollableWrapperClass).toBe(
         "typix-table-scrollable-wrapper"
       );
     });
 
-    it("accepts user overrides", () => {
-      const ext = TableExtension({
+    it("accepts user overrides via configExtension", () => {
+      const [, override] = configExtension(TableExtension, {
         hasCellMerge: false,
         hasNestedTables: true,
         defaultRows: 5,
         defaultColumns: 4,
       });
-      expect(ext.config?.hasCellMerge).toBe(false);
-      expect(ext.config?.hasNestedTables).toBe(true);
-      expect(ext.config?.defaultRows).toBe(5);
-      expect(ext.config?.defaultColumns).toBe(4);
+      expect(override.hasCellMerge).toBe(false);
+      expect(override.hasNestedTables).toBe(true);
+      expect(override.defaultRows).toBe(5);
+      expect(override.defaultColumns).toBe(4);
+    });
+
+    it("merges partial config with defaults via mergeConfig", () => {
+      const merged = TableExtension.mergeConfig!(TableExtension.config!, {
+        hasCellMerge: false,
+        defaultRows: 5,
+      });
+      expect(merged.hasCellMerge).toBe(false);
+      expect(merged.defaultRows).toBe(5);
+      expect(merged.disabled).toBe(false);
+      expect(merged.scrollShadow).toBe(true);
     });
   });
 
@@ -92,13 +95,13 @@ describe("TableExtension", () => {
     ];
 
     it("registers all 19 commands", () => {
-      const ext = TableExtension();
-      expect(Object.keys(ext.commands ?? {})).toHaveLength(19);
+      expect(
+        Object.keys(getTypixMeta(TableExtension)?.commands ?? {})
+      ).toHaveLength(19);
     });
 
     it.each(commandNames)("registers %s command", (name) => {
-      const ext = TableExtension();
-      expect(ext.commands).toHaveProperty(name);
+      expect(getTypixMeta(TableExtension)?.commands).toHaveProperty(name);
     });
   });
 });

@@ -3,6 +3,8 @@ import {
   $isRangeSelection,
   defineExtension,
   safeCast,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
 } from "lexical";
 import {
@@ -15,12 +17,9 @@ import {
   $getSelectionStyleValueForProperty,
   $patchStyleText,
 } from "@typix-editor/core/lexical/selection";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
+import { registerTypixMeta } from "@typix-editor/core";
 
-export interface FontFamilyConfig extends TypixExtensionConfig {
+export interface FontFamilyConfig {
   /**
    * Allowlist of permitted font families. When non-empty, `setFontFamily`
    * will reject values not in this list — useful for restricting choices to
@@ -45,110 +44,96 @@ export function getFontFamilyState(
   return _stateByEditor.get(editor);
 }
 
-/**
- * FontFamilyExtension — applies an inline font-family style to the current
- * selection.
- *
- * Uses `$patchStyleText` from `@lexical/selection` (Lexical best practice for
- * inline CSS on TextNodes).
- *
- * @example
- * ```ts
- * editor.chain().setFontFamily({ family: 'Georgia' }).run()
- * editor.chain().resetFontFamily().run()
- *
- * // Restrict to approved fonts
- * FontFamilyExtension({ families: ['Inter', 'Georgia', 'monospace'] })
- * ```
- */
-export const FontFamilyExtension = (
-  userConfig: Partial<FontFamilyConfig> = {}
-) => {
-  const resolvedConfig: FontFamilyConfig = {
-    families: [],
-    ...userConfig,
-  };
+export const TYPIX_SET_FONT_FAMILY = createCommand<{ family: string }>(
+  "TYPIX_SET_FONT_FAMILY"
+);
+export const TYPIX_RESET_FONT_FAMILY = createCommand<void>(
+  "TYPIX_RESET_FONT_FAMILY"
+);
 
-  const lexicalExt = defineExtension({
-    name: "@typix/font-family",
-    config: safeCast<FontFamilyConfig>(resolvedConfig),
-    mergeConfig(
-      a: FontFamilyConfig,
-      b: Partial<FontFamilyConfig>
-    ): FontFamilyConfig {
-      return { ...a, ...b };
-    },
-    build(editor: LexicalEditor, config: FontFamilyConfig) {
-      const signals = namedSignals(config);
-      const currentFamily = signal<string>("");
-      _stateByEditor.set(editor, { currentFamily });
-      return { ...signals, currentFamily };
-    },
-    register(editor: LexicalEditor, _config: FontFamilyConfig, state) {
-      const { disabled, currentFamily } = state.getOutput();
+export const FontFamilyExtension = defineExtension({
+  name: "@typix/font-family",
+  config: safeCast<FontFamilyConfig>({ families: [], disabled: false }),
+  mergeConfig(
+    a: FontFamilyConfig,
+    b: Partial<FontFamilyConfig>
+  ): FontFamilyConfig {
+    return { ...a, ...b };
+  },
+  build(editor: LexicalEditor, config: FontFamilyConfig) {
+    const signals = namedSignals(config);
+    const currentFamily = signal<string>("");
+    _stateByEditor.set(editor, { currentFamily });
+    return { ...signals, currentFamily };
+  },
+  register(editor: LexicalEditor, config: FontFamilyConfig, state) {
+    const { disabled, currentFamily, families } = state.getOutput();
 
-      return effect(() => {
-        if (disabled?.value) return;
+    return effect(() => {
+      if (disabled?.value) return;
 
-        return editor.registerUpdateListener(({ editorState }) => {
-          editorState.read(() => {
-            const selection = $getSelection();
-            if (!$isRangeSelection(selection)) {
-              currentFamily.value = "";
-              return;
-            }
-            currentFamily.value = $getSelectionStyleValueForProperty(
-              selection,
-              "font-family",
-              ""
-            );
-          });
+      const d0 = editor.registerUpdateListener(({ editorState }) => {
+        editorState.read(() => {
+          const selection = $getSelection();
+          if (!$isRangeSelection(selection)) {
+            currentFamily.value = "";
+            return;
+          }
+          currentFamily.value = $getSelectionStyleValueForProperty(
+            selection,
+            "font-family",
+            ""
+          );
         });
       });
-    },
-  });
 
-  return defineTypixExtension<FontFamilyConfig>({
-    name: "font-family",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      /** Set the font family on the current selection. */
-      setFontFamily: (cfg) => (ctx, attrs) => {
-        if (cfg.disabled) return false;
-        const family = attrs?.family as string | undefined;
-        if (!family) {
-          console.warn(
-            "[Typix] setFontFamily requires a { family: string } attr"
-          );
-          return false;
-        }
-        if (cfg.families.length > 0 && !cfg.families.includes(family)) {
-          console.warn(
-            `[Typix] Font family "${family}" is not in the allowlist.`
-          );
-          return false;
-        }
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { "font-family": family });
+      const d1 = editor.registerCommand(
+        TYPIX_SET_FONT_FAMILY,
+        ({ family }) => {
+          const allowList: string[] = families?.value ?? config.families;
+          if (allowList.length > 0 && !allowList.includes(family)) {
+            console.warn(
+              `[Typix] Font family "${family}" is not in the allowlist.`
+            );
+            return false;
           }
-        });
-        return true;
-      },
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { "font-family": family });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
 
-      /** Remove the inline font-family from selection (reverts to theme / CSS default). */
-      resetFontFamily: (cfg) => (ctx) => {
-        if (cfg.disabled) return false;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { "font-family": "" });
-          }
-        });
-        return true;
-      },
-    },
-  });
-};
+      const d2 = editor.registerCommand(
+        TYPIX_RESET_FONT_FAMILY,
+        () => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { "font-family": "" });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+
+      return () => {
+        d0();
+        d1();
+        d2();
+      };
+    });
+  },
+});
+
+registerTypixMeta(FontFamilyExtension, {
+  commands: {
+    setFontFamily: TYPIX_SET_FONT_FAMILY,
+    resetFontFamily: TYPIX_RESET_FONT_FAMILY,
+  },
+});

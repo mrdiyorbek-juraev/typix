@@ -9,10 +9,6 @@ import {
   mergeRegister,
   safeCast,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
 let lastTabKeyDownTimestamp = 0;
 let hasRegisteredKeyDownListener = false;
@@ -27,7 +23,7 @@ function registerKeyTimestampTracker(): void {
   window.addEventListener("keydown", handler, true);
 }
 
-export interface TabFocusConfig extends TypixExtensionConfig {
+export interface TabFocusConfig {
   /** Set to true to temporarily disable tab-focus behavior. */
   disabled: boolean;
   /**
@@ -89,9 +85,5 @@ export const TabFocusExtension = (userConfig: Partial<TabFocusConfig> = {}) => {
     },
   });
 
-  return defineTypixExtension({
-    name: "tab-focus",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

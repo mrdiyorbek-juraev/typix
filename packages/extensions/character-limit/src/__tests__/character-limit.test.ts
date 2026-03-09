@@ -22,8 +22,7 @@ describe("CharacterLimitExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = CharacterLimitExtension();
-      expect(ext.name).toBe("character-limit");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/character-limit");
       expect(ext.config).toBeDefined();
     });
   });

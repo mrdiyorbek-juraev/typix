@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTypixEditor } from "@typix-editor/react";
+import { getExtensionOutput } from "@typix-editor/core";
 import {
-  getSpeechToTextOutput,
   isSpeechRecognitionSupported,
   SPEECH_TO_TEXT_COMMAND,
+  SpeechToTextExtension,
+  type SpeechToTextOutput,
 } from "@typix-editor/extension-speech-to-text";
 import type { UseSpeechToTextOptions, UseSpeechToTextReturn } from "../types";
 
@@ -30,7 +32,7 @@ export function useSpeechToText(
 ): UseSpeechToTextReturn {
   const typixEditor = useTypixEditor();
   const editor = typixEditor.lexical;
-  const output = getSpeechToTextOutput(editor);
+  const output = getExtensionOutput<SpeechToTextOutput>(editor, SpeechToTextExtension);
 
   const [isListening, setIsListening] = useState(
     () => output?.isListening.value ?? false

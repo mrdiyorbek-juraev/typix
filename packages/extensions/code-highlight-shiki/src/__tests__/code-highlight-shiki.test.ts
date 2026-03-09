@@ -5,8 +5,7 @@ describe("CodeHighlightShikiExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = CodeHighlightShikiExtension();
-      expect(ext.name).toBe("code-highlight-shiki");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/code-highlight-shiki");
       expect(ext.config).toBeDefined();
     });
   });

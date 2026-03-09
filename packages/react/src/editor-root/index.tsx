@@ -12,7 +12,7 @@ import type {
 } from "lexical";
 import { defineExtension } from "lexical";
 import { useMemo } from "react";
-import type { TypixExtensionDefinition } from "@typix-editor/core";
+import type { AnyLexicalExtension } from "@typix-editor/core";
 import { TypixEditorProvider } from "../editor-context";
 import { History, SharedHistoryContext } from "./history-context";
 import { RootContext } from "../root-context";
@@ -46,8 +46,7 @@ interface EditorRootProps {
    * <EditorRoot extensions={StarterKit()} namespace="my-editor" theme={defaultTheme}>
    * ```
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  extensions?: TypixExtensionDefinition<any>[];
+  extensions?: AnyLexicalExtension[];
 
   /**
    * Editor namespace. Used when building the Lexical extension from
@@ -95,7 +94,7 @@ const EditorRoot = ({
       name: "typix/root",
       namespace,
       theme,
-      dependencies: extensions.map((e) => e.typix),
+      dependencies: extensions,
     });
     // typixExtensions should be stable (module-level or memoized by caller)
     // eslint-disable-next-line react-hooks/exhaustive-deps

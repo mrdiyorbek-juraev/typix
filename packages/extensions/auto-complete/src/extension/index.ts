@@ -16,17 +16,12 @@ import {
   defineExtension,
   safeCast,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
-
 import DICTIONARY from "../dictionary";
 import { uuid } from "../lib";
 import { addSwipeRightListener } from "@typix-editor/utils";
 import { $createAutocompleteNode, AutocompleteNode } from "../node";
 
-export interface AutocompleteConfig extends TypixExtensionConfig {
+export interface AutocompleteConfig {
   /** Set to true to temporarily disable autocomplete. */
   disabled: boolean;
   /**
@@ -384,9 +379,5 @@ export const AutocompleteExtension = (
     },
   });
 
-  return defineTypixExtension({
-    name: "auto-complete",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

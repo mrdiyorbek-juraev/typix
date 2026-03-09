@@ -3,6 +3,8 @@ import {
   $isRangeSelection,
   defineExtension,
   safeCast,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
 } from "lexical";
 import {
@@ -16,14 +18,13 @@ import {
   $patchStyleText,
 } from "@typix-editor/core/lexical/selection";
 import {
-  defineTypixExtension,
+  registerTypixMeta,
   DEFAULT_FONT_SIZE,
   MIN_FONT_SIZE,
   MAX_FONT_SIZE,
-  type TypixExtensionConfig,
 } from "@typix-editor/core";
 
-export interface FontSizeConfig extends TypixExtensionConfig {
+export interface FontSizeConfig {
   /** Default font size in px. Used as fallback when no size is set on the selection. */
   defaultSize: number;
   /** Minimum allowed font size in px. */
@@ -50,142 +51,156 @@ export function getFontSizeState(
   return _stateByEditor.get(editor);
 }
 
-/**
- * FontSizeExtension — applies inline font-size styles to the current selection.
- *
- * Uses `$patchStyleText` from `@lexical/selection` (Lexical best practice for
- * inline CSS on TextNodes).
- *
- * @example
- * ```ts
- * editor.chain().setFontSize({ size: 24 }).run()
- * editor.chain().increaseFontSize().run()
- * editor.chain().decreaseFontSize({ step: 2 }).run()
- * editor.chain().resetFontSize().run()
- * ```
- */
-export const FontSizeExtension = (userConfig: Partial<FontSizeConfig> = {}) => {
-  const resolvedConfig: FontSizeConfig = {
+export const TYPIX_SET_FONT_SIZE = createCommand<{ size: number }>(
+  "TYPIX_SET_FONT_SIZE"
+);
+export const TYPIX_INCREASE_FONT_SIZE = createCommand<{ step?: number } | void>(
+  "TYPIX_INCREASE_FONT_SIZE"
+);
+export const TYPIX_DECREASE_FONT_SIZE = createCommand<{ step?: number } | void>(
+  "TYPIX_DECREASE_FONT_SIZE"
+);
+export const TYPIX_RESET_FONT_SIZE = createCommand<void>("TYPIX_RESET_FONT_SIZE");
+
+export const FontSizeExtension = defineExtension({
+  name: "@typix/font-size",
+  config: safeCast<FontSizeConfig>({
     defaultSize: DEFAULT_FONT_SIZE,
     minSize: MIN_FONT_SIZE,
     maxSize: MAX_FONT_SIZE,
     step: 1,
-    ...userConfig,
-  };
+    disabled: false,
+  }),
+  mergeConfig(a: FontSizeConfig, b: Partial<FontSizeConfig>): FontSizeConfig {
+    return { ...a, ...b };
+  },
+  build(editor: LexicalEditor, config: FontSizeConfig) {
+    const signals = namedSignals(config);
+    const currentSize = signal<number>(config.defaultSize);
+    _stateByEditor.set(editor, { currentSize });
+    return { ...signals, currentSize };
+  },
+  register(editor: LexicalEditor, config: FontSizeConfig, state) {
+    const { disabled, currentSize, defaultSize, minSize, maxSize, step } =
+      state.getOutput();
 
-  const lexicalExt = defineExtension({
-    name: "@typix/font-size",
-    config: safeCast<FontSizeConfig>(resolvedConfig),
-    mergeConfig(a: FontSizeConfig, b: Partial<FontSizeConfig>): FontSizeConfig {
-      return { ...a, ...b };
-    },
-    build(editor: LexicalEditor, config: FontSizeConfig) {
-      const signals = namedSignals(config);
-      const currentSize = signal<number>(config.defaultSize);
-      _stateByEditor.set(editor, { currentSize });
-      return { ...signals, currentSize };
-    },
-    register(editor: LexicalEditor, config: FontSizeConfig, state) {
-      const { disabled, currentSize } = state.getOutput();
+    return effect(() => {
+      if (disabled?.value) return;
 
-      return effect(() => {
-        if (disabled?.value) return;
-
-        return editor.registerUpdateListener(({ editorState }) => {
-          editorState.read(() => {
-            const selection = $getSelection();
-            if (!$isRangeSelection(selection)) {
-              currentSize.value = config.defaultSize;
-              return;
-            }
-            const raw = $getSelectionStyleValueForProperty(
-              selection,
-              "font-size",
-              `${config.defaultSize}px`
-            );
-            currentSize.value = parseFloat(raw) || config.defaultSize;
-          });
+      const d0 = editor.registerUpdateListener(({ editorState }) => {
+        editorState.read(() => {
+          const selection = $getSelection();
+          const defSize = defaultSize?.value ?? config.defaultSize;
+          if (!$isRangeSelection(selection)) {
+            currentSize.value = defSize;
+            return;
+          }
+          const raw = $getSelectionStyleValueForProperty(
+            selection,
+            "font-size",
+            `${defSize}px`
+          );
+          currentSize.value = parseFloat(raw) || defSize;
         });
       });
-    },
-  });
 
-  return defineTypixExtension<FontSizeConfig>({
-    name: "font-size",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      /** Set font size to an exact value (clamped to minSize–maxSize). */
-      setFontSize: (cfg) => (ctx, attrs) => {
-        if (cfg.disabled) return false;
-        const size = attrs?.size as number | undefined;
-        if (size == null) {
-          console.warn("[Typix] setFontSize requires a { size: number } attr");
-          return false;
-        }
-        const clamped = Math.max(cfg.minSize, Math.min(cfg.maxSize, size));
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { "font-size": `${clamped}px` });
-          }
-        });
-        return true;
-      },
+      const d1 = editor.registerCommand(
+        TYPIX_SET_FONT_SIZE,
+        ({ size }) => {
+          const min = minSize?.value ?? config.minSize;
+          const max = maxSize?.value ?? config.maxSize;
+          const clamped = Math.max(min, Math.min(max, size));
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { "font-size": `${clamped}px` });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
 
-      /** Increase font size by step (or attrs.step). */
-      increaseFontSize: (cfg) => (ctx, attrs) => {
-        if (cfg.disabled) return false;
-        const step = (attrs?.step as number | undefined) ?? cfg.step;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!$isRangeSelection(selection)) return;
-          const current =
-            parseFloat(
-              $getSelectionStyleValueForProperty(
-                selection,
-                "font-size",
-                `${cfg.defaultSize}px`
-              )
-            ) || cfg.defaultSize;
-          const next = Math.min(cfg.maxSize, current + step);
-          $patchStyleText(selection, { "font-size": `${next}px` });
-        });
-        return true;
-      },
+      const d2 = editor.registerCommand(
+        TYPIX_INCREASE_FONT_SIZE,
+        (payload) => {
+          const stepVal = payload?.step ?? step?.value ?? config.step;
+          const max = maxSize?.value ?? config.maxSize;
+          const defSize = defaultSize?.value ?? config.defaultSize;
+          editor.update(() => {
+            const selection = $getSelection();
+            if (!$isRangeSelection(selection)) return;
+            const current =
+              parseFloat(
+                $getSelectionStyleValueForProperty(
+                  selection,
+                  "font-size",
+                  `${defSize}px`
+                )
+              ) || defSize;
+            const next = Math.min(max, current + stepVal);
+            $patchStyleText(selection, { "font-size": `${next}px` });
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
 
-      /** Decrease font size by step (or attrs.step). */
-      decreaseFontSize: (cfg) => (ctx, attrs) => {
-        if (cfg.disabled) return false;
-        const step = (attrs?.step as number | undefined) ?? cfg.step;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!$isRangeSelection(selection)) return;
-          const current =
-            parseFloat(
-              $getSelectionStyleValueForProperty(
-                selection,
-                "font-size",
-                `${cfg.defaultSize}px`
-              )
-            ) || cfg.defaultSize;
-          const next = Math.max(cfg.minSize, current - step);
-          $patchStyleText(selection, { "font-size": `${next}px` });
-        });
-        return true;
-      },
+      const d3 = editor.registerCommand(
+        TYPIX_DECREASE_FONT_SIZE,
+        (payload) => {
+          const stepVal = payload?.step ?? step?.value ?? config.step;
+          const min = minSize?.value ?? config.minSize;
+          const defSize = defaultSize?.value ?? config.defaultSize;
+          editor.update(() => {
+            const selection = $getSelection();
+            if (!$isRangeSelection(selection)) return;
+            const current =
+              parseFloat(
+                $getSelectionStyleValueForProperty(
+                  selection,
+                  "font-size",
+                  `${defSize}px`
+                )
+              ) || defSize;
+            const next = Math.max(min, current - stepVal);
+            $patchStyleText(selection, { "font-size": `${next}px` });
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
 
-      /** Remove inline font-size from selection (reverts to theme / CSS default). */
-      resetFontSize: (cfg) => (ctx) => {
-        if (cfg.disabled) return false;
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if ($isRangeSelection(selection)) {
-            $patchStyleText(selection, { "font-size": "" });
-          }
-        });
-        return true;
-      },
-    },
-  });
-};
+      const d4 = editor.registerCommand(
+        TYPIX_RESET_FONT_SIZE,
+        () => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              $patchStyleText(selection, { "font-size": "" });
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+
+      return () => {
+        d0();
+        d1();
+        d2();
+        d3();
+        d4();
+      };
+    });
+  },
+});
+
+registerTypixMeta(FontSizeExtension, {
+  commands: {
+    setFontSize: TYPIX_SET_FONT_SIZE,
+    increaseFontSize: TYPIX_INCREASE_FONT_SIZE,
+    decreaseFontSize: TYPIX_DECREASE_FONT_SIZE,
+    resetFontSize: TYPIX_RESET_FONT_SIZE,
+  },
+});

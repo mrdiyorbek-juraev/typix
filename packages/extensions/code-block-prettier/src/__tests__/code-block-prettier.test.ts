@@ -1,56 +1,67 @@
 import { describe, expect, it } from "vitest";
+import { configExtension } from "lexical";
+import { getTypixMeta, getExtensionOutput } from "@typix-editor/core";
 import {
   PrettierFormatterExtension,
   canFormatWithPrettier,
-  getPrettierOutput,
 } from "../extension";
 
 describe("PrettierFormatterExtension", () => {
-  describe("factory", () => {
-    it("returns a valid extension definition", () => {
-      const ext = PrettierFormatterExtension();
-      expect(ext.name).toBe("code-block-prettier");
-      expect(ext.typix).toBeDefined();
-      expect(ext.config).toBeDefined();
+  describe("static extension", () => {
+    it("is a valid extension definition", () => {
+      expect(PrettierFormatterExtension.name).toBe("@typix/code-block-prettier");
+      expect(PrettierFormatterExtension.config).toBeDefined();
     });
   });
 
   describe("config defaults", () => {
     it("sets printOptions to empty object by default", () => {
-      const ext = PrettierFormatterExtension();
-      expect(ext.config?.printOptions).toEqual({});
+      expect(PrettierFormatterExtension.config?.printOptions).toEqual({});
     });
 
-    it("accepts user overrides", () => {
-      const ext = PrettierFormatterExtension({
+    it("accepts user overrides via configExtension", () => {
+      const [, override] = configExtension(PrettierFormatterExtension, {
         printOptions: { tabWidth: 4, useTabs: true },
       });
-      expect(ext.config?.printOptions).toEqual({ tabWidth: 4, useTabs: true });
+      expect(override.printOptions).toEqual({ tabWidth: 4, useTabs: true });
     });
 
-    it("accepts onFormat callback", () => {
+    it("accepts onFormat callback via configExtension", () => {
       const handler = () => {};
-      const ext = PrettierFormatterExtension({ onFormat: handler });
-      expect(ext.config?.onFormat).toBe(handler);
+      const [, override] = configExtension(PrettierFormatterExtension, {
+        onFormat: handler,
+      });
+      expect(override.onFormat).toBe(handler);
     });
 
-    it("accepts onError callback", () => {
+    it("accepts onError callback via configExtension", () => {
       const handler = () => {};
-      const ext = PrettierFormatterExtension({ onError: handler });
-      expect(ext.config?.onError).toBe(handler);
+      const [, override] = configExtension(PrettierFormatterExtension, {
+        onError: handler,
+      });
+      expect(override.onError).toBe(handler);
+    });
+
+    it("merges partial config with defaults via mergeConfig", () => {
+      const merged = PrettierFormatterExtension.mergeConfig!(
+        PrettierFormatterExtension.config!,
+        { printOptions: { tabWidth: 4 } }
+      );
+      expect(merged.printOptions).toEqual({ tabWidth: 4 });
     });
   });
 
   describe("commands", () => {
     it("registers formatWithPrettier command", () => {
-      const ext = PrettierFormatterExtension();
-      expect(ext.commands).toHaveProperty("formatWithPrettier");
+      expect(
+        getTypixMeta(PrettierFormatterExtension)?.commands
+      ).toHaveProperty("formatWithPrettier");
     });
   });
 
-  describe("getPrettierOutput", () => {
+  describe("getExtensionOutput", () => {
     it("returns undefined for an unregistered editor", () => {
-      const result = getPrettierOutput({} as any);
+      const result = getExtensionOutput({} as any, PrettierFormatterExtension);
       expect(result).toBeUndefined();
     });
   });

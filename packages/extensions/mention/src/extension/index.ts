@@ -9,8 +9,7 @@ import {
   type LexicalEditor,
 } from "lexical";
 import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
+  registerExtensionOutput,
 } from "@typix-editor/core";
 import { MentionNode } from "../node";
 import type { MentionItem, MentionSearchFn } from "../types";
@@ -24,17 +23,9 @@ export interface MentionOutput {
   suggestions: Signal<MentionItem[]>;
 }
 
-const _outputByEditor = new WeakMap<LexicalEditor, MentionOutput>();
-
-export function getMentionOutput(
-  editor: LexicalEditor
-): MentionOutput | undefined {
-  return _outputByEditor.get(editor);
-}
-
 // ─── Config ──────────────────────────────────────────────────────────────────
 
-export interface MentionConfig extends TypixExtensionConfig {
+export interface MentionConfig {
   /** Character(s) that trigger the mention menu. @default '@' */
   trigger: string;
   /** Minimum number of characters after trigger before searching. @default 0 */
@@ -104,8 +95,12 @@ function getMentionQuery(
 
 // ─── Extension ───────────────────────────────────────────────────────────────
 
-export const MentionExtension = (userConfig: Partial<MentionConfig> = {}) => {
-  const resolvedConfig: MentionConfig = {
+export const MentionExtension = defineExtension({
+  name: "@typix/mention",
+
+  nodes: () => [MentionNode],
+
+  config: safeCast<MentionConfig>({
     trigger: "@",
     minLength: 0,
     maxLength: 75,
@@ -114,93 +109,83 @@ export const MentionExtension = (userConfig: Partial<MentionConfig> = {}) => {
     debounceMs: 200,
     includeTrigger: true,
     disabled: false,
-    ...userConfig,
-  };
+  }),
 
-  const lexicalExt = defineExtension({
-    name: "@typix/mention",
+  mergeConfig(a: MentionConfig, b: Partial<MentionConfig>): MentionConfig {
+    return { ...a, ...b };
+  },
 
-    nodes: () => [MentionNode],
+  build(editor: LexicalEditor) {
+    const query = signal<string | null>(null);
+    const suggestions = signal<MentionItem[]>([]);
+    const output: MentionOutput = { query, suggestions };
+    registerExtensionOutput(editor, MentionExtension, output);
+    return output;
+  },
 
-    config: safeCast<MentionConfig>(resolvedConfig),
+  register(editor: LexicalEditor, _config: MentionConfig, state: any) {
+    const { query, suggestions } = state.getOutput();
 
-    build(editor) {
-      const query = signal<string | null>(null);
-      const suggestions = signal<MentionItem[]>([]);
-      const output: MentionOutput = { query, suggestions };
-      _outputByEditor.set(editor, output);
-      return output;
-    },
+    const {
+      trigger,
+      minLength,
+      maxLength,
+      allowSpaces,
+      maxSuggestions,
+      debounceMs,
+    } = _config;
 
-    register(editor, _config, state) {
-      const { query, suggestions } = state.getOutput();
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
-      const {
-        trigger,
-        minLength,
-        maxLength,
-        allowSpaces,
-        maxSuggestions,
-        debounceMs,
-      } = resolvedConfig;
-
-      let debounceTimer: ReturnType<typeof setTimeout> | null = null;
-
-      async function resolveSuggestions(q: string): Promise<void> {
-        const src = resolvedConfig.suggestions;
-        if (!src) {
-          suggestions.value = [];
-          return;
-        }
-
-        let items: MentionItem[];
-        if (typeof src === "function") {
-          items = await src(q, trigger);
-        } else {
-          // Static array — filter by prefix
-          const lower = q.toLowerCase();
-          items = src.filter((item) =>
-            item.name.toLowerCase().startsWith(lower)
-          );
-        }
-
-        suggestions.value = items.slice(0, maxSuggestions);
+    async function resolveSuggestions(q: string): Promise<void> {
+      const src = _config.suggestions;
+      if (!src) {
+        suggestions.value = [];
+        return;
       }
 
-      function scheduleSearch(q: string) {
-        if (debounceTimer !== null) clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          resolveSuggestions(q).catch((err) => {
-            console.error("[MentionExtension] suggestions error:", err);
-          });
-        }, debounceMs);
+      let items: MentionItem[];
+      if (typeof src === "function") {
+        items = await src(q, trigger);
+      } else {
+        // Static array — filter by prefix
+        const lower = q.toLowerCase();
+        items = src.filter((item) =>
+          item.name.toLowerCase().startsWith(lower)
+        );
       }
 
-      return editor.registerUpdateListener(({ editorState }) => {
-        editorState.read(() => {
-          const q = getMentionQuery(trigger, minLength, maxLength, allowSpaces);
-          const prev = query.value;
+      suggestions.value = items.slice(0, maxSuggestions);
+    }
 
-          if (q !== prev) {
-            query.value = q;
-            if (q !== null) {
-              scheduleSearch(q);
-            } else {
-              if (debounceTimer !== null) {
-                clearTimeout(debounceTimer);
-                debounceTimer = null;
-              }
-              suggestions.value = [];
-            }
-          }
+    function scheduleSearch(q: string) {
+      if (debounceTimer !== null) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        resolveSuggestions(q).catch((err) => {
+          console.error("[MentionExtension] suggestions error:", err);
         });
-      });
-    },
-  });
+      }, debounceMs);
+    }
 
-  return defineTypixExtension({
-    name: "mention",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
-};
+    return editor.registerUpdateListener(({ editorState }) => {
+      editorState.read(() => {
+        const q = getMentionQuery(trigger, minLength, maxLength, allowSpaces);
+        const prev = query.value;
+
+        if (q !== prev) {
+          query.value = q;
+          if (q !== null) {
+            scheduleSearch(q);
+          } else {
+            if (debounceTimer !== null) {
+              clearTimeout(debounceTimer);
+              debounceTimer = null;
+            }
+            suggestions.value = [];
+          }
+        }
+      });
+    });
+  },
+});
+

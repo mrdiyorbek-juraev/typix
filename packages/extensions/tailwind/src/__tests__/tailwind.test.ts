@@ -5,8 +5,7 @@ describe("TailwindExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = TailwindExtension();
-      expect(ext.name).toBe("tailwind");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/tailwind");
       expect(ext.config).toBeDefined();
     });
   });

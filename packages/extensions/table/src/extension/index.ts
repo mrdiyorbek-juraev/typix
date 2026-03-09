@@ -5,6 +5,8 @@ import {
   $getSelection,
   $createParagraphNode,
   $parseSerializedNode,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
   type LexicalEditor,
   type LexicalNode,
 } from "lexical";
@@ -26,80 +28,25 @@ import {
   $isTableRowNode,
   type InsertTableCommandPayloadHeaders,
 } from "@typix-editor/core/lexical/table";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
+import { registerTypixMeta } from "@typix-editor/core";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-export interface TableConfig extends TypixExtensionConfig {
-  /** Temporarily disable all table behaviors and commands. */
+export interface TableConfig {
   disabled: boolean;
-  /**
-   * Enable cell merging (colspan / rowspan).
-   * When `false`, a transform enforces 1×1 cells on all tables.
-   * Default: `true`
-   */
   hasCellMerge: boolean;
-  /**
-   * Enable per-cell background colors.
-   * When `false`, background colors are stripped from all cells.
-   * Default: `true`
-   */
   hasCellBackgroundColor: boolean;
-  /**
-   * Enable Tab key navigation between cells.
-   * Default: `true`
-   */
   hasTabHandler: boolean;
-  /**
-   * Wrap tables in a scrollable `<div>` to allow horizontal overflow.
-   * Requires `theme.tableScrollableWrapper` to be set in the editor theme.
-   * Default: `true`
-   */
   hasHorizontalScroll: boolean;
-  /**
-   * Allow nested tables (experimental — not officially supported).
-   * Default: `false`
-   */
   hasNestedTables: boolean;
-  /**
-   * Attach CSS modifier classes to scrollable table wrappers so you can
-   * add left/right shadow indicators via plain CSS:
-   *
-   * ```css
-   * .typix-table-scrollable-wrapper--can-scroll-right { box-shadow: inset -8px 0 8px -6px rgba(0,0,0,.15); }
-   * .typix-table-scrollable-wrapper--can-scroll-left  { box-shadow: inset  8px 0 8px -6px rgba(0,0,0,.15); }
-   * ```
-   *
-   * Default: `true`
-   */
   scrollShadow: boolean;
-  /**
-   * CSS class of the scrollable wrapper element produced by `TableNode`.
-   * Must match `theme.tableScrollableWrapper` in your Lexical theme.
-   * Default: `'typix-table-scrollable-wrapper'`
-   */
   scrollableWrapperClass: string;
-  /**
-   * Default number of rows when inserting a table without explicit row count.
-   * @default 3
-   */
   defaultRows?: number;
-  /**
-   * Default number of columns when inserting a table without explicit column count.
-   * @default 3
-   */
   defaultColumns?: number;
 }
 
 // ─── Scroll shadow ───────────────────────────────────────────────────────────
-// Adapted from the Lexical playground's TableScrollShadowPlugin.
-// Rather than React, this runs entirely inside the Lexical register() callback
-// so it works with any UI framework.
 
-/** Inner implementation — `root` is guaranteed non-null by the caller. */
 function _attachScrollShadow(
   root: HTMLElement,
   wrapperClass: string
@@ -109,7 +56,6 @@ function _attachScrollShadow(
 
   function updateScrollState(el: HTMLElement): void {
     const hasScroll = el.scrollWidth > el.clientWidth;
-    // Adding ±1 for floating-point precision (mirrors the playground plugin)
     const canScrollRight =
       hasScroll && el.scrollLeft + el.clientWidth < el.scrollWidth - 1;
     const canScrollLeft = hasScroll && el.scrollLeft > 1;
@@ -132,7 +78,6 @@ function _attachScrollShadow(
     scrollHandlers.set(el, handler);
   }
 
-  // Initialise all already-present wrappers
   updateAll();
   root
     .querySelectorAll<HTMLElement>(`.${wrapperClass}`)
@@ -140,7 +85,6 @@ function _attachScrollShadow(
 
   const resizeObserver = new ResizeObserver(updateAll);
 
-  // Watch for new wrappers being injected into the DOM
   const mutationObserver = new MutationObserver((mutations) => {
     updateAll();
     for (const mutation of mutations) {
@@ -181,7 +125,6 @@ function setupScrollShadow(
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-/** Clears all children from a cell and inserts an empty paragraph. */
 function _clearCell(
   cellNode: import("@typix-editor/core/lexical/table").TableCellNode
 ): void {
@@ -189,55 +132,77 @@ function _clearCell(
   cellNode.append($createParagraphNode());
 }
 
+// ─── Commands ────────────────────────────────────────────────────────────────
+
+export const TYPIX_INSERT_TABLE = createCommand<{
+  rows?: number;
+  columns?: number;
+  includeHeaders?: InsertTableCommandPayloadHeaders;
+} | void>("TYPIX_INSERT_TABLE");
+
+export const TYPIX_INSERT_ROW_ABOVE = createCommand<void>(
+  "TYPIX_INSERT_ROW_ABOVE"
+);
+export const TYPIX_INSERT_ROW_BELOW = createCommand<void>(
+  "TYPIX_INSERT_ROW_BELOW"
+);
+export const TYPIX_INSERT_COLUMN_LEFT = createCommand<void>(
+  "TYPIX_INSERT_COLUMN_LEFT"
+);
+export const TYPIX_INSERT_COLUMN_RIGHT = createCommand<void>(
+  "TYPIX_INSERT_COLUMN_RIGHT"
+);
+export const TYPIX_DELETE_ROW = createCommand<void>("TYPIX_DELETE_ROW");
+export const TYPIX_DELETE_COLUMN = createCommand<void>("TYPIX_DELETE_COLUMN");
+export const TYPIX_DELETE_TABLE = createCommand<void>("TYPIX_DELETE_TABLE");
+export const TYPIX_UNMERGE_CELLS = createCommand<void>("TYPIX_UNMERGE_CELLS");
+export const TYPIX_TOGGLE_HEADER_ROW = createCommand<void>(
+  "TYPIX_TOGGLE_HEADER_ROW"
+);
+export const TYPIX_TOGGLE_HEADER_COLUMN = createCommand<void>(
+  "TYPIX_TOGGLE_HEADER_COLUMN"
+);
+export const TYPIX_CLEAR_CELL_CONTENTS = createCommand<void>(
+  "TYPIX_CLEAR_CELL_CONTENTS"
+);
+export const TYPIX_CLEAR_ROW_CONTENTS = createCommand<void>(
+  "TYPIX_CLEAR_ROW_CONTENTS"
+);
+export const TYPIX_CLEAR_COLUMN_CONTENTS = createCommand<void>(
+  "TYPIX_CLEAR_COLUMN_CONTENTS"
+);
+export const TYPIX_DUPLICATE_ROW = createCommand<void>("TYPIX_DUPLICATE_ROW");
+export const TYPIX_DUPLICATE_COLUMN = createCommand<void>(
+  "TYPIX_DUPLICATE_COLUMN"
+);
+export const TYPIX_SET_CELL_BACKGROUND_COLOR = createCommand<{
+  color: string | null;
+}>("TYPIX_SET_CELL_BACKGROUND_COLOR");
+export const TYPIX_SET_ROW_BACKGROUND_COLOR = createCommand<{
+  color: string | null;
+}>("TYPIX_SET_ROW_BACKGROUND_COLOR");
+export const TYPIX_SET_COLUMN_BACKGROUND_COLOR = createCommand<{
+  color: string | null;
+}>("TYPIX_SET_COLUMN_BACKGROUND_COLOR");
+
+// ─── Static Lexical Table dependency ─────────────────────────────────────────
+
+const DEFAULT_LEXICAL_TABLE = configExtension(LexicalTableExtension, {
+  hasCellMerge: true,
+  hasCellBackgroundColor: true,
+  hasTabHandler: true,
+  hasHorizontalScroll: true,
+  hasNestedTables: false,
+});
+
 // ─── Extension ──────────────────────────────────────────────────────────────
 
-/**
- * TableExtension — full-featured table support for Typix.
- *
- * Registers `TableNode`, `TableRowNode`, `TableCellNode` and all built-in
- * table behaviors (selection, keyboard navigation, Insert/Delete commands,
- * cell merging, horizontal scroll) via `@lexical/table`'s `TableExtension`.
- *
- * Also attaches scroll-shadow CSS classes to scrollable table wrappers so
- * you can add left/right shadow indicators purely via CSS.
- *
- * ### Commands
- * | command                  | attrs                                               |
- * |--------------------------|-----------------------------------------------------|
- * | `insertTable`            | `{ rows?, columns?, includeHeaders? }`              |
- * | `insertRowAbove`         | —                                                   |
- * | `insertRowBelow`         | —                                                   |
- * | `insertColumnLeft`       | —                                                   |
- * | `insertColumnRight`      | —                                                   |
- * | `deleteRow`              | —                                                   |
- * | `deleteColumn`           | —                                                   |
- * | `deleteTable`            | —                                                   |
- * | `unmergeCells`           | —                                                   |
- * | `toggleHeaderRow`        | —                                                   |
- * | `toggleHeaderColumn`     | —                                                   |
- * | `clearCellContents`      | —                                                   |
- * | `clearRowContents`       | —                                                   |
- * | `clearColumnContents`    | —                                                   |
- * | `duplicateRow`           | —                                                   |
- * | `duplicateColumn`        | —                                                   |
- * | `setCellBackgroundColor` | `{ color: string \| null }`                         |
- * | `setRowBackgroundColor`  | `{ color: string \| null }`                         |
- * | `setColumnBackgroundColor`| `{ color: string \| null }`                        |
- *
- * @example
- * ```ts
- * // All defaults
- * extensions={[TableExtension()]}
- *
- * // Disable cell merging, no nested tables
- * extensions={[TableExtension({ hasCellMerge: false })]}
- *
- * // Insert a 4×5 table with headers
- * editor.chain().insertTable({ rows: 4, columns: 5, includeHeaders: true }).run()
- * ```
- */
-export const TableExtension = (userConfig: Partial<TableConfig> = {}) => {
-  const resolvedConfig: TableConfig = {
+export const TableExtension = defineExtension({
+  name: "@typix/table",
+
+  dependencies: [DEFAULT_LEXICAL_TABLE],
+
+  config: safeCast<TableConfig>({
     disabled: false,
     hasCellMerge: true,
     hasCellBackgroundColor: true,
@@ -246,386 +211,414 @@ export const TableExtension = (userConfig: Partial<TableConfig> = {}) => {
     hasNestedTables: false,
     scrollShadow: true,
     scrollableWrapperClass: "typix-table-scrollable-wrapper",
-    ...userConfig,
-  };
+  }),
 
-  // Delegate all Lexical-level table setup (node registration, INSERT_TABLE_COMMAND
-  // handler, cell-merge transforms, tab/arrow navigation) to @lexical/table's
-  // own extension.  Only pass the five fields it understands.
-  const configuredLexicalTable = configExtension(LexicalTableExtension, {
-    hasCellMerge: resolvedConfig.hasCellMerge,
-    hasCellBackgroundColor: resolvedConfig.hasCellBackgroundColor,
-    hasTabHandler: resolvedConfig.hasTabHandler,
-    hasHorizontalScroll: resolvedConfig.hasHorizontalScroll,
-    hasNestedTables: resolvedConfig.hasNestedTables,
-  });
+  mergeConfig(a: TableConfig, b: Partial<TableConfig>): TableConfig {
+    return { ...a, ...b };
+  },
 
-  const lexicalExt = defineExtension({
-    name: "@typix/table",
+  build(_editor: LexicalEditor, config: TableConfig) {
+    return namedSignals(config);
+  },
 
-    // @lexical/table's TableExtension handles everything at the Lexical level.
-    dependencies: [configuredLexicalTable],
+  register(editor: LexicalEditor, _config: TableConfig, state: any) {
+    const {
+      disabled,
+      scrollShadow,
+      scrollableWrapperClass,
+      defaultRows,
+      defaultColumns,
+    } = state.getOutput();
 
-    config: safeCast<TableConfig>(resolvedConfig),
+    return effect(() => {
+      if (disabled.value) return;
 
-    mergeConfig(a: TableConfig, b: Partial<TableConfig>): TableConfig {
-      return { ...a, ...b };
-    },
+      const disposers: Array<() => void> = [];
 
-    build(_editor: LexicalEditor, config: TableConfig) {
-      return namedSignals(config);
-    },
+      if (scrollShadow.value) {
+        disposers.push(setupScrollShadow(editor, scrollableWrapperClass.value));
+      }
 
-    register(editor: LexicalEditor, _config: TableConfig, state: any) {
-      const { disabled, scrollShadow, scrollableWrapperClass } =
-        state.getOutput();
-
-      return effect(() => {
-        if (disabled.value) return;
-        if (!scrollShadow.value) return;
-        return setupScrollShadow(editor, scrollableWrapperClass.value);
-      });
-    },
-  });
-
-  return defineTypixExtension<TableConfig>({
-    name: "table",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      /**
-       * Insert a new table at the current selection.
-       * @param attrs `{ rows?: number, columns?: number, includeHeaders?: boolean | { rows: boolean; columns: boolean } }`
-       */
-      insertTable: (config) => (ctx, attrs) => {
-        const rows = String(
-          (attrs?.rows as number | string | undefined) ??
-            config.defaultRows ??
-            3
-        );
-        const columns = String(
-          (attrs?.columns as number | string | undefined) ??
-            config.defaultColumns ??
-            3
-        );
-        const includeHeaders = (
-          attrs?.includeHeaders !== undefined ? attrs.includeHeaders : true
-        ) as InsertTableCommandPayloadHeaders;
-        ctx.editor.dispatchCommand(INSERT_TABLE_COMMAND, {
-          rows,
-          columns,
-          includeHeaders,
-        });
-        return true;
-      },
-
-      /** Insert a row above the currently focused table cell. */
-      insertRowAbove: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          $insertTableRowAtSelection(false);
-        });
-        return true;
-      },
-
-      /** Insert a row below the currently focused table cell. */
-      insertRowBelow: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          $insertTableRowAtSelection(true);
-        });
-        return true;
-      },
-
-      /** Insert a column to the left of the currently focused table cell. */
-      insertColumnLeft: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          $insertTableColumnAtSelection(false);
-        });
-        return true;
-      },
-
-      /** Insert a column to the right of the currently focused table cell. */
-      insertColumnRight: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          $insertTableColumnAtSelection(true);
-        });
-        return true;
-      },
-
-      /** Delete the row containing the currently focused table cell. */
-      deleteRow: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          $deleteTableRowAtSelection();
-        });
-        return true;
-      },
-
-      /** Delete the column containing the currently focused table cell. */
-      deleteColumn: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          $deleteTableColumnAtSelection();
-        });
-        return true;
-      },
-
-      /**
-       * Delete the entire table that contains the current selection.
-       * No-ops if the selection is not inside a table.
-       */
-      deleteTable: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0];
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          $getTableNodeFromLexicalNodeOrThrow(cellNode).remove();
-        });
-        return true;
-      },
-
-      /**
-       * Unmerge the currently focused merged table cell back into individual cells.
-       * No-ops if the cell is not merged.
-       */
-      unmergeCells: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          $unmergeCell();
-        });
-        return true;
-      },
-
-      /**
-       * Toggle header state for all cells in the table's first row.
-       * If all cells already have the ROW header bit, it is removed; otherwise it is set.
-       */
-      toggleHeaderRow: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-          const firstRow = tableNode.getFirstChild();
-          if (!$isTableRowNode(firstRow)) return;
-          const cells = firstRow.getChildren().filter($isTableCellNode);
-          const isHeaderRow =
-            cells.length > 0 &&
-            cells.every((c) => c.hasHeaderState(TableCellHeaderStates.ROW));
-          const newBit = isHeaderRow
-            ? TableCellHeaderStates.NO_STATUS
-            : TableCellHeaderStates.ROW;
-          for (const cell of cells) {
-            cell.setHeaderStyles(newBit, TableCellHeaderStates.ROW);
-          }
-        });
-        return true;
-      },
-
-      /**
-       * Toggle header state for all cells in the table's first column.
-       * If all cells already have the COLUMN header bit, it is removed; otherwise it is set.
-       */
-      toggleHeaderColumn: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-          const firstColCells = tableNode
-            .getChildren()
-            .filter($isTableRowNode)
-            .map((row) => row.getFirstChild())
-            .filter($isTableCellNode);
-          const isHeaderCol =
-            firstColCells.length > 0 &&
-            firstColCells.every((c) =>
-              c.hasHeaderState(TableCellHeaderStates.COLUMN)
+      disposers.push(
+        editor.registerCommand(
+          TYPIX_INSERT_TABLE,
+          (payload) => {
+            const rows = String(payload?.rows ?? defaultRows?.value ?? 3);
+            const columns = String(
+              payload?.columns ?? defaultColumns?.value ?? 3
             );
-          const newBit = isHeaderCol
-            ? TableCellHeaderStates.NO_STATUS
-            : TableCellHeaderStates.COLUMN;
-          for (const cell of firstColCells) {
-            cell.setHeaderStyles(newBit, TableCellHeaderStates.COLUMN);
-          }
-        });
-        return true;
-      },
+            const includeHeaders = (
+              payload?.includeHeaders !== undefined
+                ? payload.includeHeaders
+                : true
+            ) as InsertTableCommandPayloadHeaders;
+            editor.dispatchCommand(INSERT_TABLE_COMMAND, {
+              rows,
+              columns,
+              includeHeaders,
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_INSERT_ROW_ABOVE,
+          () => {
+            editor.update(() => $insertTableRowAtSelection(false));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_INSERT_ROW_BELOW,
+          () => {
+            editor.update(() => $insertTableRowAtSelection(true));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_INSERT_COLUMN_LEFT,
+          () => {
+            editor.update(() => $insertTableColumnAtSelection(false));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_INSERT_COLUMN_RIGHT,
+          () => {
+            editor.update(() => $insertTableColumnAtSelection(true));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_DELETE_ROW,
+          () => {
+            editor.update(() => $deleteTableRowAtSelection());
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_DELETE_COLUMN,
+          () => {
+            editor.update(() => $deleteTableColumnAtSelection());
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_DELETE_TABLE,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              $getTableNodeFromLexicalNodeOrThrow(cellNode).remove();
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_UNMERGE_CELLS,
+          () => {
+            editor.update(() => $unmergeCell());
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_TOGGLE_HEADER_ROW,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              const firstRow = tableNode.getFirstChild();
+              if (!$isTableRowNode(firstRow)) return;
+              const cells = firstRow.getChildren().filter($isTableCellNode);
+              const isHeaderRow =
+                cells.length > 0 &&
+                cells.every((c) =>
+                  c.hasHeaderState(TableCellHeaderStates.ROW)
+                );
+              const newBit = isHeaderRow
+                ? TableCellHeaderStates.NO_STATUS
+                : TableCellHeaderStates.ROW;
+              for (const cell of cells) {
+                cell.setHeaderStyles(newBit, TableCellHeaderStates.ROW);
+              }
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_TOGGLE_HEADER_COLUMN,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              const firstColCells = tableNode
+                .getChildren()
+                .filter($isTableRowNode)
+                .map((row) => row.getFirstChild())
+                .filter($isTableCellNode);
+              const isHeaderCol =
+                firstColCells.length > 0 &&
+                firstColCells.every((c) =>
+                  c.hasHeaderState(TableCellHeaderStates.COLUMN)
+                );
+              const newBit = isHeaderCol
+                ? TableCellHeaderStates.NO_STATUS
+                : TableCellHeaderStates.COLUMN;
+              for (const cell of firstColCells) {
+                cell.setHeaderStyles(newBit, TableCellHeaderStates.COLUMN);
+              }
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_CLEAR_CELL_CONTENTS,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              _clearCell(cellNode);
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_CLEAR_ROW_CONTENTS,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const rowNode =
+                $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
+              for (const cell of rowNode
+                .getChildren()
+                .filter($isTableCellNode)) {
+                _clearCell(cell);
+              }
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_CLEAR_COLUMN_CONTENTS,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const colIndex =
+                $getTableColumnIndexFromTableCellNode(cellNode);
+              const tableNode =
+                $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              for (const row of tableNode
+                .getChildren()
+                .filter($isTableRowNode)) {
+                const cells = row.getChildren().filter($isTableCellNode);
+                const cell = cells[colIndex];
+                if (cell) _clearCell(cell);
+              }
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_DUPLICATE_ROW,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const rowNode =
+                $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
+              const clone = $parseSerializedNode(rowNode.exportJSON());
+              rowNode.insertAfter(clone);
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_DUPLICATE_COLUMN,
+          () => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const colIndex =
+                $getTableColumnIndexFromTableCellNode(cellNode);
+              const tableNode =
+                $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              for (const row of tableNode
+                .getChildren()
+                .filter($isTableRowNode)) {
+                const cells = row.getChildren().filter($isTableCellNode);
+                const sourceCell = cells[colIndex];
+                if (!sourceCell) continue;
+                const clone = $parseSerializedNode(sourceCell.exportJSON());
+                sourceCell.insertAfter(clone);
+              }
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_SET_CELL_BACKGROUND_COLOR,
+          ({ color }) => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              cellNode.setBackgroundColor(color);
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_SET_ROW_BACKGROUND_COLOR,
+          ({ color }) => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const rowNode =
+                $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
+              for (const cell of rowNode
+                .getChildren()
+                .filter($isTableCellNode)) {
+                cell.setBackgroundColor(color);
+              }
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_SET_COLUMN_BACKGROUND_COLOR,
+          ({ color }) => {
+            editor.update(() => {
+              const selection = $getSelection();
+              if (!selection) return;
+              const firstNode = selection.getNodes()[0] as
+                | LexicalNode
+                | undefined;
+              if (!firstNode) return;
+              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+              if (!cellNode) return;
+              const colIndex =
+                $getTableColumnIndexFromTableCellNode(cellNode);
+              const tableNode =
+                $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              for (const row of tableNode
+                .getChildren()
+                .filter($isTableRowNode)) {
+                const cells = row.getChildren().filter($isTableCellNode);
+                const cell = cells[colIndex];
+                if (cell) cell.setBackgroundColor(color);
+              }
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        )
+      );
 
-      /** Clear all content from the currently focused table cell. */
-      clearCellContents: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          _clearCell(cellNode);
-        });
-        return true;
-      },
+      return () => disposers.forEach((d) => d());
+    });
+  },
+});
 
-      /** Clear all content from every cell in the row of the focused cell. */
-      clearRowContents: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const rowNode = $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
-          for (const cell of rowNode.getChildren().filter($isTableCellNode)) {
-            _clearCell(cell);
-          }
-        });
-        return true;
-      },
-
-      /** Clear all content from every cell in the column of the focused cell. */
-      clearColumnContents: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
-          const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-          for (const row of tableNode.getChildren().filter($isTableRowNode)) {
-            const cells = row.getChildren().filter($isTableCellNode);
-            const cell = cells[colIndex];
-            if (cell) _clearCell(cell);
-          }
-        });
-        return true;
-      },
-
-      /**
-       * Duplicate the row containing the focused cell, inserting the clone
-       * immediately below the original.
-       */
-      duplicateRow: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const rowNode = $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
-          const clone = $parseSerializedNode(rowNode.exportJSON());
-          rowNode.insertAfter(clone);
-        });
-        return true;
-      },
-
-      /**
-       * Duplicate the column containing the focused cell, inserting the clone
-       * immediately to the right of the original.
-       */
-      duplicateColumn: (_config) => (ctx) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
-          const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-          for (const row of tableNode.getChildren().filter($isTableRowNode)) {
-            const cells = row.getChildren().filter($isTableCellNode);
-            const sourceCell = cells[colIndex];
-            if (!sourceCell) continue;
-            const clone = $parseSerializedNode(sourceCell.exportJSON());
-            sourceCell.insertAfter(clone);
-          }
-        });
-        return true;
-      },
-
-      /**
-       * Set the background color of the currently focused table cell.
-       * @param attrs `{ color: string | null }` — pass `null` to clear
-       */
-      setCellBackgroundColor: (_config) => (ctx, attrs) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          cellNode.setBackgroundColor(
-            (attrs?.color as string | null | undefined) ?? null
-          );
-        });
-        return true;
-      },
-
-      /**
-       * Set the background color of every cell in the row of the focused cell.
-       * @param attrs `{ color: string | null }` — pass `null` to clear
-       */
-      setRowBackgroundColor: (_config) => (ctx, attrs) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const rowNode = $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
-          const color = (attrs?.color as string | null | undefined) ?? null;
-          for (const cell of rowNode.getChildren().filter($isTableCellNode)) {
-            cell.setBackgroundColor(color);
-          }
-        });
-        return true;
-      },
-
-      /**
-       * Set the background color of every cell in the column of the focused cell.
-       * @param attrs `{ color: string | null }` — pass `null` to clear
-       */
-      setColumnBackgroundColor: (_config) => (ctx, attrs) => {
-        ctx.editor.update(() => {
-          const selection = $getSelection();
-          if (!selection) return;
-          const nodes = selection.getNodes();
-          const firstNode = nodes[0] as LexicalNode | undefined;
-          if (!firstNode) return;
-          const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-          if (!cellNode) return;
-          const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
-          const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-          const color = (attrs?.color as string | null | undefined) ?? null;
-          for (const row of tableNode.getChildren().filter($isTableRowNode)) {
-            const cells = row.getChildren().filter($isTableCellNode);
-            const cell = cells[colIndex];
-            if (cell) cell.setBackgroundColor(color);
-          }
-        });
-        return true;
-      },
-    },
-  });
-};
+registerTypixMeta(TableExtension, {
+  commands: {
+    insertTable: TYPIX_INSERT_TABLE,
+    insertRowAbove: TYPIX_INSERT_ROW_ABOVE,
+    insertRowBelow: TYPIX_INSERT_ROW_BELOW,
+    insertColumnLeft: TYPIX_INSERT_COLUMN_LEFT,
+    insertColumnRight: TYPIX_INSERT_COLUMN_RIGHT,
+    deleteRow: TYPIX_DELETE_ROW,
+    deleteColumn: TYPIX_DELETE_COLUMN,
+    deleteTable: TYPIX_DELETE_TABLE,
+    unmergeCells: TYPIX_UNMERGE_CELLS,
+    toggleHeaderRow: TYPIX_TOGGLE_HEADER_ROW,
+    toggleHeaderColumn: TYPIX_TOGGLE_HEADER_COLUMN,
+    clearCellContents: TYPIX_CLEAR_CELL_CONTENTS,
+    clearRowContents: TYPIX_CLEAR_ROW_CONTENTS,
+    clearColumnContents: TYPIX_CLEAR_COLUMN_CONTENTS,
+    duplicateRow: TYPIX_DUPLICATE_ROW,
+    duplicateColumn: TYPIX_DUPLICATE_COLUMN,
+    setCellBackgroundColor: TYPIX_SET_CELL_BACKGROUND_COLOR,
+    setRowBackgroundColor: TYPIX_SET_ROW_BACKGROUND_COLOR,
+    setColumnBackgroundColor: TYPIX_SET_COLUMN_BACKGROUND_COLOR,
+  },
+});

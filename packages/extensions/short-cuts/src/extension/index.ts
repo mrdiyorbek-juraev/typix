@@ -39,10 +39,6 @@ import {
   safeCast,
 } from "lexical";
 import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
-import {
   isCapitalize,
   isCenterAlign,
   isClearFormatting,
@@ -101,7 +97,7 @@ export type ShortcutName =
   | "clearFormatting"
   | "insertLink";
 
-export interface ShortCutsConfig extends TypixExtensionConfig {
+export interface ShortCutsConfig {
   /** Set to true to temporarily disable all keyboard shortcuts. */
   disabled: boolean;
   /**
@@ -456,9 +452,5 @@ export const ShortCutsExtension = (
     },
   });
 
-  return defineTypixExtension({
-    name: "short-cuts",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

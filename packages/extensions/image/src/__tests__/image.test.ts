@@ -1,55 +1,64 @@
 import { describe, expect, it } from "vitest";
+import { configExtension } from "lexical";
+import { getTypixMeta } from "@typix-editor/core";
 import { ImageExtension } from "../extension";
 
 describe("ImageExtension", () => {
-  describe("factory", () => {
-    it("returns a valid extension definition", () => {
-      const ext = ImageExtension();
-      expect(ext.name).toBe("image");
-      expect(ext.typix).toBeDefined();
-      expect(ext.config).toBeDefined();
+  describe("static extension", () => {
+    it("is a valid extension definition", () => {
+      expect(ImageExtension.name).toBe("@typix/image");
+      expect(ImageExtension.config).toBeDefined();
     });
   });
 
   describe("config defaults", () => {
     it("sets disabled to false by default", () => {
-      const ext = ImageExtension();
-      expect(ext.config?.disabled).toBe(false);
+      expect(ImageExtension.config?.disabled).toBe(false);
     });
 
     it("sets maxWidth to 800 by default", () => {
-      const ext = ImageExtension();
-      expect(ext.config?.maxWidth).toBe(800);
+      expect(ImageExtension.config?.maxWidth).toBe(800);
     });
 
     it("leaves component undefined by default", () => {
-      const ext = ImageExtension();
-      expect(ext.config?.component).toBeUndefined();
+      expect(ImageExtension.config?.component).toBeUndefined();
     });
 
-    it("accepts user overrides", () => {
-      const ext = ImageExtension({
+    it("accepts user overrides via configExtension", () => {
+      const [, override] = configExtension(ImageExtension, {
         disabled: true,
         maxWidth: 1200,
         allowedTypes: ["image/png", "image/jpeg"],
       });
-      expect(ext.config?.disabled).toBe(true);
-      expect(ext.config?.maxWidth).toBe(1200);
-      expect(ext.config?.allowedTypes).toEqual(["image/png", "image/jpeg"]);
+      expect(override.disabled).toBe(true);
+      expect(override.maxWidth).toBe(1200);
+      expect(override.allowedTypes).toEqual(["image/png", "image/jpeg"]);
+    });
+
+    it("merges partial config with defaults via mergeConfig", () => {
+      const merged = ImageExtension.mergeConfig!(ImageExtension.config!, {
+        maxWidth: 1200,
+      });
+      expect(merged.disabled).toBe(false);
+      expect(merged.maxWidth).toBe(1200);
     });
   });
 
   describe("config callbacks", () => {
-    it("accepts onInsert callback", () => {
+    it("accepts onInsert callback via configExtension", () => {
       const handler = () => {};
-      const ext = ImageExtension({ onInsert: handler });
-      expect(ext.config?.onInsert).toBe(handler);
+      const [, override] = configExtension(ImageExtension, {
+        onInsert: handler,
+      });
+      expect(override.onInsert).toBe(handler);
     });
 
-    it("accepts onDelete callback", () => {
+    it("accepts onDelete callback via configExtension", () => {
       const handler = () => {};
-      const ext = ImageExtension({ onDelete: handler });
-      expect(ext.config?.onDelete).toBe(handler);
+      const [, override] = configExtension(ImageExtension, {
+        onDelete: handler,
+      });
+      expect(override.onDelete).toBe(handler);
     });
   });
 
@@ -63,13 +72,13 @@ describe("ImageExtension", () => {
     ];
 
     it("registers all 5 commands", () => {
-      const ext = ImageExtension();
-      expect(Object.keys(ext.commands ?? {})).toHaveLength(5);
+      expect(
+        Object.keys(getTypixMeta(ImageExtension)?.commands ?? {})
+      ).toHaveLength(5);
     });
 
     it.each(commandNames)("registers %s command", (name) => {
-      const ext = ImageExtension();
-      expect(ext.commands).toHaveProperty(name);
+      expect(getTypixMeta(ImageExtension)?.commands).toHaveProperty(name);
     });
   });
 });

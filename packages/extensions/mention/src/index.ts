@@ -1,6 +1,5 @@
 export {
   MentionExtension,
-  getMentionOutput,
   type MentionConfig,
   type MentionOutput,
 } from "./extension";

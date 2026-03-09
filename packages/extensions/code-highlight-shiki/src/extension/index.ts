@@ -1,12 +1,8 @@
 import { effect, namedSignals } from "@typix-editor/core/lexical/extension";
 import { registerCodeHighlighting } from "@typix-editor/core/lexical/code-shiki";
 import { defineExtension, safeCast } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
-export interface CodeHighlightShikiConfig extends TypixExtensionConfig {
+export interface CodeHighlightShikiConfig {
   /** Set to true to temporarily disable code highlighting. */
   disabled: boolean;
   /**
@@ -45,9 +41,5 @@ export const CodeHighlightShikiExtension = (
     },
   });
 
-  return defineTypixExtension({
-    name: "code-highlight-shiki",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

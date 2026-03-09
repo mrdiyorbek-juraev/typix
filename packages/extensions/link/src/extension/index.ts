@@ -5,94 +5,107 @@ import {
   LinkNode,
   TOGGLE_LINK_COMMAND,
 } from "@typix-editor/core/lexical/link";
-import { COMMAND_PRIORITY_EDITOR, defineExtension, safeCast } from "lexical";
 import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
+  defineExtension,
+  safeCast,
+} from "lexical";
+import { registerTypixMeta } from "@typix-editor/core";
 
-export interface LinkConfig extends TypixExtensionConfig {
+export interface LinkConfig {
   /** Set to true to temporarily disable link toggle handling. */
   disabled: boolean;
   validateUrl?: ((url: string) => boolean) | undefined;
   attributes?: LinkAttributes | undefined;
 }
 
-export const LinkExtension = (userConfig: Partial<LinkConfig> = {}) => {
-  const resolvedConfig: LinkConfig = {
-    disabled: false,
-    ...userConfig,
-  };
+export const TYPIX_SET_LINK = createCommand<{ url: string } & LinkAttributes>(
+  "TYPIX_SET_LINK"
+);
+export const TYPIX_UNSET_LINK = createCommand<void>("TYPIX_UNSET_LINK");
 
-  const lexicalExt = defineExtension({
-    name: "@typix/link",
+export const LinkExtension = defineExtension({
+  name: "@typix/link",
 
-    nodes: () => [LinkNode],
+  nodes: () => [LinkNode],
 
-    config: safeCast<LinkConfig>(resolvedConfig),
+  config: safeCast<LinkConfig>({ disabled: false }),
 
-    build(_editor, config) {
-      return namedSignals(config);
-    },
+  mergeConfig(a: LinkConfig, b: Partial<LinkConfig>): LinkConfig {
+    return { ...a, ...b };
+  },
 
-    register(editor, _config, state) {
-      const { disabled, validateUrl, attributes } = state.getOutput();
+  build(_editor, config) {
+    return namedSignals(config);
+  },
 
-      return effect(() => {
-        if (disabled.value) return;
+  register(editor, config, state) {
+    const { disabled, validateUrl, attributes } = state.getOutput();
 
-        return editor.registerCommand(
-          TOGGLE_LINK_COMMAND,
-          (payload) => {
-            // Read config signals inside handler so they're always current
-            // without creating subscriptions in the effect.
-            const currentValidateUrl = validateUrl?.value;
-            const defaultAttributes = attributes?.value;
+    return effect(() => {
+      if (disabled.value) return;
 
-            if (payload === null) {
-              $toggleLink(null);
-              return true;
-            }
-            if (typeof payload === "string") {
-              if (
-                currentValidateUrl === undefined ||
-                currentValidateUrl(payload)
-              ) {
-                $toggleLink(payload, defaultAttributes);
-                return true;
-              }
-              return false;
-            }
-            const { url, ...payloadAttrs } = payload;
-            if (currentValidateUrl === undefined || currentValidateUrl(url)) {
-              $toggleLink(url, { ...defaultAttributes, ...payloadAttrs });
+      const d0 = editor.registerCommand(
+        TOGGLE_LINK_COMMAND,
+        (payload) => {
+          const currentValidateUrl = validateUrl?.value;
+          const defaultAttributes = attributes?.value;
+
+          if (payload === null) {
+            $toggleLink(null);
+            return true;
+          }
+          if (typeof payload === "string") {
+            if (
+              currentValidateUrl === undefined ||
+              currentValidateUrl(payload)
+            ) {
+              $toggleLink(payload, defaultAttributes);
               return true;
             }
             return false;
-          },
-          COMMAND_PRIORITY_EDITOR
-        );
-      });
-    },
-  });
+          }
+          const { url, ...payloadAttrs } = payload;
+          if (currentValidateUrl === undefined || currentValidateUrl(url)) {
+            $toggleLink(url, { ...defaultAttributes, ...payloadAttrs });
+            return true;
+          }
+          return false;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
 
-  return defineTypixExtension({
-    name: "link",
-    typix: lexicalExt,
-    config: resolvedConfig,
-    commands: {
-      setLink: () => (ctx, attrs) => {
-        const url = (attrs as Record<string, unknown>)?.url as
-          | string
-          | undefined;
-        if (!url) return false;
-        ctx.editor.dispatchCommand(TOGGLE_LINK_COMMAND, url);
-        return true;
-      },
-      unsetLink: () => (ctx) => {
-        ctx.editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
-        return true;
-      },
-    },
-  });
-};
+      const d1 = editor.registerCommand(
+        TYPIX_SET_LINK,
+        ({ url, ...attrs }) => {
+          editor.dispatchCommand(TOGGLE_LINK_COMMAND, { url, ...attrs });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+
+      const d2 = editor.registerCommand(
+        TYPIX_UNSET_LINK,
+        () => {
+          editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+
+      return () => {
+        d0();
+        d1();
+        d2();
+      };
+    });
+  },
+});
+
+registerTypixMeta(LinkExtension, {
+  commands: {
+    setLink: TYPIX_SET_LINK,
+    unsetLink: TYPIX_UNSET_LINK,
+  },
+});

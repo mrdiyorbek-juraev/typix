@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { CodeBlockExtension, getCodeBlockOutput } from "../extension";
+import { configExtension } from "lexical";
+import { getTypixMeta, getExtensionOutput } from "@typix-editor/core";
+import { CodeBlockExtension } from "../extension";
 import {
   searchLanguages,
   getLanguageDisplayName,
@@ -9,62 +11,70 @@ import {
 } from "../languages";
 
 describe("CodeBlockExtension", () => {
-  describe("factory", () => {
-    it("returns a valid extension definition", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.name).toBe("code-block");
-      expect(ext.typix).toBeDefined();
-      expect(ext.config).toBeDefined();
+  describe("static extension", () => {
+    it("is a valid extension definition", () => {
+      expect(CodeBlockExtension.name).toBe("@typix/code-block");
+      expect(CodeBlockExtension.config).toBeDefined();
     });
   });
 
   describe("config defaults", () => {
     it("sets disabled to false by default", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.config?.disabled).toBe(false);
+      expect(CodeBlockExtension.config?.disabled).toBe(false);
     });
 
     it("sets defaultLanguage to javascript by default", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.config?.defaultLanguage).toBe("javascript");
+      expect(CodeBlockExtension.config?.defaultLanguage).toBe("javascript");
     });
 
-    it("accepts user overrides", () => {
-      const ext = CodeBlockExtension({
+    it("accepts user overrides via configExtension", () => {
+      const [, override] = configExtension(CodeBlockExtension, {
         disabled: true,
         defaultLanguage: "python",
       });
-      expect(ext.config?.disabled).toBe(true);
-      expect(ext.config?.defaultLanguage).toBe("python");
+      expect(override.disabled).toBe(true);
+      expect(override.defaultLanguage).toBe("python");
+    });
+
+    it("merges partial config with defaults via mergeConfig", () => {
+      const merged = CodeBlockExtension.mergeConfig!(
+        CodeBlockExtension.config!,
+        { defaultLanguage: "python" }
+      );
+      expect(merged.disabled).toBe(false);
+      expect(merged.defaultLanguage).toBe("python");
     });
   });
 
   describe("commands", () => {
     it("registers insertCodeBlock command", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.commands).toHaveProperty("insertCodeBlock");
+      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
+        "insertCodeBlock"
+      );
     });
 
     it("registers setCodeLanguage command", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.commands).toHaveProperty("setCodeLanguage");
+      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
+        "setCodeLanguage"
+      );
     });
 
     it("registers copyCode command", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.commands).toHaveProperty("copyCode");
+      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
+        "copyCode"
+      );
     });
 
     it("registers deleteCodeBlock command", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.commands).toHaveProperty("deleteCodeBlock");
+      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
+        "deleteCodeBlock"
+      );
     });
   });
 
   describe("shortcuts", () => {
     it("registers Ctrl+Alt+` shortcut for insertCodeBlock", () => {
-      const ext = CodeBlockExtension();
-      expect(ext.shortcuts).toEqual(
+      expect(getTypixMeta(CodeBlockExtension)?.shortcuts).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             key: "`",
@@ -76,10 +86,9 @@ describe("CodeBlockExtension", () => {
     });
   });
 
-  describe("getCodeBlockOutput", () => {
+  describe("getExtensionOutput", () => {
     it("returns undefined for an unregistered editor", () => {
-      // Without a real editor, the output map won't have an entry
-      const result = getCodeBlockOutput({} as any);
+      const result = getExtensionOutput({} as any, CodeBlockExtension);
       expect(result).toBeUndefined();
     });
   });

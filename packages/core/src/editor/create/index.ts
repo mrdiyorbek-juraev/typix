@@ -69,7 +69,7 @@ export function createTypix(options: CreateTypixOptions): TypixEditorInstance {
         editable,
         theme,
         onError,
-        dependencies: registry.getLexicalExtensions(), 
+        dependencies: extensions,
     })
 
     // 3. Build the Lexical editor

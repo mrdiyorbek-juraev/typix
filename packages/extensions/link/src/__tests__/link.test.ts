@@ -1,52 +1,56 @@
 import { describe, expect, it } from "vitest";
+import { configExtension } from "lexical";
+import { getTypixMeta } from "@typix-editor/core";
 import { LinkExtension } from "../extension";
 
 describe("LinkExtension", () => {
-  describe("factory", () => {
-    it("returns a valid extension definition", () => {
-      const ext = LinkExtension();
-      expect(ext.name).toBe("link");
-      expect(ext.typix).toBeDefined();
-      expect(ext.config).toBeDefined();
+  describe("static extension", () => {
+    it("is a valid extension definition", () => {
+      expect(LinkExtension.name).toBe("@typix/link");
+      expect(LinkExtension.config).toBeDefined();
     });
   });
 
   describe("config defaults", () => {
     it("sets disabled to false by default", () => {
-      const ext = LinkExtension();
-      expect(ext.config?.disabled).toBe(false);
+      expect(LinkExtension.config?.disabled).toBe(false);
     });
 
     it("leaves validateUrl undefined by default", () => {
-      const ext = LinkExtension();
-      expect(ext.config?.validateUrl).toBeUndefined();
+      expect(LinkExtension.config?.validateUrl).toBeUndefined();
     });
 
     it("leaves attributes undefined by default", () => {
-      const ext = LinkExtension();
-      expect(ext.config?.attributes).toBeUndefined();
+      expect(LinkExtension.config?.attributes).toBeUndefined();
     });
 
-    it("accepts user overrides", () => {
+    it("accepts user overrides via configExtension", () => {
       const validator = (url: string) => url.startsWith("https://");
-      const ext = LinkExtension({
+      const [, override] = configExtension(LinkExtension, {
         disabled: true,
         validateUrl: validator,
       });
-      expect(ext.config?.disabled).toBe(true);
-      expect(ext.config?.validateUrl).toBe(validator);
+      expect(override.disabled).toBe(true);
+      expect(override.validateUrl).toBe(validator);
+    });
+
+    it("merges partial config with defaults via mergeConfig", () => {
+      const validator = (url: string) => url.startsWith("https://");
+      const merged = LinkExtension.mergeConfig!(LinkExtension.config!, {
+        validateUrl: validator,
+      });
+      expect(merged.disabled).toBe(false);
+      expect(merged.validateUrl).toBe(validator);
     });
   });
 
   describe("commands", () => {
     it("registers setLink command", () => {
-      const ext = LinkExtension();
-      expect(ext.commands).toHaveProperty("setLink");
+      expect(getTypixMeta(LinkExtension)?.commands).toHaveProperty("setLink");
     });
 
     it("registers unsetLink command", () => {
-      const ext = LinkExtension();
-      expect(ext.commands).toHaveProperty("unsetLink");
+      expect(getTypixMeta(LinkExtension)?.commands).toHaveProperty("unsetLink");
     });
   });
 });

@@ -5,8 +5,7 @@ describe("MarkdownShortcutsExtension", () => {
   describe("factory", () => {
     it("returns a valid extension definition", () => {
       const ext = MarkdownShortcutsExtension();
-      expect(ext.name).toBe("markdown-shortcuts");
-      expect(ext.typix).toBeDefined();
+      expect(ext.name).toBe("@typix/markdown-shortcuts");
       expect(ext.config).toBeDefined();
     });
   });

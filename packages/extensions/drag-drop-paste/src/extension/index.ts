@@ -8,10 +8,6 @@ import {
   defineExtension,
   safeCast,
 } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 
 export interface InsertImagePayload {
   src: string;
@@ -24,7 +20,7 @@ export interface InsertImagePayload {
   key?: string;
 }
 
-export interface DragDropPasteConfig extends TypixExtensionConfig {
+export interface DragDropPasteConfig {
   /** Set to true to temporarily disable drag-drop-paste handling. */
   disabled: boolean;
   acceptedTypes?: string[];
@@ -90,7 +86,7 @@ export const DragDropPasteExtension = (
     build(_editor, config) {
       return namedSignals(config);
     },
-
+    
     register(editor, _config, state) {
       const {
         disabled,
@@ -197,9 +193,5 @@ export const DragDropPasteExtension = (
     },
   });
 
-  return defineTypixExtension({
-    name: "drag-drop-paste",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };

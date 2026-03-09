@@ -1,7 +1,6 @@
 import { $getSelection, $isRangeSelection, type LexicalEditor } from 'lexical'
 import type {
     TypixEditorInstance,
-    TypixExtensionDefinition,
     TypixEventName,
     TypixEventListener,
     SerializedContent,
@@ -205,13 +204,8 @@ export class TypixEditor implements TypixEditorInstance {
     }
 
     run(command: string, ...args: unknown[]): boolean {
-        // Try extension commands (config pre-bound at registration)
-        const handler = this._registry.getCommand(command)
-        if (handler) {
-            const attrs = args[0] as Record<string, unknown> | undefined
-            return handler({ editor: this._lexical, commands: this._makeBuiltinCommands() }, attrs) !== false
-        }
-        // Try built-ins
+        const lexicalCmd = this._registry.getLexicalCommand(command)
+        if (lexicalCmd) return this._lexical.dispatchCommand(lexicalCmd, args[0])
         return executeBuiltinCommand(this._lexical, command, args)
     }
 
@@ -243,14 +237,6 @@ export class TypixEditor implements TypixEditorInstance {
     // ─────────────────────────────────────────
     // Extensions
     // ─────────────────────────────────────────
-
-    hasExtension(name: string): boolean {
-        return this._registry.hasExtension(name)
-    }
-
-    getExtension<T extends TypixExtensionDefinition>(name: string): T | undefined {
-        return this._registry.getExtension<T>(name)
-    }
 
     getShortcuts() {
         return this._registry.getAllShortcuts()
@@ -300,16 +286,6 @@ export class TypixEditor implements TypixEditorInstance {
         })
 
         this._disposers.push(unregisterUpdate, unregisterEditable, unregisterRoot)
-
-        // Run extension onCreated hooks
-        for (const extension of this._registry.getAllExtensions()) {
-            if (extension.onCreated) {
-                const cleanup = extension.onCreated(this._lexical, extension.config ?? {})
-                if (cleanup) {
-                    this._disposers.push(cleanup)
-                }
-            }
-        }
     }
 
     private _removeDomListeners(): void {
@@ -317,21 +293,6 @@ export class TypixEditor implements TypixEditorInstance {
             if (this._handleFocus) this._currentRoot.removeEventListener('focus', this._handleFocus)
             if (this._handleBlur) this._currentRoot.removeEventListener('blur', this._handleBlur)
             this._currentRoot = null
-        }
-    }
-
-    private _makeBuiltinCommands() {
-        const editor = this._lexical
-        return {
-            toggleMark: (type: string, attrs?: Record<string, unknown>) =>
-                executeBuiltinCommand(editor, 'toggleMark', [type, attrs]),
-            toggleBlock: (type: string, attrs?: Record<string, unknown>) =>
-                executeBuiltinCommand(editor, 'toggleBlock', [type, attrs]),
-            setContent: (content: SerializedContent) =>
-                executeBuiltinCommand(editor, 'setContent', [content]),
-            clearContent: () => executeBuiltinCommand(editor, 'clearContent', []),
-            focus: () => executeBuiltinCommand(editor, 'focus', []),
-            blur: () => executeBuiltinCommand(editor, 'blur', []),
         }
     }
 }

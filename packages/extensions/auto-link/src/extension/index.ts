@@ -7,10 +7,6 @@ import {
   registerAutoLink,
 } from "@typix-editor/core/lexical/link";
 import { defineExtension, safeCast } from "lexical";
-import {
-  defineTypixExtension,
-  type TypixExtensionConfig,
-} from "@typix-editor/core";
 import { EMAIL_REGEX, URL_REGEX } from "../lib";
 
 export const MATCHERS: LinkMatcher[] = [
@@ -20,7 +16,7 @@ export const MATCHERS: LinkMatcher[] = [
   createLinkMatcherWithRegExp(EMAIL_REGEX, (text) => `mailto:${text}`),
 ];
 
-export interface AutoLinkConfig extends TypixExtensionConfig {
+export interface AutoLinkConfig {
   /** Set to true to temporarily disable auto-link detection. */
   disabled: boolean;
   matchers?: LinkMatcher[];
@@ -86,9 +82,5 @@ export const AutoLinkExtension = (userConfig: Partial<AutoLinkConfig> = {}) => {
     },
   });
 
-  return defineTypixExtension({
-    name: "auto-link",
-    typix: lexicalExt,
-    config: resolvedConfig,
-  });
+  return lexicalExt;
 };
