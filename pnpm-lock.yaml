@@ -195,6 +195,9 @@ importers:
       '@typix-editor/ui':
         specifier: workspace:*
         version: link:../../packages/design-system
+      '@typix-editor/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1

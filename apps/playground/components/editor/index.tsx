@@ -1,45 +1,61 @@
 "use client";
+
+// ─── Core editor ────────────────────────────────────────────────────────────
+import type { SerializedContent } from "@typix-editor/core";
 import {
   EditorContent,
   TypixEditorContext,
   defaultTheme,
   useTypixEditor,
 } from "@typix-editor/react";
+
+// ─── Lexical ───────────────────────────────────────────────────────────────
+// IMPORTANT: every @typix-editor/extension-* must be imported ONCE here.
+// Importing the same extension via two paths (a tsconfig alias and the
+// real package name, for example) produces two distinct module instances
+// that share a `name` — Lexical's builder rejects that with error #298.
 import type { AnyLexicalExtensionArgument } from "lexical";
 import { configExtension } from "lexical";
+
+// ─── Extensions ─────────────────────────────────────────────────────────────
 import { StarterKit } from "@typix-editor/extension-starter-kit";
 import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
 import { ImageExtension } from "@typix-editor/extension-image";
 import { MentionExtension } from "@typix-editor/extension-mention";
+import { CodeBlockExtension } from "@typix-editor/extension-code-block";
 import { PrettierFormatterExtension } from "@typix-editor/extension-code-block-prettier";
 import { SpeechToTextExtension } from "@typix-editor/extension-speech-to-text";
 import { MarkdownShortcutsExtension } from "@typix-editor/extension-markdown-shortcuts";
 import { TabFocusExtension } from "@typix-editor/extension-tab-focus";
 import { TableExtension } from "@typix-editor/extension-table";
-import {
-  FloatingLinkUI,
-  DraggableBlock,
-  SlashDropdownMenu,
-  CharacterLimit,
-  EditorContextMenu,
-  imageRenderer,
-  MentionUI,
-  CodeBlockUI,
-  TableUI,
-} from "@typix-editor/ui";
-import { EditorToolbar } from "./toolbar";
-import { contextMenuItems } from "./context-menu-items";
-import { searchMentions } from "@/mocks/users";
-import { CodeBlockExtension } from "@typix-editor/extension-code-block";
-import { defaultContent } from "@/lib/default-content";
-import type { SerializedContent } from "@typix-editor/core";
 
-// Use tuple form (no [0]!) so configExtension's options actually reach the
-// extension. configExtension returns [Extension, ...configs] — indexing [0]
-// throws the config away, leaving the image renderer / mention trigger /
-// prettier opts unset.
+// ─── UI components (from @typix-editor/ui — design-system workspace) ──────
+import {
+  CharacterLimit,
+  CodeBlockUI,
+  DraggableBlock,
+  EditorContextMenu,
+  FloatingLinkUI,
+  MentionUI,
+  SlashDropdownMenu,
+  TableUI,
+  imageRenderer,
+} from "@typix-editor/ui";
+
+// ─── Local ─────────────────────────────────────────────────────────────────
+import { searchMentions } from "@/mocks/users";
+import { defaultContent } from "@/lib/default-content";
+import { contextMenuItems } from "./context-menu-items";
+import { EditorToolbar } from "./toolbar";
+
+/**
+ * Extension list — module-scoped so the array reference is stable across
+ * Strict Mode double-invokes and ordinary re-renders. `configExtension(X, cfg)`
+ * returns a tuple `[X, cfg]`; the Lexical builder unpacks it. Do NOT index
+ * `[0]` — that would discard the config.
+ */
 const extensions: AnyLexicalExtensionArgument[] = [
-  StarterKit({CodeBlockExtension: false}),
+  StarterKit(),
   FloatingLinkExtension,
   configExtension(ImageExtension, { component: imageRenderer }),
   configExtension(MentionExtension, { trigger: "@" }),
