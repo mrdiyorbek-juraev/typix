@@ -16,8 +16,9 @@
     "@typix-editor/docs",
     "@typix-editor/next-config",
     "@typix-editor/typescript-config",
-    "@typix-editor/playground",
-    "@typix-editor/design-system"
+    "@typix-editor/playground", 
+    "@typix-editor/ui",
+    "@typix-editor/storybook"
   ],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
