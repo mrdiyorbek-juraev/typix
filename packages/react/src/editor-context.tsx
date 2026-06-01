@@ -12,5 +12,6 @@ export interface TypixEditorContextValue {
   editor: TypixEditor | null;
 }
 
-export const TypixEditorContext =
-  createContext<TypixEditorContextValue | null>(null);
+export const TypixEditorContext = createContext<TypixEditorContextValue | null>(
+  null
+);

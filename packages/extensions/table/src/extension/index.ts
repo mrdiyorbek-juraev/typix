@@ -353,9 +353,7 @@ export const TableExtension = defineExtension({
               const cells = firstRow.getChildren().filter($isTableCellNode);
               const isHeaderRow =
                 cells.length > 0 &&
-                cells.every((c) =>
-                  c.hasHeaderState(TableCellHeaderStates.ROW)
-                );
+                cells.every((c) => c.hasHeaderState(TableCellHeaderStates.ROW));
               const newBit = isHeaderRow
                 ? TableCellHeaderStates.NO_STATUS
                 : TableCellHeaderStates.ROW;
@@ -455,10 +453,8 @@ export const TableExtension = defineExtension({
               if (!firstNode) return;
               const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
               if (!cellNode) return;
-              const colIndex =
-                $getTableColumnIndexFromTableCellNode(cellNode);
-              const tableNode =
-                $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
+              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
               for (const row of tableNode
                 .getChildren()
                 .filter($isTableRowNode)) {
@@ -504,10 +500,8 @@ export const TableExtension = defineExtension({
               if (!firstNode) return;
               const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
               if (!cellNode) return;
-              const colIndex =
-                $getTableColumnIndexFromTableCellNode(cellNode);
-              const tableNode =
-                $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
+              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
               for (const row of tableNode
                 .getChildren()
                 .filter($isTableRowNode)) {
@@ -576,10 +570,8 @@ export const TableExtension = defineExtension({
               if (!firstNode) return;
               const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
               if (!cellNode) return;
-              const colIndex =
-                $getTableColumnIndexFromTableCellNode(cellNode);
-              const tableNode =
-                $getTableNodeFromLexicalNodeOrThrow(cellNode);
+              const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
+              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
               for (const row of tableNode
                 .getChildren()
                 .filter($isTableRowNode)) {
@@ -623,10 +615,13 @@ registerTypixMeta(TableExtension, {
   },
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
-    insertTable(attrs?: { rows?: number; columns?: number; includeHeaders?: any }): R;
+    insertTable(attrs?: {
+      rows?: number;
+      columns?: number;
+      includeHeaders?: any;
+    }): R;
     insertRowAbove(): R;
     insertRowBelow(): R;
     insertColumnLeft(): R;

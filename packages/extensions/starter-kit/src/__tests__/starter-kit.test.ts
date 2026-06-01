@@ -100,7 +100,9 @@ describe("StarterKit", () => {
 
     it("excludes list commands", () => {
       const ext = StarterKit({ preset: "minimal" });
-      expect(getTypixMeta(ext)?.commands).not.toHaveProperty("toggleBulletList");
+      expect(getTypixMeta(ext)?.commands).not.toHaveProperty(
+        "toggleBulletList"
+      );
     });
   });
 
@@ -133,7 +135,9 @@ describe("StarterKit", () => {
     it("excludes subscript/superscript commands", () => {
       const ext = StarterKit({ preset: "blog" });
       expect(getTypixMeta(ext)?.commands).not.toHaveProperty("toggleSubscript");
-      expect(getTypixMeta(ext)?.commands).not.toHaveProperty("toggleSuperscript");
+      expect(getTypixMeta(ext)?.commands).not.toHaveProperty(
+        "toggleSuperscript"
+      );
     });
   });
 

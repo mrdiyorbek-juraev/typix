@@ -93,7 +93,6 @@ registerTypixMeta(HighlightExtension, {
   },
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
     toggleHighlight(): R;

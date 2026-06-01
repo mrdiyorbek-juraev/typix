@@ -8,8 +8,14 @@ import { readFileSync } from "node:fs";
 import { extname } from "node:path";
 
 const SUPPORTED = new Set([
-  ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
-  ".json", ".jsonc",
+  ".ts",
+  ".tsx",
+  ".js",
+  ".jsx",
+  ".mjs",
+  ".cjs",
+  ".json",
+  ".jsonc",
   ".css",
 ]);
 
@@ -26,11 +32,10 @@ if (!file) process.exit(0);
 const ext = extname(file).toLowerCase();
 if (!SUPPORTED.has(ext)) process.exit(0);
 
-const result = spawnSync(
-  "pnpm",
-  ["exec", "biome", "format", "--write", file],
-  { stdio: "ignore", shell: true }
-);
+const result = spawnSync("pnpm", ["exec", "biome", "format", "--write", file], {
+  stdio: "ignore",
+  shell: true,
+});
 
 // Always exit 0 — a formatter failure is not a tool failure.
 process.exit(0);

@@ -138,7 +138,6 @@ registerTypixMeta(FontFamilyExtension, {
   },
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
     setFontFamily(attrs: { family: string }): R;

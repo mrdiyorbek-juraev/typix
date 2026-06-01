@@ -35,7 +35,10 @@ export const TYPIX_TOGGLE_CODE_BLOCK = createCommand<{
 
 export const CodeExtension = defineExtension({
   name: "@typix/code",
-  config: safeCast<CodeConfig>({ defaultLanguage: "javascript", disabled: false }),
+  config: safeCast<CodeConfig>({
+    defaultLanguage: "javascript",
+    disabled: false,
+  }),
   mergeConfig(a: CodeConfig, b: Partial<CodeConfig>): CodeConfig {
     return { ...a, ...b };
   },
@@ -94,7 +97,6 @@ registerTypixMeta(CodeExtension, {
     { key: "`", modifiers: ["mod", "alt"], command: "toggleCodeBlock" },
   ],
 });
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

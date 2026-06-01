@@ -8,10 +8,7 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import {
-  registerTypixMeta,
-  registerExtensionOutput,
-} from "@typix-editor/core";
+import { registerTypixMeta, registerExtensionOutput } from "@typix-editor/core";
 
 // ─── Parser map (Prettier v3 plugin paths) ───────────────────────────────────
 
@@ -149,7 +146,11 @@ export const PrettierFormatterExtension = defineExtension({
     return output;
   },
 
-  register(editor: LexicalEditor, _config: PrettierFormatterConfig, state: any) {
+  register(
+    editor: LexicalEditor,
+    _config: PrettierFormatterConfig,
+    state: any
+  ) {
     const output = state.getOutput() as PrettierOutput;
 
     return editor.registerCommand(
@@ -246,8 +247,6 @@ registerTypixMeta(PrettierFormatterExtension, {
     formatWithPrettier: TYPIX_FORMAT_WITH_PRETTIER,
   },
 });
-
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

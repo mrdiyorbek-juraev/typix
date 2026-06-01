@@ -65,7 +65,9 @@ export const DirectionExtension = defineExtension({
     return { ...a, ...b };
   },
   build(editor: LexicalEditor, config: DirectionConfig) {
-    const globalDirection = signal<DirectionValue>(config.defaultGlobalDirection);
+    const globalDirection = signal<DirectionValue>(
+      config.defaultGlobalDirection
+    );
     _stateByEditor.set(editor, { globalDirection });
     return { ...namedSignals(config), globalDirection };
   },
@@ -170,7 +172,6 @@ function $applyDirectionToSelection(direction: "ltr" | "rtl" | null): void {
     }
   }
 }
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

@@ -70,7 +70,10 @@ export const CollapsibleExtension = defineExtension({
     defaultOpen: true,
   }),
 
-  mergeConfig(a: CollapsibleConfig, b: Partial<CollapsibleConfig>): CollapsibleConfig {
+  mergeConfig(
+    a: CollapsibleConfig,
+    b: Partial<CollapsibleConfig>
+  ): CollapsibleConfig {
     return { ...a, ...b };
   },
 
@@ -103,8 +106,7 @@ export const CollapsibleExtension = defineExtension({
             if (
               parent !== null &&
               parent.getFirstChild() === container &&
-              selection.anchor.key ===
-                container.getFirstDescendant()?.getKey()
+              selection.anchor.key === container.getFirstDescendant()?.getKey()
             ) {
               container.insertBefore($createParagraphNode());
             }
@@ -156,8 +158,7 @@ export const CollapsibleExtension = defineExtension({
                         openStates.delete(key);
                         continue;
                       }
-                      const node =
-                        $getNodeByKey<CollapsibleContainerNode>(key);
+                      const node = $getNodeByKey<CollapsibleContainerNode>(key);
                       if (!$isCollapsibleContainerNode(node)) continue;
                       const isOpen = node.getOpen();
                       if (
@@ -175,39 +176,48 @@ export const CollapsibleExtension = defineExtension({
           : []),
 
         // Structure-enforcing transforms — unwrap malformed collapsible nodes
-        editor.registerNodeTransform(CollapsibleContentNode, (node: CollapsibleContentNode) => {
-          const parent = node.getParent();
-          if (!$isCollapsibleContainerNode(parent)) {
+        editor.registerNodeTransform(
+          CollapsibleContentNode,
+          (node: CollapsibleContentNode) => {
+            const parent = node.getParent();
+            if (!$isCollapsibleContainerNode(parent)) {
+              const children = node.getChildren();
+              for (const child of children) {
+                node.insertBefore(child);
+              }
+              node.remove();
+            }
+          }
+        ),
+
+        editor.registerNodeTransform(
+          CollapsibleTitleNode,
+          (node: CollapsibleTitleNode) => {
+            const parent = node.getParent();
+            if (!$isCollapsibleContainerNode(parent)) {
+              node.replace(
+                $createParagraphNode().append(...node.getChildren())
+              );
+            }
+          }
+        ),
+
+        editor.registerNodeTransform(
+          CollapsibleContainerNode,
+          (node: CollapsibleContainerNode) => {
             const children = node.getChildren();
-            for (const child of children) {
-              node.insertBefore(child);
+            if (
+              children.length !== 2 ||
+              !$isCollapsibleTitleNode(children[0]) ||
+              !$isCollapsibleContentNode(children[1])
+            ) {
+              for (const child of children) {
+                node.insertBefore(child);
+              }
+              node.remove();
             }
-            node.remove();
           }
-        }),
-
-        editor.registerNodeTransform(CollapsibleTitleNode, (node: CollapsibleTitleNode) => {
-          const parent = node.getParent();
-          if (!$isCollapsibleContainerNode(parent)) {
-            node.replace(
-              $createParagraphNode().append(...node.getChildren())
-            );
-          }
-        }),
-
-        editor.registerNodeTransform(CollapsibleContainerNode, (node: CollapsibleContainerNode) => {
-          const children = node.getChildren();
-          if (
-            children.length !== 2 ||
-            !$isCollapsibleTitleNode(children[0]) ||
-            !$isCollapsibleContentNode(children[1])
-          ) {
-            for (const child of children) {
-              node.insertBefore(child);
-            }
-            node.remove();
-          }
-        }),
+        ),
 
         // Arrow-key escape: insert paragraph before/after when at document boundary
         editor.registerCommand(
@@ -268,9 +278,7 @@ export const CollapsibleExtension = defineExtension({
                   _config.defaultOpen ?? true
                 ).append(
                   title.append(paragraph),
-                  $createCollapsibleContentNode().append(
-                    $createParagraphNode()
-                  )
+                  $createCollapsibleContentNode().append($createParagraphNode())
                 )
               );
               paragraph.select();
@@ -289,7 +297,6 @@ registerTypixMeta(CollapsibleExtension, {
     insertCollapsible: INSERT_COLLAPSIBLE_COMMAND,
   },
 });
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

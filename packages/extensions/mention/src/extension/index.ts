@@ -8,9 +8,7 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import {
-  registerExtensionOutput,
-} from "@typix-editor/core";
+import { registerExtensionOutput } from "@typix-editor/core";
 import { MentionNode } from "../node";
 import type { MentionItem, MentionSearchFn } from "../types";
 
@@ -150,9 +148,7 @@ export const MentionExtension = defineExtension({
       } else {
         // Static array — filter by prefix
         const lower = q.toLowerCase();
-        items = src.filter((item) =>
-          item.name.toLowerCase().startsWith(lower)
-        );
+        items = src.filter((item) => item.name.toLowerCase().startsWith(lower));
       }
 
       suggestions.value = items.slice(0, maxSuggestions);
@@ -188,4 +184,3 @@ export const MentionExtension = defineExtension({
     });
   },
 });
-

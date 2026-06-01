@@ -25,7 +25,11 @@ export function copyNode(
   const root = getUiTemplatesDir();
   const destKindDir = getUserUiDir(
     componentDir,
-    node.kind === "primitive" ? "primitives" : node.kind === "main" ? "main" : "lib"
+    node.kind === "primitive"
+      ? "primitives"
+      : node.kind === "main"
+        ? "main"
+        : "lib"
   );
 
   if (node.isFile) {
@@ -48,11 +52,17 @@ function copyFile(src: string, dest: string, overwrite: boolean): CopyOutcome {
   return { written: [rel], skipped: [] };
 }
 
-function copyDir(srcDir: string, destDir: string, overwrite: boolean): CopyOutcome {
+function copyDir(
+  srcDir: string,
+  destDir: string,
+  overwrite: boolean
+): CopyOutcome {
   const written: string[] = [];
   const skipped: string[] = [];
 
-  const stack: Array<{ src: string; dest: string }> = [{ src: srcDir, dest: destDir }];
+  const stack: Array<{ src: string; dest: string }> = [
+    { src: srcDir, dest: destDir },
+  ];
   while (stack.length > 0) {
     const { src, dest } = stack.pop()!;
     if (!fs.existsSync(src)) continue;
@@ -61,7 +71,10 @@ function copyDir(srcDir: string, destDir: string, overwrite: boolean): CopyOutco
     if (stat.isDirectory()) {
       fs.ensureDirSync(dest);
       for (const entry of fs.readdirSync(src)) {
-        stack.push({ src: path.join(src, entry), dest: path.join(dest, entry) });
+        stack.push({
+          src: path.join(src, entry),
+          dest: path.join(dest, entry),
+        });
       }
     } else {
       const outcome = copyFile(src, dest, overwrite);
@@ -95,6 +108,9 @@ export function copyStyles(
  * Relative to cwd, forward-slash normalised for CSS @import strings.
  */
 export function getStylesIndexImportPath(componentDir: string): string {
-  const indexPath = path.join(getUserUiDir(componentDir, "styles"), "index.css");
+  const indexPath = path.join(
+    getUserUiDir(componentDir, "styles"),
+    "index.css"
+  );
   return "./" + path.relative(process.cwd(), indexPath).replace(/\\/g, "/");
 }

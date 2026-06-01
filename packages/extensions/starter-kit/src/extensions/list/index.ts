@@ -140,7 +140,6 @@ registerTypixMeta(ListExtension, {
   },
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
     toggleBulletList(): R;

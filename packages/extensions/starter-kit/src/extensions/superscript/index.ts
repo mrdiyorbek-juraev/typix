@@ -49,7 +49,6 @@ registerTypixMeta(SuperscriptExtension, {
   commands: { toggleSuperscript: TYPIX_TOGGLE_SUPERSCRIPT },
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
     toggleSuperscript(): R;

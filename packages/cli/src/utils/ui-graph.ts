@@ -215,8 +215,7 @@ export function extractImports(source: string): string[] {
   const specs = new Set<string>();
 
   // import [...] from "X" / import "X" / import type [...] from "X"
-  const importRe =
-    /\bimport\b[\s\S]*?(?:from\s+)?["']([^"']+)["']\s*;?/g;
+  const importRe = /\bimport\b[\s\S]*?(?:from\s+)?["']([^"']+)["']\s*;?/g;
   let m: RegExpExecArray | null;
   while ((m = importRe.exec(source)) !== null) {
     specs.add(m[1]!);

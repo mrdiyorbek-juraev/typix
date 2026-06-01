@@ -101,7 +101,7 @@ export interface UseTypixEditorOptions {
  * ```
  */
 export function useTypixEditor(
-  options: UseTypixEditorOptions,
+  options: UseTypixEditorOptions
 ): TypixEditor | null {
   // Hold the latest options in a ref so lifecycle effects can read them
   // without recreating the editor on every options change.
@@ -111,7 +111,7 @@ export function useTypixEditor(
   const immediate = options.immediatelyRender !== false;
 
   const [editor, setEditor] = useState<TypixEditor | null>(() =>
-    immediate ? createReactEditor(options) : null,
+    immediate ? createReactEditor(options) : null
   );
 
   // Deferred creation for SSR
@@ -130,13 +130,15 @@ export function useTypixEditor(
     const o = optionsRef.current;
     const offs: Array<() => void> = [];
     if (o.onUpdate) offs.push(editor.on("update", o.onUpdate));
-    if (o.onContentUpdate) offs.push(editor.on("contentUpdate", o.onContentUpdate));
+    if (o.onContentUpdate)
+      offs.push(editor.on("contentUpdate", o.onContentUpdate));
     if (o.onSelectionUpdate)
       offs.push(editor.on("selectionChange", o.onSelectionUpdate));
     if (o.onTransaction) offs.push(editor.on("transaction", o.onTransaction));
     if (o.onFocus) offs.push(editor.on("focus", o.onFocus));
     if (o.onBlur) offs.push(editor.on("blur", o.onBlur));
-    if (o.onEditableChange) offs.push(editor.on("editableChange", o.onEditableChange));
+    if (o.onEditableChange)
+      offs.push(editor.on("editableChange", o.onEditableChange));
     if (o.onDestroy) offs.push(editor.on("destroy", o.onDestroy));
     return () => offs.forEach((off) => off());
   }, [editor]);
@@ -180,7 +182,11 @@ function createReactEditor(options: UseTypixEditorOptions): TypixEditor {
   const namespace = options.namespace ?? "typix";
   const editable = options.editable ?? true;
   const theme = options.theme ?? {};
-  const onError = options.onError ?? ((err: Error) => { throw err; });
+  const onError =
+    options.onError ??
+    ((err: Error) => {
+      throw err;
+    });
 
   // The user's extension graph wrapped in a stable root.
   const rootExtension = defineExtension({
@@ -203,11 +209,8 @@ function createReactEditor(options: UseTypixEditorOptions): TypixEditor {
   ]);
   const lexicalEditor = builder.buildEditor();
 
-  const typixEditor = new TypixEditor(
-    lexicalEditor,
-    registry,
-    namespace,
-    () => lexicalEditor.dispose(),
+  const typixEditor = new TypixEditor(lexicalEditor, registry, namespace, () =>
+    lexicalEditor.dispose()
   );
 
   // Attach the inline onCreate handler BEFORE emitting create so it fires.

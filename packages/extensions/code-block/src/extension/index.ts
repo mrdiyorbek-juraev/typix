@@ -19,10 +19,7 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import {
-  registerTypixMeta,
-  registerExtensionOutput,
-} from "@typix-editor/core";
+import { registerTypixMeta, registerExtensionOutput } from "@typix-editor/core";
 
 // ─── Output ─────────────────────────────────────────────────────────────────
 
@@ -71,7 +68,10 @@ export const CodeBlockExtension = defineExtension({
     defaultLanguage: "javascript",
   }),
 
-  mergeConfig(a: CodeBlockConfig, b: Partial<CodeBlockConfig>): CodeBlockConfig {
+  mergeConfig(
+    a: CodeBlockConfig,
+    b: Partial<CodeBlockConfig>
+  ): CodeBlockConfig {
     return { ...a, ...b };
   },
 
@@ -118,9 +118,7 @@ export const CodeBlockExtension = defineExtension({
             const topElement = anchor.getTopLevelElementOrThrow();
             const isAlreadyCode = $isCodeNode(topElement);
             $setBlocksType(selection, () =>
-              isAlreadyCode
-                ? $createParagraphNode()
-                : $createCodeNode(language)
+              isAlreadyCode ? $createParagraphNode() : $createCodeNode(language)
             );
           } else {
             $insertNodeToNearestRoot($createCodeNode(language));
@@ -204,8 +202,6 @@ registerTypixMeta(CodeBlockExtension, {
     },
   ],
 });
-
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

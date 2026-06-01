@@ -30,7 +30,10 @@ export interface AutoLinkConfig {
 export const AutoLinkExtension = defineExtension({
   name: "@typix/auto-link",
   nodes: () => [AutoLinkNode],
-  config: safeCast<AutoLinkConfig>({ disabled: false, matchers: DEFAULT_MATCHERS }),
+  config: safeCast<AutoLinkConfig>({
+    disabled: false,
+    matchers: DEFAULT_MATCHERS,
+  }),
   mergeConfig(a: AutoLinkConfig, b: Partial<AutoLinkConfig>): AutoLinkConfig {
     return { ...a, ...b };
   },

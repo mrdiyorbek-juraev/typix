@@ -86,7 +86,7 @@ export const DragDropPasteExtension = (
     build(_editor, config) {
       return namedSignals(config);
     },
-    
+
     register(editor, _config, state) {
       const {
         disabled,

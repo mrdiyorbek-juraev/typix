@@ -28,9 +28,7 @@ import {
   type RangeSelection,
   type TextNode,
 } from "lexical";
-import {
-  registerExtensionOutput,
-} from "@typix-editor/core";
+import { registerExtensionOutput } from "@typix-editor/core";
 
 export interface FloatingLinkConfig {
   /** Set to true to temporarily disable the floating link behavior. */
@@ -74,7 +72,10 @@ export const FloatingLinkExtension = defineExtension({
     openInNewTab: true,
   }),
 
-  mergeConfig(a: FloatingLinkConfig, b: Partial<FloatingLinkConfig>): FloatingLinkConfig {
+  mergeConfig(
+    a: FloatingLinkConfig,
+    b: Partial<FloatingLinkConfig>
+  ): FloatingLinkConfig {
     return { ...a, ...b };
   },
 
@@ -88,8 +89,7 @@ export const FloatingLinkExtension = defineExtension({
   },
 
   register(editor: LexicalEditor, _config: FloatingLinkConfig, state: any) {
-    const { disabled, isLink, activeEditor, openInNewTab } =
-      state.getOutput();
+    const { disabled, isLink, activeEditor, openInNewTab } = state.getOutput();
 
     function $updateToolbar() {
       const selection = $getSelection();
@@ -188,4 +188,3 @@ export const FloatingLinkExtension = defineExtension({
     });
   },
 });
-

@@ -42,10 +42,7 @@ interface EditorContentProps {
 }
 
 const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
-  (
-    { editor, children, className, placeholder, classNames, plugins },
-    ref,
-  ) => {
+  ({ editor, children, className, placeholder, classNames, plugins }, ref) => {
     // The ReactExtension's `output.Component` provides
     // `LexicalComposerContext.Provider` + decorator portals so React
     // decorator nodes (images, mentions, etc.) render. Without this the
@@ -61,17 +58,14 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
           <RootContext>
             <SharedHistoryContext>
               {plugins ?? <DefaultPlugins />}
-              <EditableBody
-                placeholder={placeholder}
-                classNames={classNames}
-              />
+              <EditableBody placeholder={placeholder} classNames={classNames} />
               {children}
             </SharedHistoryContext>
           </RootContext>
         </ReactRoot>
       </div>
     );
-  },
+  }
 );
 
 EditorContent.displayName = "Typix.EditorContent";

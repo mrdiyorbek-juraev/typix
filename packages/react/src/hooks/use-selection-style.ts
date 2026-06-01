@@ -33,7 +33,7 @@ export function useSelectionStyle(property: string, defaultValue = ""): string {
         const raw = $getSelectionStyleValueForProperty(
           selection,
           property,
-          defaultValue,
+          defaultValue
         );
         setValue(raw || defaultValue);
       });
@@ -43,7 +43,7 @@ export function useSelectionStyle(property: string, defaultValue = ""): string {
   if (!editor) {
     throw new Error(
       "useSelectionStyle must be used within <TypixEditorProvider> " +
-        "or a <TypixEditorContext.Provider>.",
+        "or a <TypixEditorContext.Provider>."
     );
   }
 

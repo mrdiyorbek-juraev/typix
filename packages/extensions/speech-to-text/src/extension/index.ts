@@ -12,10 +12,7 @@ import {
   type LexicalCommand,
   type LexicalEditor,
 } from "lexical";
-import {
-  registerTypixMeta,
-  registerExtensionOutput,
-} from "@typix-editor/core";
+import { registerTypixMeta, registerExtensionOutput } from "@typix-editor/core";
 
 import type {
   SpeechRecognitionResult,
@@ -313,8 +310,6 @@ registerTypixMeta(SpeechToTextExtension, {
     toggleSpeechToText: TYPIX_TOGGLE_SPEECH_TO_TEXT,
   },
 });
-
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

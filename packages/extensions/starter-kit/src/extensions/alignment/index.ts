@@ -139,10 +139,11 @@ registerTypixMeta(AlignmentExtension, {
   ],
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
-    setAlignment(attrs: { alignment: "left" | "center" | "right" | "justify" | "start" | "end" }): R;
+    setAlignment(attrs: {
+      alignment: "left" | "center" | "right" | "justify" | "start" | "end";
+    }): R;
     alignLeft(): R;
     alignCenter(): R;
     alignRight(): R;

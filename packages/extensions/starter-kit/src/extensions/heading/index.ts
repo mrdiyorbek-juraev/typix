@@ -33,7 +33,10 @@ export const TYPIX_SET_HEADING = createCommand<{
 
 export const HeadingExtension = defineExtension({
   name: "@typix/heading",
-  config: safeCast<HeadingConfig>({ levels: [1, 2, 3, 4, 5, 6], disabled: false }),
+  config: safeCast<HeadingConfig>({
+    levels: [1, 2, 3, 4, 5, 6],
+    disabled: false,
+  }),
   mergeConfig(a: HeadingConfig, b: Partial<HeadingConfig>): HeadingConfig {
     return { ...a, ...b };
   },
@@ -48,8 +51,9 @@ export const HeadingExtension = defineExtension({
       const d1 = editor.registerCommand(
         TYPIX_TOGGLE_HEADING,
         ({ level }) => {
-          const enabledLevels: Array<1 | 2 | 3 | 4 | 5 | 6> =
-            levels?.value ?? [1, 2, 3, 4, 5, 6];
+          const enabledLevels: Array<1 | 2 | 3 | 4 | 5 | 6> = levels?.value ?? [
+            1, 2, 3, 4, 5, 6,
+          ];
           if (!enabledLevels.includes(level)) {
             console.warn(
               `[Typix] Heading level ${level} is not enabled. Enabled: ${enabledLevels}`
@@ -62,8 +66,7 @@ export const HeadingExtension = defineExtension({
             if (!$isRangeSelection(selection)) return;
             const anchor = selection.anchor.getNode();
             const parent = anchor.getParent();
-            const isAlready =
-              $isHeadingNode(parent) && parent.getTag() === tag;
+            const isAlready = $isHeadingNode(parent) && parent.getTag() === tag;
             $setBlocksType(selection, () =>
               isAlready ? $createParagraphNode() : $createHeadingNode(tag)
             );
@@ -119,7 +122,6 @@ registerTypixMeta(HeadingExtension, {
     },
   ],
 });
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

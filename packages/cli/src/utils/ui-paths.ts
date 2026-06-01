@@ -20,7 +20,9 @@ export function getUiTemplatesDir(): string {
   return path.resolve(__dirname, "../../dist/templates/ui");
 }
 
-export function getUiSubdir(kind: "main" | "primitives" | "lib" | "styles"): string {
+export function getUiSubdir(
+  kind: "main" | "primitives" | "lib" | "styles"
+): string {
   return path.join(getUiTemplatesDir(), kind);
 }
 
@@ -44,6 +46,9 @@ export async function resolveComponentDir(
   };
 }
 
-export function getUserUiDir(componentDir: string, kind: "main" | "primitives" | "lib" | "styles"): string {
+export function getUserUiDir(
+  componentDir: string,
+  kind: "main" | "primitives" | "lib" | "styles"
+): string {
   return path.join(componentDir, kind);
 }

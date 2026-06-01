@@ -32,7 +32,10 @@ export function useSpeechToText(
 ): UseSpeechToTextReturn {
   const typixEditor = useTypixEditorState();
   const editor = typixEditor.lexical;
-  const output = getExtensionOutput<SpeechToTextOutput>(editor, SpeechToTextExtension);
+  const output = getExtensionOutput<SpeechToTextOutput>(
+    editor,
+    SpeechToTextExtension
+  );
 
   const [isListening, setIsListening] = useState(
     () => output?.isListening.value ?? false

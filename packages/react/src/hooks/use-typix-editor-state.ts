@@ -28,7 +28,7 @@ export function useTypixEditorState(): TypixEditor {
     throw new Error(
       "useTypixEditorState must be used within <TypixEditorProvider> " +
         "or a <TypixEditorContext.Provider>. Wrap your component tree " +
-        "with one of these to provide the editor instance.",
+        "with one of these to provide the editor instance."
     );
   }
 

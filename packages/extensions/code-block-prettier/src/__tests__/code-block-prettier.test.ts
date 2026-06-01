@@ -9,7 +9,9 @@ import {
 describe("PrettierFormatterExtension", () => {
   describe("static extension", () => {
     it("is a valid extension definition", () => {
-      expect(PrettierFormatterExtension.name).toBe("@typix/code-block-prettier");
+      expect(PrettierFormatterExtension.name).toBe(
+        "@typix/code-block-prettier"
+      );
       expect(PrettierFormatterExtension.config).toBeDefined();
     });
   });
@@ -53,9 +55,9 @@ describe("PrettierFormatterExtension", () => {
 
   describe("commands", () => {
     it("registers formatWithPrettier command", () => {
-      expect(
-        getTypixMeta(PrettierFormatterExtension)?.commands
-      ).toHaveProperty("formatWithPrettier");
+      expect(getTypixMeta(PrettierFormatterExtension)?.commands).toHaveProperty(
+        "formatWithPrettier"
+      );
     });
   });
 

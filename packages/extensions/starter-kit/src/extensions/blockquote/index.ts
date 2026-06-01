@@ -70,7 +70,6 @@ registerTypixMeta(BlockquoteExtension, {
   ],
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
     toggleBlockquote(): R;

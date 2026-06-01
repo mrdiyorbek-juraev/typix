@@ -60,7 +60,7 @@ const log = (tag: string, payload?: unknown) =>
     `%c[useTypixEditor]%c ${tag}`,
     "color:#fff;background:#7c3aed;padding:2px 6px;border-radius:3px;font-weight:600",
     "color:#7c3aed;font-weight:600",
-    payload ?? "",
+    payload ?? ""
   );
 
 // Throttle transaction logs so typing doesn't flood the console.
@@ -93,11 +93,12 @@ export function FullEditor() {
       (window as unknown as { typix: unknown }).typix = editor;
       log(
         "💡 tip",
-        "editor is on window.typix — try window.typix.chain().toggleBold().run()",
+        "editor is on window.typix — try window.typix.chain().toggleBold().run()"
       );
     },
 
-    onUpdate: ({ editor }) => log("onUpdate", { length: editor.getText().length }),
+    onUpdate: ({ editor }) =>
+      log("onUpdate", { length: editor.getText().length }),
 
     onContentUpdate: ({ editor }) =>
       log("onContentUpdate (nodes changed)", {

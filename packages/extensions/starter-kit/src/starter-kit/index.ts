@@ -139,9 +139,7 @@ function withConfig<C extends object>(
   ext: AnyLexicalExtension,
   cfg: Partial<C> | undefined
 ): ExtOrTuple {
-  return cfg && Object.keys(cfg).length > 0
-    ? configExtension(ext, cfg)
-    : ext;
+  return cfg && Object.keys(cfg).length > 0 ? configExtension(ext, cfg) : ext;
 }
 
 /**
@@ -179,26 +177,46 @@ export const StarterKit = (options: StarterKitOptions = {}) => {
   // Build enabled sub-extensions (all are native Lexical extensions now)
   const subExts: ExtOrTuple[] = [];
 
-  if (merged.bold !== false) subExts.push(withConfig(BoldExtension, merged.bold));
-  if (merged.italic !== false) subExts.push(withConfig(ItalicExtension, merged.italic));
-  if (merged.underline !== false) subExts.push(withConfig(UnderlineExtension, merged.underline));
-  if (merged.strike !== false) subExts.push(withConfig(StrikeExtension, merged.strike));
-  if (merged.subscript !== false) subExts.push(withConfig(SubscriptExtension, merged.subscript));
-  if (merged.superscript !== false) subExts.push(withConfig(SuperscriptExtension, merged.superscript));
-  if (merged.highlight !== false) subExts.push(withConfig(HighlightExtension, merged.highlight));
-  if (merged.heading !== false) subExts.push(withConfig(HeadingExtension, merged.heading));
-  if (merged.blockquote !== false) subExts.push(withConfig(BlockquoteExtension, merged.blockquote));
-  if (merged.list !== false) subExts.push(withConfig(ListExtension, merged.list));
-  if (merged.code !== false) subExts.push(withConfig(CodeExtension, merged.code));
-  if (merged.alignment !== false) subExts.push(withConfig(AlignmentExtension, merged.alignment));
-  if (merged.link !== false) subExts.push(withConfig(LinkExtension, merged.link));
-  if (merged.history !== false) subExts.push(withConfig(HistoryExtension, merged.history));
-  if (merged.autoLink !== false) subExts.push(withConfig(AutoLinkExtension, merged.autoLink));
-  if (merged.dragDropPaste !== false) subExts.push(withConfig(DragDropPasteExtension, merged.dragDropPaste));
-  if (merged.fontSize !== false) subExts.push(withConfig(FontSizeExtension, merged.fontSize));
-  if (merged.fontFamily !== false) subExts.push(withConfig(FontFamilyExtension, merged.fontFamily));
-  if (merged.textColor !== false) subExts.push(withConfig(TextColorExtension, merged.textColor));
-  if (merged.direction !== false) subExts.push(withConfig(DirectionExtension, merged.direction));
+  if (merged.bold !== false)
+    subExts.push(withConfig(BoldExtension, merged.bold));
+  if (merged.italic !== false)
+    subExts.push(withConfig(ItalicExtension, merged.italic));
+  if (merged.underline !== false)
+    subExts.push(withConfig(UnderlineExtension, merged.underline));
+  if (merged.strike !== false)
+    subExts.push(withConfig(StrikeExtension, merged.strike));
+  if (merged.subscript !== false)
+    subExts.push(withConfig(SubscriptExtension, merged.subscript));
+  if (merged.superscript !== false)
+    subExts.push(withConfig(SuperscriptExtension, merged.superscript));
+  if (merged.highlight !== false)
+    subExts.push(withConfig(HighlightExtension, merged.highlight));
+  if (merged.heading !== false)
+    subExts.push(withConfig(HeadingExtension, merged.heading));
+  if (merged.blockquote !== false)
+    subExts.push(withConfig(BlockquoteExtension, merged.blockquote));
+  if (merged.list !== false)
+    subExts.push(withConfig(ListExtension, merged.list));
+  if (merged.code !== false)
+    subExts.push(withConfig(CodeExtension, merged.code));
+  if (merged.alignment !== false)
+    subExts.push(withConfig(AlignmentExtension, merged.alignment));
+  if (merged.link !== false)
+    subExts.push(withConfig(LinkExtension, merged.link));
+  if (merged.history !== false)
+    subExts.push(withConfig(HistoryExtension, merged.history));
+  if (merged.autoLink !== false)
+    subExts.push(withConfig(AutoLinkExtension, merged.autoLink));
+  if (merged.dragDropPaste !== false)
+    subExts.push(withConfig(DragDropPasteExtension, merged.dragDropPaste));
+  if (merged.fontSize !== false)
+    subExts.push(withConfig(FontSizeExtension, merged.fontSize));
+  if (merged.fontFamily !== false)
+    subExts.push(withConfig(FontFamilyExtension, merged.fontFamily));
+  if (merged.textColor !== false)
+    subExts.push(withConfig(TextColorExtension, merged.textColor));
+  if (merged.direction !== false)
+    subExts.push(withConfig(DirectionExtension, merged.direction));
 
   // Compose all Lexical extensions into one
   const lexicalExt = defineExtension({

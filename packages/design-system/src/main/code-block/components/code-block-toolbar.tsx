@@ -25,7 +25,10 @@ function PrettierButton({
   language: string;
   editor: TypixEditor;
 }) {
-  const output = getExtensionOutput<PrettierOutput>(editor.lexical, PrettierFormatterExtension)!;
+  const output = getExtensionOutput<PrettierOutput>(
+    editor.lexical,
+    PrettierFormatterExtension
+  )!;
   const formatting = useSignal(output.formatting);
   const errors = useSignal(output.errors);
 
@@ -41,9 +44,7 @@ function PrettierButton({
         title={error ? "Prettier error — hover to see" : "Format with Prettier"}
         disabled={isRunning}
         onMouseDown={(e) => e.preventDefault()}
-        onClick={() =>
-          editor.chain().formatWithPrettier({ nodeKey }).run()
-        }
+        onClick={() => editor.chain().formatWithPrettier({ nodeKey }).run()}
         className={`flex items-center rounded p-1 transition-colors disabled:opacity-40 ${
           error
             ? "text-destructive hover:bg-destructive/10"
@@ -83,7 +84,10 @@ export function CodeBlockToolbar({ nodeKey }: CodeBlockToolbarProps) {
   const [language, setLanguage] = useState("javascript");
   const [copied, setCopied] = useState(false);
 
-  const hasPrettier = !!getExtensionOutput<PrettierOutput>(editor.lexical, PrettierFormatterExtension);
+  const hasPrettier = !!getExtensionOutput<PrettierOutput>(
+    editor.lexical,
+    PrettierFormatterExtension
+  );
 
   useEffect(() => {
     const sync = () => {

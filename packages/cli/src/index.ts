@@ -67,7 +67,10 @@ ui.command("list")
   .option("--installed", "Show only components already vendored")
   .option("--available", "Show only components not yet vendored")
   .option("--all", "Show both (default)")
-  .option("--path <dir>", "Override the destination path used for the installed check")
+  .option(
+    "--path <dir>",
+    "Override the destination path used for the installed check"
+  )
   .option("--json", "Output as JSON")
   .action(uiListCommand);
 
@@ -77,7 +80,10 @@ ui.command("add")
   .option("-a, --all", "Vendor every available UI component")
   .option("--path <dir>", "Override the destination path")
   .option("--overwrite", "Re-copy components even if they already exist")
-  .option("-d, --debug", "Dry-run — show what would be copied without writing files")
+  .option(
+    "-d, --debug",
+    "Dry-run — show what would be copied without writing files"
+  )
   .action(uiAddCommand);
 
 ui.command("remove")
@@ -86,7 +92,10 @@ ui.command("remove")
   .option("-a, --all", "Remove every vendored component")
   .option("--path <dir>", "Override the source path")
   .option("--force", "Skip the confirmation prompt")
-  .option("--remove-peers", "Also uninstall npm peers declared by the removed components")
+  .option(
+    "--remove-peers",
+    "Also uninstall npm peers declared by the removed components"
+  )
   .option("-d, --debug", "Dry-run — print what would be removed")
   .action(uiRemoveCommand);
 

@@ -50,7 +50,9 @@ export async function uiListCommand(options: ListOptions) {
     return {
       name,
       installed,
-      installedAt: installed ? path.relative(process.cwd(), installedAt) : undefined,
+      installedAt: installed
+        ? path.relative(process.cwd(), installedAt)
+        : undefined,
     };
   });
 

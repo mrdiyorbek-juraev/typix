@@ -6,10 +6,7 @@ import path from "node:path";
 import { logger, spinner } from "../../utils/logger.js";
 import { removePackages } from "../../utils/package-manager.js";
 import { walkGraph } from "../../utils/ui-graph.js";
-import {
-  getUserUiDir,
-  resolveComponentDir,
-} from "../../utils/ui-paths.js";
+import { getUserUiDir, resolveComponentDir } from "../../utils/ui-paths.js";
 
 type RemoveOptions = {
   all?: boolean;
@@ -62,7 +59,9 @@ export async function uiRemoveCommand(
   } else {
     for (const name of components) {
       if (!vendored.includes(name)) {
-        logger.error(`"${name}" is not vendored in ${path.relative(process.cwd(), componentDir)}.`);
+        logger.error(
+          `"${name}" is not vendored in ${path.relative(process.cwd(), componentDir)}.`
+        );
         process.exitCode = 1;
         return;
       }
@@ -80,7 +79,9 @@ export async function uiRemoveCommand(
   const survivorRels = new Set(
     survivorGraph ? survivorGraph.nodes.map((n) => n.rel) : []
   );
-  const survivorPeers = new Set(survivorGraph ? [...survivorGraph.npmPeers] : []);
+  const survivorPeers = new Set(
+    survivorGraph ? [...survivorGraph.npmPeers] : []
+  );
 
   const orphanedNodes = removedGraph.nodes.filter((n) => {
     if (n.kind === "main") return selected.includes(n.slug);
@@ -105,11 +106,12 @@ export async function uiRemoveCommand(
       ? path.join(destDir, path.basename(n.abs))
       : path.join(destDir, n.slug);
     const rel = path.relative(process.cwd(), target);
-    const tag = n.kind === "main"
-      ? chalk.red("main")
-      : n.kind === "primitive"
-        ? chalk.yellow("primitive (orphaned)")
-        : chalk.yellow("lib (orphaned)");
+    const tag =
+      n.kind === "main"
+        ? chalk.red("main")
+        : n.kind === "primitive"
+          ? chalk.yellow("primitive (orphaned)")
+          : chalk.yellow("lib (orphaned)");
     console.log(`    ${tag}  ${chalk.cyan(n.slug)}  ${chalk.gray(rel)}`);
   }
 
@@ -147,14 +149,23 @@ export async function uiRemoveCommand(
     for (const n of orphanedNodes) {
       const destDir = getUserUiDir(
         componentDir,
-        n.kind === "primitive" ? "primitives" : n.kind === "main" ? "main" : "lib"
+        n.kind === "primitive"
+          ? "primitives"
+          : n.kind === "main"
+            ? "main"
+            : "lib"
       );
       const target = n.isFile
         ? path.join(destDir, path.basename(n.abs))
         : path.join(destDir, n.slug);
       // Native fs.rm with retries handles Windows EBUSY/ENOTEMPTY race conditions
       // (e.g., when tsc/IDE briefly holds a file handle) better than fs-extra.remove.
-      await rm(target, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+      await rm(target, {
+        recursive: true,
+        force: true,
+        maxRetries: 5,
+        retryDelay: 100,
+      });
     }
     s.succeed(`Removed ${orphanedNodes.length} item(s).`);
   } catch (err) {
@@ -170,10 +181,14 @@ export async function uiRemoveCommand(
     try {
       removePackages(orphanedPeers);
     } catch {
-      logger.error("Failed to uninstall some peers. Remove them manually if needed.");
+      logger.error(
+        "Failed to uninstall some peers. Remove them manually if needed."
+      );
     }
   } else if (options.removePeers && removedGraph.npmPeers.size > 0) {
-    logger.info("All npm peers are still required by remaining components — kept.");
+    logger.info(
+      "All npm peers are still required by remaining components — kept."
+    );
   }
 
   logger.break();

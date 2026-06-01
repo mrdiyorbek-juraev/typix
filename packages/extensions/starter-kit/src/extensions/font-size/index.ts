@@ -60,7 +60,9 @@ export const TYPIX_INCREASE_FONT_SIZE = createCommand<{ step?: number } | void>(
 export const TYPIX_DECREASE_FONT_SIZE = createCommand<{ step?: number } | void>(
   "TYPIX_DECREASE_FONT_SIZE"
 );
-export const TYPIX_RESET_FONT_SIZE = createCommand<void>("TYPIX_RESET_FONT_SIZE");
+export const TYPIX_RESET_FONT_SIZE = createCommand<void>(
+  "TYPIX_RESET_FONT_SIZE"
+);
 
 export const FontSizeExtension = defineExtension({
   name: "@typix/font-size",
@@ -204,7 +206,6 @@ registerTypixMeta(FontSizeExtension, {
     resetFontSize: TYPIX_RESET_FONT_SIZE,
   },
 });
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

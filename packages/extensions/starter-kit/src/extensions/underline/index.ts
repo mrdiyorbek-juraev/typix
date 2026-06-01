@@ -50,7 +50,6 @@ registerTypixMeta(UnderlineExtension, {
   shortcuts: [{ key: "u", modifiers: ["mod"], command: "toggleUnderline" }],
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
     toggleUnderline(): R;

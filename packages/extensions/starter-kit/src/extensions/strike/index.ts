@@ -47,7 +47,6 @@ registerTypixMeta(StrikeExtension, {
   ],
 });
 
-
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
     toggleStrike(): R;

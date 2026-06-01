@@ -10,10 +10,7 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import {
-  registerTypixMeta,
-  registerExtensionOutput,
-} from "@typix-editor/core";
+import { registerTypixMeta, registerExtensionOutput } from "@typix-editor/core";
 import type { SlashCommandConfig, SlashCommandOutput } from "../types";
 
 // ─── Commands ────────────────────────────────────────────────────────────────
@@ -60,7 +57,10 @@ export const SlashCommandExtension = defineExtension({
     disabled: false,
   }),
 
-  mergeConfig(a: SlashCommandConfig, b: Partial<SlashCommandConfig>): SlashCommandConfig {
+  mergeConfig(
+    a: SlashCommandConfig,
+    b: Partial<SlashCommandConfig>
+  ): SlashCommandConfig {
     return { ...a, ...b };
   },
 
@@ -124,8 +124,6 @@ registerTypixMeta(SlashCommandExtension, {
     },
   ],
 });
-
-
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {
