@@ -30,7 +30,7 @@ import {
 import { EditorToolbar } from "./toolbar";
 import { contextMenuItems } from "./context-menu-items";
 import { searchMentions } from "@/mocks/users";
-import { CodeBlockExtension } from "@typix-editor/extensions/code-block";
+import { CodeBlockExtension } from "@typix-editor/extension-code-block";
 import { defaultContent } from "@/lib/default-content";
 import type { SerializedContent } from "@typix-editor/core";
 

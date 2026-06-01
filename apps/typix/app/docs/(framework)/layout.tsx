@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { baseOptions } from "@/lib/layout.shared";
 import { source } from "@/lib/source";
@@ -22,7 +23,7 @@ function collectUrls(nodes: PageTree.Node[]): string[] {
   });
 }
 
-export default function Layout({ children }: LayoutProps<"/docs/[[...slug]]">) {
+export default function Layout({ children }: { children: ReactNode }) {
   const base = baseOptions();
   const tree = source.getPageTree();
   const allUrls = collectUrls(tree.children);
