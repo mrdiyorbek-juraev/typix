@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/core",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Headless editor API for Typix — framework-agnostic wrapper around Lexical",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",
@@ -146,7 +146,8 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "homepage": "https://typix.com",
   "repository": {
@@ -167,11 +168,11 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
-    "@lexical/code-shiki": "^0.40.0",
-    "@lexical/extension": "^0.40.0",
-    "@lexical/history": "^0.40.0",
-    "@lexical/markdown": "^0.40.0",
-    "@lexical/text": "^0.40.0"
+    "@lexical/code-shiki": "^0.45.0",
+    "@lexical/extension": "^0.45.0",
+    "@lexical/history": "^0.45.0",
+    "@lexical/markdown": "^0.45.0",
+    "@lexical/text": "^0.45.0"
   },
   "peerDependenciesMeta": {
     "@lexical/code-shiki": {
@@ -192,26 +193,26 @@
   },
   "dependencies": {
     "@typix-editor/utils": "workspace:*",
-    "lexical": "^0.40.0",
-    "@lexical/code": "^0.40.0",
-    "@lexical/hashtag": "^0.40.0",
-    "@lexical/headless": "^0.40.0",
-    "@lexical/html": "^0.40.0",
-    "@lexical/link": "^0.40.0",
-    "@lexical/list": "^0.40.0",
-    "@lexical/mark": "^0.40.0",
-    "@lexical/overflow": "^0.40.0",
-    "@lexical/rich-text": "^0.40.0",
-    "@lexical/selection": "^0.40.0",
-    "@lexical/table": "^0.40.0",
-    "@lexical/utils": "^0.40.0"
+    "lexical": "^0.45.0",
+    "@lexical/code": "^0.45.0",
+    "@lexical/hashtag": "^0.45.0",
+    "@lexical/headless": "^0.45.0",
+    "@lexical/html": "^0.45.0",
+    "@lexical/link": "^0.45.0",
+    "@lexical/list": "^0.45.0",
+    "@lexical/mark": "^0.45.0",
+    "@lexical/overflow": "^0.45.0",
+    "@lexical/rich-text": "^0.45.0",
+    "@lexical/selection": "^0.45.0",
+    "@lexical/table": "^0.45.0",
+    "@lexical/utils": "^0.45.0"
   },
   "devDependencies": {
-    "@lexical/code-shiki": "^0.40.0",
-    "@lexical/extension": "^0.40.0",
-    "@lexical/history": "^0.40.0",
-    "@lexical/markdown": "^0.40.0",
-    "@lexical/text": "^0.40.0",
+    "@lexical/code-shiki": "^0.45.0",
+    "@lexical/extension": "^0.45.0",
+    "@lexical/history": "^0.45.0",
+    "@lexical/markdown": "^0.45.0",
+    "@lexical/text": "^0.45.0",
     "@types/node": "^25.1.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"

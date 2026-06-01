@@ -1,5 +1,12 @@
 # @typix-editor/extension-floating-link
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Tracks the active link node + edit state so the `FloatingLinkUI` component can render a positioned popover (vendor via `typix ui add floating-link`).
+- `URL` validation, edit/cancel/delete actions, and the input ref are all exposed as render props on the UI side.
+
 ## 4.0.0
 
 ### Minor Changes

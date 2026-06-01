@@ -1,5 +1,12 @@
 # @typix-editor/extension-tab-focus
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Restores normal Tab focus behavior — Tab moves focus out of the editor instead of inserting a tab character. Shift+Tab still moves focus backwards.
+- Useful for accessibility and form-embedded editors where trapping focus is undesirable.
+
 ## 4.0.0
 
 ### Minor Changes

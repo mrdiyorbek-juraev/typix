@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/cli",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "CLI for installing extensions in your Typix editor project",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",
@@ -10,7 +10,8 @@
   },
   "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",

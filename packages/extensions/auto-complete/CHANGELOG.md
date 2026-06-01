@@ -1,5 +1,13 @@
 # @typix-editor/extension-auto-complete
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. `AutoCompleteExtension` is now a config object, not a constructor — pass it directly into `useTypixEditor({ extensions })`.
+- Ghost-text suggestions render via a Lexical decorator and accept `getSuggestion(ctx)` / `onAccept` / `triggerChars` options.
+- Accept-key behavior is configurable per instance: `Tab` (default) or any custom key chord.
+
 ## 4.0.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @typix-editor/extension-draggable-block
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Tracks the hovered block and exposes the position to the matching `DraggableBlock` UI component for drag-to-reorder.
+- Decoupled from UI: the extension only emits events; the visual drag handle ships separately via `typix ui add draggable-block`.
+
 ## 4.0.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @typix-editor/extension-context-menu
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Surfaces the editor's right-click intent so UI components can render a custom menu — pair with `EditorContextMenu` from `@typix-editor/ui` (vendored via `typix ui add context-menu`).
+
 ## 4.0.0
 
 ### Minor Changes

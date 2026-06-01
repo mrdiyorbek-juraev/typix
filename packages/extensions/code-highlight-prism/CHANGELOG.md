@@ -1,5 +1,12 @@
 # @typix-editor/extension-code-highlight-prism
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Pairs with `extension-code-block` to provide Prism-based syntax highlighting for fenced code blocks.
+- Supports configurable language sets and the standard Prism token classes — themable via any Prism CSS.
+
 ## 4.0.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/utils",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "description": "Shared utilities for the Typix editor framework",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",
@@ -38,7 +38,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
@@ -49,14 +50,14 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.4.0",
-    "@lexical/selection": "^0.40.0",
-    "@lexical/utils": "^0.40.0",
-    "@lexical/headless": "^0.40.0",
-    "@lexical/mark": "^0.40.0"
+    "@lexical/selection": "^0.45.0",
+    "@lexical/utils": "^0.45.0",
+    "@lexical/headless": "^0.45.0",
+    "@lexical/mark": "^0.45.0"
   },
   "devDependencies": {
     "@types/node": "^25.1.0",
-    "lexical": "^0.40.0",
+    "lexical": "^0.45.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   },

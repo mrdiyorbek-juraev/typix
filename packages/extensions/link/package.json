@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-link",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Link extension for Typix",
   "keywords": [
     "typix",
@@ -31,7 +31,8 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "publishConfig": {
     "access": "public"
@@ -51,8 +52,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "peerDependencies": {
-    "@typix-editor/core": "^4.1.0",
-    "lexical": "^0.40.0"
+    "@typix-editor/core": "^5.0.0",
+    "lexical": "^0.45.0"
   },
   "devDependencies": {
     "@typix-editor/core": "workspace:*",

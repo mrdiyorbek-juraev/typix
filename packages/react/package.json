@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/react",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "React adapter for Typix editor framework",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",
@@ -25,7 +25,8 @@
     "url": "https://github.com/mrdiyorbek-juraev/typix.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
@@ -37,30 +38,27 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
     "@typix-editor/utils": "workspace:*",
-    "@lexical/react": "^0.40.0",
-    "@lexical/extension": "^0.40.0",
-    "@lexical/text": "^0.40.0",
-    "@lexical/utils": "^0.40.0"
+    "@lexical/react": "^0.45.0",
+    "@lexical/extension": "^0.45.0",
+    "@lexical/text": "^0.45.0",
+    "@lexical/utils": "^0.45.0"
   },
   "peerDependencies": {
     "@typix-editor/core": "workspace:*",
+    "lexical": "^0.45.0",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "devDependencies": {
     "@typix-editor/core": "workspace:*",
-    "lexical": "^0.40.0",
-    "@lexical/headless": "^0.40.0",
-    "@lexical/mark": "^0.40.0",
-    "@tailwindcss/postcss": "^4.1.17",
-    "@tailwindcss/typography": "^0.5.19",
+    "lexical": "^0.45.0",
+    "@lexical/headless": "^0.45.0",
+    "@lexical/mark": "^0.45.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.1",
-    "postcss": "^8.5.6",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "tailwindcss": "^4.1.17",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0"
   },

@@ -1,4 +1,11 @@
-# @typix/extension-rich-text
+# @typix-editor/extension-drag-drop-paste
+
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Handles dropped files and pasted images on the editor surface, dispatching `INSERT_IMAGE_COMMAND` (or your custom handler) for each.
+- Configurable MIME-type filter and per-file `onUpload` callback for hooking up your own storage.
 
 ## 4.0.0
 

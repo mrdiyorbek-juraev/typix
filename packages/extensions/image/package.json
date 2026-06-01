@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-image",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Image extension for Typix",
   "keywords": [
     "typix",
@@ -31,7 +31,8 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "publishConfig": {
     "access": "public"
@@ -54,12 +55,12 @@
     "@typix-editor/extension-drag-drop-paste": "workspace:*"
   },
   "peerDependencies": {
-    "@typix-editor/core": "^4.1.0"
+    "@typix-editor/core": "^5.0.0"
   },
   "devDependencies": {
     "@typix-editor/core": "workspace:*",
     "@types/node": "^25.1.0",
-    "lexical": "^0.40.0"
+    "lexical": "^0.45.0"
   },
   "engines": {
     "node": ">=18.0.0"

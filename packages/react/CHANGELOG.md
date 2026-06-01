@@ -1,4 +1,23 @@
-# @typix/react
+# @typix-editor/react
+
+## 5.0.0
+
+### Major Changes
+
+- **New hook API: `useTypixEditor`.** Creates the editor instance with extensions, theme, namespace, and initial content; returns a stable `TypixEditor`. Pairs with `TypixEditorContext.Provider` for sharing across the React tree. The legacy `useEditor` is removed.
+- **`useTypixEditorState()`** — subscribes to live editor state with React-safe rerenders for selection, format flags, active marks, and command capabilities. Replaces ad-hoc selection listeners + `useActiveFormats`.
+- **`useCurrentTypixEditor()`** — typed accessor for the editor instance from any descendant, returning the same `TypixEditor` that `useTypixEditor` produces.
+- **`<EditorContent />`** — the single render component for the editable surface. Receives `editor`, `placeholder`, `className`, and other props; internally wires Lexical's `RichTextPlugin`, `ContentEditable`, history, shortcuts, and default plugins.
+- **`<TypixEditorProvider />`** — sugar for `useTypixEditor` + `TypixEditorContext.Provider` when you don't need the raw hook return value.
+- **`defaultTheme`** export that maps Lexical's node names to the `.typix-*` class vocabulary the design-system CSS targets.
+- **Lexical re-exports moved to `@typix-editor/react/lexical`** subpath (already in 4.0.0; reaffirmed).
+- **Shortcuts plugin + history context are split out** of `<EditorContent />` internals into `editor-content/shortcuts-plugin.tsx` and `editor-content/history-context.tsx`, making them overridable.
+
+## 4.0.0
+
+### Minor Changes
+
+- [#55](https://github.com/mrdiyorbek-juraev/typix/pull/55) [`2cfef9d`](https://github.com/mrdiyorbek-juraev/typix/commit/2cfef9dc403577fcca14942e6496c829a6a61050) Thanks [@mrdiyorbek-juraev](https://github.com/mrdiyorbek-juraev)! - Update Lexical peer dependencies to `^0.40.0` across all packages. Simplify CLI to extension installation only.
 
 ## 4.0.0
 
