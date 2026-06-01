@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@typix-editor/design-system/dist";
 import { FullEditor } from "./editor/index";
 import { TypixLogo } from "./logo";
 
@@ -15,7 +14,6 @@ export function PlaygroundEditor() {
               Typix
             </span>
           </div>
-          <Badge>v2</Badge>
         </div>
         <span className="text-xs text-muted-foreground">
           All features enabled
