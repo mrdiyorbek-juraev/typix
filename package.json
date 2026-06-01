@@ -78,10 +78,5 @@
     "@clack/prompts": "^0.11.0",
     "commander": "^14.0.2"
   },
-  "pnpm": {
-    "overrides": {
-      "parse5": "^7.2.1"
-    }
-  },
   "type": "module"
 }
