@@ -1,67 +1,43 @@
 ---
 title: Keywords
-description: Highlight specific keywords in the editor
+description: Highlight a configured list of words as styled keyword nodes
 ---
 
-The Keywords extension highlights predefined keywords in the editor content using a custom `KeywordNode`.
+Wraps occurrences of a configured word list in keyword nodes. Useful
+for syntax-like highlighting (TODO, FIXME, brand names, glossary
+terms).
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-keywords
+```
+
+## Live demo
 
 <ComponentPreview name="keywords" />
 
-## Installation
+## Config
 
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-keywords
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-keywords
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-keywords
-    ```
-  </Tab>
-</Tabs>
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `keywords` | `string[]` | required | List of words to highlight as keyword nodes. |
 
-## Setup
-
-Register the `KeywordNode` and add the extension:
+## Match all keywords helper
 
 ```tsx
-import { createEditorConfig, defaultExtensionNodes } from '@typix-editor/react';
-import { KeywordsExtension, KeywordNode } from '@typix-editor/extension-keywords';
-
-const config = createEditorConfig({
-  extensionNodes: [...defaultExtensionNodes, KeywordNode],
-});
-
-function MyEditor() {
-  return (
-    <EditorRoot config={config}>
-      <EditorContent />
-      <KeywordsExtension />
-    </EditorRoot>
-  );
-}
+import { KEYWORDS_REGEX } from "@typix-editor/extension-keywords";
 ```
 
-## Exports
+The compiled regex used internally — handy if you need to mirror
+the matching logic elsewhere in your app.
 
-| Export | Type | Description |
-| --- | --- | --- |
-| `KeywordsExtension` | Component | The keyword detection plugin |
-| `KeywordNode` | Lexical Node | Node for highlighted keywords |
-| `$createKeywordNode` | Function | Create a keyword node |
-| `$isKeywordNode` | Function | Type guard for keyword nodes |
+## Node helpers
 
-## Nodes
-
-| Node | Description |
-| --- | --- |
-| `KeywordNode` | Renders keyword text with special styling. Must be registered in editor config. |
+```tsx
+import {
+  $createKeywordNode,
+  $isKeywordNode,
+  KeywordNode,
+} from "@typix-editor/extension-keywords";
+```

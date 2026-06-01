@@ -1,109 +1,52 @@
 ---
 title: Short Cuts
-description: Keyboard shortcuts for editor formatting and block operations
+description: Keyboard shortcuts for every formatting action
 ---
 
-The Short Cuts extension registers keyboard shortcuts for common formatting, block, alignment, and font size operations.
+Wires up the standard keyboard shortcuts: `⌘B` bold, `⌘I` italic, `⌘U`
+underline, `⌘⇧S` strikethrough, `⌘E` code, `⌘K` link, plus block-level
+shortcuts.
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-short-cuts
+```
+
+## Live demo
 
 <ComponentPreview name="short-cuts" />
 
-## Installation
-
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-short-cuts
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-short-cuts
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-short-cuts
-    ```
-  </Tab>
-</Tabs>
-
-## Setup
+## Shortcuts
 
 ```tsx
-import { ShortCutsExtension } from '@typix-editor/extension-short-cuts';
-
-function MyEditor() {
-  return (
-    <EditorRoot>
-      <EditorContent />
-      <ShortCutsExtension />
-    </EditorRoot>
-  );
-}
+import { SHORTCUTS } from "@typix-editor/extension-short-cuts";
 ```
 
-## Props
+The `SHORTCUTS` constant is the full default mapping. Use it as a base
+for custom shortcuts via `configExtension`.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onLinkEditModeChange` | `(isLinkEditMode: boolean) => void` | — | Callback when link edit mode toggles |
+## Config
 
-## Available shortcuts
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `shortcuts` | `Partial<Record<ShortcutName, string>>` | built-in | Override key combos per shortcut name. |
+| `enableDefaults` | `boolean` | `true` | Disable to opt-out of built-in shortcuts. |
 
-### Block formatting
+## Custom shortcut
 
-| Shortcut | Action |
-| --- | --- |
-| `Ctrl+Alt+0` | Paragraph |
-| `Ctrl+Alt+1`–`6` | Heading 1–6 |
-| `Ctrl+Alt+7` | Bullet list |
-| `Ctrl+Alt+8` | Numbered list |
-| `Ctrl+Alt+9` | Check list |
-| `Ctrl+Shift+C` | Code block |
-| `Ctrl+Shift+Q` | Block quote |
+```tsx
+import { configExtension } from "@typix-editor/core";
 
-### Text formatting
+configExtension(ShortCutsExtension, {
+  shortcuts: {
+    bold: "mod+shift+b",  // override ⌘B
+  },
+});
+```
 
-| Shortcut | Action |
-| --- | --- |
-| `Ctrl+Shift+S` | Strikethrough |
-| `Ctrl+Shift+L` | Lowercase |
-| `Ctrl+Shift+U` | Uppercase |
-| `Ctrl+Shift+K` | Capitalize |
-| `Ctrl+,` | Subscript |
-| `Ctrl+.` | Superscript |
-| `Ctrl+Shift+E` | Inline code |
+## Related
 
-### Alignment
-
-| Shortcut | Action |
-| --- | --- |
-| `Ctrl+Shift+L` | Left align |
-| `Ctrl+Shift+E` | Center align |
-| `Ctrl+Shift+R` | Right align |
-| `Ctrl+Shift+J` | Justify |
-
-### Other
-
-| Shortcut | Action |
-| --- | --- |
-| `Ctrl+Shift+=` | Increase font size |
-| `Ctrl+Shift+-` | Decrease font size |
-| `Ctrl+Shift+X` | Clear formatting |
-| `Ctrl+K` | Insert/toggle link |
-| `Ctrl+]` | Indent |
-| `Ctrl+[` | Outdent |
-
-<Callout type="info">
-  On macOS, `Ctrl` is replaced with `Cmd`.
-</Callout>
-
-## Exports
-
-| Export | Type | Description |
-| --- | --- | --- |
-| `ShortCutsExtension` | Component | The keyboard shortcuts plugin |
-| `ShortCutsExtensionProps` | Type | Props type |
-| `SHORTCUTS` | Object | Shortcut definitions for reference |
+<Cards>
+  <Card title="Markdown Shortcuts" href="/docs/extensions/markdown-shortcuts" description="Trigger formatting via markdown syntax." />
+</Cards>

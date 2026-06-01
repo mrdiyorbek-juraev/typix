@@ -32,7 +32,7 @@ export function useClearFormatting(
   const isVisible = !options?.hideWhenUnavailable || canClear;
 
   const handleClear = useCallback(() => {
-    let chain = editor.chain().focus() as any;
+    let chain = editor.chain().focus();
     for (const mark of MARK_NAMES) {
       if (editor.isActive(mark)) {
         chain = chain.toggleMark(mark);

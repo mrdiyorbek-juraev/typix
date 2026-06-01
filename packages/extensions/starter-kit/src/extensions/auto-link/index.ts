@@ -50,6 +50,7 @@ export const AutoLinkExtension = defineExtension({
       return registerAutoLink(editor, {
         matchers: currentMatchers,
         changeHandlers: [stableOnChange],
+        excludeParents: [],
       });
     });
   },

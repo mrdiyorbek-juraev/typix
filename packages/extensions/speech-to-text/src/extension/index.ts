@@ -314,3 +314,10 @@ registerTypixMeta(SpeechToTextExtension, {
   },
 });
 
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleSpeechToText(): R;
+  }
+}

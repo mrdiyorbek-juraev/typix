@@ -1,155 +1,198 @@
 ---
 title: Editor Setup
-description: Configure the editor with createEditorConfig, custom nodes, and initial content
+description: All useTypixEditor options, lifecycle hooks, and the editor instance API
 ---
 
-## Default behavior
-
-When you use `EditorRoot` without a `config` prop, it creates a default configuration with:
-
-- Namespace: `"typix-editor"`
-- All default extension nodes (headings, lists, links, tables, code blocks, etc.)
-- The default Typix theme
-- Editable mode enabled
+`useTypixEditor` is the v2 hook that creates and manages a Typix editor.
+It returns a `TypixEditor` instance — a thin, fluent wrapper around the
+underlying Lexical editor.
 
 ```tsx
-<EditorRoot>
-  <EditorContent />
-</EditorRoot>
-```
-
-This is sufficient for most use cases. For advanced control, read on.
-
-## Custom configuration
-
-Use `createEditorConfig` to build a Lexical config object with Typix defaults.
-
-```tsx
-import {
-  EditorRoot,
-  EditorContent,
-  createEditorConfig,
-  defaultExtensionNodes,
-  defaultTheme,
-} from '@typix-editor/react';
-
-const config = createEditorConfig({
-  namespace: 'my-editor',
+const editor = useTypixEditor({
+  extensions,
   theme: defaultTheme,
-  extensionNodes: defaultExtensionNodes,
-  editable: true,
-});
-
-function MyEditor() {
-  return (
-    <EditorRoot config={config}>
-      <EditorContent />
-    </EditorRoot>
-  );
-}
-```
-
-### Options
-
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `namespace` | `string` | `"typix-editor"` | Unique namespace for the editor instance |
-| `theme` | `EditorThemeClasses` | `undefined` | Theme classes for styling editor elements |
-| `extensionNodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Custom nodes to register |
-| `editable` | `boolean` | `true` | Whether the editor is editable |
-| `onError` | `(error: Error, editor: LexicalEditor) => void` | `console.error` | Error handler |
-| `initialState` | `SerializedEditorState` | `undefined` | Initial content as serialized state |
-| `editorState` | `InitialEditorStateType` | `undefined` | Advanced: direct Lexical editor state |
-
-<Callout type="warn">
-  If both `initialState` and `editorState` are provided, `initialState` takes priority.
-</Callout>
-
-## Adding extension nodes
-
-When you install extensions that provide custom nodes, add them to `extensionNodes`:
-
-```tsx
-import { defaultExtensionNodes } from '@typix-editor/react';
-import { CollapsibleContainerNode, CollapsibleContentNode, CollapsibleTitleNode } from '@typix-editor/extension-collapsible';
-import { MentionNode } from '@typix-editor/extension-mention';
-
-const config = createEditorConfig({
-  extensionNodes: [
-    ...defaultExtensionNodes,
-    CollapsibleContainerNode,
-    CollapsibleContentNode,
-    CollapsibleTitleNode,
-    MentionNode,
-  ],
+  namespace: "my-editor",
 });
 ```
 
-## Default extension nodes
+## Required options
 
-The `defaultExtensionNodes` array includes nodes for common content types:
+### `extensions`
 
-| Node | Source | Purpose |
-| --- | --- | --- |
-| `HeadingNode` | `@lexical/rich-text` | H1–H6 headings |
-| `ParagraphNode` | `lexical` | Paragraph blocks |
-| `TextNode` | `lexical` | Inline text |
-| `QuoteNode` | `@lexical/rich-text` | Block quotes |
-| `ListNode` | `@lexical/list` | Ordered, unordered, check lists |
-| `ListItemNode` | `@lexical/list` | Individual list items |
-| `LinkNode` | `@lexical/link` | Hyperlinks |
-| `AutoLinkNode` | `@lexical/link` | Auto-detected links |
-| `CodeNode` | `@lexical/code` | Code blocks |
-| `CodeHighlightNode` | `@lexical/code` | Syntax-highlighted tokens |
-| `HashtagNode` | `@lexical/hashtag` | Hashtag tokens |
-| `OverflowNode` | `@lexical/overflow` | Overflow containers |
-| `TableNode` | `@lexical/table` | Tables |
-| `TableRowNode` | `@lexical/table` | Table rows |
-| `TableCellNode` | `@lexical/table` | Table cells |
-
-## Initial content
-
-You can provide initial content in several ways:
-
-### Via EditorRoot `content` prop
+The list of extensions the editor activates. Each extension is either an
+extension constructor (`StarterKit()`, `DragDropPasteExtension()`) or a
+configured pair via `configExtension`:
 
 ```tsx
-const savedContent = JSON.parse(localStorage.getItem('draft'));
+import { configExtension } from "@typix-editor/core";
+import { MentionExtension } from "@typix-editor/extension-mention";
 
-<EditorRoot content={savedContent}>
-  <EditorContent />
-</EditorRoot>
+const extensions = [
+  StarterKit(),
+  configExtension(MentionExtension, { trigger: "@" }),
+];
 ```
 
-### Via createEditorConfig `initialState`
+Extensions augment the global `TypixCommands<R>` interface, so
+`editor.chain()` is typed per installed extension. Adding
+`MentionExtension` adds `editor.chain().insertMention(...)` to the
+typed surface.
+
+## Common options
+
+### `theme`
+
+The CSS-class theme passed to Lexical. Use `defaultTheme` from
+`@typix-editor/react` unless you have a reason to customize.
 
 ```tsx
-const config = createEditorConfig({
-  initialState: {
-    root: {
-      children: [],
-      direction: 'ltr',
-      format: '',
-      indent: 0,
-      type: 'root',
-      version: 1,
-    },
+import { defaultTheme } from "@typix-editor/react";
+```
+
+### `namespace`
+
+A unique string identifying this editor. Required when multiple editors
+render on the same page so Lexical can disambiguate them.
+
+```tsx
+namespace: "comment-editor",
+```
+
+### `content`
+
+Initial content as a serialized JSON state (the shape `editor.getJSON()`
+returns). Omit for an empty editor.
+
+```tsx
+content: savedFromBackend,
+```
+
+### `editable`
+
+`true` (default) or `false`. Set to `false` for a read-only render.
+
+```tsx
+editable: false,
+```
+
+### `autofocus`
+
+`"start"`, `"end"`, `true`, or `false`. Focuses the editor on mount.
+
+```tsx
+autofocus: "end",
+```
+
+### `immediatelyRender`
+
+When `false`, the hook returns `null` on first render and the editor
+becomes available after mount. Required for SSR safety (Next.js App
+Router). Add a null guard.
+
+```tsx {6}
+const editor = useTypixEditor({
+  extensions,
+  immediatelyRender: false,
+});
+
+if (!editor) return null;
+```
+
+## Lifecycle hooks
+
+All optional callbacks. Each receives an object with the editor instance.
+
+```tsx
+const editor = useTypixEditor({
+  extensions,
+
+  onBeforeCreate: ({ options }) => {
+    // Inspect or mutate options before the editor is created.
+  },
+  onCreate: ({ editor }) => {
+    console.log("Editor ready", editor.id);
+  },
+  onUpdate: ({ editor }) => {
+    saveContent(editor.getJSON());
+  },
+  onFocus: ({ editor }) => {
+    console.log("Focused");
+  },
+  onBlur: ({ editor }) => {
+    console.log("Blurred");
+  },
+  onDestroy: () => {
+    console.log("Editor torn down");
+  },
+  onError: (err) => {
+    console.error(err);
   },
 });
 ```
 
-## Listening for changes
+## The `editor` instance
 
-`EditorRoot` provides two callbacks:
+Once available, the editor exposes:
 
-- **`onContentChange`** — Receives `SerializedEditorState` (JSON), best for persistence
-- **`onChange`** — Receives raw `EditorState`, best for advanced state inspection
+| Property / method | Purpose |
+|---|---|
+| `editor.chain()` | Fluent command builder — `editor.chain().toggleBold().run()` |
+| `editor.can()` | Check if a chain would succeed — `editor.can().toggleBold()` |
+| `editor.lexical` | The underlying `LexicalEditor` for direct access |
+| `editor.getJSON()` | Serialize content as `SerializedEditorState` |
+| `editor.getHTML()` | Serialize content as HTML |
+| `editor.getText()` | Plain-text contents |
+| `editor.setContent(state)` | Load a serialized state |
+| `editor.isEmpty()` | `true` when no content |
+| `editor.isEditable()` | Current editable state |
+| `editor.setEditable(v)` | Toggle editable |
+| `editor.emitter` | Subscribe to events: `editor.emitter.on("contentChange", fn)` |
+| `editor.namespace` | The namespace you passed in |
+| `editor.id` | Auto-generated unique id |
+
+## Sharing the editor
+
+Pass the editor to children via `TypixEditorContext.Provider` so toolbar
+buttons, floating UI, and any descendant component can use the shipped
+hooks (`useTypixEditorState`, `useEditorState`, etc.) without prop
+drilling.
 
 ```tsx
-<EditorRoot
-  onContentChange={(json) => saveToDatabase(json)}
-  onChange={(editorState) => console.log(editorState)}
->
-  <EditorContent />
-</EditorRoot>
+<TypixEditorContext.Provider value={{ editor }}>
+  <EditorToolbar />
+  <EditorContent editor={editor} placeholder="Start typing…" />
+  <FloatingLinkUI />
+</TypixEditorContext.Provider>
 ```
+
+## Hooks for editor state
+
+In any descendant of the provider:
+
+```tsx
+import {
+  useCurrentTypixEditor,
+  useTypixEditorState,
+  useEditorState,
+} from "@typix-editor/react";
+```
+
+- `useCurrentTypixEditor()` — direct access to the editor instance.
+- `useTypixEditorState()` — subscribes to internal Typix state.
+- `useEditorState(selector)` — subscribes to a Lexical state selector,
+  re-renders only when the selected value changes.
+
+## Next
+
+<Cards>
+  <Card
+    title="Quick Start"
+    href="/docs/getting-started/quick-start"
+    description="Build the toolbar + editor together."
+  />
+  <Card
+    title="useTypixEditor reference"
+    href="/docs/core/typix-editor"
+    description="Full API surface for the editor instance."
+  />
+</Cards>

@@ -1,0 +1,47 @@
+---
+title: BlockquoteButton & CodeBlockButton
+description: Toggle blockquote and code block nodes.
+---
+
+<ComponentPreview name="ui-block-buttons" />
+
+## Install
+
+```bash
+npx typix ui add blockquote-button code-block-button
+```
+
+## BlockquoteButton
+
+```tsx
+import { BlockquoteButton } from "@/components/typix/main/blockquote-button";
+
+<BlockquoteButton />
+<BlockquoteButton hideWhenUnavailable />
+```
+
+## CodeBlockButton
+
+```tsx
+import { CodeBlockButton } from "@/components/typix/main/code-block-button";
+
+<CodeBlockButton />
+<CodeBlockButton hideWhenUnavailable />
+```
+
+## Props (both)
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string` | — | Override the button label. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when unavailable. |
+| `showShortcut` | `boolean` | `true` | Show keyboard shortcut in tooltip. |
+| `onToggled` | `(isActive: boolean) => void` | — | Callback after toggle. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Hooks
+
+```tsx
+import { useBlockquote } from "@/components/typix/main/blockquote-button";
+import { useCodeBlock } from "@/components/typix/main/code-block-button";
+```

@@ -94,3 +94,11 @@ registerTypixMeta(CodeExtension, {
     { key: "`", modifiers: ["mod", "alt"], command: "toggleCodeBlock" },
   ],
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleInlineCode(): R;
+    toggleCodeBlock(attrs?: { language?: string }): R;
+  }
+}

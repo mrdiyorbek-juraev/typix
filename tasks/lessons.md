@@ -64,3 +64,24 @@ Rules I enforce on myself, written after corrections. Reviewed at every session 
 1. `@source` pointing to `packages/design-system/src/**/*.{ts,tsx}` — so Tailwind scans and generates the classes used in design-system components.
 2. `@import "@typix-editor/ui/styles"` — pulls in keyframes (`typix-image-spin`, `typix-image-fade-in`), `--typix-ui-*` design tokens, and shadcn theme tokens.
 Without both, design-system components render unstyled. This is a hard requirement for Tailwind v4's source-based detection model.
+
+### L011 — Mirror source layout to skip import rewriting
+**Trigger:** Planned a full import rewriter for `typix ui add` before discovering the source uses only relative cross-folder imports (`../../primitives/button`), zero `@typix-editor/ui` bare imports.
+**Rule:** When designing a "copy source code into user's project" feature, first grep for cross-package bare-specifier imports in the source. If the source uses pure relative imports, mirror the directory layout exactly in the destination — every relative path resolves identically, and no rewriter is needed. Saved an entire utility module and class of bugs (mismatched relative-path-rewrite math).
+
+### L012 — Use native fs.rm with retries for directory deletion, not fs-extra.remove
+**Trigger:** `fs.remove()` from fs-extra silently left files behind on Windows when deleting a folder during `typix ui remove` (mark-button.tsx survived). Second invocation succeeded. Classic EBUSY / file-handle race.
+**Rule:** For any recursive directory delete on Windows, use Node's built-in `fs.promises.rm(path, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 })`. Don't trust fs-extra's `remove()` — it doesn't retry, so any transient handle (tsc, VS Code, antivirus) can leave orphaned files with no error thrown.
+
+### L013 — Never put `{a,b}` brace expansion inside CSS comments — Tailwind v4 PostCSS misparses it
+**Trigger:** Documentation comment in `tailwind.css` showed example glob `../**/*.{ts,tsx}`. Tailwind v4's PostCSS plugin treats the `{` as a CSS rule opening and `ts,tsx` as a selector, then fails with "Invalid declaration: `ts,tsx`". Real `@source "../**/*.{ts,tsx}"` directive on a separate line is fine — but the comment example with the same braces breaks parsing.
+**Rule:** When writing CSS comments that mention glob patterns, never include `{a,b}` brace expansion. Either inline the pattern in prose ("scans .ts and .tsx files") or use a different separator like `(ts|tsx)`. Affects only Tailwind v4 + PostCSS; vanilla CSS spec says comments should be ignored, so this is a parser quirk that's easy to overlook.
+
+### L014 — Next dev/Turbopack caches CSS pipeline errors across hot reloads
+**Trigger:** Fixed a CSS bug in `packages/design-system/src/styles/tailwind.css` but hitting the running playground dev server kept returning the OLD error (line numbers, columns, content all matched pre-fix state). Hot-reload of CSS imported via workspace-aliased subpath does not invalidate the Turbopack CSS pipeline cache.
+**Rule:** When a CSS fix appears not to take effect, don't trust the dev-server error output. Validate with `pnpm exec next build` (fresh compile, no cache) before assuming the fix didn't work. Restarting the dev server also clears it, but `next build` is non-destructive when another instance holds the `.next/dev/lock`.
+
+### L015 — Tailwind v4 @theme inline propagation differs between relative and node_modules @imports under Turbopack
+**Trigger:** Same design-system `tailwind.css` containing `@theme inline { --color-border: var(--border); ... }` worked when imported via `@import "@typix-editor/ui/styles"` (workspace-alias / node_modules path) but failed with "Cannot apply unknown utility class `border-border`" when imported via the equivalent relative path `@import "../components/typix/styles/index.css"` (which then imports tailwind.css). Same target file, different resolution path.
+**Why:** Tailwind v4 + Turbopack appears to treat node_modules CSS imports through a different pipeline that registers `@theme inline` utility declarations across nested @imports. Relative-path CSS imports do NOT propagate `@theme inline` registrations through a second level of indirection — utility names defined in `tailwind.css` aren't seen by `@apply` calls in the top-level entry.
+**How to apply:** When designing a "vendor-and-import" CSS distribution model (shadcn-style), do NOT ship an `index.css` orchestrator that bundles `@theme inline` blocks via @import. Instead, instruct users to import the constituent files DIRECTLY from their app CSS entry. For Typix CLI users: the `typix ui add` success message prints the three explicit imports (`tokens.css`, `editor.css`, `tailwind.css`) rather than a single `index.css`. Keep `index.css` only for non-Tailwind consumers and for workspace-alias use.

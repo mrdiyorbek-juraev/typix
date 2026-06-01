@@ -247,3 +247,10 @@ registerTypixMeta(PrettierFormatterExtension, {
   },
 });
 
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    formatWithPrettier(attrs: { nodeKey: string }): R;
+  }
+}

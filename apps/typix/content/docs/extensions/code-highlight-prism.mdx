@@ -1,59 +1,34 @@
 ---
 title: Code Highlight (Prism)
-description: Syntax highlighting for code blocks using Prism.js
+description: Syntax highlighting for code blocks via Prism.js
 ---
 
-The Code Highlight Prism extension adds syntax highlighting to code blocks using [Prism.js](https://prismjs.com/).
+Adds Prism.js-powered syntax highlighting to your code blocks. Requires
+the [Code Block](/docs/extensions/code-block) extension as the host
+container.
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-code-highlight-prism
+```
+
+## Live demo
 
 <ComponentPreview name="code-highlight-prism" />
 
-## Installation
+## Why Prism vs Shiki
 
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-code-highlight-prism
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-code-highlight-prism
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-code-highlight-prism
-    ```
-  </Tab>
-</Tabs>
+- **Prism** — small bundle, fast, runs at runtime. Good for general
+  syntax highlighting where bundle size matters.
+- **Shiki** — VS Code's TextMate-grammar engine. Identical output to
+  your editor's theme but larger bundle.
 
-## Setup
+Pick one. Don't install both.
 
-```tsx
-import { CodeHighlightPrismExtension } from '@typix-editor/extension-code-highlight-prism';
+## Related
 
-function MyEditor() {
-  return (
-    <EditorRoot>
-      <EditorContent />
-      <CodeHighlightPrismExtension />
-    </EditorRoot>
-  );
-}
-```
-
-<Callout type="info">
-  `CodeNode` and `CodeHighlightNode` are included in `defaultExtensionNodes`.
-</Callout>
-
-## Exports
-
-| Export | Type | Description |
-| --- | --- | --- |
-| `CodeHighlightPrismExtension` | Component | Prism-based syntax highlighter |
-
-## See also
-
-- [Code Highlight (Shiki)](/docs/extensions/code-highlight-shiki) — Alternative highlighting with Shiki
+<Cards>
+  <Card title="Code Block" href="/docs/extensions/code-block" description="Foundation extension." />
+  <Card title="Code Highlight (Shiki)" href="/docs/extensions/code-highlight-shiki" description="The Shiki alternative." />
+</Cards>

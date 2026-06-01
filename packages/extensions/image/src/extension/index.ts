@@ -206,3 +206,14 @@ registerTypixMeta(ImageExtension, {
     duplicateImage: TYPIX_DUPLICATE_IMAGE,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    insertImage(attrs: { src: string; altText?: string; width?: number | "inherit"; height?: number | "inherit"; maxWidth?: number; showCaption?: boolean; caption?: string; key?: string }): R;
+    setImageAlignment(attrs: { nodeKey: string; alignment: "left" | "center" | "right" }): R;
+    toggleImageCaption(attrs: { nodeKey: string }): R;
+    deleteImage(attrs: { nodeKey: string }): R;
+    duplicateImage(attrs: { nodeKey: string }): R;
+  }
+}

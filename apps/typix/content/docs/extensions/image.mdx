@@ -1,0 +1,51 @@
+---
+title: Image
+description: Block-level images with resize, alignment, and caption
+---
+
+Inserts images as full block-level nodes with resize handles, alignment
+controls (left/center/right/wide/full), captions, and alt text. For
+drop/paste-to-insert, pair with [Drag & Drop Paste](/docs/extensions/drag-drop-paste).
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-image
+```
+
+## Live demo
+
+<ComponentPreview name="image" />
+
+## Insert programmatically
+
+```tsx
+import { INSERT_IMAGE_COMMAND } from "@typix-editor/extension-image";
+
+editor.lexical.dispatchCommand(INSERT_IMAGE_COMMAND, {
+  src: "https://example.com/cat.png",
+  altText: "A cat",
+});
+```
+
+## Node helpers
+
+```tsx
+import {
+  $createImageNode,
+  $isImageNode,
+  type ImageAlignment,
+} from "@typix-editor/extension-image";
+```
+
+## Vendor the UI
+
+```bash
+npx typix ui add image
+```
+
+## Related
+
+<Cards>
+  <Card title="Drag & Drop Paste" href="/docs/extensions/drag-drop-paste" description="Insert images by dropping or pasting." />
+</Cards>

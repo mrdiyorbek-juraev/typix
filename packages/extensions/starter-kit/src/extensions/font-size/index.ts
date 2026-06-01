@@ -204,3 +204,13 @@ registerTypixMeta(FontSizeExtension, {
     resetFontSize: TYPIX_RESET_FONT_SIZE,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    setFontSize(attrs: { size: number }): R;
+    increaseFontSize(attrs?: { step?: number }): R;
+    decreaseFontSize(attrs?: { step?: number }): R;
+    resetFontSize(): R;
+  }
+}

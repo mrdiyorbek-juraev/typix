@@ -137,3 +137,11 @@ registerTypixMeta(FontFamilyExtension, {
     resetFontFamily: TYPIX_RESET_FONT_FAMILY,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    setFontFamily(attrs: { family: string }): R;
+    resetFontFamily(): R;
+  }
+}

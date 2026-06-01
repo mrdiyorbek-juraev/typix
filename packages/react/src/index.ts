@@ -1,23 +1,33 @@
-// ─── React-specific ──────────────────────────────────────────────────────────
+// ─── @typix-editor/react — public API ─────────────────────────────────────────
 
-// Editor shell
-export { EditorRoot, type EditorRootProps } from "./editor-root";
+// Editor creation (hook)
+export {
+  useTypixEditor,
+  type UseTypixEditorOptions,
+} from "./hooks/use-typix-editor";
+
+// Editor context + reader
+export {
+  TypixEditorContext,
+  type TypixEditorContextValue,
+} from "./editor-context";
+export { useCurrentTypixEditor } from "./hooks/use-current-typix-editor";
+
+// Provider (convenience wrapper combining the hook + context)
+export {
+  TypixEditorProvider,
+  type TypixEditorProviderProps,
+} from "./editor-provider";
+
+// Editor content (renders the editable surface)
+export { EditorContent, type EditorContentProps } from "./editor-content";
 export {
   type ContextShape,
   SharedHistoryContext,
   useSharedHistoryContext,
-} from "./editor-root/history-context";
+} from "./editor-content/history-context";
 
-// Editor content
-export { EditorContent, type EditorContentProps } from "./editor-content";
-
-// Contexts
-export {
-  TypixEditorContext,
-  type TypixEditorContextValue,
-  TypixEditorProvider,
-  useTypixEditor,
-} from "./editor-context";
+// Root context (for floating UI positioning)
 export {
   RootContext,
   type RootContextShape,
@@ -83,7 +93,7 @@ export { useRange } from "./hooks/use-range";
 // Theme
 export { defaultTheme } from "./theme";
 
-// Lexical React plugins (re-exported for design system consumers)
+// Lexical React plugin re-exports (for downstream consumers that need them)
 export { DraggableBlockPlugin_EXPERIMENTAL as DraggableBlockPlugin } from "@lexical/react/LexicalDraggableBlockPlugin";
 export {
   LexicalTypeaheadMenuPlugin,
@@ -91,9 +101,5 @@ export {
   type MenuTextMatch,
 } from "@lexical/react/LexicalTypeaheadMenuPlugin";
 
-// Extension API
-export {
-  LexicalExtensionComposer,
-  type LexicalExtensionComposerProps,
-} from "@lexical/react/LexicalExtensionComposer";
+// Lexical extension building blocks (for custom advanced bootstrap)
 export { buildEditorFromExtensions } from "@lexical/extension";

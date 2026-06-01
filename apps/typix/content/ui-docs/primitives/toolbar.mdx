@@ -1,0 +1,47 @@
+---
+title: Toolbar
+description: Base container for editor toolbar buttons with ARIA semantics.
+---
+
+## Install
+
+```bash
+npx typix ui add toolbar
+```
+
+(`toolbar` is also auto-vendored as a dependency of any toolbar button.)
+
+## Import
+
+```tsx
+import {
+  Toolbar,
+  ToolbarGroup,
+  ToolbarSeparator,
+} from "@/components/typix/primitives/toolbar";
+```
+
+## Components
+
+| Component | Description |
+|-----------|-------------|
+| `Toolbar` | Outer `role="toolbar"` container |
+| `ToolbarGroup` | Groups related buttons |
+| `ToolbarSeparator` | Visual divider (`1px` vertical line) |
+
+## Usage
+
+```tsx
+<Toolbar className="border-b px-2 py-1">
+  <ToolbarGroup>
+    <UndoRedoButton action="undo" />
+    <UndoRedoButton action="redo" />
+  </ToolbarGroup>
+  <ToolbarSeparator className="mx-1 h-5 w-px bg-border" />
+  <ToolbarGroup>
+    <MarkButton type="bold" />
+    <MarkButton type="italic" />
+    <MarkButton type="underline" />
+  </ToolbarGroup>
+</Toolbar>
+```

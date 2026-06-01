@@ -1,0 +1,11 @@
+{
+  "title": "Overlays",
+  "pages": [
+    "index",
+    "floating-link",
+    "mention",
+    "slash-command",
+    "draggable-block",
+    "context-menu"
+  ]
+}

@@ -1,0 +1,86 @@
+---
+title: EditorContextMenu
+description: Right-click menu for the editor surface, with conditional items and access to the TypixEditor instance.
+---
+
+`EditorContextMenu` wraps your `<EditorContent />` and shows a Radix
+context menu on right-click. Items receive the live `TypixEditor`, so
+`disabled`/`hidden` predicates can react to the current selection state.
+
+## Install
+
+```bash
+npx typix ui add context-menu
+```
+
+The CLI also installs `@typix-editor/extension-context-menu` if needed.
+
+## Import
+
+```tsx
+import { EditorContextMenu } from "@/components/typix/main/context-menu";
+// Also exported as `ContextMenuUI`
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `items` | `EditorContextMenuItem[]` | — | Menu items to render. Required. |
+| `className` | `string` | — | Extra class on the content popover. |
+| `children` | `ReactNode` | — | The editor area to wrap — typically `<EditorContent />`. |
+
+### EditorContextMenuItem
+
+Three discriminated variants:
+
+```ts
+type EditorContextMenuItem =
+  | {
+      type: "item";
+      label: string;
+      icon?: ReactNode;
+      shortcut?: string;
+      disabled?: boolean | ((editor: TypixEditor) => boolean);
+      hidden?: boolean | ((editor: TypixEditor) => boolean);
+      onSelect: (editor: TypixEditor) => void;
+    }
+  | { type: "separator"; hidden?: boolean | ((editor: TypixEditor) => boolean) }
+  | { type: "label"; label: string; hidden?: boolean | ((editor: TypixEditor) => boolean) };
+```
+
+## Usage
+
+```tsx
+import { Copy, Trash } from "lucide-react";
+import { EditorContextMenu } from "@/components/typix/main/context-menu";
+
+const items = [
+  { type: "label", label: "Edit" },
+  {
+    type: "item",
+    label: "Copy",
+    icon: <Copy size={14} />,
+    shortcut: "⌘C",
+    onSelect: (editor) => editor.chain().copy().run(),
+  },
+  { type: "separator" },
+  {
+    type: "item",
+    label: "Delete",
+    icon: <Trash size={14} />,
+    disabled: (editor) => editor.lexical.getEditorState().read(() => false),
+    onSelect: (editor) => editor.chain().deleteSelection().run(),
+  },
+];
+
+<EditorContextMenu items={items}>
+  <EditorContent editor={editor} />
+</EditorContextMenu>
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-context-menu" href="/docs/extensions/context-menu" description="The behavior extension this UI pairs with." />
+</Cards>

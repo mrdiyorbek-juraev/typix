@@ -1,0 +1,4 @@
+{
+  "title": "Typix UI",
+  "pages": ["index", "editor-toolbar", "overlays", "components", "primitives"]
+}

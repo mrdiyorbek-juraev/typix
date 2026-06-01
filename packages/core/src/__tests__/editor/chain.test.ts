@@ -3,8 +3,8 @@ import { createHeadlessEditor } from '@lexical/headless'
 import { createCommand } from 'lexical'
 import type { LexicalEditor, AnyLexicalExtension } from 'lexical'
 import { createChainBuilder, createCanChainBuilder } from '../../editor/chain'
-import { ExtensionRegistry } from '../../editor/extension'
-import { registerTypixMeta } from '../../meta'
+import { ExtensionRegistry } from '../../extension'
+import { registerTypixMeta } from '../../extension/compat'
 import type { ChainBuilder, CanChainBuilder } from '../../types'
 
 const mockExt = () => ({}) as AnyLexicalExtension
@@ -12,7 +12,9 @@ const mockExt = () => ({}) as AnyLexicalExtension
 function makeEditor(): LexicalEditor {
   return createHeadlessEditor({
     namespace: 'test',
-    onError: (err) => { throw err },
+    onError: (err) => {
+      throw err
+    },
   })
 }
 
@@ -32,12 +34,17 @@ describe('createChainBuilder', () => {
   describe('built-in methods return the proxy (chainable)', () => {
     it('focus() returns itself', () => expect(chain.focus()).toBe(chain))
     it('blur() returns itself', () => expect(chain.blur()).toBe(chain))
-    it('clearContent() returns itself', () => expect(chain.clearContent()).toBe(chain))
-    it('toggleMark() returns itself', () => expect(chain.toggleMark('bold')).toBe(chain))
-    it('toggleBlock() returns itself', () => expect(chain.toggleBlock('heading')).toBe(chain))
+    it('clearContent() returns itself', () =>
+      expect(chain.clearContent()).toBe(chain))
+    it('undo() returns itself', () => expect(chain.undo()).toBe(chain))
+    it('redo() returns itself', () => expect(chain.redo()).toBe(chain))
+    it('toggleMark() returns itself', () =>
+      expect(chain.toggleMark('bold')).toBe(chain))
   })
 
-  it('proxies unknown method calls and returns itself', () => {
+  it('Proxy still queues unknown method calls at runtime (type system enforces names)', () => {
+    // The TypeScript surface no longer permits unknown methods, but the
+    // Proxy continues to queue them so extension-registered commands work.
     const result = (chain as any).customCommand('arg1')
     expect(result).toBe(chain)
   })
@@ -49,7 +56,7 @@ describe('createChainBuilder', () => {
       expect(chain.run()).toBe(true)
     })
 
-    it('dispatches a registered Lexical command and returns true', () => {
+    it('dispatches a registered v4 Lexical command and returns true', () => {
       const ext = mockExt()
       const MY_CMD = createCommand<void>('TYPIX_MY_CMD_TEST')
       registerTypixMeta(ext, { commands: { myCmd: MY_CMD } })
@@ -81,8 +88,9 @@ describe('createChainBuilder', () => {
       registerTypixMeta(ext, { commands: { pass: PASS_CMD, fail: FAIL_CMD } })
       registry.register(ext)
 
-      const spy = vi.spyOn(editor, 'dispatchCommand')
-        .mockImplementation((cmd: any) => cmd === PASS_CMD ? true : false)
+      const spy = vi
+        .spyOn(editor, 'dispatchCommand')
+        .mockImplementation((cmd: any) => (cmd === PASS_CMD ? true : false))
       ;(chain as any).pass()
       ;(chain as any).fail()
       expect(chain.run()).toBe(false)
@@ -139,8 +147,7 @@ describe('createChainBuilder', () => {
     })
 
     it('falls back to built-in commands (e.g. undo returns true)', () => {
-      // 'undo' is a Lexical built-in handled by executeBuiltinCommand
-      ;(chain as any).undo()
+      chain.undo()
       expect(chain.run()).toBe(true)
     })
   })
@@ -154,8 +161,10 @@ describe('createChainBuilder', () => {
     registry.register(ext)
 
     const spy = vi.spyOn(editor, 'dispatchCommand').mockReturnValue(true)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(createChainBuilder(editor, registry) as any).clearContent().toggle().run()
+    ;(createChainBuilder(editor, registry) as any)
+      .clearContent()
+      .toggle()
+      .run()
     expect(spy).toHaveBeenCalledWith(CMD, undefined)
     spy.mockRestore()
   })
@@ -175,8 +184,6 @@ describe('createCanChainBuilder', () => {
     registry = new ExtensionRegistry()
     can = createCanChainBuilder(editor, registry)
   })
-
-  // ── run() basics ──────────────────────────────────────────────────
 
   it('returns true for an empty queue', () => {
     expect(can.run()).toBe(true)
@@ -213,11 +220,11 @@ describe('createCanChainBuilder', () => {
   })
 
   it('returns true for builtin undo', () => {
-    expect((can as any).undo().run()).toBe(true)
+    expect(can.undo().run()).toBe(true)
   })
 
   it('returns true for builtin redo', () => {
-    expect((can as any).redo().run()).toBe(true)
+    expect(can.redo().run()).toBe(true)
   })
 
   // ── toggleMark ────────────────────────────────────────────────────
@@ -227,21 +234,24 @@ describe('createCanChainBuilder', () => {
   })
 
   it('returns false for toggleMark with an unknown mark', () => {
-    expect(can.toggleMark('nonexistent').run()).toBe(false)
+    // Cast through any because BuiltinMarkName excludes unknown names by design.
+    expect((can.toggleMark as any)('nonexistent').run()).toBe(false)
   })
 
-  // ── toggleBlock ───────────────────────────────────────────────────
+  // ── toggleBlock no longer built-in ────────────────────────────────
 
-  it('returns false for toggleBlock via builtin (requires extension)', () => {
-    expect(can.toggleBlock('heading').run()).toBe(false)
+  it('toggleBlock is no longer a built-in — only available via extension', () => {
+    // Unknown command via Proxy returns false through `can()` when no
+    // extension claims it.
+    expect((can as any).toggleBlock('heading').run()).toBe(false)
   })
 
-  it('returns true for toggleBlock when extension handles it', () => {
+  it('an extension can still expose a "toggleBlock" command if it wants to', () => {
     const ext = mockExt()
     const CMD = createCommand<void>('TYPIX_TOGGLE_BLOCK_CMD')
     registerTypixMeta(ext, { commands: { toggleBlock: CMD } })
     registry.register(ext)
-    expect(can.toggleBlock('heading').run()).toBe(true)
+    expect((can as any).toggleBlock('heading').run()).toBe(true)
   })
 
   // ── Mixed chains ──────────────────────────────────────────────────
@@ -279,10 +289,11 @@ describe('createCanChainBuilder', () => {
     expect(can.blur()).toBe(can)
     expect(can.clearContent()).toBe(can)
     expect(can.toggleMark('bold')).toBe(can)
-    expect(can.toggleBlock('heading')).toBe(can)
+    expect(can.undo()).toBe(can)
+    expect(can.redo()).toBe(can)
   })
 
-  it('proxies unknown method calls and returns itself', () => {
+  it('Proxy still queues unknown method calls at runtime', () => {
     expect((can as any).someCommand('arg')).toBe(can)
   })
 

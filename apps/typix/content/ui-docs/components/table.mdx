@@ -1,0 +1,64 @@
+---
+title: TableUI
+description: Full table UI — hover-driven cell menu, header toggle buttons, row/column color pickers, and a separate cell resizer.
+---
+
+`TableUI` pairs with [`extension-table`](/docs/extensions/table) and
+provides every interactive control a user expects: insert/delete
+rows/columns, merge/split, toggle header row/column, color cells, and
+duplicate rows. `TableCellResizer` is exported separately so you can ship
+only the resize handles if you don't want the full UI.
+
+## Install
+
+```bash
+npx typix ui add table
+```
+
+The CLI also installs `@typix-editor/extension-table` if needed.
+
+## Import
+
+```tsx
+import {
+  TableUI,
+  TableCellResizer,
+  type TableHoverInfo,
+} from "@/components/typix/main/table";
+```
+
+## Components
+
+| Export | Purpose |
+|---|---|
+| `TableUI` | Full UI — cell menu, header buttons, color picker. |
+| `TableCellResizer` | Just the drag-to-resize handles. |
+| `TableHoverInfo` (type) | Shape of the hover state your custom UI can read. |
+
+## Usage
+
+Drop `TableUI` once inside the editor provider; it activates whenever the
+cursor lands inside a table:
+
+```tsx
+import { TableUI } from "@/components/typix/main/table";
+
+<TypixEditorContext.Provider value={{ editor }}>
+  <EditorContent editor={editor} />
+  <TableUI />
+</TypixEditorContext.Provider>
+```
+
+Resize-handles-only mode:
+
+```tsx
+import { TableCellResizer } from "@/components/typix/main/table";
+
+<TableCellResizer />
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-table" href="/docs/extensions/table" description="The behavior extension this UI pairs with." />
+</Cards>

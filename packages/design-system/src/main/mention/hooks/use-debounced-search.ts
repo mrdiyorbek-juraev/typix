@@ -7,7 +7,7 @@ import type {
 export function useDebouncedSearch(
   query: string | null,
   trigger: string,
-  onSearch: MentionSearchFn,
+  onSearch: MentionSearchFn | undefined,
   debounceMs: number,
   maxSuggestions: number
 ): { results: MentionItem[]; isLoading: boolean } {
@@ -20,7 +20,7 @@ export function useDebouncedSearch(
       clearTimeout(debounceRef.current);
     }
 
-    if (query === null) {
+    if (query === null || !onSearch) {
       setResults([]);
       setIsLoading(false);
       return;

@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createCommand } from 'lexical'
 import type { AnyLexicalExtension } from 'lexical'
-import { ExtensionRegistry } from '../../editor/extension'
-import { registerTypixMeta } from '../../meta'
+import { ExtensionRegistry } from '../../extension'
+import { registerTypixMeta } from '../../extension/compat'
 
 // Lightweight stand-in for AnyLexicalExtension — plain objects are valid WeakMap keys
 const mockExt = () => ({}) as AnyLexicalExtension

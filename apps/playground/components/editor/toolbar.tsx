@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ImagePlus, Moon, Sun, Table } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useTypixEditor } from "@typix-editor/react";
+import { useTypixEditorState } from "@typix-editor/react";
 import { INSERT_IMAGE_COMMAND } from "@typix-editor/extension-image";
 import {
   Toolbar,
@@ -42,7 +42,7 @@ import {
 export function EditorToolbar() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const editor = useTypixEditor();
+  const editor = useTypixEditorState();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => setMounted(true), []);

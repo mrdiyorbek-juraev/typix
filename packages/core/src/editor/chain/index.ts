@@ -1,6 +1,11 @@
 import type { LexicalEditor } from 'lexical'
-import type { ChainBuilder, CanChainBuilder, SerializedContent } from '../../types'
-import type { ExtensionRegistry } from '../extension'
+import type {
+    BuiltinMarkName,
+    CanChainBuilder,
+    ChainBuilder,
+    SerializedContent,
+} from '../../types'
+import type { ExtensionRegistry } from '../../extension'
 import { executeBuiltinCommand } from '../command'
 import { isKnownBuiltinCommand } from './can'
 
@@ -9,19 +14,43 @@ type QueuedStep = {
     args: unknown[]
 }
 
+// Internal shape — the concrete object backing the Proxy. Kept loose so
+// the Proxy can attach typed extension commands via declaration merging.
+interface ChainBase {
+    run(): boolean
+    focus(position?: 'start' | 'end' | 'all'): ChainBuilder
+    blur(): ChainBuilder
+    setContent(content: SerializedContent | string): ChainBuilder
+    clearContent(): ChainBuilder
+    undo(): ChainBuilder
+    redo(): ChainBuilder
+    toggleMark(name: BuiltinMarkName, attrs?: Record<string, unknown>): ChainBuilder
+}
+
+interface CanChainBase {
+    run(): boolean
+    focus(position?: 'start' | 'end' | 'all'): CanChainBuilder
+    blur(): CanChainBuilder
+    setContent(content: SerializedContent | string): CanChainBuilder
+    clearContent(): CanChainBuilder
+    undo(): CanChainBuilder
+    redo(): CanChainBuilder
+    toggleMark(name: BuiltinMarkName, attrs?: Record<string, unknown>): CanChainBuilder
+}
+
 /**
  * Creates a chainable command builder.
  *
- * Every method queues a command and returns `this`, allowing fluent chains.
- * Calling `.run()` executes all queued commands in order and returns `true`
- * if every command succeeded.
+ * Every method queues a command and returns the proxy, allowing fluent
+ * chains. Calling `.run()` executes all queued commands in order and
+ * returns `true` if every command succeeded.
+ *
+ * Built-in methods are typed via `TypixCommands<R>`. Extension authors
+ * augment that interface from their own package to add type-safe entries.
  *
  * @example
  * ```ts
- * editor.chain()
- *   .focus()
- *   .toggleBold()
- *   .run()
+ * editor.chain().focus().toggleBold().run()
  * ```
  */
 export function createChainBuilder(
@@ -30,79 +59,75 @@ export function createChainBuilder(
 ): ChainBuilder {
     const queue: QueuedStep[] = []
 
-    // Declare proxy reference so known methods can return it
+    // Forward reference so the typed methods can return the proxy.
     let proxy: ChainBuilder
 
-    const builder: ChainBuilder = {
+    const builder: ChainBase = {
         run(): boolean {
             let allSucceeded = true
             for (const step of queue) {
                 const success = dispatchCommand(lexicalEditor, registry, step.name, step.args)
-                if (!success) {
-                    allSucceeded = false
-                }
+                if (!success) allSucceeded = false
             }
             queue.length = 0
             return allSucceeded
         },
-
-        focus(position = 'end'): ChainBuilder {
+        focus(position = 'end') {
             queue.push({ name: 'focus', args: [position] })
             return proxy
         },
-
-        blur(): ChainBuilder {
+        blur() {
             queue.push({ name: 'blur', args: [] })
             return proxy
         },
-
-        setContent(content: SerializedContent | string): ChainBuilder {
+        setContent(content) {
             queue.push({ name: 'setContent', args: [content] })
             return proxy
         },
-
-        clearContent(): ChainBuilder {
+        clearContent() {
             queue.push({ name: 'clearContent', args: [] })
             return proxy
         },
-
-        toggleMark(name: string, attrs?: Record<string, unknown>): ChainBuilder {
-            queue.push({ name: 'toggleMark', args: [name, attrs] })
+        undo() {
+            queue.push({ name: 'undo', args: [] })
             return proxy
         },
-
-        toggleBlock(name: string, attrs?: Record<string, unknown>): ChainBuilder {
-            queue.push({ name: 'toggleBlock', args: [name, attrs] })
+        redo() {
+            queue.push({ name: 'redo', args: [] })
+            return proxy
+        },
+        toggleMark(name, attrs) {
+            queue.push({ name: 'toggleMark', args: [name, attrs] })
             return proxy
         },
     }
 
-    // Proxy: intercept any unknown method call and treat it as a registered command
     proxy = new Proxy(builder, {
         get(target, prop: string) {
-            // Return known chain methods directly
             if (prop in target) {
-                return target[prop as keyof ChainBuilder]
+                return (target as unknown as Record<string, unknown>)[prop]
             }
-
-            // Treat unknown props as dynamic commands from extensions
             if (typeof prop === 'string') {
                 return (...args: unknown[]) => {
                     queue.push({ name: prop, args })
                     return proxy
                 }
             }
-
             return undefined
         },
-    })
+    }) as unknown as ChainBuilder
 
     return proxy
 }
 
 /**
  * Dispatch a single named command against the editor.
- * Checks extension Lexical commands first, then falls back to built-in commands.
+ *
+ * Resolution order:
+ *   1. Typed command factory registered via withTypixMeta(..., { commands })
+ *   2. Legacy Lexical command registered via registerTypixMeta.commands
+ *   3. Built-in commands (focus, blur, setContent, clearContent,
+ *      toggleMark, undo, redo)
  */
 function dispatchCommand(
     editor: LexicalEditor,
@@ -110,6 +135,19 @@ function dispatchCommand(
     name: string,
     args: unknown[],
 ): boolean {
+    // Typed command factory
+    const factory = registry.getCommandFactory(name)
+    if (factory) {
+        try {
+            const commandFn = factory(...args)
+            return commandFn(editor) !== false
+        } catch (err: unknown) {
+            console.error(`[Typix] Error in v5 command "${name}":`, err)
+            return false
+        }
+    }
+
+    // Legacy: Lexical command from registerTypixMeta
     const lexicalCmd = registry.getLexicalCommand(name)
     if (lexicalCmd) {
         try {
@@ -120,7 +158,7 @@ function dispatchCommand(
         }
     }
 
-    // Fall back to built-in commands
+    // Built-in fallback
     return executeBuiltinCommand(editor, name, args)
 }
 
@@ -129,16 +167,16 @@ function dispatchCommand(
 // ─────────────────────────────────────────────────────
 
 /**
- * Creates a chainable command builder that checks whether commands **can** run
- * without actually executing them.
+ * Creates a chainable command builder that checks whether commands
+ * **can** run without actually executing them.
  *
- * A command "can run" if it's either a registered extension command or a known
- * built-in command.
+ * A command "can run" if it is a registered command factory, a registered
+ * legacy Lexical command, or a known built-in.
  *
  * @example
  * ```ts
- * editor.can().toggleBold().run()   // → true if bold extension registered
- * editor.can().nonexistent().run()  // → false
+ * editor.can().toggleBold().run()   // true if a bold extension registered
+ * editor.can().nonexistent().run()  // false
  * ```
  */
 export function createCanChainBuilder(
@@ -149,7 +187,7 @@ export function createCanChainBuilder(
 
     let proxy: CanChainBuilder
 
-    const builder: CanChainBuilder = {
+    const builder: CanChainBase = {
         run(): boolean {
             for (const step of queue) {
                 if (!canDispatchCommand(registry, step.name, step.args)) {
@@ -160,34 +198,32 @@ export function createCanChainBuilder(
             queue.length = 0
             return true
         },
-
-        focus(_position = 'end'): CanChainBuilder {
-            queue.push({ name: 'focus', args: [_position] })
+        focus(position = 'end') {
+            queue.push({ name: 'focus', args: [position] })
             return proxy
         },
-
-        blur(): CanChainBuilder {
+        blur() {
             queue.push({ name: 'blur', args: [] })
             return proxy
         },
-
-        setContent(_content: SerializedContent | string): CanChainBuilder {
-            queue.push({ name: 'setContent', args: [_content] })
+        setContent(content) {
+            queue.push({ name: 'setContent', args: [content] })
             return proxy
         },
-
-        clearContent(): CanChainBuilder {
+        clearContent() {
             queue.push({ name: 'clearContent', args: [] })
             return proxy
         },
-
-        toggleMark(name: string, attrs?: Record<string, unknown>): CanChainBuilder {
-            queue.push({ name: 'toggleMark', args: [name, attrs] })
+        undo() {
+            queue.push({ name: 'undo', args: [] })
             return proxy
         },
-
-        toggleBlock(name: string, attrs?: Record<string, unknown>): CanChainBuilder {
-            queue.push({ name: 'toggleBlock', args: [name, attrs] })
+        redo() {
+            queue.push({ name: 'redo', args: [] })
+            return proxy
+        },
+        toggleMark(name, attrs) {
+            queue.push({ name: 'toggleMark', args: [name, attrs] })
             return proxy
         },
     }
@@ -195,26 +231,21 @@ export function createCanChainBuilder(
     proxy = new Proxy(builder, {
         get(target, prop: string) {
             if (prop in target) {
-                return target[prop as keyof CanChainBuilder]
+                return (target as unknown as Record<string, unknown>)[prop]
             }
-
             if (typeof prop === 'string') {
                 return (...args: unknown[]) => {
                     queue.push({ name: prop, args })
                     return proxy
                 }
             }
-
             return undefined
         },
-    })
+    }) as unknown as CanChainBuilder
 
     return proxy
 }
 
-/**
- * Check if a named command can be dispatched (exists) without executing it.
- */
 function canDispatchCommand(
     registry: ExtensionRegistry,
     name: string,

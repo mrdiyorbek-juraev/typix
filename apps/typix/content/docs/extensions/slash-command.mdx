@@ -1,0 +1,49 @@
+---
+title: Slash Command
+description: Notion-style / menu for inserting blocks
+---
+
+Type `/` anywhere in the editor and a menu appears with insertable
+blocks — headings, lists, code blocks, quotes, custom items. The
+discoverable counterpart to keyboard shortcuts.
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-slash-command
+```
+
+## Live demo
+
+<ComponentPreview name="slash-command" />
+
+## Programmatic insertion
+
+```tsx
+import {
+  canInsertSlashCommand,
+  insertSlashCommand,
+} from "@typix-editor/extension-slash-command";
+
+if (canInsertSlashCommand(editor)) {
+  insertSlashCommand(editor);
+}
+```
+
+## Custom menu items
+
+`SlashDropdownMenu` accepts a custom `items` prop with extra block types
+(insert image, embed, table, AI-generated content, etc.).
+
+## Vendor the UI
+
+```bash
+npx typix ui add slash-command
+```
+
+## Related
+
+<Cards>
+  <Card title="Context Menu" href="/docs/extensions/context-menu" description="Right-click discovery." />
+  <Card title="Markdown Shortcuts" href="/docs/extensions/markdown-shortcuts" description="Markdown-syntax discovery." />
+</Cards>

@@ -113,7 +113,11 @@ const codeBlock = (code: string, language: string) => ({
 });
 
 // Table helpers
-const tableCell = (children: object[], headerState: 0 | 1 = 0) => ({
+const tableCell = (
+  children: object[],
+  headerState: 0 | 1 = 0,
+  width?: number
+) => ({
   children,
   direction: "ltr" as const,
   format: "" as const,
@@ -124,6 +128,7 @@ const tableCell = (children: object[], headerState: 0 | 1 = 0) => ({
   colSpan: 1,
   rowSpan: 1,
   backgroundColor: null,
+  ...(width !== undefined ? { width } : {}),
 });
 
 const tableRow = (...cells: object[]) => ({
@@ -145,13 +150,16 @@ const table = (...rows: object[]) => ({
 });
 
 // Shorthand: header cell with plain text
-const hCell = (text: string) => tableCell([paragraph(t(text, BOLD))], 1);
+const hCell = (text: string, width?: number) =>
+  tableCell([paragraph(t(text, BOLD))], 1, width);
 
 // Shorthand: body cell with plain text
-const cell = (text: string) => tableCell([paragraph(t(text))], 0);
+const cell = (text: string, width?: number) =>
+  tableCell([paragraph(t(text))], 0, width);
 
 // Shorthand: body cell with code-formatted text
-const codeCell = (text: string) => tableCell([paragraph(t(text, CODE))], 0);
+const codeCell = (text: string, width?: number) =>
+  tableCell([paragraph(t(text, CODE))], 0, width);
 
 // Image node (DecoratorNode — no children/direction/indent)
 const image = (
@@ -286,13 +294,13 @@ export const defaultContent = {
       ),
 
       table(
-        tableRow(hCell("Shortcut"), hCell("Action")),
-        tableRow(codeCell("⌘ + B"), cell("Bold")),
-        tableRow(codeCell("⌘ + I"), cell("Italic")),
-        tableRow(codeCell("⌘ + U"), cell("Underline")),
-        tableRow(codeCell("⌘ + K"), cell("Insert link")),
-        tableRow(codeCell("⌘ + Shift + S"), cell("Strikethrough")),
-        tableRow(codeCell("⌘ + Shift + H"), cell("Highlight"))
+        tableRow(hCell("Shortcut", 220), hCell("Action", 200)),
+        tableRow(codeCell("⌘ + B", 220), cell("Bold", 200)),
+        tableRow(codeCell("⌘ + I", 220), cell("Italic", 200)),
+        tableRow(codeCell("⌘ + U", 220), cell("Underline", 200)),
+        tableRow(codeCell("⌘ + K", 220), cell("Insert link", 200)),
+        tableRow(codeCell("⌘ + Shift + S", 220), cell("Strikethrough", 200)),
+        tableRow(codeCell("⌘ + Shift + H", 220), cell("Highlight", 200))
       ),
 
       emptyParagraph(),

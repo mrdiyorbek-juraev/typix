@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.5",
-    "@typix-editor/theme": "workspace:*",
     "@typix-editor/ui": "workspace:*",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"

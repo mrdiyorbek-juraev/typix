@@ -1,0 +1,69 @@
+---
+title: MentionUI
+description: "`@`-trigger picker for mentioning users or entities, with async search and full render-prop control."
+---
+
+`MentionUI` pairs with the [`extension-mention`](/docs/extensions/mention)
+extension. You supply an `onSearch` function; the component handles the
+trigger, debounce, keyboard nav, and menu rendering.
+
+## Install
+
+```bash
+npx typix ui add mention
+```
+
+The CLI also installs `@typix-editor/extension-mention` if needed.
+
+## Import
+
+```tsx
+import {
+  MentionUI,
+  MentionDefaultMenuItem,
+} from "@/components/typix/main/mention";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `onSearch` | `MentionSearchFn` | — | Async function that returns suggestions for a query. Required. |
+| `onSelect` | `(item: MentionItem) => void` | — | Called when an item is picked. |
+| `onMenuOpen` | `() => void` | — | Called when the menu opens. |
+| `onMenuClose` | `() => void` | — | Called when the menu closes. |
+| `triggerConfig` | `{ trigger?: string; minLength?: number; maxLength?: number; allowSpaces?: boolean }` | — | Override trigger behavior. |
+| `includeTrigger` | `boolean` | `true` | Whether the inserted mention keeps the trigger character. |
+| `maxSuggestions` | `number` | `10` | Max items shown. |
+| `debounceMs` | `number` | `200` | Debounce delay for `onSearch`. |
+| `renderMenu` | `(props: MentionMenuProps) => JSX.Element \| null` | — | Replace the menu container entirely. |
+| `renderMenuItem` | `(props: MentionMenuItemProps) => ReactNode` | — | Replace each menu item. |
+| `loadingContent` | `ReactNode` | — | Shown while `onSearch` is in-flight. |
+| `emptyContent` | `ReactNode` | — | Shown when results are empty. |
+| `menuPortalTarget` | `HTMLElement \| null` | — | Portal target for the menu. |
+| `menuClassName` | `string` | — | Extra class on the menu container. |
+| `disabled` | `boolean` | `false` | Disable the picker. |
+
+## Usage
+
+```tsx
+import { MentionUI } from "@/components/typix/main/mention";
+
+async function searchUsers(query: string) {
+  const res = await fetch(`/api/users?q=${query}`);
+  return (await res.json()) as MentionItem[];
+}
+
+<MentionUI
+  onSearch={searchUsers}
+  onSelect={(user) => console.log("picked", user)}
+  debounceMs={150}
+  emptyContent={<div className="p-3 text-sm">No users found.</div>}
+/>
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-mention" href="/docs/extensions/mention" description="The behavior extension this UI pairs with." />
+</Cards>

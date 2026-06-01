@@ -21,7 +21,8 @@ const KNOWN_MARKS = new Set([
 /**
  * Check if a command name corresponds to a known built-in command.
  * For `toggleMark`, validates the mark name exists.
- * `toggleBlock` always returns false (requires extension).
+ *
+ * `toggleBlock` is not a built-in — extensions own block toggles.
  */
 export function isKnownBuiltinCommand(name: string, args: unknown[]): boolean {
     if (KNOWN_BUILTIN_COMMANDS.has(name)) return true
@@ -31,6 +32,5 @@ export function isKnownBuiltinCommand(name: string, args: unknown[]): boolean {
         return markName != null && KNOWN_MARKS.has(markName)
     }
 
-    // toggleBlock always false via builtin fallback — requires extension
     return false
 }

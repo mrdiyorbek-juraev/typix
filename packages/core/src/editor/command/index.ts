@@ -63,13 +63,6 @@ export function executeBuiltinCommand(
             return true
         }
 
-        case 'toggleBlock': {
-            console.warn(
-                `[Typix] toggleBlock("${args[0]}") requires the corresponding extension to handle it.`,
-            )
-            return false
-        }
-
         case 'setContent': {
             const content = args[0] as SerializedContent | string
             setEditorContent(editor, content)

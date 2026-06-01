@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import type { TypixEditor } from "@typix-editor/core";
 import { useTypixEditorState } from "@typix-editor/react";
 import { List } from "lucide-react";
@@ -23,10 +22,7 @@ export function useListDropdownMenu(
   const items: ListItemConfig[] = types.map((type) => {
     const config = LIST_CONFIG[type];
     const isActive = editor.isActive(config.activeName);
-    const canToggle = editor
-      .can()
-      [config.toggleCmd as keyof ReturnType<typeof editor.can>]()
-      .run();
+    const canToggle = config.canApply(editor.can()).run();
 
     return {
       type,
@@ -36,7 +32,7 @@ export function useListDropdownMenu(
       isActive,
       canToggle,
       handleToggle: () => {
-        (editor.chain().focus() as any)[config.toggleCmd]().run();
+        config.apply(editor.chain().focus()).run();
       },
     };
   });
@@ -69,10 +65,7 @@ export function canToggleAnyList(
   editor: TypixEditor,
   types: ListType[] = ALL_TYPES
 ): boolean {
-  return types.some((type) => {
-    const cmd = LIST_CONFIG[type].toggleCmd;
-    return editor.can()[cmd]().run();
-  });
+  return types.some((type) => LIST_CONFIG[type].canApply(editor.can()).run());
 }
 
 export function getActiveListType(

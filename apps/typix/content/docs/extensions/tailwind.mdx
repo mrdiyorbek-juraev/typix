@@ -1,0 +1,47 @@
+---
+title: Tailwind
+description: Tailwind-friendly theme tokens for editor nodes
+---
+
+A drop-in theme that maps Lexical node classes to Tailwind utility
+classes, so you can style the editor with the same vocabulary as the
+rest of your app.
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-tailwind
+```
+
+## Live demo
+
+<ComponentPreview name="tailwind" />
+
+## Config
+
+`TailwindExtension(config?)` accepts a `TailwindConfig` to override
+the default class mappings:
+
+```tsx
+TailwindExtension({
+  heading: {
+    h1: "text-4xl font-bold tracking-tight",
+    h2: "text-2xl font-semibold",
+  },
+  paragraph: "leading-relaxed",
+  // ...
+});
+```
+
+## When to use
+
+- **Tailwind-first project** — match your design system's typography.
+- **Quick styling override** — change a single class without writing CSS.
+- **Bypassing `defaultTheme`** — replace the `.typix-*` class hierarchy
+  with utility classes.
+
+## Related
+
+<Cards>
+  <Card title="Theming" href="/docs/getting-started/theming" description="Token + CSS-based theming." />
+</Cards>

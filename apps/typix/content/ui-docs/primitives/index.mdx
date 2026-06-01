@@ -1,0 +1,61 @@
+---
+title: Primitives
+description: Low-level building blocks for Typix UI — three editor-specific primitives plus the full shadcn primitive set, all vendorable via the CLI.
+---
+
+Primitives are the smallest unit of Typix UI. Most are standard
+[shadcn/ui](https://ui.shadcn.com) primitives with no Typix-specific
+behavior — you can use them anywhere in your app. Three are editor-aware:
+`Toolbar` (with `role="toolbar"` semantics), `Kbd` (for shortcut hints),
+and `ColorSelector` (the palette picker used by color buttons).
+
+All primitives are auto-vendored as dependencies when you run
+`typix ui add` for a component that needs them. You can also vendor any
+primitive on its own:
+
+```bash
+npx typix ui add button dropdown-menu tooltip
+```
+
+## Typix-specific
+
+| Primitive | Description |
+|---|---|
+| [`Toolbar`](/docs/ui/primitives/toolbar) | `role="toolbar"` container, with `ToolbarGroup`, `ToolbarSeparator`, `ToolbarSpacer`, `ToolbarButton`, `ToolbarToggleGroup`, `ToolbarToggleItem`, and `ToolbarLink`. |
+| [`Kbd`](/docs/ui/primitives/kbd) | Styled `<kbd>` for keyboard shortcut hints. |
+| [`ColorSelector`](/docs/ui/primitives/color-selector) | Palette picker used by the color text + highlight buttons. |
+
+## Shadcn primitives
+
+These follow the standard shadcn/ui API. The vendored source lives in
+`components/typix/primitives/<name>/` and you can edit it like any shadcn
+component. See [ui.shadcn.com](https://ui.shadcn.com/docs/components) for
+full API references.
+
+| Primitive | Vendor name | Purpose |
+|---|---|---|
+| `Avatar` | `avatar` | User / entity avatar with image + fallback. |
+| `Badge` | `badge` | Small label / status pill. |
+| `Button` | `button` | Base button with variants. |
+| `Calendar` | `calendar` | Date picker grid. |
+| `Card` | `card` | Surface container with header / content / footer. |
+| `Checkbox` | `checkbox` | Boolean input. |
+| `Command` | `command` | Searchable command palette primitive (used by `MentionUI`, `SlashDropdownMenu`). |
+| `ContextMenu` | `context-menu` | Right-click menu (the primitive, not [`EditorContextMenu`](/docs/ui/overlays/context-menu)). |
+| `Dialog` | `dialog` | Modal dialog. |
+| `DropdownMenu` | `dropdown-menu` | Click-anchored menu. |
+| `Input` | `input` | Single-line text input. |
+| `Label` | `label` | Accessible form label. |
+| `Popover` | `popover` | Floating positioned content. |
+| `RadioGroup` | `radio-group` | Single-select radio set. |
+| `ScrollArea` | `scroll-area` | Styled overflow container. |
+| `Select` | `select` | Native-style dropdown. |
+| `Separator` | `separator` | 1px divider. |
+| `Skeleton` | `skeleton` | Loading-state placeholder. |
+| `Slider` | `slider` | Range input. |
+| `Switch` | `switch` | Boolean toggle. |
+| `Tabs` | `tabs` | Tabbed panels. |
+| `Textarea` | `textarea` | Multi-line text input. |
+| `Toggle` | `toggle` | Two-state press button. |
+| `ToggleGroup` | `toggle-group` | Group of toggles (single or multi). |
+| `Tooltip` | `tooltip` | Hover-anchored hint. |

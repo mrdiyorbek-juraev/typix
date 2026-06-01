@@ -1,90 +1,167 @@
 ---
-title: Extensions Overview
-description: Browse all official Typix extensions
+title: Overview
+description: All 25 official Typix extensions — what each one ships and when to use it
 ---
 
-Extensions are modular packages that add features to your Typix editor. Each extension is a separate npm package you install only when needed.
+Typix v2 ships **25 official extensions**. Each is a separate npm package
+under the `@typix-editor/extension-*` scope. Install only what you use.
 
-## How extensions work
+```bash
+# One extension
+pnpm add @typix-editor/extension-mention
 
-Extensions are React components rendered as children of `EditorRoot`. They register Lexical plugins, commands, and node transforms behind the scenes.
-
-```tsx
-<EditorRoot>
-  <EditorContent />
-  <LinkExtension />
-  <ShortCutsExtension />
-  <MaxLengthExtension maxLength={1000} />
-</EditorRoot>
+# Several
+pnpm add @typix-editor/extension-mention @typix-editor/extension-floating-link
 ```
 
-Some extensions also provide custom Lexical nodes that must be registered in the editor config:
+Or browse the interactive picker via the CLI:
 
-```tsx
-import { createEditorConfig, defaultExtensionNodes } from '@typix-editor/react';
-import { MentionNode } from '@typix-editor/extension-mention';
-
-const config = createEditorConfig({
-  extensionNodes: [...defaultExtensionNodes, MentionNode],
-});
+```bash
+npx typix add
 ```
 
-## Extension catalog
+## Start with the Starter Kit
 
-### Text & Formatting
+`StarterKit` bundles the common defaults (rich text, history, headings,
+lists, links, basic marks). For 90% of projects, this is your first
+extension:
+
+```tsx
+import { StarterKit } from "@typix-editor/extension-starter-kit";
+
+const extensions = [StarterKit()];
+```
+
+Skip it only if you need a stripped-down editor (e.g., just inline marks,
+no block-level nodes).
+
+## All 25 by category
+
+### Core (always-on for most editors)
+
+| Extension | npm package | What it adds |
+|---|---|---|
+| Starter Kit | `@typix-editor/extension-starter-kit` | Rich-text + history + lists + headings + basic marks (bundles many of the below). |
+| Link | `@typix-editor/extension-link` | Link node + click-to-open + serialization. |
+| Tailwind | `@typix-editor/extension-tailwind` | Tailwind-friendly editor theme tokens. |
+
+### Text & inline formatting
+
+| Extension | npm package | What it adds |
+|---|---|---|
+| Auto Complete | `@typix-editor/extension-auto-complete` | Inline ghost-text suggestions. |
+| Auto Link | `@typix-editor/extension-auto-link` | URLs become links as you type. |
+| Mention | `@typix-editor/extension-mention` | `@`-mention picker with custom trigger + suggestion list. |
+| Keywords | `@typix-editor/extension-keywords` | Highlight a configurable set of keywords inline. |
+| Markdown Shortcuts | `@typix-editor/extension-markdown-shortcuts` | Convert markdown syntax (`## `, `* `, `>` …) as you type. |
+| Short Cuts | `@typix-editor/extension-short-cuts` | Keyboard shortcuts (⌘B, ⌘I, ⌘U, …). |
+| Tab Focus | `@typix-editor/extension-tab-focus` | Tab key navigates in/out of the editor (a11y). |
+
+### Block-level
+
+| Extension | npm package | What it adds |
+|---|---|---|
+| Collapsible | `@typix-editor/extension-collapsible` | Collapsible content sections. |
+| Code Block | `@typix-editor/extension-code-block` | Multi-line code blocks with language selection. |
+| Code Block Prettier | `@typix-editor/extension-code-block-prettier` | Format code blocks on demand. |
+| Code Highlight (Prism) | `@typix-editor/extension-code-highlight-prism` | Syntax highlighting via Prism.js. |
+| Code Highlight (Shiki) | `@typix-editor/extension-code-highlight-shiki` | Syntax highlighting via Shiki. |
+| Table | `@typix-editor/extension-table` | Tables with merging, resizing, frozen headers. |
+
+### Media
+
+| Extension | npm package | What it adds |
+|---|---|---|
+| Image | `@typix-editor/extension-image` | Block-level images with resize, alignment, caption, alt. |
+| Drag & Drop Paste | `@typix-editor/extension-drag-drop-paste` | Drop/paste images into the editor. |
+
+### Editor surface
+
+| Extension | npm package | What it adds |
+|---|---|---|
+| Floating Link | `@typix-editor/extension-floating-link` | Floating UI for editing inline links. |
+| Draggable Block | `@typix-editor/extension-draggable-block` | Drag handle to reorder content blocks. |
+| Context Menu | `@typix-editor/extension-context-menu` | Right-click context menu. |
+| Slash Command | `@typix-editor/extension-slash-command` | Notion-style `/` menu for inserting blocks. |
+
+### Input & accessibility
+
+| Extension | npm package | What it adds |
+|---|---|---|
+| Character Limit | `@typix-editor/extension-character-limit` | Visual character count + warning state. |
+| Max Length | `@typix-editor/extension-max-length` | Hard cap on input length. |
+| Speech to Text | `@typix-editor/extension-speech-to-text` | Voice dictation via Web Speech API. |
+
+## Extension shape
+
+All extensions follow the same pattern. Most take an optional config via
+`configExtension`:
+
+```tsx
+import { configExtension } from "@typix-editor/core";
+import { MentionExtension } from "@typix-editor/extension-mention";
+
+const extensions = [
+  StarterKit(),
+  configExtension(MentionExtension, {
+    trigger: "@",
+    // ...
+  }),
+];
+```
+
+Some extensions are bare exports (no config needed):
+
+```tsx
+import { AutoLinkExtension } from "@typix-editor/extension-auto-link";
+
+const extensions = [StarterKit(), AutoLinkExtension];
+```
+
+Some are constructors with options at call time:
+
+```tsx
+import { DraggableBlockExtension } from "@typix-editor/extension-draggable-block";
+
+const extensions = [StarterKit(), DraggableBlockExtension({ /* opts */ })];
+```
+
+The extension's docs page tells you which shape applies.
+
+## Many extensions have matching UI components
+
+For each behavior extension, Typix UI often ships a paired React
+component that you vendor into your repo via the CLI's `typix ui add`.
+
+| Extension | Paired UI component |
+|---|---|
+| `extension-floating-link` | `<FloatingLinkUI />` |
+| `extension-mention` | `<MentionUI />` |
+| `extension-code-block` | `<CodeBlockUI />` |
+| `extension-table` | `<TableUI />` |
+| `extension-draggable-block` | `<DraggableBlock />` |
+| `extension-context-menu` | `<EditorContextMenu />` |
+| `extension-slash-command` | `<SlashDropdownMenu />` |
+| `extension-character-limit` | `<CharacterLimit />` |
+
+```bash
+npx typix ui add floating-link mention code-block
+```
+
+[More on UI vendoring →](/docs/getting-started/cli#ui-add)
+
+## Per-extension docs
+
+Each extension has a dedicated page with its config options, exposed
+commands, and a live preview. Browse the sidebar or jump straight in:
 
 <Cards>
-  <Card title="Link" href="/docs/extensions/link" description="URL validation for link nodes" />
-  <Card title="Floating Link" href="/docs/extensions/floating-link" description="Floating link editor UI" />
-  <Card title="Auto Link" href="/docs/extensions/auto-link" description="Auto-detect and convert URLs" />
-  <Card title="Keywords" href="/docs/extensions/keywords" description="Keyword highlighting" />
+  <Card title="Auto Complete" href="/docs/extensions/auto-complete" description="Ghost-text suggestions." />
+  <Card title="Auto Link" href="/docs/extensions/auto-link" description="URL → link as you type." />
+  <Card title="Floating Link" href="/docs/extensions/floating-link" description="Inline link editor." />
+  <Card title="Mention" href="/docs/extensions/mention" description="@ picker." />
+  <Card title="Slash Command" href="/docs/extensions/slash-command" description="/ menu for inserting blocks." />
+  <Card title="Code Block" href="/docs/extensions/code-highlight-prism" description="Syntax-highlighted code." />
+  <Card title="Table" href="/docs/extensions/tables" description="Tables with merging + resize." />
+  <Card title="Draggable Block" href="/docs/extensions/draggable-block" description="Drag handle to reorder." />
 </Cards>
-
-### Code
-
-<Cards>
-  <Card title="Code Highlight (Prism)" href="/docs/extensions/code-highlight-prism" description="Syntax highlighting with Prism" />
-  <Card title="Code Highlight (Shiki)" href="/docs/extensions/code-highlight-shiki" description="Syntax highlighting with Shiki" />
-</Cards>
-
-### Input & Behavior
-
-<Cards>
-  <Card title="Short Cuts" href="/docs/extensions/short-cuts" description="Keyboard shortcuts for formatting" />
-  <Card title="Auto Complete" href="/docs/extensions/auto-complete" description="Word auto-completion" />
-  <Card title="Max Length" href="/docs/extensions/max-length" description="Character/word limit enforcement" />
-  <Card title="Tab Focus" href="/docs/extensions/tab-focus" description="Tab key focus management" />
-  <Card title="Speech to Text" href="/docs/extensions/speech-to-text" description="Voice dictation input" />
-</Cards>
-
-### UI & Interaction
-
-<Cards>
-  <Card title="Mention" href="/docs/extensions/mention" description="@mention typeahead with search" />
-  <Card title="Context Menu" href="/docs/extensions/context-menu" description="Right-click context menu" />
-  <Card title="Draggable Block" href="/docs/extensions/draggable-block" description="Drag-and-drop block reordering" />
-  <Card title="Drag Drop Paste" href="/docs/extensions/drag-drop-paste" description="Image drag, drop, and paste" />
-  <Card title="Collapsible" href="/docs/extensions/collapsible" description="Collapsible/accordion blocks" />
-</Cards>
-
-## Installation pattern
-
-All extensions follow the same pattern:
-
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-{name}
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-{name}
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-{name}
-    ```
-  </Tab>
-</Tabs>

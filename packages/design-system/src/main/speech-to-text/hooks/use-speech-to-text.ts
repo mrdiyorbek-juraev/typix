@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useTypixEditor } from "@typix-editor/react";
+import { useTypixEditorState } from "@typix-editor/react";
 import { getExtensionOutput } from "@typix-editor/core";
 import {
   isSpeechRecognitionSupported,
@@ -30,7 +30,7 @@ import type { UseSpeechToTextOptions, UseSpeechToTextReturn } from "../types";
 export function useSpeechToText(
   options?: UseSpeechToTextOptions
 ): UseSpeechToTextReturn {
-  const typixEditor = useTypixEditor();
+  const typixEditor = useTypixEditorState();
   const editor = typixEditor.lexical;
   const output = getExtensionOutput<SpeechToTextOutput>(editor, SpeechToTextExtension);
 

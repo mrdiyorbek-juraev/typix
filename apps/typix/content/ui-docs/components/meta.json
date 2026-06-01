@@ -1,0 +1,11 @@
+{
+  "title": "Components",
+  "pages": [
+    "index",
+    "code-block",
+    "table",
+    "image",
+    "character-limit",
+    "speech-to-text"
+  ]
+}

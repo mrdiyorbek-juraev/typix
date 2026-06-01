@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { LexicalEditor } from "lexical";
-import { useTypixEditor } from "@typix-editor/react";
+import { useTypixEditorState } from "@typix-editor/react";
 import { getExtensionOutput } from "@typix-editor/core";
 import { FloatingLinkExtension, type FloatingLinkOutput } from "@typix-editor/extension-floating-link";
 import { FloatingLinkEditorPortal } from "./portal";
@@ -27,7 +27,7 @@ export function FloatingLinkUI({
   children,
   verticalOffset = 40,
 }: FloatingLinkUIProps = {}): JSX.Element | null {
-  const typixEditor = useTypixEditor();
+  const typixEditor = useTypixEditorState();
   const editor = typixEditor.lexical;
   const output = getExtensionOutput<FloatingLinkOutput>(editor, FloatingLinkExtension);
 

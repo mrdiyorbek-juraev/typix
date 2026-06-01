@@ -77,6 +77,7 @@ export const AutoLinkExtension = (userConfig: Partial<AutoLinkConfig> = {}) => {
         return registerAutoLink(editor, {
           matchers: currentMatchers,
           changeHandlers: [stableOnChange],
+          excludeParents: [],
         });
       });
     },

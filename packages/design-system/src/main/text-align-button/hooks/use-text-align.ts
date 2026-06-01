@@ -1,5 +1,9 @@
 import { useCallback } from "react";
-import type { TypixEditor } from "@typix-editor/core";
+import type {
+  TypixEditor,
+  ChainBuilder,
+  CanChainBuilder,
+} from "@typix-editor/core";
 import { useTypixEditorState } from "@typix-editor/react";
 import { AlignLeft, AlignCenter, AlignRight, AlignJustify } from "lucide-react";
 import { useIsApple } from "../../../lib/use-is-apple";
@@ -11,7 +15,8 @@ import type {
 import type { FC } from "react";
 
 interface AlignConfig {
-  alignCmd: string;
+  apply: (chain: ChainBuilder) => ChainBuilder;
+  canApply: (can: CanChainBuilder) => CanChainBuilder;
   Icon: FC;
   label: string;
   macKeys: string[];
@@ -20,28 +25,32 @@ interface AlignConfig {
 
 const ALIGN_CONFIG: Record<TextAlign, AlignConfig> = {
   left: {
-    alignCmd: "alignLeft",
+    apply: (c) => c.alignLeft(),
+    canApply: (c) => c.alignLeft(),
     Icon: AlignLeft,
     label: "Align Left",
     macKeys: ["⌘", "⇧", "L"],
     winKeys: ["Ctrl", "Shift", "L"],
   },
   center: {
-    alignCmd: "alignCenter",
+    apply: (c) => c.alignCenter(),
+    canApply: (c) => c.alignCenter(),
     Icon: AlignCenter,
     label: "Align Center",
     macKeys: ["⌘", "⇧", "E"],
     winKeys: ["Ctrl", "Shift", "E"],
   },
   right: {
-    alignCmd: "alignRight",
+    apply: (c) => c.alignRight(),
+    canApply: (c) => c.alignRight(),
     Icon: AlignRight,
     label: "Align Right",
     macKeys: ["⌘", "⇧", "R"],
     winKeys: ["Ctrl", "Shift", "R"],
   },
   justify: {
-    alignCmd: "alignJustify",
+    apply: (c) => c.alignJustify(),
+    canApply: (c) => c.alignJustify(),
     Icon: AlignJustify,
     label: "Justify",
     macKeys: ["⌘", "⇧", "J"],
@@ -57,16 +66,13 @@ export function useTextAlign(
   const isApple = useIsApple();
   const config = ALIGN_CONFIG[align];
 
-  const canAlign = editor
-    .can()
-    [config.alignCmd as keyof ReturnType<typeof editor.can>]()
-    .run();
+  const canAlign = config.canApply(editor.can()).run();
   const isVisible = !options?.hideWhenUnavailable || canAlign;
 
   const handleTextAlign = useCallback(() => {
-    (editor.chain().focus() as any)[config.alignCmd]().run();
+    config.apply(editor.chain().focus()).run();
     options?.onAligned?.();
-  }, [editor, config.alignCmd, options]);
+  }, [editor, config, options]);
 
   return {
     isVisible,
@@ -84,11 +90,9 @@ export function canSetTextAlign(
   editor: TypixEditor,
   align: TextAlign
 ): boolean {
-  const cmd = ALIGN_CONFIG[align].alignCmd;
-  return editor.can()[cmd]().run();
+  return ALIGN_CONFIG[align].canApply(editor.can()).run();
 }
 
 export function setTextAlign(editor: TypixEditor, align: TextAlign): void {
-  const cmd = ALIGN_CONFIG[align].alignCmd;
-  editor.chain().focus()[cmd]().run();
+  ALIGN_CONFIG[align].apply(editor.chain().focus()).run();
 }

@@ -1,0 +1,35 @@
+---
+title: ColorHighlightButton
+description: Apply a background highlight color to the selected text.
+---
+
+<ComponentPreview name="ui-color-highlight" />
+
+## Install
+
+```bash
+npx typix ui add color-highlight-button
+```
+
+## Import
+
+```tsx
+import { ColorHighlightButton } from "@/components/typix/main/color-highlight-button";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string` | — | Override the button label. |
+| `defaultColor` | `string` | first highlight color | Default color shown. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when unavailable. |
+| `showShortcut` | `boolean` | `true` | Show keyboard shortcut in tooltip. |
+| `onColorSelected` | `(color: string) => void` | — | Called when a color is selected. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Exports
+
+```ts
+import { HIGHLIGHT_COLORS, HIGHLIGHT_COLOR_VALUES } from "@/components/typix/main/color-highlight-button";
+```

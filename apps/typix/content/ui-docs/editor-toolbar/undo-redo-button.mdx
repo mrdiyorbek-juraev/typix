@@ -1,0 +1,36 @@
+---
+title: UndoRedoButton
+description: Undo or redo the last editor change.
+---
+
+<ComponentPreview name="ui-undo-redo" />
+
+## Install
+
+```bash
+npx typix ui add undo-redo-button
+```
+
+## Import
+
+```tsx
+import { UndoRedoButton } from "@/components/typix/main/undo-redo-button";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `action` | `"undo" \| "redo"` | — | Which action to perform. Required. |
+| `text` | `string` | — | Override the button label. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hides when undo/redo history is empty. |
+| `showShortcut` | `boolean` | `true` | Show keyboard shortcut in tooltip. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Hook
+
+```tsx
+import { useUndoRedo } from "@/components/typix/main/undo-redo-button";
+
+const { canUndo, canRedo, handleUndo, handleRedo } = useUndoRedo({ action: "undo" });
+```

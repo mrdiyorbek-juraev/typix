@@ -56,6 +56,7 @@ export const LinkExtension = defineExtension({
             $toggleLink(null);
             return true;
           }
+          if (payload === undefined) return false;
           if (typeof payload === "string") {
             if (
               currentValidateUrl === undefined ||
@@ -67,6 +68,7 @@ export const LinkExtension = defineExtension({
             return false;
           }
           const { url, ...payloadAttrs } = payload;
+          if (!url) return false;
           if (currentValidateUrl === undefined || currentValidateUrl(url)) {
             $toggleLink(url, { ...defaultAttributes, ...payloadAttrs });
             return true;
@@ -78,7 +80,9 @@ export const LinkExtension = defineExtension({
 
       const d1 = editor.registerCommand(
         TYPIX_SET_LINK,
-        ({ url, ...attrs }) => {
+        (payload) => {
+          if (!payload) return false;
+          const { url, ...attrs } = payload;
           editor.dispatchCommand(TOGGLE_LINK_COMMAND, { url, ...attrs });
           return true;
         },

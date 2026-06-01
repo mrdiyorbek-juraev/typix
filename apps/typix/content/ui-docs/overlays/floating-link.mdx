@@ -1,0 +1,87 @@
+---
+title: FloatingLinkUI
+description: Inline link editor that hovers over a link node or the current selection, with edit / delete / open actions.
+---
+
+`FloatingLinkUI` reads link state from the [`extension-floating-link`](/docs/extensions/floating-link)
+extension and renders an anchored popover with view + edit modes. Pass a
+render function as `children` to fully replace the default UI while
+keeping all the state plumbing.
+
+## Install
+
+```bash
+npx typix ui add floating-link
+```
+
+The CLI also installs `@typix-editor/extension-floating-link` if it isn't
+already present.
+
+## Import
+
+```tsx
+import {
+  FloatingLinkUI,
+  DefaultFloatingLinkUI,
+} from "@/components/typix/main/floating-link";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `anchorElem` | `HTMLElement` | `document.body` | Element used as the positioning anchor. |
+| `children` | `(props: FloatingLinkRenderProps) => ReactNode` | — | Custom render function. Replaces the default UI entirely. |
+| `verticalOffset` | `number` | `40` | Vertical offset in px for positioning below the link. |
+
+### FloatingLinkRenderProps
+
+The render function receives editing state and a set of actions:
+
+| Field | Type | Description |
+|---|---|---|
+| `isEditing` | `boolean` | Whether the input is visible. |
+| `linkUrl` | `string` | Current link URL from the node. |
+| `editedUrl` | `string` | URL being edited in the input. |
+| `isValidUrl` | `boolean` | Whether the edited URL is valid. |
+| `setEditedUrl` | `(url: string) => void` | Update the input value. |
+| `submitLink` | `() => void` | Commit the edited URL. |
+| `cancelEdit` | `() => void` | Discard edits and return to view mode. |
+| `startEdit` | `() => void` | Enter edit mode. |
+| `deleteLink` | `() => void` | Remove the link entirely. |
+| `inputRef` | `RefObject<HTMLInputElement>` | Ref for the URL input (auto-focused when editing). |
+
+## Usage
+
+Default UI — just drop it inside the editor provider:
+
+```tsx
+import { FloatingLinkUI } from "@/components/typix/main/floating-link";
+
+<TypixEditorContext.Provider value={{ editor }}>
+  <EditorContent editor={editor} />
+  <FloatingLinkUI />
+</TypixEditorContext.Provider>
+```
+
+Custom render — wire your own UI to the render props:
+
+```tsx
+<FloatingLinkUI>
+  {({ isEditing, linkUrl, startEdit, deleteLink }) =>
+    isEditing ? <MyLinkEditor /> : (
+      <div>
+        <a href={linkUrl} target="_blank">{linkUrl}</a>
+        <button onClick={startEdit}>Edit</button>
+        <button onClick={deleteLink}>Remove</button>
+      </div>
+    )
+  }
+</FloatingLinkUI>
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-floating-link" href="/docs/extensions/floating-link" description="The behavior extension this UI pairs with." />
+</Cards>

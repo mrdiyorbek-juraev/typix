@@ -1,0 +1,43 @@
+---
+title: Code Block + Prettier
+description: Format code blocks on demand with Prettier
+---
+
+Adds a "Format" action to code blocks that runs Prettier on the content.
+Requires [Code Block](/docs/extensions/code-block) to be installed.
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-code-block-prettier
+```
+
+## Live demo
+
+<ComponentPreview name="code-block-prettier" />
+
+## Config
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `printOptions` | `Prettier.Options` | `{}` | Forwarded directly to Prettier. |
+
+Supported `printOptions` include `tabWidth`, `semi`, `singleQuote`,
+`trailingComma`, `printWidth`, etc. See
+[Prettier docs](https://prettier.io/docs/en/options.html).
+
+## Helper
+
+```tsx
+import { canFormatWithPrettier } from "@typix-editor/extension-code-block-prettier";
+
+if (canFormatWithPrettier("typescript")) {
+  // Prettier can handle this language
+}
+```
+
+## Related
+
+<Cards>
+  <Card title="Code Block" href="/docs/extensions/code-block" description="Foundation extension." />
+</Cards>

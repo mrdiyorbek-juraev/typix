@@ -18,6 +18,41 @@ peer: react, react-dom, lexical
 
 ---
 
+## Dependency classification rules
+
+Where each dep belongs in `package.json` follows the actual runtime usage. Get this wrong and consumers get duplicate React/Lexical copies, or the package fails to build, or both.
+
+| Category | Goes in | Example |
+|---|---|---|
+| **Imported at runtime by `src/`** | `dependencies` (or `peerDependencies` if shared with consumer) | `@lexical/react`, `@lexical/extension`, `@lexical/text`, `@lexical/utils`, `@radix-ui/react-slot` |
+| **Shared singleton with consumer** | `peerDependencies` (+ same in `devDependencies` for local build) | `react`, `react-dom`, `lexical`, `@typix-editor/core` |
+| **Used ONLY in `__tests__/`** | `devDependencies` only | `@lexical/headless`, `@lexical/mark`, `vitest`, `@testing-library/*` |
+| **Build tooling** | `devDependencies` | `tsup`, `typescript`, `@types/*` |
+| **Tailwind / PostCSS** | **Don't include.** This package emits no CSS. | (none — if you see these in package.json, remove them) |
+
+### Before adding a new dep
+
+1. `grep -rn 'from "<package>"' src/` — is it actually imported by source?
+2. If yes, will consumers also use it directly (e.g., `lexical`)? → `peerDependencies` + `devDependencies`
+3. If yes but consumer-invisible (e.g., `@radix-ui/react-slot`)? → `dependencies`
+4. If only in `__tests__/`? → `devDependencies` only
+5. If neither? → **don't add it.** Audit existing deps the same way periodically.
+
+### Why `lexical` is a peerDependency, not a dependency
+
+`lexical` exports module-singleton state (the active editor, command registry). If react adapter bundled its own `lexical` copy via `dependencies`, and the consumer also installed `lexical`, you'd get two copies — `instanceof LexicalEditor` checks fail, commands silently no-op. Always peer.
+
+### Why we don't re-route through `@typix-editor/core/lexical/*`
+
+Core re-exports the lexical packages via subpaths. Theoretically `import { ... } from "@typix-editor/core/lexical"` could replace `from "lexical"`. We don't do this because:
+1. `@lexical/react` is React-specific and not re-exported from core anyway
+2. `from "lexical"` is what every React-developer + bundler + type-checker expects
+3. peer-dep singleton safety is identical either way
+
+If you ever flip to the core-re-export approach, the migration is a search-and-replace — but don't do it casually.
+
+---
+
 ## Source Layout
 
 ```

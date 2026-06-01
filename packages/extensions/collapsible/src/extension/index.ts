@@ -289,3 +289,10 @@ registerTypixMeta(CollapsibleExtension, {
     insertCollapsible: INSERT_COLLAPSIBLE_COMMAND,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    insertCollapsible(): R;
+  }
+}

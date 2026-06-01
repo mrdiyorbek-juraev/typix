@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as ReactDOM from "react-dom";
 import type { TextNode } from "lexical";
 import {
-  useTypixEditor,
+  useTypixEditorState,
   LexicalTypeaheadMenuPlugin,
   MenuOption,
   type MenuTextMatch,
@@ -75,7 +75,7 @@ export function MentionUI({
   menuClassName,
   disabled = false,
 }: MentionUIProps): JSX.Element | null {
-  const typixEditor = useTypixEditor();
+  const typixEditor = useTypixEditorState();
   const editor = typixEditor.lexical;
   const [queryString, setQueryString] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);

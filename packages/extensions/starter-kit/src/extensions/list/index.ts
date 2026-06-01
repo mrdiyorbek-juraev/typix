@@ -139,3 +139,12 @@ registerTypixMeta(ListExtension, {
     toggleCheckList: TYPIX_TOGGLE_CHECK_LIST,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleBulletList(): R;
+    toggleOrderedList(): R;
+    toggleCheckList(): R;
+  }
+}

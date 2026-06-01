@@ -1,79 +1,30 @@
 ---
 title: Link
-description: URL validation for link nodes
+description: Manual link node — the foundation for Auto Link and Floating Link
 ---
 
-The Link extension provides URL validation for link nodes in the editor. It wraps Lexical's `LinkPlugin` with Typix's URL validation.
+The basic link extension — adds the link node type and commands. Pair
+with [Auto Link](/docs/extensions/auto-link) for URL-as-you-type and
+[Floating Link](/docs/extensions/floating-link) for the inline editor UI.
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-link
+```
+
+## Live demo
 
 <ComponentPreview name="link" />
 
-## Installation
-
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-link
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-link
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-link
-    ```
-  </Tab>
-</Tabs>
-
-## Setup
-
-```tsx
-import { LinkExtension } from '@typix-editor/extension-link';
-
-function MyEditor() {
-  return (
-    <EditorRoot>
-      <EditorContent />
-      <LinkExtension />
-    </EditorRoot>
-  );
-}
-```
-
 <Callout type="info">
-  `LinkNode` is included in `defaultExtensionNodes`, so no additional node registration is needed.
+  `StarterKit` already includes the link extension. You only need to add
+  it explicitly if you've opted out of the starter bundle.
 </Callout>
-
-### Custom URL validation
-
-```tsx
-<LinkExtension
-  validateUrl={(url) => {
-    // Only allow HTTPS URLs
-    return url.startsWith('https://');
-  }}
-/>
-```
-
-## Props
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `validateUrl` | `(url: string) => boolean` | `validateUrl` from core | Custom URL validator function |
-
-## Exports
-
-| Export | Type | Description |
-| --- | --- | --- |
-| `LinkExtension` | Component | The link validation plugin |
-| `LinkExtensionProps` | Type | Props type |
 
 ## Related
 
-- [Floating Link](/docs/extensions/floating-link) — Floating link editor UI
-- [Auto Link](/docs/extensions/auto-link) — Auto-detect URLs
-- [URL Utilities](/docs/core/utilities/url-utils) — `sanitizeUrl` and `validateUrl`
+<Cards>
+  <Card title="Auto Link" href="/docs/extensions/auto-link" description="URLs become links as you type." />
+  <Card title="Floating Link" href="/docs/extensions/floating-link" description="Inline link editor UI." />
+</Cards>

@@ -48,3 +48,10 @@ export const SubscriptExtension = defineExtension({
 registerTypixMeta(SubscriptExtension, {
   commands: { toggleSubscript: TYPIX_TOGGLE_SUBSCRIPT },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleSubscript(): R;
+  }
+}

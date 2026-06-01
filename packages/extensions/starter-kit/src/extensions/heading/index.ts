@@ -119,3 +119,11 @@ registerTypixMeta(HeadingExtension, {
     },
   ],
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleHeading(attrs: { level: 1 | 2 | 3 | 4 | 5 | 6 }): R;
+    setHeading(attrs: { level: 1 | 2 | 3 | 4 | 5 | 6 }): R;
+  }
+}

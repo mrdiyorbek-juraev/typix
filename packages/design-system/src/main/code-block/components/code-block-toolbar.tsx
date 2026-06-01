@@ -42,10 +42,7 @@ function PrettierButton({
         disabled={isRunning}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() =>
-          editor
-            .chain()
-            .formatWithPrettier({ nodeKey } as Record<string, unknown>)
-            .run()
+          editor.chain().formatWithPrettier({ nodeKey }).run()
         }
         className={`flex items-center rounded p-1 transition-colors disabled:opacity-40 ${
           error
@@ -114,19 +111,13 @@ export function CodeBlockToolbar({ nodeKey }: CodeBlockToolbarProps) {
   if (!rect) return null;
 
   const handleCopy = () => {
-    editor
-      .chain()
-      .copyCode({ nodeKey } as Record<string, unknown>)
-      .run();
+    editor.chain().copyCode({ nodeKey }).run();
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
 
   const handleDelete = () => {
-    editor
-      .chain()
-      .deleteCodeBlock({ nodeKey } as Record<string, unknown>)
-      .run();
+    editor.chain().deleteCodeBlock({ nodeKey }).run();
   };
 
   return createPortal(
@@ -144,13 +135,7 @@ export function CodeBlockToolbar({ nodeKey }: CodeBlockToolbarProps) {
         nodeKey={nodeKey}
         language={language}
         onSelect={(lang) =>
-          editor
-            .chain()
-            .setCodeLanguage({ nodeKey, language: lang } as Record<
-              string,
-              unknown
-            >)
-            .run()
+          editor.chain().setCodeLanguage({ nodeKey, language: lang }).run()
         }
       />
 

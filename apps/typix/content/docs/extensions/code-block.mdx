@@ -1,0 +1,50 @@
+---
+title: Code Block
+description: Multi-line code blocks with language selection
+---
+
+Block-level code container with a language dropdown. Foundation for
+syntax highlighting ([Prism](/docs/extensions/code-highlight-prism) or
+[Shiki](/docs/extensions/code-highlight-shiki)) and on-demand formatting
+([Prettier](/docs/extensions/code-block-prettier)).
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-code-block
+```
+
+## Live demo
+
+<ComponentPreview name="code-block" />
+
+## Language helpers
+
+```tsx
+import {
+  LANGUAGE_KEYS,
+  LANGUAGE_MAP,
+  getLanguageDisplayName,
+  normalizeLanguage,
+  searchLanguages,
+} from "@typix-editor/extension-code-block";
+```
+
+- `LANGUAGE_KEYS` — array of every supported language key
+- `getLanguageDisplayName("ts")` → `"TypeScript"`
+- `normalizeLanguage("javascript")` → `"js"`
+- `searchLanguages("type")` → fuzzy-match results
+
+## Vendor the UI
+
+```bash
+npx typix ui add code-block
+```
+
+## Related
+
+<Cards>
+  <Card title="Code Highlight (Prism)" href="/docs/extensions/code-highlight-prism" description="Syntax highlighting via Prism.js." />
+  <Card title="Code Highlight (Shiki)" href="/docs/extensions/code-highlight-shiki" description="Syntax highlighting via Shiki." />
+  <Card title="Code Block + Prettier" href="/docs/extensions/code-block-prettier" description="Format code blocks on demand." />
+</Cards>

@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
-import "@typix-editor/theme";
 import "@typix-editor/ui/styles";
 
 // ── Theme decorator ────────────────────────────────────────────────────────

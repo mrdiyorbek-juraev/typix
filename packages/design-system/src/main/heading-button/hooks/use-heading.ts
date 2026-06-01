@@ -79,11 +79,11 @@ export function useHeading(
   const config = HEADING_CONFIG[level];
 
   const isActive = editor.isActive(config.activeName);
-  const canToggle = (editor.can() as any).toggleHeading({ level }).run();
+  const canToggle = editor.can().toggleHeading({ level }).run();
   const isVisible = !options?.hideWhenUnavailable || canToggle;
 
   const handleToggle = useCallback(() => {
-    (editor.chain().focus() as any).toggleHeading({ level }).run();
+    editor.chain().focus().toggleHeading({ level }).run();
     options?.onToggled?.();
   }, [editor, level, options]);
 
@@ -111,9 +111,9 @@ export function canToggleHeading(
   editor: TypixEditor,
   level: HeadingLevel
 ): boolean {
-  return (editor.can() as any).toggleHeading({ level }).run();
+  return editor.can().toggleHeading({ level }).run();
 }
 
 export function toggleHeading(editor: TypixEditor, level: HeadingLevel): void {
-  (editor.chain().focus() as any).toggleHeading({ level }).run();
+  editor.chain().focus().toggleHeading({ level }).run();
 }

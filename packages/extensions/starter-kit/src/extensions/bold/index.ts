@@ -44,3 +44,9 @@ registerTypixMeta(BoldExtension, {
   commands: { toggleBold: TYPIX_TOGGLE_BOLD },
   shortcuts: [{ key: "b", modifiers: ["mod"], command: "toggleBold" }],
 });
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleBold(): R;
+  }
+}

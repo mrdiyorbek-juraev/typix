@@ -622,3 +622,28 @@ registerTypixMeta(TableExtension, {
     setColumnBackgroundColor: TYPIX_SET_COLUMN_BACKGROUND_COLOR,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    insertTable(attrs?: { rows?: number; columns?: number; includeHeaders?: any }): R;
+    insertRowAbove(): R;
+    insertRowBelow(): R;
+    insertColumnLeft(): R;
+    insertColumnRight(): R;
+    deleteRow(): R;
+    deleteColumn(): R;
+    deleteTable(): R;
+    unmergeCells(): R;
+    toggleHeaderRow(): R;
+    toggleHeaderColumn(): R;
+    clearCellContents(): R;
+    clearRowContents(): R;
+    clearColumnContents(): R;
+    duplicateRow(): R;
+    duplicateColumn(): R;
+    setCellBackgroundColor(attrs: { color: string | null }): R;
+    setRowBackgroundColor(attrs: { color: string | null }): R;
+    setColumnBackgroundColor(attrs: { color: string | null }): R;
+  }
+}

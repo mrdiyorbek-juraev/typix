@@ -5,6 +5,17 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Typix design system — tokens, editor node CSS, and Tailwind v4 wiring.
+   Imported flat (not via index.css) for Tailwind v4 + Turbopack compat. */
+@import "@typix-editor/ui/styles/tokens";
+@import "@typix-editor/ui/styles/editor";
+@import "@typix-editor/ui/styles/tailwind";
+
+/* The docs/marketing site imports UI components directly from @typix-editor/ui
+   (the package, not a vendored folder). Tell Tailwind to scan that source so
+   the classes those components use actually get generated. */
+@source "../../../packages/design-system/src/**/*.{ts,tsx}";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -50,6 +61,8 @@
 
 :root {
   --radius: 0.625rem;
+  --color-fd-primary: oklch(0.55 0.18 149.579);
+  --color-fd-primary-foreground: oklch(0.985 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -84,6 +97,8 @@
 }
 
 .dark {
+  --color-fd-primary: oklch(0.723 0.219 149.579);
+  --color-fd-primary-foreground: oklch(0.145 0 0);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -123,6 +138,13 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .prose a:not([data-card]):not([role="button"]) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: oklch(0.723 0.219 149.579);
   }
 }
 

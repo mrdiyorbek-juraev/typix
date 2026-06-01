@@ -92,3 +92,12 @@ registerTypixMeta(HighlightExtension, {
     removeHighlightColor: TYPIX_REMOVE_HIGHLIGHT_COLOR,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleHighlight(): R;
+    setHighlightColor(attrs: { color: string | undefined }): R;
+    removeHighlightColor(): R;
+  }
+}

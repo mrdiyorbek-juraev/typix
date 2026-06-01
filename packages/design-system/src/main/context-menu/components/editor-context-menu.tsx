@@ -1,4 +1,4 @@
-import { useTypixEditor } from "@typix-editor/react";
+import { useTypixEditorState } from "@typix-editor/react";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -36,7 +36,7 @@ export function EditorContextMenu({
   className,
   children,
 }: EditorContextMenuProps) {
-  const editor = useTypixEditor();
+  const editor = useTypixEditorState();
 
   return (
     <ContextMenu>

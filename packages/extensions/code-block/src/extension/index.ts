@@ -205,3 +205,13 @@ registerTypixMeta(CodeBlockExtension, {
   ],
 });
 
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    insertCodeBlock(attrs?: { language?: string }): R;
+    setCodeLanguage(attrs: { nodeKey: string; language: string }): R;
+    copyCode(attrs: { nodeKey: string }): R;
+    deleteCodeBlock(attrs: { nodeKey: string }): R;
+  }
+}

@@ -69,3 +69,10 @@ registerTypixMeta(BlockquoteExtension, {
     { key: "q", modifiers: ["mod", "shift"], command: "toggleBlockquote" },
   ],
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleBlockquote(): R;
+  }
+}

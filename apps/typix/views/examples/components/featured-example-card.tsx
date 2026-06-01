@@ -66,7 +66,7 @@ export function FeaturedExampleCard({ example }: FeaturedExampleCardProps) {
         {/* Right — live preview */}
         <div className="border-t border-border/60 bg-muted/20 lg:border-t-0">
           {example.previewName ? (
-            <div className="[&_.not-prose]:my-0 [&_.not-prose]:rounded-none">
+            <div className="w-full [&_.not-prose]:my-0 [&_.not-prose]:w-full [&_.not-prose]:rounded-none">
               <Suspense
                 fallback={
                   <div className="flex min-h-[420px] items-center justify-center text-sm text-muted-foreground">
@@ -78,7 +78,7 @@ export function FeaturedExampleCard({ example }: FeaturedExampleCardProps) {
                   name={example.previewName}
                   classNames={{
                     preview:
-                      "[&_div]:border-t-0 [&_div]:border-r-0  [&_div]:border-l-0 [&_div]:rounded-none",
+                      "[&_div]:border-t-0 [&_div]:border-r-0 [&_div]:border-l-0 [&_div]:rounded-none",
                     codeBlock: "max-h-[420px] overflow-y-auto",
                   }}
                 />

@@ -1,0 +1,44 @@
+---
+title: ListDropdownMenu
+description: Dropdown for switching between bullet, ordered, and checklist types.
+---
+
+<ComponentPreview name="ui-list-dropdown" />
+
+## Install
+
+```bash
+npx typix ui add list-dropdown-menu list-button
+```
+
+## Import
+
+```tsx
+import { ListDropdownMenu } from "@/components/typix/main/list-dropdown-menu";
+import { ListButton } from "@/components/typix/main/list-button";
+```
+
+## ListDropdownMenu Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `types` | `ListType[]` | all | Which list types to include in the dropdown. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when no list type is applicable. |
+| `portal` | `boolean` | `true` | Render dropdown in a portal. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### ListType
+
+```ts
+type ListType = "bullet" | "ordered" | "check";
+```
+
+## ListButton
+
+Use `ListButton` for a simple single-type toggle:
+
+```tsx
+<ListButton type="bullet" />
+<ListButton type="ordered" />
+<ListButton type="check" />
+```

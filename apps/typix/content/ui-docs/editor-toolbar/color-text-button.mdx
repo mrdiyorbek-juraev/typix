@@ -1,0 +1,36 @@
+---
+title: ColorTextButton
+description: Change the text color of the selected content.
+---
+
+<ComponentPreview name="ui-color-text" />
+
+## Install
+
+```bash
+npx typix ui add color-text-button
+```
+
+## Import
+
+```tsx
+import { ColorTextButton } from "@/components/typix/main/color-text-button";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string` | — | Override the button label. |
+| `defaultColor` | `string` | `"#000000"` | Default color shown in the button. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when color can't be set. |
+| `onColorSelected` | `(color: string) => void` | — | Called when a color is selected. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Exports
+
+```ts
+import { TEXT_COLORS_TEXT, TEXT_COLOR_VALUES } from "@/components/typix/main/color-text-button";
+// TEXT_COLORS_TEXT — array of color name strings
+// TEXT_COLOR_VALUES — array of hex color values
+```

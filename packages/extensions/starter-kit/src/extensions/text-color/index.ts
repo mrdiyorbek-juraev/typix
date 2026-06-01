@@ -78,3 +78,11 @@ registerTypixMeta(TextColorExtension, {
     removeTextColor: TYPIX_REMOVE_TEXT_COLOR,
   },
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    setTextColor(attrs: { color: string | undefined }): R;
+    removeTextColor(): R;
+  }
+}

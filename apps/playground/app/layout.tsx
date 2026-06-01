@@ -1,10 +1,9 @@
 import type { Viewport } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
-import "@typix-editor/theme";
-import "./globals.css";
 import { ThemeProvider } from "@/components/provider";
 import Layout from "@/components/layout";
 import { baseUrl, createMetadata } from "@/lib/metadata";
+import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",

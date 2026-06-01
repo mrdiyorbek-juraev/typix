@@ -7,7 +7,12 @@ import type {
     ChainBuilder,
     CanChainBuilder,
 } from '../../types'
-import { ExtensionRegistry } from '../extension'
+import { ExtensionRegistry, TYPIX_META } from '../../extension'
+import type {
+    ExtensionCommands,
+    ExtensionStorage,
+    TypixExtension,
+} from '../../extension'
 import {
     isMarkActive,
     getEditorText,
@@ -19,7 +24,6 @@ import {
 } from '../command'
 import { createChainBuilder, createCanChainBuilder } from '../chain'
 import { TypixEventEmitter } from '../event'
-
 
 let _instanceCounter = 0
 
@@ -41,6 +45,9 @@ export class TypixEditor implements TypixEditorInstance {
     private _handleFocus: (() => void) | null = null
     private _handleBlur: (() => void) | null = null
 
+    // Per-editor typed storage, keyed by extension identity.
+    private _storage = new WeakMap<object, unknown>()
+
     constructor(
         lexicalEditor: LexicalEditor,
         registry: ExtensionRegistry,
@@ -54,6 +61,7 @@ export class TypixEditor implements TypixEditorInstance {
         this._registry = registry
         this._lexicalDispose = lexicalDispose
 
+        this._initV5Storage()
         this._registerCoreListeners()
     }
 
@@ -72,6 +80,8 @@ export class TypixEditor implements TypixEditorInstance {
 
     destroy(): void {
         this._emitter.emit('destroy', { editor: this })
+        // Fire extension onDestroy hooks before tearing down
+        this._runV5LifecycleHook('onDestroy')
         // Remove DOM focus/blur listeners before unregistering the root listener
         this._removeDomListeners()
         this._disposers.forEach((dispose) => dispose())
@@ -92,7 +102,7 @@ export class TypixEditor implements TypixEditorInstance {
 
     getJSON(): SerializedContent {
         const state = this._lexical.getEditorState()
-        return state.toJSON() as unknown as SerializedContent;
+        return state.toJSON() as unknown as SerializedContent
     }
 
     getHTML(): string {
@@ -158,10 +168,7 @@ export class TypixEditor implements TypixEditorInstance {
     // ─────────────────────────────────────────
 
     isActive(name: string, _attrs?: Record<string, unknown>): boolean {
-        // Check text marks first (bold, italic, underline, strikethrough, code, etc.)
         if (isMarkActive(this._lexical, name)) return true
-        // Check block types — handles headings by level (h1/h2/h3),
-        // lists (bullet/number/check), quote, code block, paragraph
         return isBlockActive(this._lexical, name as any)
     }
 
@@ -173,7 +180,6 @@ export class TypixEditor implements TypixEditorInstance {
             const nodes = selection.getNodes()
             for (const node of nodes) {
                 if (node.getType() === name) {
-                    // Extract exportJSON for attribute inspection
                     const json = (node as any).exportJSON?.() ?? {}
                     const { type, version, ...rest } = json
                     attrs = rest
@@ -204,8 +210,21 @@ export class TypixEditor implements TypixEditorInstance {
     }
 
     run(command: string, ...args: unknown[]): boolean {
+        // Typed factory takes precedence over legacy Lexical command map
+        const factory = this._registry.getCommandFactory(command)
+        if (factory) {
+            try {
+                const fn = factory(...args)
+                return fn(this._lexical) !== false
+            } catch (err: unknown) {
+                console.error(`[Typix] Error in v5 command "${command}":`, err)
+                return false
+            }
+        }
+        // Legacy Lexical command map
         const lexicalCmd = this._registry.getLexicalCommand(command)
         if (lexicalCmd) return this._lexical.dispatchCommand(lexicalCmd, args[0])
+        // Built-in fallback
         return executeBuiltinCommand(this._lexical, command, args)
     }
 
@@ -238,6 +257,25 @@ export class TypixEditor implements TypixEditorInstance {
     // Extensions
     // ─────────────────────────────────────────
 
+    /**
+     * Typed access to per-editor storage declared by an extension via
+     * `withTypixMeta(defineExtension({...}), { storage: () => ... })`.
+     */
+    storage<E extends TypixExtension>(extension: E): ExtensionStorage<E> {
+        return this._storage.get(extension as unknown as object) as ExtensionStorage<E>
+    }
+
+    /**
+     * Typed access to an extension's command record. Useful when you
+     * want to invoke a single command without going through chain().
+     */
+    commands<E extends TypixExtension>(extension: E): ExtensionCommands<E> {
+        const meta = (extension as unknown as Record<symbol, unknown>)[
+            TYPIX_META
+        ] as { commands?: () => ExtensionCommands<E> } | undefined
+        return meta?.commands?.() ?? ({} as ExtensionCommands<E>)
+    }
+
     getShortcuts() {
         return this._registry.getAllShortcuts()
     }
@@ -251,18 +289,105 @@ export class TypixEditor implements TypixEditorInstance {
     }
 
     // ─────────────────────────────────────────
+    // Internal: emit `create` after construction (called by createTypix).
+    // Separate from the constructor so listeners attached pre-emit fire.
+    // ─────────────────────────────────────────
+
+    /** @internal */
+    _emitCreate(): void {
+        this._runV5LifecycleHook('onCreate')
+        this._emitter.emit('create', { editor: this })
+    }
+
+    // ─────────────────────────────────────────
     // Private
     // ─────────────────────────────────────────
 
+    private _initV5Storage(): void {
+        for (const { ext, meta } of this._registry.getLifecycleMetas()) {
+            if (meta.storage) {
+                try {
+                    this._storage.set(ext as unknown as object, meta.storage())
+                } catch (err) {
+                    console.error(
+                        `[Typix] Error initializing storage for "${meta.name}":`,
+                        err,
+                    )
+                }
+            }
+        }
+    }
+
+    private _runV5LifecycleHook(hook: 'onCreate' | 'onDestroy'): void {
+        for (const { ext, meta } of this._registry.getLifecycleMetas()) {
+            const fn = meta[hook]
+            if (!fn) continue
+            try {
+                fn({
+                    editor: this._lexical,
+                    storage: this._storage.get(ext as unknown as object),
+                })
+            } catch (err) {
+                console.error(
+                    `[Typix] Error in ${hook} for "${meta.name}":`,
+                    err,
+                )
+            }
+        }
+    }
+
     private _registerCoreListeners(): void {
-        // Forward Lexical update events → Typix events
+        // Single update-listener fan-out emits update / contentUpdate /
+        // selectionChange / transaction. Avoids four separate Lexical
+        // subscriptions for the same callback.
         const unregisterUpdate = this._lexical.registerUpdateListener(
-            ({ editorState }) => {
+            (payload) => {
+                const {
+                    editorState,
+                    prevEditorState,
+                    dirtyElements,
+                    dirtyLeaves,
+                    tags,
+                } = payload
+
+                // Transaction — lowest level, fires once per update
+                this._emitter.emit('transaction', {
+                    editor: this,
+                    editorState,
+                    prevEditorState,
+                    dirtyElements,
+                    dirtyLeaves,
+                    tags,
+                })
+
+                // Update — fires for every update (selection-only included)
                 this._emitter.emit('update', { editor: this, editorState })
+
+                const hasNodeChanges =
+                    dirtyElements.size > 0 || dirtyLeaves.size > 0
+
+                if (hasNodeChanges) {
+                    this._emitter.emit('contentUpdate', {
+                        editor: this,
+                        editorState,
+                    })
+                }
+
+                // Selection moved without content changing
+                const selectionChanged =
+                    !hasNodeChanges &&
+                    prevEditorState._selection !== editorState._selection
+
+                if (selectionChanged) {
+                    this._emitter.emit('selectionChange', {
+                        editor: this,
+                        editorState,
+                    })
+                }
             },
         )
 
-        // Forward Lexical editable change → Typix events
+        // Forward Lexical editable change → Typix event
         const unregisterEditable = this._lexical.registerEditableListener(
             (editable) => {
                 this._emitter.emit('editableChange', { editor: this, editable })
@@ -276,7 +401,6 @@ export class TypixEditor implements TypixEditorInstance {
         const handleFocus = this._handleFocus
         const handleBlur = this._handleBlur
 
-        // We attach focus/blur after mount since we need the root element
         const unregisterRoot = this._lexical.registerRootListener((root, prevRoot) => {
             prevRoot?.removeEventListener('focus', handleFocus)
             prevRoot?.removeEventListener('blur', handleBlur)

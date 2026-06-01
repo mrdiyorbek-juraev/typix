@@ -170,3 +170,14 @@ function $applyDirectionToSelection(direction: "ltr" | "rtl" | null): void {
     }
   }
 }
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    setGlobalDirection(attrs: { direction: "ltr" | "rtl" | "auto" | null }): R;
+    setLTR(): R;
+    setRTL(): R;
+    setAutoDirection(): R;
+    unsetDirection(): R;
+  }
+}

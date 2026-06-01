@@ -46,3 +46,10 @@ registerTypixMeta(StrikeExtension, {
     { key: "s", modifiers: ["mod", "shift"], command: "toggleStrike" },
   ],
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleStrike(): R;
+  }
+}

@@ -138,3 +138,16 @@ registerTypixMeta(AlignmentExtension, {
     { key: "j", modifiers: ["mod", "shift"], command: "alignJustify" },
   ],
 });
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    setAlignment(attrs: { alignment: "left" | "center" | "right" | "justify" | "start" | "end" }): R;
+    alignLeft(): R;
+    alignCenter(): R;
+    alignRight(): R;
+    alignJustify(): R;
+    alignStart(): R;
+    alignEnd(): R;
+  }
+}

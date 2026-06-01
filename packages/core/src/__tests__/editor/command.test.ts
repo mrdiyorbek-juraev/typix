@@ -114,10 +114,8 @@ describe('executeBuiltinCommand', () => {
     warn.mockRestore()
   })
 
-  it('handles "toggleBlock" and returns false (delegated to extensions)', () => {
-    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+  it('"toggleBlock" is no longer a built-in (v5): returns false silently', () => {
     expect(executeBuiltinCommand(makeEditor(), 'toggleBlock', ['heading'])).toBe(false)
-    warn.mockRestore()
   })
 
   // Note: 'blur' calls editor.getRootElement() which is unsupported in headless mode.

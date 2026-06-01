@@ -1,0 +1,52 @@
+---
+title: FontFamilyDropdownMenu
+description: Select a font family from a configurable list.
+---
+
+<ComponentPreview name="ui-font-family" />
+
+## Install
+
+```bash
+npx typix ui add font-family-dropdown-menu
+```
+
+## Import
+
+```tsx
+import {
+  FontFamilyDropdownMenu,
+  type FontFamilyItem,
+} from "@/components/typix/main/font-family-dropdown-menu";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `families` | `FontFamilyItem[]` | — | List of font families to show. Required. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when font family can't be changed. |
+| `portal` | `boolean` | `true` | Render dropdown in a portal. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## FontFamilyItem
+
+```ts
+interface FontFamilyItem {
+  label: string;  // Display name, e.g. "Sans Serif"
+  value: string;  // CSS font-family value, e.g. "sans-serif"
+}
+```
+
+## Example
+
+```tsx
+const FONT_FAMILIES: FontFamilyItem[] = [
+  { label: "Sans Serif", value: "sans-serif" },
+  { label: "Serif", value: "serif" },
+  { label: "Monospace", value: "monospace" },
+  { label: "Inter", value: "'Inter', sans-serif" },
+];
+
+<FontFamilyDropdownMenu families={FONT_FAMILIES} />
+```

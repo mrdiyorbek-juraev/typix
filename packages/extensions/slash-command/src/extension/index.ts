@@ -125,3 +125,10 @@ registerTypixMeta(SlashCommandExtension, {
   ],
 });
 
+
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    insertSlashCommand(attrs?: { trigger?: string }): R;
+  }
+}

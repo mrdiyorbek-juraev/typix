@@ -44,3 +44,9 @@ registerTypixMeta(ItalicExtension, {
   commands: { toggleItalic: TYPIX_TOGGLE_ITALIC },
   shortcuts: [{ key: "i", modifiers: ["mod"], command: "toggleItalic" }],
 });
+
+declare module "@typix-editor/core" {
+  interface TypixCommands<R> {
+    toggleItalic(): R;
+  }
+}

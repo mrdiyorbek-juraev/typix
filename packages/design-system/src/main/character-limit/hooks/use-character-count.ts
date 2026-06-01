@@ -1,4 +1,4 @@
-import { useTypixEditor } from "@typix-editor/react";
+import { useTypixEditorState } from "@typix-editor/react";
 import { useEffect, useState } from "react";
 import type { CharacterCountStats, UseCharacterCountOptions } from "../types";
 
@@ -53,7 +53,7 @@ function computeStats(
 export function useCharacterCount({
   charset = "UTF-16",
 }: UseCharacterCountOptions = {}): CharacterCountStats {
-  const editor = useTypixEditor();
+  const editor = useTypixEditorState();
 
   const [stats, setStats] = useState<CharacterCountStats>(() =>
     computeStats(editor.getText(), charset)
