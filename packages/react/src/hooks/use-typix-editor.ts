@@ -198,6 +198,28 @@ function createReactEditor(options: UseTypixEditorOptions): TypixEditor {
     dependencies: options.extensions,
   });
 
+  // Guard against bare factory functions in the extensions list. Several
+  // extensions (StarterKit, MarkdownShortcutsExtension, TabFocusExtension,
+  // …) are *factories* — `extensions: [MarkdownShortcutsExtension]` looks
+  // sensible to the type checker (functions are valid input here) but the
+  // function's `.name` collides with another bare factory after minifier
+  // mangling, surfacing as the cryptic Lexical #298 ("multiple extensions
+  // registered with name ") in production. Fail loudly instead.
+  for (let i = 0; i < options.extensions.length; i++) {
+    const candidate = options.extensions[i];
+    const unwrapped = Array.isArray(candidate) ? candidate[0] : candidate;
+    if (typeof unwrapped === "function") {
+      const fnName = (unwrapped as { name?: string }).name || "<anonymous>";
+      throw new Error(
+        `[typix] extensions[${i}] is a factory function (\`${fnName}\`). ` +
+          `Did you mean \`${fnName}()\`? Some Typix extensions are factories ` +
+          `(StarterKit, MarkdownShortcutsExtension, TabFocusExtension, …) and ` +
+          `must be called. Passing the bare function trips Lexical #298 once ` +
+          `the bundle is minified.`
+      );
+    }
+  }
+
   // Build the editor through @lexical/extension's builder with React
   // wiring added. configExtension(ReactExtension, { contentEditable: null })
   // tells ReactExtension NOT to render its own <ContentEditable> — the

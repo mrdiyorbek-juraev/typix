@@ -63,8 +63,14 @@ const extensions: AnyLexicalExtensionArgument[] = [
     printOptions: { tabWidth: 2, semi: true, singleQuote: true },
   }),
   SpeechToTextExtension,
-  MarkdownShortcutsExtension,
-  TabFocusExtension,
+  // ⚠️ MarkdownShortcutsExtension and TabFocusExtension are FACTORY
+  // FUNCTIONS, not extension objects. Calling them returns the actual
+  // extension. Passing the bare function trips Lexical #298 in production
+  // because the JS Function.name gets minified to "" (or to the same
+  // mangled identifier as another bare function), and Lexical's de-dup
+  // check rejects two distinct objects sharing one name.
+  MarkdownShortcutsExtension(),
+  TabFocusExtension(),
   TableExtension,
   CodeBlockExtension,
 ];
