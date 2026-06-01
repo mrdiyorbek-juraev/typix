@@ -4,18 +4,16 @@ import {
   Button,
   Input,
   Badge,
-  SelectRoot,
+  Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-  SelectItemText,
-  SwitchRoot,
-  SwitchThumb,
-  TabsRoot,
+  Switch,
+  Tabs,
   TabsList,
   TabsTrigger,
-  TabsPanel,
+  TabsContent,
 } from "@typix-editor/ui";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -596,22 +594,16 @@ function OverviewStory() {
             >
               SELECT
             </div>
-            <SelectRoot defaultValue="apple">
+            <Select defaultValue="apple">
               <SelectTrigger>
                 <SelectValue placeholder="Choose…" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="apple">
-                  <SelectItemText>Apple</SelectItemText>
-                </SelectItem>
-                <SelectItem value="banana">
-                  <SelectItemText>Banana</SelectItemText>
-                </SelectItem>
-                <SelectItem value="cherry">
-                  <SelectItemText>Cherry</SelectItemText>
-                </SelectItem>
+                <SelectItem value="apple">Apple</SelectItem>
+                <SelectItem value="banana">Banana</SelectItem>
+                <SelectItem value="cherry">Cherry</SelectItem>
               </SelectContent>
-            </SelectRoot>
+            </Select>
           </div>
 
           <div>
@@ -627,15 +619,11 @@ function OverviewStory() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <SwitchRoot>
-                  <SwitchThumb />
-                </SwitchRoot>
+                <Switch />
                 <span style={{ fontSize: 12, color: "#78716c" }}>Off</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <SwitchRoot defaultChecked>
-                  <SwitchThumb />
-                </SwitchRoot>
+                <Switch defaultChecked />
                 <span style={{ fontSize: 12, color: "#78716c" }}>On</span>
               </div>
             </div>
@@ -652,28 +640,28 @@ function OverviewStory() {
             >
               TABS
             </div>
-            <TabsRoot defaultValue="overview">
+            <Tabs defaultValue="overview">
               <TabsList>
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="details">Details</TabsTrigger>
                 <TabsTrigger value="settings">Settings</TabsTrigger>
               </TabsList>
-              <TabsPanel value="overview">
+              <TabsContent value="overview">
                 <p style={{ margin: 0, fontSize: 12, color: "#78716c" }}>
                   Overview content here.
                 </p>
-              </TabsPanel>
-              <TabsPanel value="details">
+              </TabsContent>
+              <TabsContent value="details">
                 <p style={{ margin: 0, fontSize: 12, color: "#78716c" }}>
                   Details content here.
                 </p>
-              </TabsPanel>
-              <TabsPanel value="settings">
+              </TabsContent>
+              <TabsContent value="settings">
                 <p style={{ margin: 0, fontSize: 12, color: "#78716c" }}>
                   Settings content here.
                 </p>
-              </TabsPanel>
-            </TabsRoot>
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </Section>

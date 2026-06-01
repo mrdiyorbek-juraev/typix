@@ -39,7 +39,7 @@ import type { SerializedContent } from "@typix-editor/core";
 // throws the config away, leaving the image renderer / mention trigger /
 // prettier opts unset.
 const extensions: AnyLexicalExtensionArgument[] = [
-  StarterKit(),
+  StarterKit({CodeBlockExtension: false}),
   FloatingLinkExtension,
   configExtension(ImageExtension, { component: imageRenderer }),
   configExtension(MentionExtension, { trigger: "@" }),

@@ -1895,4 +1895,12 @@ export const illustrations: Record<string, any> = {
   keywords: KeywordsIllustration,
   "tab-focus": TabFocusIllustration,
   "speech-to-text": SpeechToTextIllustration,
+  // Rendered exclusively via /api/illustration/[slug] (see svgs.ts).
+  // The component values here are unused — only key membership matters
+  // for `hasIllustration` in example-card.tsx.
+  image: ImagesIllustration,
+  "code-block": CodeEditorIllustration,
+  "code-block-prettier": CodeEditorIllustration,
+  "slash-command": MarkdownIllustration,
+  tailwind: FormattingIllustration,
 };
