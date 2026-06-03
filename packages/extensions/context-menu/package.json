@@ -57,7 +57,7 @@
   "devDependencies": {
     "@typix-editor/core": "workspace:*",
     "@types/node": "^25.1.0",
-    "lexical": "^0.45.0"
+    "lexical": "catalog:"
   },
   "engines": {
     "node": ">=18.0.0"

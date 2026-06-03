@@ -8,7 +8,7 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import { registerTypixMeta, registerExtensionOutput } from "@typix-editor/core";
+import { withTypixMeta, registerExtensionOutput } from "@typix-editor/core";
 
 // ─── Parser map (Prettier v3 plugin paths) ───────────────────────────────────
 
@@ -123,130 +123,133 @@ export const TYPIX_FORMAT_WITH_PRETTIER = createCommand<{ nodeKey: string }>(
 
 // ─── Extension ───────────────────────────────────────────────────────────────
 
-export const PrettierFormatterExtension = defineExtension({
-  name: "@typix/code-block-prettier",
+export const PrettierFormatterExtension = withTypixMeta(
+  defineExtension({
+    name: "@typix/code-block-prettier",
 
-  config: safeCast<PrettierFormatterConfig>({
-    printOptions: {},
-  }),
+    config: safeCast<PrettierFormatterConfig>({
+      printOptions: {},
+    }),
 
-  mergeConfig(
-    a: PrettierFormatterConfig,
-    b: Partial<PrettierFormatterConfig>
-  ): PrettierFormatterConfig {
-    return { ...a, ...b };
-  },
+    mergeConfig(
+      a: PrettierFormatterConfig,
+      b: Partial<PrettierFormatterConfig>
+    ): PrettierFormatterConfig {
+      return { ...a, ...b };
+    },
 
-  build(editor: LexicalEditor) {
-    const output: PrettierOutput = {
-      formatting: signal<Set<string>>(new Set()),
-      errors: signal<Map<string, string>>(new Map()),
-    };
-    registerExtensionOutput(editor, PrettierFormatterExtension, output);
-    return output;
-  },
+    build(editor: LexicalEditor) {
+      const output: PrettierOutput = {
+        formatting: signal<Set<string>>(new Set()),
+        errors: signal<Map<string, string>>(new Map()),
+      };
+      registerExtensionOutput(editor, PrettierFormatterExtension, output);
+      return output;
+    },
 
-  register(
-    editor: LexicalEditor,
-    _config: PrettierFormatterConfig,
-    state: any
-  ) {
-    const output = state.getOutput() as PrettierOutput;
+    register(
+      editor: LexicalEditor,
+      _config: PrettierFormatterConfig,
+      state: any
+    ) {
+      const output = state.getOutput() as PrettierOutput;
 
-    return editor.registerCommand(
-      TYPIX_FORMAT_WITH_PRETTIER,
-      ({ nodeKey }) => {
-        if (!output) return false;
+      return editor.registerCommand(
+        TYPIX_FORMAT_WITH_PRETTIER,
+        ({ nodeKey }) => {
+          if (!output) return false;
 
-        const snapshot = editor.getEditorState().read(() => {
-          const node = $getNodeByKey(nodeKey);
-          if (!$isCodeNode(node)) return null;
-          return {
-            code: node.getTextContent(),
-            lang: (node.getLanguage() ?? "javascript").toLowerCase(),
-          };
-        });
+          const snapshot = editor.getEditorState().read(() => {
+            const node = $getNodeByKey(nodeKey);
+            if (!$isCodeNode(node)) return null;
+            return {
+              code: node.getTextContent(),
+              lang: (node.getLanguage() ?? "javascript").toLowerCase(),
+            };
+          });
 
-        if (!snapshot) return false;
+          if (!snapshot) return false;
 
-        const mapping = LANG_MAP[snapshot.lang];
-        if (!mapping) {
-          const errs = new Map(output.errors.value);
-          errs.set(
-            nodeKey,
-            `No Prettier parser for language "${snapshot.lang}"`
-          );
-          output.errors.value = errs;
-          _config.onError?.(
-            new Error(`No Prettier parser for "${snapshot.lang}"`),
-            nodeKey
-          );
-          return false;
-        }
-
-        // Mark loading
-        output.formatting.value = new Set([
-          ...output.formatting.value,
-          nodeKey,
-        ]);
-
-        // Clear stale error
-        if (output.errors.value.has(nodeKey)) {
-          const errs = new Map(output.errors.value);
-          errs.delete(nodeKey);
-          output.errors.value = errs;
-        }
-
-        void (async () => {
-          try {
-            const [{ format }, ...pluginModules] = await Promise.all([
-              import("prettier/standalone"),
-              ...mapping.load.map((fn) => fn()),
-            ]);
-
-            const plugins = pluginModules.map(
-              (m: unknown) => (m as Record<string, unknown>).default ?? m
-            );
-
-            const formatted = await (format as Function)(snapshot.code, {
-              parser: mapping.parser,
-              plugins,
-              ..._config.printOptions,
-            });
-
-            editor.update(() => {
-              const node = $getNodeByKey(nodeKey);
-              if (!$isCodeNode(node)) return;
-              const selection = node.select(0);
-              selection.insertText((formatted as string).trimEnd());
-            });
-
-            _config.onFormat?.(formatted as string, nodeKey);
-          } catch (err: unknown) {
-            const msg = err instanceof Error ? err.message : String(err);
+          const mapping = LANG_MAP[snapshot.lang];
+          if (!mapping) {
             const errs = new Map(output.errors.value);
-            errs.set(nodeKey, msg);
+            errs.set(
+              nodeKey,
+              `No Prettier parser for language "${snapshot.lang}"`
+            );
             output.errors.value = errs;
-            _config.onError?.(err, nodeKey);
-          } finally {
-            const next = new Set(output.formatting.value);
-            next.delete(nodeKey);
-            output.formatting.value = next;
+            _config.onError?.(
+              new Error(`No Prettier parser for "${snapshot.lang}"`),
+              nodeKey
+            );
+            return false;
           }
-        })();
 
-        return true;
-      },
-      COMMAND_PRIORITY_EDITOR
-    );
-  },
-});
+          // Mark loading
+          output.formatting.value = new Set([
+            ...output.formatting.value,
+            nodeKey,
+          ]);
 
-registerTypixMeta(PrettierFormatterExtension, {
-  commands: {
-    formatWithPrettier: TYPIX_FORMAT_WITH_PRETTIER,
-  },
-});
+          // Clear stale error
+          if (output.errors.value.has(nodeKey)) {
+            const errs = new Map(output.errors.value);
+            errs.delete(nodeKey);
+            output.errors.value = errs;
+          }
+
+          void (async () => {
+            try {
+              const [{ format }, ...pluginModules] = await Promise.all([
+                import("prettier/standalone"),
+                ...mapping.load.map((fn) => fn()),
+              ]);
+
+              const plugins = pluginModules.map(
+                (m: unknown) => (m as Record<string, unknown>).default ?? m
+              );
+
+              const formatted = await (format as Function)(snapshot.code, {
+                parser: mapping.parser,
+                plugins,
+                ..._config.printOptions,
+              });
+
+              editor.update(() => {
+                const node = $getNodeByKey(nodeKey);
+                if (!$isCodeNode(node)) return;
+                const selection = node.select(0);
+                selection.insertText((formatted as string).trimEnd());
+              });
+
+              _config.onFormat?.(formatted as string, nodeKey);
+            } catch (err: unknown) {
+              const msg = err instanceof Error ? err.message : String(err);
+              const errs = new Map(output.errors.value);
+              errs.set(nodeKey, msg);
+              output.errors.value = errs;
+              _config.onError?.(err, nodeKey);
+            } finally {
+              const next = new Set(output.formatting.value);
+              next.delete(nodeKey);
+              output.formatting.value = next;
+            }
+          })();
+
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
+    },
+  }),
+  {
+    commands: () => ({
+      formatWithPrettier:
+        (attrs: { nodeKey: string }) => (editor: LexicalEditor) =>
+          editor.dispatchCommand(TYPIX_FORMAT_WITH_PRETTIER, attrs),
+    }),
+  }
+);
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

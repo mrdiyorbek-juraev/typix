@@ -7,7 +7,7 @@ import {
   $getNearestNodeFromDOMNode,
   $getSelection,
 } from "lexical";
-import { useTypixEditorState } from "@typix-editor/react";
+import { useCurrentTypixEditor } from "@typix-editor/react";
 import {
   TableCellNode,
   $getTableNodeFromLexicalNodeOrThrow,
@@ -23,13 +23,16 @@ import {
 import { Plus } from "lucide-react";
 import type { TableHoverInfo } from "../types";
 import { findTableElement } from "../utils";
-import { useMounted } from "../hooks";
+import { useMounted, useTablePositions } from "../hooks";
 import { CellMiniMenu } from "./cell-menu";
 import { ColumnMenu } from "./column-menu";
 import { RowMenu } from "./row-menu";
 
 export function TableUI() {
-  const editor = useTypixEditorState();
+  // useCurrentTypixEditor (vs useTypixEditorState): identity-stable editor
+  // without subscribing to every update — TableUI only re-renders on its own
+  // hover/selection state, not on every keystroke.
+  const { editor } = useCurrentTypixEditor();
   const mounted = useMounted();
   const [hoverInfo, setHoverInfo] = useState<TableHoverInfo | null>(null);
   const [hasTableSelection, setHasTableSelection] = useState(false);
@@ -37,7 +40,26 @@ export function TableUI() {
   // Prevent leave timer while any dropdown is open or during drag
   const menuOpenRef = useRef(false);
   const isDraggingRef = useRef(false);
+  // Tracks whether the cursor is currently inside any portal handle (the
+  // floating + strip, cell/row/col handles, etc). Mouse moves between the
+  // editor root and a portal element can fire onMouseLeave(editor) and
+  // onMouseEnter(portal) in an order where clearLeaveTimer runs before
+  // startLeaveTimer, leaving a stray timer that nulls hoverInfo while the
+  // cursor sits on the + button. The timer callback re-checks this ref to
+  // skip nulling when the cursor is genuinely still on a handle.
+  const cursorOnPortalRef = useRef(false);
   const dragIndicatorRef = useRef<HTMLDivElement>(null);
+  // Tracks the in-flight drag's AbortController so we can tear down its
+  // document-level pointermove/pointerup listeners on unmount — otherwise
+  // unmounting mid-drag leaks listeners that fire against a dead closure.
+  const dragControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      dragControllerRef.current?.abort();
+      dragControllerRef.current = null;
+    };
+  }, []);
 
   const clearLeaveTimer = useCallback(() => {
     if (leaveTimerRef.current !== null) {
@@ -50,13 +72,23 @@ export function TableUI() {
     if (menuOpenRef.current || isDraggingRef.current) return;
     clearLeaveTimer();
     leaveTimerRef.current = setTimeout(() => {
-      if (!menuOpenRef.current && !isDraggingRef.current) setHoverInfo(null);
+      // Re-check at fire time: the cursor may have entered a portal
+      // handle (e.g. the + strip) after the timer was scheduled.
+      if (
+        menuOpenRef.current ||
+        isDraggingRef.current ||
+        cursorOnPortalRef.current
+      ) {
+        return;
+      }
+      setHoverInfo(null);
     }, 400);
   }, [clearLeaveTimer]);
 
   /** Run fn in a Lexical update, selecting the given cell first. */
   const withCell = useCallback(
     (cellKey: string, fn: (cell: TableCellNode) => void) => {
+      if (!editor) return;
       editor.lexical.update(() => {
         const node = $getNodeByKey(cellKey);
         if (!(node instanceof TableCellNode)) return;
@@ -70,6 +102,7 @@ export function TableUI() {
   // ── Track table selection state ──────────────────────────────────────────────
 
   useEffect(() => {
+    if (!editor) return;
     let prev = false;
     return editor.lexical.registerUpdateListener(({ editorState }) => {
       editorState.read(() => {
@@ -85,11 +118,18 @@ export function TableUI() {
   // ── Mouse tracking ────────────────────────────────────────────────────────────
 
   useEffect(() => {
+    if (!editor) return;
     const root = editor.lexical.getRootElement();
     if (!root) return;
 
     const handleMouseOver = (e: MouseEvent) => {
       if (isDraggingRef.current) return;
+      // Freeze hover updates while a dropdown is open — otherwise the
+      // trigger button (and the rest of the floating handles) chase the
+      // mouse to a new cell while Radix keeps the dropdown open against
+      // the old anchor, making it look like the menu spontaneously opened
+      // on whatever cell the user is now hovering.
+      if (menuOpenRef.current) return;
       clearLeaveTimer();
       const target = e.target as HTMLElement;
       const cellEl = target.closest("td, th") as HTMLElement | null;
@@ -129,13 +169,31 @@ export function TableUI() {
             cellRect: cellEl.getBoundingClientRect(),
             rowRect: rowEl.getBoundingClientRect(),
             tableRect: tableEl.getBoundingClientRect(),
+            verticalAlign: lexNode.getVerticalAlign() ?? "",
+            rowStriping: tableNode.getRowStriping(),
+            frozenRows: tableNode.getFrozenRows(),
+            frozenColumns: tableNode.getFrozenColumns(),
           };
         } catch {
           // Not inside a table
         }
       });
 
-      if (info) setHoverInfo(info);
+      if (info) {
+        // Skip re-render when the user hovers within the same cell — the
+        // rects do drift slightly but a mouseover into a new cell will refresh
+        // them, and within-cell mousemoves were spamming React reconciliation.
+        const next: TableHoverInfo = info;
+        setHoverInfo((prev: TableHoverInfo | null) =>
+          prev &&
+          prev.cellKey === next.cellKey &&
+          prev.headerState === next.headerState &&
+          prev.colSpan === next.colSpan &&
+          prev.rowSpan === next.rowSpan
+            ? prev
+            : next
+        );
+      }
     };
 
     const handleMouseLeave = () => startLeaveTimer();
@@ -150,40 +208,27 @@ export function TableUI() {
     };
   }, [editor, clearLeaveTimer, startLeaveTimer]);
 
-  // ── Inject table-level CSS for striping, freeze, vertical-align ────────────
-
-  useEffect(() => {
-    const id = "typix-table-plugin-styles";
-    if (document.getElementById(id)) return;
-    const style = document.createElement("style");
-    style.id = id;
-    style.textContent = `
-      table[data-striped="true"] tr:nth-child(even) td,
-      table[data-striped="true"] tr:nth-child(even) th {
-        background-color: var(--typix-table-row-striping-bg) !important;
-      }
-      td[data-valign="top"], th[data-valign="top"] { vertical-align: top !important; }
-      td[data-valign="middle"], th[data-valign="middle"] { vertical-align: middle !important; }
-      td[data-valign="bottom"], th[data-valign="bottom"] { vertical-align: bottom !important; }
-      table[data-freeze-row="true"] tr:first-child td,
-      table[data-freeze-row="true"] tr:first-child th {
-        position: sticky !important; top: 0; z-index: 1;
-        background-color: var(--background, white);
-      }
-      table[data-freeze-col="true"] td:first-child,
-      table[data-freeze-col="true"] th:first-child {
-        position: sticky !important; left: 0; z-index: 1;
-        background-color: var(--background, white);
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      style.remove();
-    };
-  }, []);
+  // Note: row-striping / frozen-row / frozen-col / vertical-align were
+  // previously implemented by injecting !important CSS keyed off data-*
+  // attributes. That was a duplicate of behavior Lexical already provides
+  // natively via TableNode.{setRowStriping,setFrozenRows,setFrozenColumns}
+  // and TableCellNode.setVerticalAlign — those survive reconciliation,
+  // serialize through exportJSON, and undo/redo correctly. The matching
+  // CSS classes (typix-table--row-striping, typix-table--frozen-row,
+  // typix-table--frozen-column) live in packages/design-system/src/styles/
+  // editor.css and are emitted by Lexical via theme.tableRowStriping etc.
 
   const portalHandlers = useMemo(
-    () => ({ onMouseEnter: clearLeaveTimer, onMouseLeave: startLeaveTimer }),
+    () => ({
+      onMouseEnter: () => {
+        cursorOnPortalRef.current = true;
+        clearLeaveTimer();
+      },
+      onMouseLeave: () => {
+        cursorOnPortalRef.current = false;
+        startLeaveTimer();
+      },
+    }),
     [clearLeaveTimer, startLeaveTimer]
   );
 
@@ -225,6 +270,7 @@ export function TableUI() {
       cellKey: string,
       e: React.PointerEvent
     ) => {
+      if (!editor) return;
       const startPos = type === "column" ? e.clientX : e.clientY;
       let dragging = false;
       let targetGap = sourceIndex;
@@ -282,8 +328,10 @@ export function TableUI() {
       };
 
       const onUp = () => {
-        document.removeEventListener("pointermove", onMove, true);
-        document.removeEventListener("pointerup", onUp, true);
+        controller.abort();
+        if (dragControllerRef.current === controller) {
+          dragControllerRef.current = null;
+        }
         hideDragInd();
         isDraggingRef.current = false;
 
@@ -334,54 +382,36 @@ export function TableUI() {
         });
       };
 
-      // Use capture phase to ensure events reach us even if Radix captures the pointer
-      document.addEventListener("pointermove", onMove, true);
-      document.addEventListener("pointerup", onUp, true);
+      // Abort any prior drag that somehow leaked (defensive) — should be no-op.
+      dragControllerRef.current?.abort();
+      const controller = new AbortController();
+      dragControllerRef.current = controller;
+
+      // Use capture phase to ensure events reach us even if Radix captures
+      // the pointer. AbortController.signal removes both listeners in one
+      // call when the drag ends or the component unmounts.
+      document.addEventListener("pointermove", onMove, {
+        capture: true,
+        signal: controller.signal,
+      });
+      document.addEventListener("pointerup", onUp, {
+        capture: true,
+        signal: controller.signal,
+      });
     },
     [editor, showDragInd, hideDragInd]
   );
 
-  if (!mounted || !hoverInfo) return null;
+  const positions = useTablePositions(hoverInfo);
 
-  const { tableRect, rowRect, cellRect } = hoverInfo;
-
-  // ── Positions ─────────────────────────────────────────────────────────────
-  const COL_HANDLE_SIZE = 16;
-  const ROW_HANDLE_SIZE = 16;
-
-  const colHandleLeft = Math.round(
-    cellRect.left + cellRect.width / 2 - COL_HANDLE_SIZE / 2
-  );
-  const colHandleTop = Math.round(tableRect.top - COL_HANDLE_SIZE / 2);
-
-  const rowHandleLeft = Math.round(tableRect.left - ROW_HANDLE_SIZE / 2);
-  const rowHandleTop = Math.round(
-    rowRect.top + rowRect.height / 2 - ROW_HANDLE_SIZE / 2
-  );
-
-  const cellMenuLeft = Math.round(cellRect.right - 22);
-  const cellMenuTop = Math.round(cellRect.top + 3);
-
-  // Add-column strip: full table height, to the right of the table
-  const addColLeft = Math.round(tableRect.right + 4);
-  const addColTop = Math.round(tableRect.top);
-  const addColHeight = Math.round(tableRect.height);
-
-  // Add-row strip: full table width, below the table
-  const addRowLeft = Math.round(tableRect.left);
-  const addRowTop = Math.round(tableRect.bottom + 4);
-  const addRowWidth = Math.round(tableRect.width);
-
-  // Show + buttons only when hovering the last column / last row
-  const isLastCol = Math.abs(cellRect.right - tableRect.right) < 5;
-  const isLastRow = Math.abs(rowRect.bottom - tableRect.bottom) < 5;
+  if (!editor || !mounted || !hoverInfo || !positions) return null;
 
   return createPortal(
     <>
       {/* ── Column action handle (on top border) ─────────────────────────── */}
       <div
         className="fixed z-50"
-        style={{ left: colHandleLeft, top: colHandleTop }}
+        style={positions.colHandle}
         onPointerDown={(e) =>
           handleGripDrag("column", hoverInfo.colIndex, hoverInfo.cellKey, e)
         }
@@ -398,7 +428,7 @@ export function TableUI() {
       {/* ── Row action handle (on left border) ───────────────────────────── */}
       <div
         className="fixed z-50"
-        style={{ left: rowHandleLeft, top: rowHandleTop }}
+        style={positions.rowHandle}
         onPointerDown={(e) =>
           handleGripDrag("row", hoverInfo.rowIndex, hoverInfo.cellKey, e)
         }
@@ -415,7 +445,7 @@ export function TableUI() {
       {/* ── Cell mini-menu (inside cell, top-right) ───────────────────────── */}
       <div
         className="fixed z-50"
-        style={{ left: cellMenuLeft, top: cellMenuTop }}
+        style={positions.cellMenu}
         {...portalHandlers}
       >
         <CellMiniMenu
@@ -428,10 +458,10 @@ export function TableUI() {
       </div>
 
       {/* ── Add column + (full table height, right side) ─────────────── */}
-      {isLastCol && (
+      {positions.isLastCol && (
         <div
           className="fixed z-50"
-          style={{ left: addColLeft, top: addColTop, height: addColHeight }}
+          style={positions.addColStrip}
           {...portalHandlers}
         >
           <button
@@ -450,10 +480,10 @@ export function TableUI() {
       )}
 
       {/* ── Add row + (full table width, bottom side) ─────────────────── */}
-      {isLastRow && (
+      {positions.isLastRow && (
         <div
           className="fixed z-50"
-          style={{ left: addRowLeft, top: addRowTop, width: addRowWidth }}
+          style={positions.addRowStrip}
           {...portalHandlers}
         >
           <button
@@ -479,7 +509,7 @@ export function TableUI() {
           position: "fixed",
           zIndex: 61,
           pointerEvents: "none",
-          backgroundColor: "#151B54",
+          backgroundColor: "hsl(var(--primary))",
           boxShadow: "0 0 6px 1px hsl(var(--primary) / 0.4)",
         }}
       />

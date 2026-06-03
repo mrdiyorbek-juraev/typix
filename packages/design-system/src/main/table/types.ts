@@ -10,6 +10,14 @@ export interface TableHoverInfo {
   cellRect: DOMRect;
   rowRect: DOMRect;
   tableRect: DOMRect;
+  /** "" | "top" | "middle" | "bottom" — read from TableCellNode.getVerticalAlign() */
+  verticalAlign: string;
+  /** Table-level row striping flag — read from TableNode.getRowStriping() */
+  rowStriping: boolean;
+  /** Number of frozen rows at the top — 0 means none. */
+  frozenRows: number;
+  /** Number of frozen columns on the left — 0 means none. */
+  frozenColumns: number;
 }
 
 export type ResizeDirection = "column" | "row";

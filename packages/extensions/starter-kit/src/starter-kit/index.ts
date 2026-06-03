@@ -1,10 +1,5 @@
 import { defineExtension } from "lexical";
-import {
-  registerTypixMeta,
-  mergeTypixMeta,
-  configExtension,
-  type AnyLexicalExtension,
-} from "@typix-editor/core";
+import { configExtension, type AnyLexicalExtension } from "@typix-editor/core";
 import { BoldExtension, type BoldConfig } from "../extensions/bold";
 import { ItalicExtension, type ItalicConfig } from "../extensions/italic";
 import {
@@ -144,7 +139,9 @@ function withConfig<C extends object>(
 
 /**
  * StarterKit — a batteries-included bundle of the most common Typix extensions,
- * returned as a single native Lexical extension with merged Typix metadata.
+ * returned as a single native Lexical extension whose dependencies are walked
+ * by `createTypix` so every sub-extension's commands and shortcuts are picked
+ * up automatically.
  *
  * Pass `false` to disable an extension, or an options object to configure it.
  *
@@ -218,14 +215,10 @@ export const StarterKit = (options: StarterKitOptions = {}) => {
   if (merged.direction !== false)
     subExts.push(withConfig(DirectionExtension, merged.direction));
 
-  // Compose all Lexical extensions into one
-  const lexicalExt = defineExtension({
+  // Each sub-extension already carries its own Typix metadata via
+  // withTypixMeta — createTypix walks `dependencies` so they all register.
+  return defineExtension({
     name: "@typix/starter-kit",
     dependencies: subExts as AnyLexicalExtension[],
   });
-
-  // Merge all sub-extension metadata (commands + shortcuts) into StarterKit
-  registerTypixMeta(lexicalExt, mergeTypixMeta(subExts));
-
-  return lexicalExt;
 };

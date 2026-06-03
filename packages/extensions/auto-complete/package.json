@@ -53,7 +53,7 @@
   },
   "peerDependencies": {
     "@typix-editor/core": "^5.0.0",
-    "lexical": "^0.45.0"
+    "lexical": "catalog:"
   },
   "dependencies": {
     "@typix-editor/utils": "workspace:*"

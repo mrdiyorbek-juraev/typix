@@ -5,7 +5,6 @@ import { getExtensionDependencyFromEditor } from "@lexical/extension";
 import { ReactExtension } from "@lexical/react/ReactExtension";
 import type { TypixEditor } from "@typix-editor/core";
 import { RootContext, useRootContext } from "../root-context";
-import { SharedHistoryContext } from "./history-context";
 import { DefaultPlugins } from "./default-plugins";
 import { RichTextExtension } from "./rich-text-plugin";
 
@@ -34,15 +33,37 @@ interface EditorContentProps {
   };
 
   /**
+   * Auto-focus the editor on mount.
+   * - `"start"` — caret at document start
+   * - `"end"` — caret at document end
+   * - `false` (default) — no autofocus
+   *
+   * Only used when `plugins` is omitted (default plugin set).
+   */
+  autoFocus?: "start" | "end" | false;
+
+  /**
    * Override the default plugin tree. When omitted, EditorContent renders
-   * `<DefaultPlugins />` (History + AutoFocus + Shortcuts + SafeListPlugin).
-   * When provided, only these plugins are rendered.
+   * `<DefaultPlugins autoFocus={autoFocus} />` (AutoFocus + Shortcuts).
+   * When provided, only these plugins are rendered and `autoFocus` is
+   * ignored — mount your own AutoFocusPlugin if you need it.
    */
   plugins?: ReactNode;
 }
 
 const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
-  ({ editor, children, className, placeholder, classNames, plugins }, ref) => {
+  (
+    {
+      editor,
+      children,
+      className,
+      placeholder,
+      classNames,
+      autoFocus,
+      plugins,
+    },
+    ref
+  ) => {
     // The ReactExtension's `output.Component` provides
     // `LexicalComposerContext.Provider` + decorator portals so React
     // decorator nodes (images, mentions, etc.) render. Without this the
@@ -56,11 +77,9 @@ const EditorContent = forwardRef<HTMLDivElement, EditorContentProps>(
       <div className={className} ref={ref}>
         <ReactRoot>
           <RootContext>
-            <SharedHistoryContext>
-              {plugins ?? <DefaultPlugins />}
-              <EditableBody placeholder={placeholder} classNames={classNames} />
-              {children}
-            </SharedHistoryContext>
+            {plugins ?? <DefaultPlugins autoFocus={autoFocus} />}
+            <EditableBody placeholder={placeholder} classNames={classNames} />
+            {children}
           </RootContext>
         </ReactRoot>
       </div>

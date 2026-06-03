@@ -43,9 +43,6 @@ export interface UseTypixEditorOptions {
   /** Whether the editor starts editable. Default: true. */
   editable?: boolean;
 
-  /** Where to place the caret on first render. Default: false (no autofocus). */
-  autofocus?: "start" | "end" | "all" | false;
-
   /**
    * If `false`, the editor is created on mount instead of synchronously
    * during render — required for SSR (Next.js App Router) to avoid
@@ -82,23 +79,8 @@ export interface UseTypixEditorOptions {
  * to render the editable surface, and to `<TypixEditorContext.Provider>`
  * (or use `<TypixEditorProvider>`) to share it with descendant components.
  *
- * @example
- * ```tsx
- * const editor = useTypixEditor({
- *   extensions: [BoldExtension, ItalicExtension],
- *   content: '<p>Hello</p>',
- *   onUpdate: ({ editor }) => save(editor.getJSON()),
- * })
- *
- * if (!editor) return null
- *
- * return (
- *   <TypixEditorContext.Provider value={{ editor }}>
- *     <Toolbar />
- *     <EditorContent editor={editor} />
- *   </TypixEditorContext.Provider>
- * )
- * ```
+ * To autofocus on mount, pass `autoFocus="end"` to `<EditorContent>` — not
+ * here. Autofocus is a rendering concern owned by the editable surface.
  */
 export function useTypixEditor(
   options: UseTypixEditorOptions
@@ -171,32 +153,11 @@ export function useTypixEditor(
  * @lexical/react ReactProviderExtension + ReactExtension. That allows
  * EditorContent to render decorator portals via the Component output of
  * ReactExtension. The result is otherwise identical to what createTypix
- * from core builds.
+ * from core builds — including the dependency-graph walk so aggregator
+ * extensions like StarterKit register their sub-extension commands.
  */
 function createReactEditor(options: UseTypixEditorOptions): TypixEditor {
   options.onBeforeCreate?.({ options });
-
-  const registry = new ExtensionRegistry();
-  for (const ext of options.extensions) registry.register(ext);
-
-  const namespace = options.namespace ?? "typix";
-  const editable = options.editable ?? true;
-  const theme = options.theme ?? {};
-  const onError =
-    options.onError ??
-    ((err: Error) => {
-      throw err;
-    });
-
-  // The user's extension graph wrapped in a stable root.
-  const rootExtension = defineExtension({
-    name: `@typix/root/${namespace}`,
-    namespace,
-    editable,
-    theme,
-    onError,
-    dependencies: options.extensions,
-  });
 
   // Guard against bare factory functions in the extensions list. Several
   // extensions (StarterKit, MarkdownShortcutsExtension, TabFocusExtension,
@@ -219,6 +180,47 @@ function createReactEditor(options: UseTypixEditorOptions): TypixEditor {
       );
     }
   }
+
+  // Walk the dependency graph the same way createTypix does so aggregator
+  // extensions (StarterKit) surface their sub-extension commands, shortcuts,
+  // storage, and lifecycle hooks in the registry. Without this walk,
+  // `editor.chain().toggleBold()` would silently fall through because
+  // `toggleBold` lives on a sub-extension, not on StarterKit itself.
+  const registry = new ExtensionRegistry();
+  const seen = new WeakSet<AnyLexicalExtension>();
+  const registerRecursively = (input: AnyLexicalExtensionArgument): void => {
+    const base: AnyLexicalExtension = Array.isArray(input)
+      ? (input[0] as AnyLexicalExtension)
+      : input;
+    if (seen.has(base)) return;
+    seen.add(base);
+    registry.register(input);
+    const deps = (base as { dependencies?: AnyLexicalExtensionArgument[] })
+      .dependencies;
+    if (deps) {
+      for (const dep of deps) registerRecursively(dep);
+    }
+  };
+  for (const ext of options.extensions) registerRecursively(ext);
+
+  const namespace = options.namespace ?? "typix";
+  const editable = options.editable ?? true;
+  const theme = options.theme ?? {};
+  const onError =
+    options.onError ??
+    ((err: Error) => {
+      throw err;
+    });
+
+  // The user's extension graph wrapped in a stable root.
+  const rootExtension = defineExtension({
+    name: `@typix/root/${namespace}`,
+    namespace,
+    editable,
+    theme,
+    onError,
+    dependencies: options.extensions,
+  });
 
   // Build the editor through @lexical/extension's builder with React
   // wiring added. configExtension(ReactExtension, { contentEditable: null })

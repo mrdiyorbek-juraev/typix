@@ -1,6 +1,10 @@
 import { buildEditorFromExtensions } from '@lexical/extension'
-import { defineExtension } from 'lexical'
-import { CreateTypixOptions, TypixEditorInstance } from '../../types'
+import {
+    defineExtension,
+    type AnyLexicalExtension,
+    type AnyLexicalExtensionArgument,
+} from 'lexical'
+import type { CreateTypixOptions, TypixEditorInstance } from '../../types'
 import { ExtensionRegistry } from '../../extension'
 import { setEditorContent } from '../command'
 import { TypixEditor } from '../editor'
@@ -10,10 +14,11 @@ import { TypixEditor } from '../editor'
  *
  * This is the primary entry point for building a Typix editor. It:
  * 1. Emits `beforeCreate` (synchronously)
- * 2. Builds a Lexical editor from all provided extensions
- * 3. Registers commands, shortcuts, and lifecycle hooks
- * 4. Emits `create` (after construction, before initial content)
- * 5. Returns a `TypixEditorInstance` ready to be mounted
+ * 2. Walks the extension dependency graph so nested extensions register too
+ * 3. Builds a Lexical editor from all provided extensions
+ * 4. Registers commands, shortcuts, and lifecycle hooks
+ * 5. Emits `create` (after construction, before initial content)
+ * 6. Returns a `TypixEditorInstance` ready to be mounted
  *
  * The returned instance is framework-agnostic. Mount it using a
  * framework adapter (`@typix-editor/react`, `@typix-editor/vue`,
@@ -52,10 +57,28 @@ export function createTypix(options: CreateTypixOptions): TypixEditorInstance {
     // Inline hook: fires before anything else.
     onBeforeCreate?.({ options })
 
-    // 1. Build extension registry
+    // 1. Register every extension reachable via the dependency graph.
+    //    Aggregator extensions like StarterKit list sub-extensions as
+    //    Lexical dependencies — walking the graph means their commands,
+    //    shortcuts, storage, and lifecycle hooks are picked up automatically
+    //    without a separate "merge metadata" step.
     const registry = new ExtensionRegistry()
+    const seen = new WeakSet<AnyLexicalExtension>()
+    const registerRecursively = (input: AnyLexicalExtensionArgument): void => {
+        const base: AnyLexicalExtension = Array.isArray(input)
+            ? (input[0] as AnyLexicalExtension)
+            : input
+        if (seen.has(base)) return
+        seen.add(base)
+        registry.register(input)
+        const deps = (base as { dependencies?: AnyLexicalExtensionArgument[] })
+            .dependencies
+        if (deps) {
+            for (const dep of deps) registerRecursively(dep)
+        }
+    }
     for (const ext of extensions) {
-        registry.register(ext)
+        registerRecursively(ext)
     }
 
     // 2. Build the root Lexical extension that aggregates everything

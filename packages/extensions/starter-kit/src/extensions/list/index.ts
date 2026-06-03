@@ -19,7 +19,7 @@ import {
   registerCheckList,
 } from "@typix-editor/core/lexical/list";
 import { $getNearestNodeOfType } from "@typix-editor/core/lexical/utils";
-import { registerTypixMeta } from "@typix-editor/core";
+import { withTypixMeta } from "@typix-editor/core";
 import { namedSignals, effect } from "@typix-editor/core/lexical/extension";
 
 export interface ListConfig {
@@ -53,92 +53,98 @@ export const TYPIX_TOGGLE_CHECK_LIST = createCommand<void>(
   "TYPIX_TOGGLE_CHECK_LIST"
 );
 
-export const ListExtension = defineExtension({
-  name: "@typix/list",
-  config: safeCast<ListConfig>({
-    bullet: true,
-    ordered: true,
-    checklist: true,
-    disabled: false,
+export const ListExtension = withTypixMeta(
+  defineExtension({
+    name: "@typix/list",
+    config: safeCast<ListConfig>({
+      bullet: true,
+      ordered: true,
+      checklist: true,
+      disabled: false,
+    }),
+    mergeConfig(a: ListConfig, b: Partial<ListConfig>): ListConfig {
+      return { ...a, ...b };
+    },
+    nodes: () => [ListNode, ListItemNode],
+    build(_editor: LexicalEditor, config: ListConfig) {
+      return namedSignals(config);
+    },
+    register(editor: LexicalEditor, _config: ListConfig, state: any) {
+      const { disabled, checklist, bullet, ordered } = state.getOutput();
+      return effect(() => {
+        if (disabled.value) return;
+        const disposers: Array<() => void> = [];
+        disposers.push(registerList(editor));
+        if (checklist.value) disposers.push(registerCheckList(editor));
+
+        if (bullet.value) {
+          disposers.push(
+            editor.registerCommand(
+              TYPIX_TOGGLE_BULLET_LIST,
+              () => {
+                const isActive = getActiveListType(editor) === "bullet";
+                editor.dispatchCommand(
+                  isActive
+                    ? REMOVE_LIST_COMMAND
+                    : INSERT_UNORDERED_LIST_COMMAND,
+                  undefined
+                );
+                return true;
+              },
+              COMMAND_PRIORITY_EDITOR
+            )
+          );
+        }
+
+        if (ordered.value) {
+          disposers.push(
+            editor.registerCommand(
+              TYPIX_TOGGLE_ORDERED_LIST,
+              () => {
+                const isActive = getActiveListType(editor) === "number";
+                editor.dispatchCommand(
+                  isActive ? REMOVE_LIST_COMMAND : INSERT_ORDERED_LIST_COMMAND,
+                  undefined
+                );
+                return true;
+              },
+              COMMAND_PRIORITY_EDITOR
+            )
+          );
+        }
+
+        if (checklist.value) {
+          disposers.push(
+            editor.registerCommand(
+              TYPIX_TOGGLE_CHECK_LIST,
+              () => {
+                const isActive = getActiveListType(editor) === "check";
+                editor.dispatchCommand(
+                  isActive ? REMOVE_LIST_COMMAND : INSERT_CHECK_LIST_COMMAND,
+                  undefined
+                );
+                return true;
+              },
+              COMMAND_PRIORITY_EDITOR
+            )
+          );
+        }
+
+        return () => disposers.forEach((d) => d());
+      });
+    },
   }),
-  mergeConfig(a: ListConfig, b: Partial<ListConfig>): ListConfig {
-    return { ...a, ...b };
-  },
-  nodes: () => [ListNode, ListItemNode],
-  build(_editor: LexicalEditor, config: ListConfig) {
-    return namedSignals(config);
-  },
-  register(editor: LexicalEditor, _config: ListConfig, state: any) {
-    const { disabled, checklist, bullet, ordered } = state.getOutput();
-    return effect(() => {
-      if (disabled.value) return;
-      const disposers: Array<() => void> = [];
-      disposers.push(registerList(editor));
-      if (checklist.value) disposers.push(registerCheckList(editor));
-
-      if (bullet.value) {
-        disposers.push(
-          editor.registerCommand(
-            TYPIX_TOGGLE_BULLET_LIST,
-            () => {
-              const isActive = getActiveListType(editor) === "bullet";
-              editor.dispatchCommand(
-                isActive ? REMOVE_LIST_COMMAND : INSERT_UNORDERED_LIST_COMMAND,
-                undefined
-              );
-              return true;
-            },
-            COMMAND_PRIORITY_EDITOR
-          )
-        );
-      }
-
-      if (ordered.value) {
-        disposers.push(
-          editor.registerCommand(
-            TYPIX_TOGGLE_ORDERED_LIST,
-            () => {
-              const isActive = getActiveListType(editor) === "number";
-              editor.dispatchCommand(
-                isActive ? REMOVE_LIST_COMMAND : INSERT_ORDERED_LIST_COMMAND,
-                undefined
-              );
-              return true;
-            },
-            COMMAND_PRIORITY_EDITOR
-          )
-        );
-      }
-
-      if (checklist.value) {
-        disposers.push(
-          editor.registerCommand(
-            TYPIX_TOGGLE_CHECK_LIST,
-            () => {
-              const isActive = getActiveListType(editor) === "check";
-              editor.dispatchCommand(
-                isActive ? REMOVE_LIST_COMMAND : INSERT_CHECK_LIST_COMMAND,
-                undefined
-              );
-              return true;
-            },
-            COMMAND_PRIORITY_EDITOR
-          )
-        );
-      }
-
-      return () => disposers.forEach((d) => d());
-    });
-  },
-});
-
-registerTypixMeta(ListExtension, {
-  commands: {
-    toggleBulletList: TYPIX_TOGGLE_BULLET_LIST,
-    toggleOrderedList: TYPIX_TOGGLE_ORDERED_LIST,
-    toggleCheckList: TYPIX_TOGGLE_CHECK_LIST,
-  },
-});
+  {
+    commands: () => ({
+      toggleBulletList: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_TOGGLE_BULLET_LIST, undefined),
+      toggleOrderedList: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_TOGGLE_ORDERED_LIST, undefined),
+      toggleCheckList: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_TOGGLE_CHECK_LIST, undefined),
+    }),
+  }
+);
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

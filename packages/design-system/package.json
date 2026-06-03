@@ -69,9 +69,9 @@
     "tailwind-merge": "^3.2.0"
   },
   "peerDependencies": {
-    "@lexical/link": "^0.45.0",
-    "@lexical/react": "^0.45.0",
-    "@lexical/utils": "^0.45.0",
+    "@lexical/link": "catalog:",
+    "@lexical/react": "catalog:",
+    "@lexical/utils": "catalog:",
     "@typix-editor/core": "workspace:*",
     "@typix-editor/extension-code-block": "workspace:*",
     "@typix-editor/extension-code-block-prettier": "workspace:*",
@@ -82,7 +82,7 @@
     "@typix-editor/extension-table": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/utils": "workspace:*",
-    "lexical": "^0.45.0",
+    "lexical": "catalog:",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
@@ -131,9 +131,9 @@
     }
   },
   "devDependencies": {
-    "@lexical/link": "^0.45.0",
-    "@lexical/react": "^0.45.0",
-    "@lexical/utils": "^0.45.0",
+    "@lexical/link": "catalog:",
+    "@lexical/react": "catalog:",
+    "@lexical/utils": "catalog:",
     "@typix-editor/core": "workspace:*",
     "@typix-editor/extension-code-block": "workspace:*",
     "@typix-editor/extension-code-block-prettier": "workspace:*",
@@ -144,12 +144,12 @@
     "@typix-editor/extension-table": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/utils": "workspace:*",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.1",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@tailwindcss/cli": "^4.1.4",
-    "lexical": "^0.45.0",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "lexical": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "tailwindcss": "^4.1.4",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0"

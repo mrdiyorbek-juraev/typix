@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { configExtension } from "lexical";
-import { getTypixMeta } from "@typix-editor/core";
+import { getTypixExtensionMeta } from "@typix-editor/core";
 import { LinkExtension } from "../extension";
 
 describe("LinkExtension", () => {
@@ -46,11 +46,15 @@ describe("LinkExtension", () => {
 
   describe("commands", () => {
     it("registers setLink command", () => {
-      expect(getTypixMeta(LinkExtension)?.commands).toHaveProperty("setLink");
+      expect(getTypixExtensionMeta(LinkExtension)?.commands?.()).toHaveProperty(
+        "setLink"
+      );
     });
 
     it("registers unsetLink command", () => {
-      expect(getTypixMeta(LinkExtension)?.commands).toHaveProperty("unsetLink");
+      expect(getTypixExtensionMeta(LinkExtension)?.commands?.()).toHaveProperty(
+        "unsetLink"
+      );
     });
   });
 });

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { configExtension } from "lexical";
-import { getTypixMeta, getExtensionOutput } from "@typix-editor/core";
+import { getTypixExtensionMeta, getExtensionOutput } from "@typix-editor/core";
 import { CodeBlockExtension } from "../extension";
 import {
   searchLanguages,
@@ -48,33 +48,33 @@ describe("CodeBlockExtension", () => {
 
   describe("commands", () => {
     it("registers insertCodeBlock command", () => {
-      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
-        "insertCodeBlock"
-      );
+      expect(
+        getTypixExtensionMeta(CodeBlockExtension)?.commands?.()
+      ).toHaveProperty("insertCodeBlock");
     });
 
     it("registers setCodeLanguage command", () => {
-      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
-        "setCodeLanguage"
-      );
+      expect(
+        getTypixExtensionMeta(CodeBlockExtension)?.commands?.()
+      ).toHaveProperty("setCodeLanguage");
     });
 
     it("registers copyCode command", () => {
-      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
-        "copyCode"
-      );
+      expect(
+        getTypixExtensionMeta(CodeBlockExtension)?.commands?.()
+      ).toHaveProperty("copyCode");
     });
 
     it("registers deleteCodeBlock command", () => {
-      expect(getTypixMeta(CodeBlockExtension)?.commands).toHaveProperty(
-        "deleteCodeBlock"
-      );
+      expect(
+        getTypixExtensionMeta(CodeBlockExtension)?.commands?.()
+      ).toHaveProperty("deleteCodeBlock");
     });
   });
 
   describe("shortcuts", () => {
     it("registers Ctrl+Alt+` shortcut for insertCodeBlock", () => {
-      expect(getTypixMeta(CodeBlockExtension)?.shortcuts).toEqual(
+      expect(getTypixExtensionMeta(CodeBlockExtension)?.shortcuts).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             key: "`",

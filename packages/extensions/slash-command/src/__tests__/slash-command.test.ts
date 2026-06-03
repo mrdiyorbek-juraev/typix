@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { configExtension } from "lexical";
-import { getTypixMeta, getExtensionOutput } from "@typix-editor/core";
+import { getTypixExtensionMeta, getExtensionOutput } from "@typix-editor/core";
 import { SlashCommandExtension } from "../extension";
 import { canInsertSlashCommand, insertSlashCommand } from "../utils";
 import {
@@ -33,13 +33,13 @@ describe("SlashCommandExtension", () => {
     });
 
     it("includes insertSlashCommand command", () => {
-      expect(getTypixMeta(SlashCommandExtension)?.commands).toHaveProperty(
-        "insertSlashCommand"
-      );
+      expect(
+        getTypixExtensionMeta(SlashCommandExtension)?.commands?.()
+      ).toHaveProperty("insertSlashCommand");
     });
 
     it("includes Mod+/ shortcut", () => {
-      expect(getTypixMeta(SlashCommandExtension)?.shortcuts).toEqual(
+      expect(getTypixExtensionMeta(SlashCommandExtension)?.shortcuts).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             key: "/",

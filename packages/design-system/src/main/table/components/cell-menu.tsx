@@ -1,6 +1,5 @@
 "use client";
 
-import { memo } from "react";
 import { $getSelection } from "lexical";
 import type { TypixEditor } from "@typix-editor/core";
 import {
@@ -42,7 +41,7 @@ import {
 import type { TableHoverInfo } from "../types";
 import { ColorPicker } from "./color-picker";
 
-export const CellMiniMenu = memo(function CellMiniMenu({
+export function CellMiniMenu({
   hoverInfo,
   withCell,
   editor,
@@ -55,30 +54,49 @@ export const CellMiniMenu = memo(function CellMiniMenu({
   hasTableSelection: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const { cellKey, colSpan, rowSpan, headerState } = hoverInfo;
+  const {
+    cellKey,
+    colSpan,
+    rowSpan,
+    headerState,
+    verticalAlign,
+    rowStriping,
+    frozenRows,
+    frozenColumns,
+  } = hoverInfo;
   const isMerged = colSpan > 1 || rowSpan > 1;
   const isHeaderRow = (headerState & TableCellHeaderStates.ROW) !== 0;
   const isHeaderCol = (headerState & TableCellHeaderStates.COLUMN) !== 0;
 
-  // Read DOM state for table-level toggles
-  const cellDOM = editor.lexical.getElementByKey(cellKey);
-  const tableEl = cellDOM?.closest("table") as HTMLElement | null;
-  const currentVAlign = cellDOM?.getAttribute("data-valign") || "top";
-  const isStriped = tableEl?.getAttribute("data-striped") === "true";
-  const isRowFrozen = tableEl?.getAttribute("data-freeze-row") === "true";
-  const isColFrozen = tableEl?.getAttribute("data-freeze-col") === "true";
+  // State sourced from the Lexical model (via TableHoverInfo), not from
+  // raw DOM attributes — survives reconciliation and serializes correctly.
+  const currentVAlign = verticalAlign || "top";
+  const isStriped = rowStriping;
+  const isRowFrozen = frozenRows > 0;
+  const isColFrozen = frozenColumns > 0;
 
-  const toggleTableAttr = (attr: string) => {
-    if (!tableEl) return;
-    tableEl.setAttribute(
-      attr,
-      tableEl.getAttribute(attr) === "true" ? "false" : "true"
-    );
-  };
+  const toggleRowStriping = () =>
+    withCell(cellKey, (cell) => {
+      const t = $getTableNodeFromLexicalNodeOrThrow(cell);
+      t.setRowStriping(!t.getRowStriping());
+    });
 
-  const setVAlign = (align: string) => {
-    if (cellDOM) cellDOM.setAttribute("data-valign", align);
-  };
+  const toggleFrozenRows = () =>
+    withCell(cellKey, (cell) => {
+      const t = $getTableNodeFromLexicalNodeOrThrow(cell);
+      t.setFrozenRows(t.getFrozenRows() > 0 ? 0 : 1);
+    });
+
+  const toggleFrozenColumns = () =>
+    withCell(cellKey, (cell) => {
+      const t = $getTableNodeFromLexicalNodeOrThrow(cell);
+      t.setFrozenColumns(t.getFrozenColumns() > 0 ? 0 : 1);
+    });
+
+  const setVAlign = (align: "top" | "middle" | "bottom") =>
+    withCell(cellKey, (cell) => {
+      cell.setVerticalAlign(align);
+    });
 
   return (
     <DropdownMenu modal={false} onOpenChange={onOpenChange}>
@@ -134,7 +152,7 @@ export const CellMiniMenu = memo(function CellMiniMenu({
         </DropdownMenuSub>
 
         {/* Toggle row striping */}
-        <DropdownMenuItem onSelect={() => toggleTableAttr("data-striped")}>
+        <DropdownMenuItem onSelect={toggleRowStriping}>
           <Rows3 className="size-4" />
           {isStriped ? "Remove row striping" : "Toggle row striping"}
         </DropdownMenuItem>
@@ -158,11 +176,11 @@ export const CellMiniMenu = memo(function CellMiniMenu({
         </DropdownMenuSub>
 
         {/* Freeze toggles */}
-        <DropdownMenuItem onSelect={() => toggleTableAttr("data-freeze-row")}>
+        <DropdownMenuItem onSelect={toggleFrozenRows}>
           <Lock className="size-4" />
           {isRowFrozen ? "Unfreeze first row" : "Toggle first row freeze"}
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => toggleTableAttr("data-freeze-col")}>
+        <DropdownMenuItem onSelect={toggleFrozenColumns}>
           <Lock className="size-4" />
           {isColFrozen ? "Unfreeze first column" : "Toggle first column freeze"}
         </DropdownMenuItem>
@@ -260,4 +278,4 @@ export const CellMiniMenu = memo(function CellMiniMenu({
       </DropdownMenuContent>
     </DropdownMenu>
   );
-});
+}

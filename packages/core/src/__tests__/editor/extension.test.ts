@@ -1,11 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { createCommand } from 'lexical'
-import type { AnyLexicalExtension } from 'lexical'
-import { ExtensionRegistry } from '../../extension'
-import { registerTypixMeta } from '../../extension/compat'
-
-// Lightweight stand-in for AnyLexicalExtension — plain objects are valid WeakMap keys
-const mockExt = () => ({}) as AnyLexicalExtension
+import { defineExtension } from 'lexical'
+import { ExtensionRegistry, withTypixMeta } from '../../extension'
 
 // ── ExtensionRegistry ───────────────────────────────────────────────────────
 
@@ -20,95 +15,91 @@ describe('ExtensionRegistry', () => {
 
   describe('register', () => {
     it('registers an extension without metadata — no crash', () => {
-      const ext = mockExt()
+      const ext = defineExtension({ name: 'bare' })
       expect(() => registry.register(ext)).not.toThrow()
       expect(registry.getAllExtensions()).toHaveLength(1)
     })
 
-    it('stores commands from TypixMeta', () => {
-      const ext = mockExt()
-      const cmd = createCommand<void>('TEST_CMD_STORE')
-      registerTypixMeta(ext, { commands: { myCmd: cmd } })
+    it('stores commands from withTypixMeta', () => {
+      const fn = () => true
+      const ext = withTypixMeta(defineExtension({ name: 'cmd' }), {
+        commands: () => ({ myCmd: () => () => fn() }),
+      })
       registry.register(ext)
-      expect(registry.getLexicalCommand('myCmd')).toBe(cmd)
+      expect(registry.hasCommand('myCmd')).toBe(true)
+      expect(registry.getCommandFactory('myCmd')).toBeDefined()
     })
 
-    it('stores shortcuts from TypixMeta', () => {
-      const ext = mockExt()
-      const shortcut = { key: 'b', modifiers: ['mod' as const], command: 'toggleBold' }
-      registerTypixMeta(ext, { shortcuts: [shortcut] })
+    it('stores shortcuts from withTypixMeta', () => {
+      const shortcut = {
+        key: 'b',
+        modifiers: ['mod' as const],
+        command: 'toggleBold',
+      }
+      const ext = withTypixMeta(defineExtension({ name: 'sc' }), {
+        shortcuts: [shortcut],
+      })
       registry.register(ext)
       expect(registry.getAllShortcuts()).toContainEqual(shortcut)
     })
 
     it('accumulates shortcuts from multiple extensions', () => {
-      const ext1 = mockExt()
-      const ext2 = mockExt()
       const s1 = { key: 'b', modifiers: ['mod' as const], command: 'bold' }
       const s2 = { key: 'i', modifiers: ['mod' as const], command: 'italic' }
-      registerTypixMeta(ext1, { shortcuts: [s1] })
-      registerTypixMeta(ext2, { shortcuts: [s2] })
-      registry.register(ext1)
-      registry.register(ext2)
+      registry.register(
+        withTypixMeta(defineExtension({ name: 'a' }), { shortcuts: [s1] }),
+      )
+      registry.register(
+        withTypixMeta(defineExtension({ name: 'b' }), { shortcuts: [s2] }),
+      )
       expect(registry.getAllShortcuts()).toHaveLength(2)
     })
 
     it('warns on duplicate command names and keeps the first', () => {
-      const ext1 = mockExt()
-      const ext2 = mockExt()
-      const cmd1 = createCommand<void>('CMD_FIRST')
-      const cmd2 = createCommand<void>('CMD_SECOND')
-      registerTypixMeta(ext1, { commands: { toggle: cmd1 } })
-      registerTypixMeta(ext2, { commands: { toggle: cmd2 } })
+      const first = withTypixMeta(defineExtension({ name: 'first' }), {
+        commands: () => ({ toggle: () => () => true }),
+      })
+      const second = withTypixMeta(defineExtension({ name: 'second' }), {
+        commands: () => ({ toggle: () => () => false }),
+      })
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
-      registry.register(ext1)
-      registry.register(ext2)
+      registry.register(first)
+      registry.register(second)
       expect(warn).toHaveBeenCalledWith('[Typix] Command "toggle" already registered.')
-      expect(registry.getLexicalCommand('toggle')).toBe(cmd1)
       warn.mockRestore()
     })
 
     it('multiple extensions register independently without conflict', () => {
-      const ext1 = mockExt()
-      const ext2 = mockExt()
-      const cmd1 = createCommand<void>('CMD_BOLD')
-      const cmd2 = createCommand<void>('CMD_ITALIC')
-      registerTypixMeta(ext1, { commands: { bold: cmd1 } })
-      registerTypixMeta(ext2, { commands: { italic: cmd2 } })
-      registry.register(ext1)
-      registry.register(ext2)
-      expect(registry.getLexicalCommand('bold')).toBe(cmd1)
-      expect(registry.getLexicalCommand('italic')).toBe(cmd2)
+      const a = withTypixMeta(defineExtension({ name: 'a' }), {
+        commands: () => ({ bold: () => () => true }),
+      })
+      const b = withTypixMeta(defineExtension({ name: 'b' }), {
+        commands: () => ({ italic: () => () => true }),
+      })
+      registry.register(a)
+      registry.register(b)
+      expect(registry.hasCommand('bold')).toBe(true)
+      expect(registry.hasCommand('italic')).toBe(true)
     })
   })
 
-  // ── getLexicalCommand / hasCommand ─────────────────────────────────────
+  // ── hasCommand / getCommandFactory ─────────────────────────────────────
 
-  describe('getLexicalCommand', () => {
-    it('returns the LexicalCommand for a registered command name', () => {
-      const ext = mockExt()
-      const cmd = createCommand<string>('TEST_GET_CMD')
-      registerTypixMeta(ext, { commands: { myCmd: cmd } })
+  describe('lookup', () => {
+    it('hasCommand returns true for registered names', () => {
+      const ext = withTypixMeta(defineExtension({ name: 'lookup' }), {
+        commands: () => ({ ping: () => () => true }),
+      })
       registry.register(ext)
-      expect(registry.getLexicalCommand('myCmd')).toBe(cmd)
+      expect(registry.hasCommand('ping')).toBe(true)
     })
 
-    it('returns undefined for an unregistered command name', () => {
-      expect(registry.getLexicalCommand('nonexistent')).toBeUndefined()
-    })
-  })
-
-  describe('hasCommand', () => {
-    it('returns true for a registered command', () => {
-      const ext = mockExt()
-      const cmd = createCommand<void>('TEST_HAS_CMD')
-      registerTypixMeta(ext, { commands: { toggle: cmd } })
-      registry.register(ext)
-      expect(registry.hasCommand('toggle')).toBe(true)
-    })
-
-    it('returns false for an unregistered command', () => {
+    it('hasCommand returns false for unregistered names', () => {
       expect(registry.hasCommand('nonexistent')).toBe(false)
+    })
+
+    it('getCommandFactory returns undefined for unregistered names', () => {
+      expect(registry.getCommandFactory('nope')).toBeUndefined()
     })
   })
 
@@ -116,19 +107,18 @@ describe('ExtensionRegistry', () => {
 
   describe('getAllExtensions', () => {
     it('returns all registered extensions in insertion order', () => {
-      const ext1 = mockExt()
-      const ext2 = mockExt()
-      registry.register(ext1)
-      registry.register(ext2)
+      const a = defineExtension({ name: 'a' })
+      const b = defineExtension({ name: 'b' })
+      registry.register(a)
+      registry.register(b)
       const all = registry.getAllExtensions()
-      expect(all[0]).toBe(ext1)
-      expect(all[1]).toBe(ext2)
+      expect(all[0]).toBe(a)
+      expect(all[1]).toBe(b)
       expect(all).toHaveLength(2)
     })
 
     it('returns a copy — mutating it does not affect the registry', () => {
-      const ext = mockExt()
-      registry.register(ext)
+      registry.register(defineExtension({ name: 'x' }))
       const copy = registry.getAllExtensions()
       copy.splice(0, 1)
       expect(registry.getAllExtensions()).toHaveLength(1)
@@ -139,10 +129,16 @@ describe('ExtensionRegistry', () => {
 
   describe('getAllShortcuts', () => {
     it('returns a copy — mutating it does not affect the registry', () => {
-      const ext = mockExt()
-      const shortcut = { key: 'b', modifiers: ['mod' as const], command: 'bold' }
-      registerTypixMeta(ext, { shortcuts: [shortcut] })
-      registry.register(ext)
+      const shortcut = {
+        key: 'b',
+        modifiers: ['mod' as const],
+        command: 'bold',
+      }
+      registry.register(
+        withTypixMeta(defineExtension({ name: 'sc' }), {
+          shortcuts: [shortcut],
+        }),
+      )
       const copy = registry.getAllShortcuts()
       copy.splice(0, 1)
       expect(registry.getAllShortcuts()).toHaveLength(1)

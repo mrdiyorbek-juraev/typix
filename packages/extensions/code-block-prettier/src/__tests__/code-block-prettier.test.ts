@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { configExtension } from "lexical";
-import { getTypixMeta, getExtensionOutput } from "@typix-editor/core";
+import { getTypixExtensionMeta, getExtensionOutput } from "@typix-editor/core";
 import {
   PrettierFormatterExtension,
   canFormatWithPrettier,
@@ -55,9 +55,9 @@ describe("PrettierFormatterExtension", () => {
 
   describe("commands", () => {
     it("registers formatWithPrettier command", () => {
-      expect(getTypixMeta(PrettierFormatterExtension)?.commands).toHaveProperty(
-        "formatWithPrettier"
-      );
+      expect(
+        getTypixExtensionMeta(PrettierFormatterExtension)?.commands?.()
+      ).toHaveProperty("formatWithPrettier");
     });
   });
 

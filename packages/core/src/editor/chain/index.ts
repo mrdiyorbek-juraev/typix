@@ -125,8 +125,7 @@ export function createChainBuilder(
  *
  * Resolution order:
  *   1. Typed command factory registered via withTypixMeta(..., { commands })
- *   2. Legacy Lexical command registered via registerTypixMeta.commands
- *   3. Built-in commands (focus, blur, setContent, clearContent,
+ *   2. Built-in commands (focus, blur, setContent, clearContent,
  *      toggleMark, undo, redo)
  */
 function dispatchCommand(
@@ -135,30 +134,17 @@ function dispatchCommand(
     name: string,
     args: unknown[],
 ): boolean {
-    // Typed command factory
     const factory = registry.getCommandFactory(name)
     if (factory) {
         try {
             const commandFn = factory(...args)
             return commandFn(editor) !== false
         } catch (err: unknown) {
-            console.error(`[Typix] Error in v5 command "${name}":`, err)
+            console.error(`[Typix] Error in command "${name}":`, err)
             return false
         }
     }
 
-    // Legacy: Lexical command from registerTypixMeta
-    const lexicalCmd = registry.getLexicalCommand(name)
-    if (lexicalCmd) {
-        try {
-            return editor.dispatchCommand(lexicalCmd, args[0])
-        } catch (err: unknown) {
-            console.error(`[Typix] Error dispatching "${name}":`, err)
-            return false
-        }
-    }
-
-    // Built-in fallback
     return executeBuiltinCommand(editor, name, args)
 }
 

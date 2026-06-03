@@ -210,21 +210,16 @@ export class TypixEditor implements TypixEditorInstance {
     }
 
     run(command: string, ...args: unknown[]): boolean {
-        // Typed factory takes precedence over legacy Lexical command map
         const factory = this._registry.getCommandFactory(command)
         if (factory) {
             try {
                 const fn = factory(...args)
                 return fn(this._lexical) !== false
             } catch (err: unknown) {
-                console.error(`[Typix] Error in v5 command "${command}":`, err)
+                console.error(`[Typix] Error in command "${command}":`, err)
                 return false
             }
         }
-        // Legacy Lexical command map
-        const lexicalCmd = this._registry.getLexicalCommand(command)
-        if (lexicalCmd) return this._lexical.dispatchCommand(lexicalCmd, args[0])
-        // Built-in fallback
         return executeBuiltinCommand(this._lexical, command, args)
     }
 

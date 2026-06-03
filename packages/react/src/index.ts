@@ -21,11 +21,6 @@ export {
 
 // Editor content (renders the editable surface)
 export { EditorContent, type EditorContentProps } from "./editor-content";
-export {
-  type ContextShape,
-  SharedHistoryContext,
-  useSharedHistoryContext,
-} from "./editor-content/history-context";
 
 // Root context (for floating UI positioning)
 export {

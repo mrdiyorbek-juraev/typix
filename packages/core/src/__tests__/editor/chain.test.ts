@@ -1,13 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createHeadlessEditor } from '@lexical/headless'
-import { createCommand } from 'lexical'
-import type { LexicalEditor, AnyLexicalExtension } from 'lexical'
-import { createChainBuilder, createCanChainBuilder } from '../../editor/chain'
-import { ExtensionRegistry } from '../../extension'
-import { registerTypixMeta } from '../../extension/compat'
-import type { ChainBuilder, CanChainBuilder } from '../../types'
-
-const mockExt = () => ({}) as AnyLexicalExtension
+import { defineExtension, type LexicalEditor } from 'lexical'
+import { createCanChainBuilder, createChainBuilder } from '../../editor/chain'
+import { ExtensionRegistry, withTypixMeta } from '../../extension'
+import type { CanChainBuilder, ChainBuilder, CommandFn } from '../../types'
 
 function makeEditor(): LexicalEditor {
   return createHeadlessEditor({
@@ -56,94 +52,87 @@ describe('createChainBuilder', () => {
       expect(chain.run()).toBe(true)
     })
 
-    it('dispatches a registered v4 Lexical command and returns true', () => {
-      const ext = mockExt()
-      const MY_CMD = createCommand<void>('TYPIX_MY_CMD_TEST')
-      registerTypixMeta(ext, { commands: { myCmd: MY_CMD } })
+    it('invokes a registered command factory and returns true', () => {
+      const inner = vi.fn<CommandFn>(() => true)
+      const factory = vi.fn(() => inner)
+      const ext = withTypixMeta(defineExtension({ name: 'cmd' }), {
+        commands: () => ({ myCmd: factory }),
+      })
       registry.register(ext)
-
-      const spy = vi.spyOn(editor, 'dispatchCommand').mockReturnValue(true)
       ;(chain as any).myCmd()
       expect(chain.run()).toBe(true)
-      expect(spy).toHaveBeenCalledWith(MY_CMD, undefined)
-      spy.mockRestore()
+      expect(factory).toHaveBeenCalledTimes(1)
+      expect(inner).toHaveBeenCalledWith(editor)
     })
 
-    it('returns false when dispatchCommand returns false', () => {
-      const ext = mockExt()
-      const MY_CMD = createCommand<void>('TYPIX_FAIL_CMD')
-      registerTypixMeta(ext, { commands: { myCmd: MY_CMD } })
+    it('returns false when the command function returns false', () => {
+      const ext = withTypixMeta(defineExtension({ name: 'cmd-fail' }), {
+        commands: () => ({ myCmd: () => () => false }),
+      })
       registry.register(ext)
-
-      const spy = vi.spyOn(editor, 'dispatchCommand').mockReturnValue(false)
       ;(chain as any).myCmd()
       expect(chain.run()).toBe(false)
-      spy.mockRestore()
     })
 
     it('returns false when at least one command in the queue fails', () => {
-      const ext = mockExt()
-      const PASS_CMD = createCommand<void>('TYPIX_PASS_CMD')
-      const FAIL_CMD = createCommand<void>('TYPIX_FAIL_CMD2')
-      registerTypixMeta(ext, { commands: { pass: PASS_CMD, fail: FAIL_CMD } })
+      const ext = withTypixMeta(defineExtension({ name: 'mixed' }), {
+        commands: () => ({
+          pass: () => () => true,
+          fail: () => () => false,
+        }),
+      })
       registry.register(ext)
-
-      const spy = vi
-        .spyOn(editor, 'dispatchCommand')
-        .mockImplementation((cmd: any) => (cmd === PASS_CMD ? true : false))
       ;(chain as any).pass()
       ;(chain as any).fail()
       expect(chain.run()).toBe(false)
-      spy.mockRestore()
     })
 
-    it('passes args[0] as payload to dispatchCommand', () => {
-      const ext = mockExt()
-      const CMD = createCommand<string>('TYPIX_PAYLOAD_CMD')
-      registerTypixMeta(ext, { commands: { doIt: CMD } })
+    it('forwards args to the command factory', () => {
+      const factory = vi.fn((_payload: string) => () => true)
+      const ext = withTypixMeta(defineExtension({ name: 'payload' }), {
+        commands: () => ({ doIt: factory }),
+      })
       registry.register(ext)
-
-      const spy = vi.spyOn(editor, 'dispatchCommand').mockReturnValue(true)
       ;(chain as any).doIt('myPayload')
       chain.run()
-      expect(spy).toHaveBeenCalledWith(CMD, 'myPayload')
-      spy.mockRestore()
+      expect(factory).toHaveBeenCalledWith('myPayload')
     })
 
     it('clears the queue after execution', () => {
-      const ext = mockExt()
-      const CMD = createCommand<void>('TYPIX_ONCE_CMD')
-      registerTypixMeta(ext, { commands: { doIt: CMD } })
+      const inner = vi.fn<CommandFn>(() => true)
+      const ext = withTypixMeta(defineExtension({ name: 'once' }), {
+        commands: () => ({ doIt: () => inner }),
+      })
       registry.register(ext)
-
-      const spy = vi.spyOn(editor, 'dispatchCommand').mockReturnValue(true)
       ;(chain as any).doIt()
       chain.run()
       chain.run() // second run — queue was already cleared
-      expect(spy).toHaveBeenCalledTimes(1)
-      spy.mockRestore()
+      expect(inner).toHaveBeenCalledTimes(1)
     })
 
     it('executes queued commands in order', () => {
-      const extA = mockExt()
-      const extB = mockExt()
-      const CMD_A = createCommand<void>('TYPIX_ORDER_A')
-      const CMD_B = createCommand<void>('TYPIX_ORDER_B')
-      registerTypixMeta(extA, { commands: { a: CMD_A } })
-      registerTypixMeta(extB, { commands: { b: CMD_B } })
+      const order: string[] = []
+      const extA = withTypixMeta(defineExtension({ name: 'a' }), {
+        commands: () => ({
+          a: () => () => {
+            order.push('a')
+            return true
+          },
+        }),
+      })
+      const extB = withTypixMeta(defineExtension({ name: 'b' }), {
+        commands: () => ({
+          b: () => () => {
+            order.push('b')
+            return true
+          },
+        }),
+      })
       registry.register(extA)
       registry.register(extB)
-
-      const order: string[] = []
-      vi.spyOn(editor, 'dispatchCommand').mockImplementation((cmd: any) => {
-        if (cmd === CMD_A) order.push('a')
-        if (cmd === CMD_B) order.push('b')
-        return true
-      })
       ;(chain as any).a().b()
       chain.run()
       expect(order).toEqual(['a', 'b'])
-      vi.restoreAllMocks()
     })
 
     it('falls back to built-in commands (e.g. undo returns true)', () => {
@@ -155,18 +144,16 @@ describe('createChainBuilder', () => {
   // ── Fluent chaining ───────────────────────────────────────────────────
 
   it('supports a full fluent chain without intermediate variable', () => {
-    const ext = mockExt()
-    const CMD = createCommand<void>('TYPIX_FLUENT_CMD')
-    registerTypixMeta(ext, { commands: { toggle: CMD } })
+    const inner = vi.fn<CommandFn>(() => true)
+    const ext = withTypixMeta(defineExtension({ name: 'fluent' }), {
+      commands: () => ({ toggle: () => inner }),
+    })
     registry.register(ext)
-
-    const spy = vi.spyOn(editor, 'dispatchCommand').mockReturnValue(true)
     ;(createChainBuilder(editor, registry) as any)
       .clearContent()
       .toggle()
       .run()
-    expect(spy).toHaveBeenCalledWith(CMD, undefined)
-    spy.mockRestore()
+    expect(inner).toHaveBeenCalledWith(editor)
   })
 })
 
@@ -190,9 +177,9 @@ describe('createCanChainBuilder', () => {
   })
 
   it('returns true when extension command is registered', () => {
-    const ext = mockExt()
-    const CMD = createCommand<void>('TYPIX_CAN_CMD')
-    registerTypixMeta(ext, { commands: { myCmd: CMD } })
+    const ext = withTypixMeta(defineExtension({ name: 'can-cmd' }), {
+      commands: () => ({ myCmd: () => () => true }),
+    })
     registry.register(ext)
     expect((can as any).myCmd().run()).toBe(true)
   })
@@ -241,15 +228,13 @@ describe('createCanChainBuilder', () => {
   // ── toggleBlock no longer built-in ────────────────────────────────
 
   it('toggleBlock is no longer a built-in — only available via extension', () => {
-    // Unknown command via Proxy returns false through `can()` when no
-    // extension claims it.
     expect((can as any).toggleBlock('heading').run()).toBe(false)
   })
 
   it('an extension can still expose a "toggleBlock" command if it wants to', () => {
-    const ext = mockExt()
-    const CMD = createCommand<void>('TYPIX_TOGGLE_BLOCK_CMD')
-    registerTypixMeta(ext, { commands: { toggleBlock: CMD } })
+    const ext = withTypixMeta(defineExtension({ name: 'toggle-block' }), {
+      commands: () => ({ toggleBlock: () => () => true }),
+    })
     registry.register(ext)
     expect((can as any).toggleBlock('heading').run()).toBe(true)
   })
@@ -257,9 +242,9 @@ describe('createCanChainBuilder', () => {
   // ── Mixed chains ──────────────────────────────────────────────────
 
   it('returns true when all commands in a mixed chain exist', () => {
-    const ext = mockExt()
-    const CMD = createCommand<void>('TYPIX_MIXED_CMD')
-    registerTypixMeta(ext, { commands: { customCmd: CMD } })
+    const ext = withTypixMeta(defineExtension({ name: 'mix' }), {
+      commands: () => ({ customCmd: () => () => true }),
+    })
     registry.register(ext)
     expect((can as any).focus().customCmd().run()).toBe(true)
   })
@@ -270,16 +255,19 @@ describe('createCanChainBuilder', () => {
 
   // ── No side effects ───────────────────────────────────────────────
 
-  it('does NOT call editor.dispatchCommand', () => {
-    const ext = mockExt()
-    const CMD = createCommand<void>('TYPIX_NO_SIDE_EFFECT_CMD')
-    registerTypixMeta(ext, { commands: { myCmd: CMD } })
+  it('does NOT invoke the command factory or its inner fn', () => {
+    const inner = vi.fn<CommandFn>(() => true)
+    const factory = vi.fn(() => inner)
+    const ext = withTypixMeta(defineExtension({ name: 'no-side' }), {
+      commands: () => ({ myCmd: factory }),
+    })
     registry.register(ext)
-
-    const spy = vi.spyOn(editor, 'dispatchCommand')
     ;(can as any).myCmd().run()
-    expect(spy).not.toHaveBeenCalled()
-    spy.mockRestore()
+    // Note: registry eagerly evaluates the `commands` factory once at register
+    // time to enumerate keys, so `factory` is the inner per-command factory,
+    // which `can()` should never call.
+    expect(factory).not.toHaveBeenCalled()
+    expect(inner).not.toHaveBeenCalled()
   })
 
   // ── Chainability ──────────────────────────────────────────────────

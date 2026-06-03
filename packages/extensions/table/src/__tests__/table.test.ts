@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { configExtension } from "lexical";
-import { getTypixMeta } from "@typix-editor/core";
+import { getTypixExtensionMeta } from "@typix-editor/core";
 import { TableExtension } from "../extension";
 
 describe("TableExtension", () => {
@@ -96,12 +96,14 @@ describe("TableExtension", () => {
 
     it("registers all 19 commands", () => {
       expect(
-        Object.keys(getTypixMeta(TableExtension)?.commands ?? {})
+        Object.keys(getTypixExtensionMeta(TableExtension)?.commands?.() ?? {})
       ).toHaveLength(19);
     });
 
     it.each(commandNames)("registers %s command", (name) => {
-      expect(getTypixMeta(TableExtension)?.commands).toHaveProperty(name);
+      expect(
+        getTypixExtensionMeta(TableExtension)?.commands?.()
+      ).toHaveProperty(name);
     });
   });
 });

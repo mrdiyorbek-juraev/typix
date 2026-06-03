@@ -96,7 +96,6 @@ export function FullEditor() {
     theme: defaultTheme,
     content: defaultContent as unknown as SerializedContent,
     editable: true,
-    autofocus: "end",
     immediatelyRender: false, // SSR-safe (Next.js App Router)
     onError: (err) => log("onError", err),
 
@@ -159,9 +158,12 @@ export function FullEditor() {
           <EditorToolbar />
         </div>
         <EditorContextMenu items={contextMenuItems}>
-          <div className="mx-auto max-w-[1200px] pb-12">
+          {/* pb-24 = 96px, comfortably clears the fixed CharacterLimit footer
+              (~40px) so the last paragraph never slips behind it. */}
+          <div className="mx-auto max-w-[1200px] pb-24">
             <EditorContent
               editor={editor}
+              autoFocus="end"
               placeholder="Start typing… or type / for commands"
               className="bg-background p-4 font-sans"
               classNames={{

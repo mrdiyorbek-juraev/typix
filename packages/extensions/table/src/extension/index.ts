@@ -28,7 +28,7 @@ import {
   $isTableRowNode,
   type InsertTableCommandPayloadHeaders,
 } from "@typix-editor/core/lexical/table";
-import { registerTypixMeta } from "@typix-editor/core";
+import { withTypixMeta } from "@typix-editor/core";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -197,423 +197,459 @@ const DEFAULT_LEXICAL_TABLE = configExtension(LexicalTableExtension, {
 
 // ─── Extension ──────────────────────────────────────────────────────────────
 
-export const TableExtension = defineExtension({
-  name: "@typix/table",
+export const TableExtension = withTypixMeta(
+  defineExtension({
+    name: "@typix/table",
 
-  dependencies: [DEFAULT_LEXICAL_TABLE],
+    dependencies: [DEFAULT_LEXICAL_TABLE],
 
-  config: safeCast<TableConfig>({
-    disabled: false,
-    hasCellMerge: true,
-    hasCellBackgroundColor: true,
-    hasTabHandler: true,
-    hasHorizontalScroll: true,
-    hasNestedTables: false,
-    scrollShadow: true,
-    scrollableWrapperClass: "typix-table-scrollable-wrapper",
+    config: safeCast<TableConfig>({
+      disabled: false,
+      hasCellMerge: true,
+      hasCellBackgroundColor: true,
+      hasTabHandler: true,
+      hasHorizontalScroll: true,
+      hasNestedTables: false,
+      scrollShadow: true,
+      scrollableWrapperClass: "typix-table-scrollable-wrapper",
+    }),
+
+    mergeConfig(a: TableConfig, b: Partial<TableConfig>): TableConfig {
+      return { ...a, ...b };
+    },
+
+    build(_editor: LexicalEditor, config: TableConfig) {
+      return namedSignals(config);
+    },
+
+    register(editor: LexicalEditor, _config: TableConfig, state: any) {
+      const {
+        disabled,
+        scrollShadow,
+        scrollableWrapperClass,
+        defaultRows,
+        defaultColumns,
+      } = state.getOutput();
+
+      return effect(() => {
+        if (disabled.value) return;
+
+        const disposers: Array<() => void> = [];
+
+        if (scrollShadow.value) {
+          disposers.push(
+            setupScrollShadow(editor, scrollableWrapperClass.value)
+          );
+        }
+
+        disposers.push(
+          editor.registerCommand(
+            TYPIX_INSERT_TABLE,
+            (payload) => {
+              const rows = String(payload?.rows ?? defaultRows?.value ?? 3);
+              const columns = String(
+                payload?.columns ?? defaultColumns?.value ?? 3
+              );
+              const includeHeaders = (
+                payload?.includeHeaders !== undefined
+                  ? payload.includeHeaders
+                  : true
+              ) as InsertTableCommandPayloadHeaders;
+              editor.dispatchCommand(INSERT_TABLE_COMMAND, {
+                rows,
+                columns,
+                includeHeaders,
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_INSERT_ROW_ABOVE,
+            () => {
+              editor.update(() => $insertTableRowAtSelection(false));
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_INSERT_ROW_BELOW,
+            () => {
+              editor.update(() => $insertTableRowAtSelection(true));
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_INSERT_COLUMN_LEFT,
+            () => {
+              editor.update(() => $insertTableColumnAtSelection(false));
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_INSERT_COLUMN_RIGHT,
+            () => {
+              editor.update(() => $insertTableColumnAtSelection(true));
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_DELETE_ROW,
+            () => {
+              editor.update(() => $deleteTableRowAtSelection());
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_DELETE_COLUMN,
+            () => {
+              editor.update(() => $deleteTableColumnAtSelection());
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_DELETE_TABLE,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                $getTableNodeFromLexicalNodeOrThrow(cellNode).remove();
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_UNMERGE_CELLS,
+            () => {
+              editor.update(() => $unmergeCell());
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_TOGGLE_HEADER_ROW,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
+                const firstRow = tableNode.getFirstChild();
+                if (!$isTableRowNode(firstRow)) return;
+                const cells = firstRow.getChildren().filter($isTableCellNode);
+                const isHeaderRow =
+                  cells.length > 0 &&
+                  cells.every((c) =>
+                    c.hasHeaderState(TableCellHeaderStates.ROW)
+                  );
+                const newBit = isHeaderRow
+                  ? TableCellHeaderStates.NO_STATUS
+                  : TableCellHeaderStates.ROW;
+                for (const cell of cells) {
+                  cell.setHeaderStyles(newBit, TableCellHeaderStates.ROW);
+                }
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_TOGGLE_HEADER_COLUMN,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
+                const firstColCells = tableNode
+                  .getChildren()
+                  .filter($isTableRowNode)
+                  .map((row) => row.getFirstChild())
+                  .filter($isTableCellNode);
+                const isHeaderCol =
+                  firstColCells.length > 0 &&
+                  firstColCells.every((c) =>
+                    c.hasHeaderState(TableCellHeaderStates.COLUMN)
+                  );
+                const newBit = isHeaderCol
+                  ? TableCellHeaderStates.NO_STATUS
+                  : TableCellHeaderStates.COLUMN;
+                for (const cell of firstColCells) {
+                  cell.setHeaderStyles(newBit, TableCellHeaderStates.COLUMN);
+                }
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_CLEAR_CELL_CONTENTS,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                _clearCell(cellNode);
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_CLEAR_ROW_CONTENTS,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const rowNode =
+                  $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
+                for (const cell of rowNode
+                  .getChildren()
+                  .filter($isTableCellNode)) {
+                  _clearCell(cell);
+                }
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_CLEAR_COLUMN_CONTENTS,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const colIndex =
+                  $getTableColumnIndexFromTableCellNode(cellNode);
+                const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
+                for (const row of tableNode
+                  .getChildren()
+                  .filter($isTableRowNode)) {
+                  const cells = row.getChildren().filter($isTableCellNode);
+                  const cell = cells[colIndex];
+                  if (cell) _clearCell(cell);
+                }
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_DUPLICATE_ROW,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const rowNode =
+                  $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
+                const clone = $parseSerializedNode(rowNode.exportJSON());
+                rowNode.insertAfter(clone);
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_DUPLICATE_COLUMN,
+            () => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const colIndex =
+                  $getTableColumnIndexFromTableCellNode(cellNode);
+                const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
+                for (const row of tableNode
+                  .getChildren()
+                  .filter($isTableRowNode)) {
+                  const cells = row.getChildren().filter($isTableCellNode);
+                  const sourceCell = cells[colIndex];
+                  if (!sourceCell) continue;
+                  const clone = $parseSerializedNode(sourceCell.exportJSON());
+                  sourceCell.insertAfter(clone);
+                }
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_SET_CELL_BACKGROUND_COLOR,
+            ({ color }) => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                cellNode.setBackgroundColor(color);
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_SET_ROW_BACKGROUND_COLOR,
+            ({ color }) => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const rowNode =
+                  $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
+                for (const cell of rowNode
+                  .getChildren()
+                  .filter($isTableCellNode)) {
+                  cell.setBackgroundColor(color);
+                }
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          ),
+          editor.registerCommand(
+            TYPIX_SET_COLUMN_BACKGROUND_COLOR,
+            ({ color }) => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (!selection) return;
+                const firstNode = selection.getNodes()[0] as
+                  | LexicalNode
+                  | undefined;
+                if (!firstNode) return;
+                const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
+                if (!cellNode) return;
+                const colIndex =
+                  $getTableColumnIndexFromTableCellNode(cellNode);
+                const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
+                for (const row of tableNode
+                  .getChildren()
+                  .filter($isTableRowNode)) {
+                  const cells = row.getChildren().filter($isTableCellNode);
+                  const cell = cells[colIndex];
+                  if (cell) cell.setBackgroundColor(color);
+                }
+              });
+              return true;
+            },
+            COMMAND_PRIORITY_EDITOR
+          )
+        );
+
+        return () => disposers.forEach((d) => d());
+      });
+    },
   }),
-
-  mergeConfig(a: TableConfig, b: Partial<TableConfig>): TableConfig {
-    return { ...a, ...b };
-  },
-
-  build(_editor: LexicalEditor, config: TableConfig) {
-    return namedSignals(config);
-  },
-
-  register(editor: LexicalEditor, _config: TableConfig, state: any) {
-    const {
-      disabled,
-      scrollShadow,
-      scrollableWrapperClass,
-      defaultRows,
-      defaultColumns,
-    } = state.getOutput();
-
-    return effect(() => {
-      if (disabled.value) return;
-
-      const disposers: Array<() => void> = [];
-
-      if (scrollShadow.value) {
-        disposers.push(setupScrollShadow(editor, scrollableWrapperClass.value));
-      }
-
-      disposers.push(
-        editor.registerCommand(
-          TYPIX_INSERT_TABLE,
-          (payload) => {
-            const rows = String(payload?.rows ?? defaultRows?.value ?? 3);
-            const columns = String(
-              payload?.columns ?? defaultColumns?.value ?? 3
-            );
-            const includeHeaders = (
-              payload?.includeHeaders !== undefined
-                ? payload.includeHeaders
-                : true
-            ) as InsertTableCommandPayloadHeaders;
-            editor.dispatchCommand(INSERT_TABLE_COMMAND, {
-              rows,
-              columns,
-              includeHeaders,
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_INSERT_ROW_ABOVE,
-          () => {
-            editor.update(() => $insertTableRowAtSelection(false));
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_INSERT_ROW_BELOW,
-          () => {
-            editor.update(() => $insertTableRowAtSelection(true));
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_INSERT_COLUMN_LEFT,
-          () => {
-            editor.update(() => $insertTableColumnAtSelection(false));
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_INSERT_COLUMN_RIGHT,
-          () => {
-            editor.update(() => $insertTableColumnAtSelection(true));
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_DELETE_ROW,
-          () => {
-            editor.update(() => $deleteTableRowAtSelection());
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_DELETE_COLUMN,
-          () => {
-            editor.update(() => $deleteTableColumnAtSelection());
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_DELETE_TABLE,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              $getTableNodeFromLexicalNodeOrThrow(cellNode).remove();
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_UNMERGE_CELLS,
-          () => {
-            editor.update(() => $unmergeCell());
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_TOGGLE_HEADER_ROW,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-              const firstRow = tableNode.getFirstChild();
-              if (!$isTableRowNode(firstRow)) return;
-              const cells = firstRow.getChildren().filter($isTableCellNode);
-              const isHeaderRow =
-                cells.length > 0 &&
-                cells.every((c) => c.hasHeaderState(TableCellHeaderStates.ROW));
-              const newBit = isHeaderRow
-                ? TableCellHeaderStates.NO_STATUS
-                : TableCellHeaderStates.ROW;
-              for (const cell of cells) {
-                cell.setHeaderStyles(newBit, TableCellHeaderStates.ROW);
-              }
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_TOGGLE_HEADER_COLUMN,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-              const firstColCells = tableNode
-                .getChildren()
-                .filter($isTableRowNode)
-                .map((row) => row.getFirstChild())
-                .filter($isTableCellNode);
-              const isHeaderCol =
-                firstColCells.length > 0 &&
-                firstColCells.every((c) =>
-                  c.hasHeaderState(TableCellHeaderStates.COLUMN)
-                );
-              const newBit = isHeaderCol
-                ? TableCellHeaderStates.NO_STATUS
-                : TableCellHeaderStates.COLUMN;
-              for (const cell of firstColCells) {
-                cell.setHeaderStyles(newBit, TableCellHeaderStates.COLUMN);
-              }
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_CLEAR_CELL_CONTENTS,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              _clearCell(cellNode);
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_CLEAR_ROW_CONTENTS,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const rowNode =
-                $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
-              for (const cell of rowNode
-                .getChildren()
-                .filter($isTableCellNode)) {
-                _clearCell(cell);
-              }
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_CLEAR_COLUMN_CONTENTS,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
-              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-              for (const row of tableNode
-                .getChildren()
-                .filter($isTableRowNode)) {
-                const cells = row.getChildren().filter($isTableCellNode);
-                const cell = cells[colIndex];
-                if (cell) _clearCell(cell);
-              }
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_DUPLICATE_ROW,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const rowNode =
-                $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
-              const clone = $parseSerializedNode(rowNode.exportJSON());
-              rowNode.insertAfter(clone);
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_DUPLICATE_COLUMN,
-          () => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
-              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-              for (const row of tableNode
-                .getChildren()
-                .filter($isTableRowNode)) {
-                const cells = row.getChildren().filter($isTableCellNode);
-                const sourceCell = cells[colIndex];
-                if (!sourceCell) continue;
-                const clone = $parseSerializedNode(sourceCell.exportJSON());
-                sourceCell.insertAfter(clone);
-              }
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_SET_CELL_BACKGROUND_COLOR,
-          ({ color }) => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              cellNode.setBackgroundColor(color);
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_SET_ROW_BACKGROUND_COLOR,
-          ({ color }) => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const rowNode =
-                $getTableRowNodeFromTableCellNodeOrThrow(cellNode);
-              for (const cell of rowNode
-                .getChildren()
-                .filter($isTableCellNode)) {
-                cell.setBackgroundColor(color);
-              }
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        ),
-        editor.registerCommand(
-          TYPIX_SET_COLUMN_BACKGROUND_COLOR,
-          ({ color }) => {
-            editor.update(() => {
-              const selection = $getSelection();
-              if (!selection) return;
-              const firstNode = selection.getNodes()[0] as
-                | LexicalNode
-                | undefined;
-              if (!firstNode) return;
-              const cellNode = $getTableCellNodeFromLexicalNode(firstNode);
-              if (!cellNode) return;
-              const colIndex = $getTableColumnIndexFromTableCellNode(cellNode);
-              const tableNode = $getTableNodeFromLexicalNodeOrThrow(cellNode);
-              for (const row of tableNode
-                .getChildren()
-                .filter($isTableRowNode)) {
-                const cells = row.getChildren().filter($isTableCellNode);
-                const cell = cells[colIndex];
-                if (cell) cell.setBackgroundColor(color);
-              }
-            });
-            return true;
-          },
-          COMMAND_PRIORITY_EDITOR
-        )
-      );
-
-      return () => disposers.forEach((d) => d());
-    });
-  },
-});
-
-registerTypixMeta(TableExtension, {
-  commands: {
-    insertTable: TYPIX_INSERT_TABLE,
-    insertRowAbove: TYPIX_INSERT_ROW_ABOVE,
-    insertRowBelow: TYPIX_INSERT_ROW_BELOW,
-    insertColumnLeft: TYPIX_INSERT_COLUMN_LEFT,
-    insertColumnRight: TYPIX_INSERT_COLUMN_RIGHT,
-    deleteRow: TYPIX_DELETE_ROW,
-    deleteColumn: TYPIX_DELETE_COLUMN,
-    deleteTable: TYPIX_DELETE_TABLE,
-    unmergeCells: TYPIX_UNMERGE_CELLS,
-    toggleHeaderRow: TYPIX_TOGGLE_HEADER_ROW,
-    toggleHeaderColumn: TYPIX_TOGGLE_HEADER_COLUMN,
-    clearCellContents: TYPIX_CLEAR_CELL_CONTENTS,
-    clearRowContents: TYPIX_CLEAR_ROW_CONTENTS,
-    clearColumnContents: TYPIX_CLEAR_COLUMN_CONTENTS,
-    duplicateRow: TYPIX_DUPLICATE_ROW,
-    duplicateColumn: TYPIX_DUPLICATE_COLUMN,
-    setCellBackgroundColor: TYPIX_SET_CELL_BACKGROUND_COLOR,
-    setRowBackgroundColor: TYPIX_SET_ROW_BACKGROUND_COLOR,
-    setColumnBackgroundColor: TYPIX_SET_COLUMN_BACKGROUND_COLOR,
-  },
-});
+  {
+    commands: () => ({
+      insertTable:
+        (attrs?: {
+          rows?: number;
+          columns?: number;
+          includeHeaders?: InsertTableCommandPayloadHeaders;
+        }) =>
+        (editor: LexicalEditor) =>
+          editor.dispatchCommand(TYPIX_INSERT_TABLE, attrs),
+      insertRowAbove: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_INSERT_ROW_ABOVE, undefined),
+      insertRowBelow: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_INSERT_ROW_BELOW, undefined),
+      insertColumnLeft: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_INSERT_COLUMN_LEFT, undefined),
+      insertColumnRight: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_INSERT_COLUMN_RIGHT, undefined),
+      deleteRow: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_DELETE_ROW, undefined),
+      deleteColumn: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_DELETE_COLUMN, undefined),
+      deleteTable: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_DELETE_TABLE, undefined),
+      unmergeCells: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_UNMERGE_CELLS, undefined),
+      toggleHeaderRow: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_TOGGLE_HEADER_ROW, undefined),
+      toggleHeaderColumn: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_TOGGLE_HEADER_COLUMN, undefined),
+      clearCellContents: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_CLEAR_CELL_CONTENTS, undefined),
+      clearRowContents: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_CLEAR_ROW_CONTENTS, undefined),
+      clearColumnContents: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_CLEAR_COLUMN_CONTENTS, undefined),
+      duplicateRow: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_DUPLICATE_ROW, undefined),
+      duplicateColumn: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_DUPLICATE_COLUMN, undefined),
+      setCellBackgroundColor:
+        (attrs: { color: string | null }) => (editor: LexicalEditor) =>
+          editor.dispatchCommand(TYPIX_SET_CELL_BACKGROUND_COLOR, attrs),
+      setRowBackgroundColor:
+        (attrs: { color: string | null }) => (editor: LexicalEditor) =>
+          editor.dispatchCommand(TYPIX_SET_ROW_BACKGROUND_COLOR, attrs),
+      setColumnBackgroundColor:
+        (attrs: { color: string | null }) => (editor: LexicalEditor) =>
+          editor.dispatchCommand(TYPIX_SET_COLUMN_BACKGROUND_COLOR, attrs),
+    }),
+  }
+);
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

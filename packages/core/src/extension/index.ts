@@ -4,7 +4,7 @@
 
 import { configExtension } from 'lexical'
 
-// Preferred API: bare Lexical extensions + side-attached Typix metadata
+// Attach Typix metadata to a Lexical extension.
 export {
     withTypixMeta,
     getTypixExtensionMeta,
@@ -14,21 +14,15 @@ export {
 // Registry (still public so adapters can introspect):
 export { ExtensionRegistry } from './registry'
 
+// Per-LexicalEditor extension output store (cross-package signal sharing).
+export {
+    registerExtensionOutput,
+    getExtensionOutput,
+} from './output-store'
+
 // Re-export Lexical's configExtension so consumers don't need
 // to import from 'lexical' directly.
 export { configExtension }
-
-// Legacy compatibility shim (deprecated):
-export {
-    registerTypixMeta,
-    getTypixMeta,
-    resolveTypixMeta,
-    mergeTypixMeta,
-    typixExtension,
-    registerExtensionOutput,
-    getExtensionOutput,
-} from './compat'
-export type { TypixCommandMap, TypixMeta } from './compat'
 
 // Extension types live in types/ — re-export for convenience so consumers
 // can import everything from '@typix-editor/core/extension' if they prefer.

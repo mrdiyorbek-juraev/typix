@@ -1,6 +1,5 @@
 "use client";
 
-import { memo } from "react";
 import { $parseSerializedNode } from "lexical";
 import { $createParagraphNode } from "@typix-editor/core";
 import type { TypixEditor } from "@typix-editor/core";
@@ -40,7 +39,7 @@ import {
 import type { TableHoverInfo } from "../types";
 import { ColorPicker } from "./color-picker";
 
-export const ColumnMenu = memo(function ColumnMenu({
+export function ColumnMenu({
   hoverInfo,
   withCell,
   editor,
@@ -237,4 +236,4 @@ export const ColumnMenu = memo(function ColumnMenu({
       </DropdownMenuContent>
     </DropdownMenu>
   );
-});
+}

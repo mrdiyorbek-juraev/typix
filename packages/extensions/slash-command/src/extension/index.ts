@@ -10,7 +10,7 @@ import {
   safeCast,
   type LexicalEditor,
 } from "lexical";
-import { registerTypixMeta, registerExtensionOutput } from "@typix-editor/core";
+import { withTypixMeta, registerExtensionOutput } from "@typix-editor/core";
 import type { SlashCommandConfig, SlashCommandOutput } from "../types";
 
 // ─── Commands ────────────────────────────────────────────────────────────────
@@ -49,81 +49,84 @@ function getSlashQuery(trigger: string): { query: string } | null {
 
 // ─── Extension ───────────────────────────────────────────────────────────────
 
-export const SlashCommandExtension = defineExtension({
-  name: "@typix/slash-command",
+export const SlashCommandExtension = withTypixMeta(
+  defineExtension({
+    name: "@typix/slash-command",
 
-  config: safeCast<SlashCommandConfig>({
-    trigger: "/",
-    disabled: false,
-  }),
+    config: safeCast<SlashCommandConfig>({
+      trigger: "/",
+      disabled: false,
+    }),
 
-  mergeConfig(
-    a: SlashCommandConfig,
-    b: Partial<SlashCommandConfig>
-  ): SlashCommandConfig {
-    return { ...a, ...b };
-  },
+    mergeConfig(
+      a: SlashCommandConfig,
+      b: Partial<SlashCommandConfig>
+    ): SlashCommandConfig {
+      return { ...a, ...b };
+    },
 
-  build(editor: LexicalEditor) {
-    const isActive = signal(false);
-    const query = signal<string | null>(null);
-    const output: SlashCommandOutput = { isActive, query };
-    registerExtensionOutput(editor, SlashCommandExtension, output);
-    return output;
-  },
+    build(editor: LexicalEditor) {
+      const isActive = signal(false);
+      const query = signal<string | null>(null);
+      const output: SlashCommandOutput = { isActive, query };
+      registerExtensionOutput(editor, SlashCommandExtension, output);
+      return output;
+    },
 
-  register(editor: LexicalEditor, _config: SlashCommandConfig, state: any) {
-    const { isActive, query } = state.getOutput();
-    const { trigger } = _config;
+    register(editor: LexicalEditor, _config: SlashCommandConfig, state: any) {
+      const { isActive, query } = state.getOutput();
+      const { trigger } = _config;
 
-    const d0 = editor.registerUpdateListener(({ editorState }) => {
-      editorState.read(() => {
-        const result = getSlashQuery(trigger);
-        const prevQuery = query.value;
-        const nextQuery = result ? result.query : null;
+      const d0 = editor.registerUpdateListener(({ editorState }) => {
+        editorState.read(() => {
+          const result = getSlashQuery(trigger);
+          const prevQuery = query.value;
+          const nextQuery = result ? result.query : null;
 
-        if (nextQuery !== prevQuery) {
-          query.value = nextQuery;
-          isActive.value = nextQuery !== null;
-        }
-      });
-    });
-
-    const d1 = editor.registerCommand(
-      TYPIX_INSERT_SLASH_COMMAND,
-      (payload) => {
-        if (_config.disabled) return false;
-        const triggerChar = payload?.trigger ?? _config.trigger;
-        editor.update(() => {
-          const sel = $getSelection();
-          if ($isRangeSelection(sel)) {
-            sel.insertText(triggerChar);
+          if (nextQuery !== prevQuery) {
+            query.value = nextQuery;
+            isActive.value = nextQuery !== null;
           }
         });
-        return true;
-      },
-      COMMAND_PRIORITY_EDITOR
-    );
+      });
 
-    return () => {
-      d0();
-      d1();
-    };
-  },
-});
+      const d1 = editor.registerCommand(
+        TYPIX_INSERT_SLASH_COMMAND,
+        (payload) => {
+          if (_config.disabled) return false;
+          const triggerChar = payload?.trigger ?? _config.trigger;
+          editor.update(() => {
+            const sel = $getSelection();
+            if ($isRangeSelection(sel)) {
+              sel.insertText(triggerChar);
+            }
+          });
+          return true;
+        },
+        COMMAND_PRIORITY_EDITOR
+      );
 
-registerTypixMeta(SlashCommandExtension, {
-  commands: {
-    insertSlashCommand: TYPIX_INSERT_SLASH_COMMAND,
-  },
-  shortcuts: [
-    {
-      key: "/",
-      modifiers: ["mod"],
-      command: "insertSlashCommand",
+      return () => {
+        d0();
+        d1();
+      };
     },
-  ],
-});
+  }),
+  {
+    commands: () => ({
+      insertSlashCommand:
+        (attrs?: { trigger?: string }) => (editor: LexicalEditor) =>
+          editor.dispatchCommand(TYPIX_INSERT_SLASH_COMMAND, attrs),
+    }),
+    shortcuts: [
+      {
+        key: "/",
+        modifiers: ["mod"],
+        command: "insertSlashCommand",
+      },
+    ],
+  }
+);
 
 declare module "@typix-editor/core" {
   interface TypixCommands<R> {

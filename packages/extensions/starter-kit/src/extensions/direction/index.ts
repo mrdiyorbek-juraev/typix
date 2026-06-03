@@ -14,7 +14,7 @@ import {
   signal,
   type Signal,
 } from "@typix-editor/core/lexical/extension";
-import { registerTypixMeta } from "@typix-editor/core";
+import { withTypixMeta } from "@typix-editor/core";
 
 /** Text direction value. `null` removes explicit direction (browser default / auto-detect). */
 export type DirectionValue = "ltr" | "rtl" | "auto" | null;
@@ -52,110 +52,117 @@ export const TYPIX_UNSET_DIRECTION = createCommand<void>(
   "TYPIX_UNSET_DIRECTION"
 );
 
-export const DirectionExtension = defineExtension({
-  name: "@typix/direction",
-  config: safeCast<DirectionConfig>({
-    defaultGlobalDirection: null,
-    disabled: false,
+export const DirectionExtension = withTypixMeta(
+  defineExtension({
+    name: "@typix/direction",
+    config: safeCast<DirectionConfig>({
+      defaultGlobalDirection: null,
+      disabled: false,
+    }),
+    mergeConfig(
+      a: DirectionConfig,
+      b: Partial<DirectionConfig>
+    ): DirectionConfig {
+      return { ...a, ...b };
+    },
+    build(editor: LexicalEditor, config: DirectionConfig) {
+      const globalDirection = signal<DirectionValue>(
+        config.defaultGlobalDirection
+      );
+      _stateByEditor.set(editor, { globalDirection });
+      return { ...namedSignals(config), globalDirection };
+    },
+    register(editor: LexicalEditor, _config: DirectionConfig, state) {
+      const { disabled, globalDirection } = state.getOutput();
+
+      const applyGlobalDir = () => {
+        if (disabled?.value) return;
+        const dir = globalDirection.value;
+        const rootEl = editor.getRootElement();
+        if (!rootEl) return;
+        if (dir === null) {
+          rootEl.removeAttribute("dir");
+        } else {
+          rootEl.setAttribute("dir", dir);
+        }
+      };
+
+      const cleanups: Array<() => void> = [
+        globalDirection.subscribe(() => applyGlobalDir()),
+        editor.registerRootListener((rootEl) => {
+          if (rootEl) applyGlobalDir();
+        }),
+        editor.registerCommand(
+          TYPIX_SET_GLOBAL_DIRECTION,
+          ({ direction }) => {
+            if (disabled?.value) return false;
+            globalDirection.value = direction;
+            editor.update(() => {
+              $getRoot().setDirection(
+                direction === "ltr" || direction === "rtl" ? direction : null
+              );
+            });
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_SET_LTR,
+          () => {
+            if (disabled?.value) return false;
+            editor.update(() => $applyDirectionToSelection("ltr"));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_SET_RTL,
+          () => {
+            if (disabled?.value) return false;
+            editor.update(() => $applyDirectionToSelection("rtl"));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_SET_AUTO_DIRECTION,
+          () => {
+            if (disabled?.value) return false;
+            editor.update(() => $applyDirectionToSelection(null));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+        editor.registerCommand(
+          TYPIX_UNSET_DIRECTION,
+          () => {
+            if (disabled?.value) return false;
+            editor.update(() => $applyDirectionToSelection(null));
+            return true;
+          },
+          COMMAND_PRIORITY_EDITOR
+        ),
+      ];
+
+      return () => cleanups.forEach((fn) => fn());
+    },
   }),
-  mergeConfig(
-    a: DirectionConfig,
-    b: Partial<DirectionConfig>
-  ): DirectionConfig {
-    return { ...a, ...b };
-  },
-  build(editor: LexicalEditor, config: DirectionConfig) {
-    const globalDirection = signal<DirectionValue>(
-      config.defaultGlobalDirection
-    );
-    _stateByEditor.set(editor, { globalDirection });
-    return { ...namedSignals(config), globalDirection };
-  },
-  register(editor: LexicalEditor, _config: DirectionConfig, state) {
-    const { disabled, globalDirection } = state.getOutput();
-
-    const applyGlobalDir = () => {
-      if (disabled?.value) return;
-      const dir = globalDirection.value;
-      const rootEl = editor.getRootElement();
-      if (!rootEl) return;
-      if (dir === null) {
-        rootEl.removeAttribute("dir");
-      } else {
-        rootEl.setAttribute("dir", dir);
-      }
-    };
-
-    const cleanups: Array<() => void> = [
-      globalDirection.subscribe(() => applyGlobalDir()),
-      editor.registerRootListener((rootEl) => {
-        if (rootEl) applyGlobalDir();
-      }),
-      editor.registerCommand(
-        TYPIX_SET_GLOBAL_DIRECTION,
-        ({ direction }) => {
-          if (disabled?.value) return false;
-          globalDirection.value = direction;
-          editor.update(() => {
-            $getRoot().setDirection(
-              direction === "ltr" || direction === "rtl" ? direction : null
-            );
-          });
-          return true;
-        },
-        COMMAND_PRIORITY_EDITOR
-      ),
-      editor.registerCommand(
-        TYPIX_SET_LTR,
-        () => {
-          if (disabled?.value) return false;
-          editor.update(() => $applyDirectionToSelection("ltr"));
-          return true;
-        },
-        COMMAND_PRIORITY_EDITOR
-      ),
-      editor.registerCommand(
-        TYPIX_SET_RTL,
-        () => {
-          if (disabled?.value) return false;
-          editor.update(() => $applyDirectionToSelection("rtl"));
-          return true;
-        },
-        COMMAND_PRIORITY_EDITOR
-      ),
-      editor.registerCommand(
-        TYPIX_SET_AUTO_DIRECTION,
-        () => {
-          if (disabled?.value) return false;
-          editor.update(() => $applyDirectionToSelection(null));
-          return true;
-        },
-        COMMAND_PRIORITY_EDITOR
-      ),
-      editor.registerCommand(
-        TYPIX_UNSET_DIRECTION,
-        () => {
-          if (disabled?.value) return false;
-          editor.update(() => $applyDirectionToSelection(null));
-          return true;
-        },
-        COMMAND_PRIORITY_EDITOR
-      ),
-    ];
-
-    return () => cleanups.forEach((fn) => fn());
-  },
-});
-
-registerTypixMeta(DirectionExtension, {
-  commands: {
-    setGlobalDirection: TYPIX_SET_GLOBAL_DIRECTION,
-    setLTR: TYPIX_SET_LTR,
-    setRTL: TYPIX_SET_RTL,
-    setAutoDirection: TYPIX_SET_AUTO_DIRECTION,
-    unsetDirection: TYPIX_UNSET_DIRECTION,
-  },
-});
+  {
+    commands: () => ({
+      setGlobalDirection:
+        (attrs: { direction: DirectionValue }) => (editor: LexicalEditor) =>
+          editor.dispatchCommand(TYPIX_SET_GLOBAL_DIRECTION, attrs),
+      setLTR: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_SET_LTR, undefined),
+      setRTL: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_SET_RTL, undefined),
+      setAutoDirection: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_SET_AUTO_DIRECTION, undefined),
+      unsetDirection: () => (editor: LexicalEditor) =>
+        editor.dispatchCommand(TYPIX_UNSET_DIRECTION, undefined),
+    }),
+  }
+);
 
 /** @internal Apply direction to all top-level block nodes in the current selection. */
 function $applyDirectionToSelection(direction: "ltr" | "rtl" | null): void {

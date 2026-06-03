@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
+// AbortController is used to tear down the document-level drag listeners
+// in one call (and to clean up if the component unmounts mid-drag).
 import { createPortal } from "react-dom";
 import { $getNodeByKey, $getNearestNodeFromDOMNode } from "lexical";
-import { useTypixEditorState } from "@typix-editor/react";
+import { useCurrentTypixEditor } from "@typix-editor/react";
 import {
   TableCellNode,
   $getTableNodeFromLexicalNodeOrThrow,
@@ -17,7 +19,11 @@ import { getColumnDOMCells } from "../utils";
 import { useMounted } from "../hooks";
 
 export function TableCellResizer() {
-  const editor = useTypixEditorState();
+  // useCurrentTypixEditor (vs useTypixEditorState): identity-stable editor
+  // without re-rendering on every keystroke. The resizer only manipulates
+  // refs/styles outside React state, so subscribing to editor updates was
+  // pure waste.
+  const { editor } = useCurrentTypixEditor();
   const mounted = useMounted();
   const isDragging = useRef(false);
 
@@ -27,6 +33,14 @@ export function TableCellResizer() {
 
   // Cache the current handle info in a ref so the pointerdown handler always reads the latest
   const handleInfoRef = useRef<ResizeHandle | null>(null);
+  const dragControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      dragControllerRef.current?.abort();
+      dragControllerRef.current = null;
+    };
+  }, []);
 
   const showHandle = useCallback((h: ResizeHandle | null) => {
     handleInfoRef.current = h;
@@ -74,6 +88,7 @@ export function TableCellResizer() {
   // ── Detect hover near cell edges ─────────────────────────────────────────
 
   useEffect(() => {
+    if (!editor) return;
     const root = editor.lexical.getRootElement();
     if (!root) return;
 
@@ -156,6 +171,7 @@ export function TableCellResizer() {
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
+      if (!editor) return;
       const handle = handleInfoRef.current;
       if (!handle) return;
       e.preventDefault();
@@ -164,6 +180,11 @@ export function TableCellResizer() {
       const { cellEl, cellKey, direction } = handle;
       const tableEl = cellEl.closest("table") as HTMLTableElement | null;
       const tableRect = tableEl?.getBoundingClientRect();
+
+      // Abort any prior drag that somehow leaked (defensive — should be no-op).
+      dragControllerRef.current?.abort();
+      const controller = new AbortController();
+      dragControllerRef.current = controller;
 
       if (direction === "column") {
         const startX = e.clientX;
@@ -208,8 +229,10 @@ export function TableCellResizer() {
         const onUp = (ev: PointerEvent) => {
           isDragging.current = false;
           showDragLine(null);
-          document.removeEventListener("pointermove", onMove);
-          document.removeEventListener("pointerup", onUp);
+          controller.abort();
+          if (dragControllerRef.current === controller) {
+            dragControllerRef.current = null;
+          }
 
           const dx = ev.clientX - startX;
           const newWidth = Math.max(MIN_COL_WIDTH, startWidth + dx);
@@ -248,8 +271,12 @@ export function TableCellResizer() {
           });
         };
 
-        document.addEventListener("pointermove", onMove);
-        document.addEventListener("pointerup", onUp);
+        document.addEventListener("pointermove", onMove, {
+          signal: controller.signal,
+        });
+        document.addEventListener("pointerup", onUp, {
+          signal: controller.signal,
+        });
       } else {
         const startY = e.clientY;
         const rowEl = cellEl.closest("tr") as HTMLElement | null;
@@ -283,8 +310,10 @@ export function TableCellResizer() {
         const onUp = (ev: PointerEvent) => {
           isDragging.current = false;
           showDragLine(null);
-          document.removeEventListener("pointermove", onMove);
-          document.removeEventListener("pointerup", onUp);
+          controller.abort();
+          if (dragControllerRef.current === controller) {
+            dragControllerRef.current = null;
+          }
 
           if (rowEl) rowEl.style.height = "";
 
@@ -299,14 +328,18 @@ export function TableCellResizer() {
           });
         };
 
-        document.addEventListener("pointermove", onMove);
-        document.addEventListener("pointerup", onUp);
+        document.addEventListener("pointermove", onMove, {
+          signal: controller.signal,
+        });
+        document.addEventListener("pointerup", onUp, {
+          signal: controller.signal,
+        });
       }
     },
     [editor, showHandle, showDragLine]
   );
 
-  if (!mounted) return null;
+  if (!editor || !mounted) return null;
 
   return createPortal(
     <>

@@ -38,27 +38,27 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
     "@typix-editor/utils": "workspace:*",
-    "@lexical/react": "^0.45.0",
-    "@lexical/extension": "^0.45.0",
-    "@lexical/text": "^0.45.0",
-    "@lexical/utils": "^0.45.0"
+    "@lexical/react": "catalog:",
+    "@lexical/extension": "catalog:",
+    "@lexical/text": "catalog:",
+    "@lexical/utils": "catalog:"
   },
   "peerDependencies": {
     "@typix-editor/core": "workspace:*",
-    "lexical": "^0.45.0",
+    "lexical": "catalog:",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "devDependencies": {
     "@typix-editor/core": "workspace:*",
-    "lexical": "^0.45.0",
-    "@lexical/headless": "^0.45.0",
-    "@lexical/mark": "^0.45.0",
+    "lexical": "catalog:",
+    "@lexical/headless": "catalog:",
+    "@lexical/mark": "catalog:",
     "@types/node": "^24.10.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.1",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0"
   },

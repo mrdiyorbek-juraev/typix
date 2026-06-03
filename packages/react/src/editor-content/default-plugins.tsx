@@ -1,36 +1,41 @@
 "use client";
 
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { History } from "./history-context";
 import { ShortcutsPlugin } from "./shortcuts-plugin";
 
-/**
- * Only mounts ListPlugin when ListNode is registered on the editor.
- * Prevents crashes when presets that disable the list extension are used.
- */
-function SafeListPlugin() {
-  const [editor] = useLexicalComposerContext();
-  const hasListNodes =
-    editor._nodes.has("list") && editor._nodes.has("listitem");
-  if (!hasListNodes) return null;
-  return <ListPlugin />;
+interface DefaultPluginsProps {
+  /**
+   * If set, mounts `<AutoFocusPlugin>` with the matching defaultSelection.
+   * `false` (default) skips autofocus entirely.
+   */
+  autoFocus?: "start" | "end" | false;
 }
 
 /**
- * The opinionated default plugin set rendered inside EditorContent.
- * Includes history, autofocus, keyboard shortcut binding, and a safe
- * list plugin. Pass `plugins={...}` to EditorContent to replace this
- * with a custom plugin tree.
+ * Opinionated default plugin set rendered by EditorContent.
+ *
+ * History and list behavior is intentionally **not** mounted here —
+ * `HistoryExtension` and `ListExtension` (from StarterKit or imported
+ * individually) already call `registerHistory` / `registerList` on the
+ * editor. Mounting `HistoryPlugin` / `ListPlugin` on top of them
+ * duplicates the update listeners and causes Lexical's
+ * `$triggerEnqueuedUpdates` to throw "endlessly enqueueing more updates".
+ *
+ * If you need history/list behavior without StarterKit, add
+ * `HistoryExtension` / `ListExtension` to your extensions array — don't
+ * mount the React plugins manually.
  */
-export function DefaultPlugins() {
+export function DefaultPlugins({ autoFocus = false }: DefaultPluginsProps) {
   return (
     <>
-      <History />
-      <AutoFocusPlugin />
+      {autoFocus !== false ? (
+        <AutoFocusPlugin
+          defaultSelection={autoFocus === "start" ? "rootStart" : "rootEnd"}
+        />
+      ) : null}
       <ShortcutsPlugin />
-      <SafeListPlugin />
     </>
   );
 }
+
+export type { DefaultPluginsProps };

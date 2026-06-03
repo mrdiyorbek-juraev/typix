@@ -50,14 +50,14 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.4.0",
-    "@lexical/selection": "^0.45.0",
-    "@lexical/utils": "^0.45.0",
-    "@lexical/headless": "^0.45.0",
-    "@lexical/mark": "^0.45.0"
+    "@lexical/selection": "catalog:",
+    "@lexical/utils": "catalog:",
+    "@lexical/headless": "catalog:",
+    "@lexical/mark": "catalog:"
   },
   "devDependencies": {
     "@types/node": "^25.1.0",
-    "lexical": "^0.45.0",
+    "lexical": "catalog:",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   },

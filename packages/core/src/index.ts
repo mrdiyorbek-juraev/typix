@@ -19,7 +19,7 @@ export {
     TEXT_FORMAT_TYPES,
 } from './editor/constants'
 
-// ── Extension API (preferred) ──────────────────────────
+// ── Extension API ──────────────────────────────────────
 // Pattern:  withTypixMeta(defineExtension({...}), {commands, shortcuts, storage, onCreate})
 export {
     withTypixMeta,
@@ -27,6 +27,8 @@ export {
     configExtension,
     TYPIX_META,
     getTypixExtensionMeta,
+    registerExtensionOutput,
+    getExtensionOutput,
 } from './extension'
 export type {
     TypixExtension,
@@ -78,21 +80,6 @@ export type {
     // Shortcuts
     TypixShortcut,
 } from './types'
-
-// ─────────────────────────────────────────────────────
-// Legacy metadata system (deprecated — kept for backward compat).
-// Re-exported via the compat shim. Use `withTypixMeta(defineExtension({...}), {...})` instead.
-// ─────────────────────────────────────────────────────
-export {
-    registerTypixMeta,
-    getTypixMeta,
-    resolveTypixMeta,
-    mergeTypixMeta,
-    typixExtension,
-    registerExtensionOutput,
-    getExtensionOutput,
-} from './extension'
-export type { TypixMeta, TypixCommandMap } from './extension'
 
 // ─────────────────────────────────────────────────────
 // Lexical node types and primitives (for extensions)
