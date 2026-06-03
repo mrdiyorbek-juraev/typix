@@ -44,3 +44,32 @@ catalog:
 
 overrides:
   parse5: ^7.2.1
+  # Security overrides: each forces a transitive dep to a patched version.
+  # The lockfile already had the patched copy resolved for at least one
+  # consumer, so these overrides hoist that version everywhere rather than
+  # pulling a brand-new major into the graph — low regression risk.
+
+  # critical — fast-xml-parser CVE GHSA-fj3w-jwp8-x2g3, fumadocs-openapi
+  fast-xml-parser: ^4.5.4
+  # high — vite arbitrary file read advisories patched after 7.3.1
+  vite: ^7.3.2
+  # high — rollup arbitrary file write via path traversal
+  rollup: ^4.55.1
+  # high — fast-uri path traversal / host confusion, patched after 3.1.1
+  fast-uri: ^3.1.2
+  # high/moderate — picomatch ReDoS, patched in 4.0.4+
+  picomatch: ^4.0.4
+  # high/moderate — path-to-regexp ReDoS (multiple advisories)
+  path-to-regexp: ^8.3.0
+  # moderate — yaml prototype pollution / ReDoS
+  yaml: ^2.8.2
+  # moderate — postcss line-return parsing
+  postcss: ^8.5.6
+  # moderate — ajv prototype pollution
+  ajv: ^8.17.1
+  # moderate — brace-expansion ReDoS
+  brace-expansion: ^2.0.2
+  # high — immutable.js prototype pollution, patched in 5.1.5+
+  immutable: ^5.1.5
+  # moderate — uuid potential regex DoS in v9 line; v11 in lockfile
+  uuid: ^11.1.0
