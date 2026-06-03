@@ -10,11 +10,13 @@ export interface CodeBlockProps {
 }
 
 export async function CodeBlock({ code, lang, wrapper }: CodeBlockProps) {
+  // fumadocs-core 16+ removed `config` from HighlightOptions; spread the
+  // themes from shikiConfig directly and select the JS regex engine.
   const rendered = await highlight(code, {
-    config: shikiConfig,
+    engine: "js",
     lang,
+    ...shikiConfig.defaultThemes,
     components: {
-      // @ts-expect-error - shiki types are not compatible with fumadocs
       pre: Base.Pre,
     },
   });

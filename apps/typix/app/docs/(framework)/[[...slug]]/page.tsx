@@ -40,7 +40,6 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
       <DocsBody>
         <MDX
           components={getMDXComponents({
-            // @ts-expect-error
             a: createRelativeLink(source, page),
           })}
         />

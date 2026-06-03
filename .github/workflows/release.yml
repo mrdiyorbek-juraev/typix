@@ -64,6 +64,13 @@ jobs:
         id: build-the-mono-repo
         run: pnpm build
 
+      - name: 🔑 Configure npm auth
+        # Written here rather than in the committed .npmrc so the workspace
+        # .npmrc stays warning-free on dev machines where NPM_TOKEN is unset.
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+
       - name: 📣 Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1

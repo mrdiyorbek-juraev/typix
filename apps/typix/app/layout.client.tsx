@@ -25,7 +25,6 @@ export function useMode(): string | undefined {
 export function FumadocsIcon(props: React.SVGProps<SVGSVGElement>) {
   const id = useId();
   return (
-    // @ts-expect-error
     <svg width="80" height="80" viewBox="0 0 180 180" {...props}>
       <circle
         cx="90"

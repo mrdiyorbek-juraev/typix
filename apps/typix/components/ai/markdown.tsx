@@ -72,7 +72,6 @@ function createProcessor(): Processor {
         Fragment,
         components: {
           ...defaultMdxComponents,
-          // @ts-expect-error
           pre: Pre,
           img: undefined, // use JSX
         },

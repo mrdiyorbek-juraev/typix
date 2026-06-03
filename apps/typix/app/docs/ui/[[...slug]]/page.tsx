@@ -26,7 +26,6 @@ export default async function Page(props: {
       <DocsBody>
         <MDX
           components={getMDXComponents({
-            // @ts-expect-error
             a: createRelativeLink(uiSource, page),
           })}
         />
