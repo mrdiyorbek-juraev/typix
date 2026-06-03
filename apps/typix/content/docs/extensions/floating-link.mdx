@@ -1,74 +1,43 @@
 ---
 title: Floating Link
-description: Floating link editor UI for creating and editing links
+description: Floating inline link editor with edit + remove actions
 ---
 
-The Floating Link extension provides a floating UI that appears when a link is selected, allowing users to edit, open, or remove links.
+When the cursor lands on a link node, a small floating toolbar appears
+showing the URL with edit and remove buttons. No modal, no toolbar
+hunting.
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-floating-link
+```
+
+## Live demo
 
 <ComponentPreview name="floating-link" />
 
-## Installation
+## Custom render
 
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-floating-link
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-floating-link
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-floating-link
-    ```
-  </Tab>
-</Tabs>
-
-## Setup
+`FloatingLinkUI` accepts a `children` render prop for fully custom UI:
 
 ```tsx
-import { FloatingLinkExtension } from '@typix-editor/extension-floating-link';
-
-function MyEditor() {
-  return (
-    <EditorRoot>
-      <EditorContent />
-      <FloatingLinkExtension />
-    </EditorRoot>
-  );
-}
-```
-
-### With custom rendering
-
-```tsx
-<FloatingLinkExtension
-  render={(props) => (
-    <div className="my-link-editor">
-      <input value={props.url} onChange={(e) => props.setUrl(e.target.value)} />
-      <button onClick={props.onConfirm}>Save</button>
-      <button onClick={props.onRemove}>Remove</button>
-    </div>
+<FloatingLinkUI>
+  {({ url, setUrl, isEditing, beginEdit, confirm, cancel, remove }) => (
+    /* your own JSX */
   )}
-/>
+</FloatingLinkUI>
 ```
 
-## Exports
+## Vendor the UI
 
-| Export | Type | Description |
-| --- | --- | --- |
-| `FloatingLinkExtension` | Component | The floating link editor plugin |
-| `FloatingLinkExtensionProps` | Type | Props type |
-| `FloatingLinkRenderProps` | Type | Props passed to custom render function |
+```bash
+npx typix ui add floating-link
+```
 
-## Behavior
+## Related
 
-- Appears when the cursor is inside a link node
-- Shows the current URL with options to edit, open in new tab, or remove
-- Positions itself using the floating element positioning utility
-- Supports fully custom rendering via the `render` prop
+<Cards>
+  <Card title="Auto Link" href="/docs/extensions/auto-link" description="Detect URLs as you type." />
+  <Card title="Link extension" href="/docs/extensions/link" description="Underlying link node." />
+</Cards>

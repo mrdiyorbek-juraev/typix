@@ -1,0 +1,90 @@
+---
+title: Typix UI
+description: Vendorable React components for the Typix editor — toolbar buttons, overlays, primitives, and design tokens you copy into your project via the CLI.
+---
+
+Typix UI is a set of **vendorable** React components built on shadcn
+primitives and Tailwind CSS. Components are copied into your project — not
+installed from `node_modules` — via the Typix CLI. You own the source and
+can edit it freely.
+
+## Install
+
+```bash
+npx typix init                    # one-time, writes typix.json
+npx typix ui add <component>      # any time, copies source into components/typix/
+```
+
+The first `ui add` also drops the design-system CSS into
+`components/typix/styles/`. See [Installation](/docs/getting-started/installation)
+for the global CSS wiring.
+
+## Catalog
+
+### Editor toolbar
+
+Pre-built formatting buttons that read editor state from context and ship
+with tooltips + keyboard shortcuts. Each is also exposed as a companion
+hook (`useMark`, `useHeading`, etc.) for building your own UI.
+
+| Component | Purpose |
+|---|---|
+| [`MarkButton`](/docs/ui/editor-toolbar/mark-button) | Toggle bold, italic, underline, strike, code, sup/subscript. |
+| [`HeadingButton`](/docs/ui/editor-toolbar/heading-button) | Toggle H1–H6. |
+| [`BlockquoteButton` & `CodeBlockButton`](/docs/ui/editor-toolbar/blockquote-code-block-button) | Toggle blockquote / code block. |
+| [`ListDropdownMenu`](/docs/ui/editor-toolbar/list-dropdown-menu) | Switch between bullet / ordered / checklist. |
+| [`TextAlignButton`](/docs/ui/editor-toolbar/text-align-button) | Left / center / right / justify. |
+| [`UndoRedoButton`](/docs/ui/editor-toolbar/undo-redo-button) | Undo / redo with disabled-when-empty. |
+| [`ClearFormattingButton`](/docs/ui/editor-toolbar/clear-formatting-button) | Strip inline marks from the selection. |
+| [`ColorTextButton`](/docs/ui/editor-toolbar/color-text-button) | Change text color. |
+| [`ColorHighlightButton`](/docs/ui/editor-toolbar/color-highlight-button) | Change highlight background color. |
+| [`FontSizeInput`](/docs/ui/editor-toolbar/font-size-input) | Increment / decrement font size. |
+| [`FontFamilyDropdownMenu`](/docs/ui/editor-toolbar/font-family-dropdown-menu) | Pick from a configurable font list. |
+
+### Overlays
+
+Floating UI that anchors to a selection, cursor, or DOM node. These pair
+with their corresponding behavior extensions.
+
+| Component | Purpose |
+|---|---|
+| [`FloatingLinkUI`](/docs/ui/overlays/floating-link) | Inline link editor that hovers over links and selected ranges. |
+| [`MentionUI`](/docs/ui/overlays/mention) | `@`-trigger picker for mentioning users / entities. |
+| [`SlashDropdownMenu`](/docs/ui/overlays/slash-command) | `/`-trigger command palette for inserting blocks. |
+| [`DraggableBlock`](/docs/ui/overlays/draggable-block) | Drag handle that lets users reorder blocks. |
+| [`EditorContextMenu`](/docs/ui/overlays/context-menu) | Right-click menu for the editor surface. |
+
+### Components
+
+Larger feature components — not just a single button.
+
+| Component | Purpose |
+|---|---|
+| [`CodeBlockUI`](/docs/ui/components/code-block) | Language picker + toolbar wired into the code-block extension. |
+| [`TableUI`](/docs/ui/components/table) | Full table UI: cell menu, header buttons, color pickers, resize. |
+| [`ImageComponent`](/docs/ui/components/image) | Renderer + toolbar + caption + alignment for images. |
+| [`CharacterLimit`](/docs/ui/components/character-limit) | Live character / word counter with limit threshold. |
+| [`SpeechToTextButton`](/docs/ui/components/speech-to-text) | Browser speech-recognition toggle. |
+
+### Primitives
+
+Low-level building blocks. See the [primitives index](/docs/ui/primitives)
+for the full list of 28 primitives — three are Typix-specific (`Toolbar`,
+`Kbd`, `ColorSelector`); the rest are standard shadcn primitives you can
+drop into any UI.
+
+## How vendoring works
+
+When you run `typix ui add <name>`, the CLI walks the component's
+dependency graph and copies:
+
+- `components/typix/main/<name>/` — the component itself
+- `components/typix/primitives/...` — every primitive it imports
+- `components/typix/lib/utils.ts` — the `cn()` helper
+- `components/typix/styles/{tokens,editor,tailwind,index}.css` — design-system CSS (first run only)
+
+It also installs any missing npm peers (Radix UI packages, lucide-react,
+etc.) using your project's package manager. Edit any of these files freely
+— they're yours now.
+
+[Full CLI flow →](/docs/getting-started/cli)

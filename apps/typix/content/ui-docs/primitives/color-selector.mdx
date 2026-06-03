@@ -1,0 +1,38 @@
+---
+title: ColorSelector
+description: A color palette picker for selecting from a predefined set of colors.
+---
+
+## Install
+
+```bash
+npx typix ui add color-selector
+```
+
+## Import
+
+```tsx
+import { ColorSelector } from "@/components/typix/primitives/color-selector";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `colors` | `string[]` | — | Array of color values (hex, rgb, etc.). Required. |
+| `value` | `string` | — | Currently selected color (controlled). |
+| `defaultValue` | `string` | — | Initially selected color (uncontrolled). |
+| `onColorSelect` | `(color: string) => void` | — | Called when a color is selected. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Size of each color swatch. |
+
+## Example
+
+```tsx
+import { ColorSelector } from "@/components/typix/primitives/color-selector";
+import { HIGHLIGHT_COLOR_VALUES } from "@/components/typix/main/color-highlight-button";
+
+<ColorSelector
+  colors={HIGHLIGHT_COLOR_VALUES}
+  onColorSelect={(color) => applyHighlight(color)}
+/>
+```

@@ -1,5 +1,2 @@
-export {
-  ContextMenuExtension,
-  type ContextMenuExtensionProps,
-  type TypixContextMenuItem,
-} from "./extension";
+export { ContextMenuExtension, type ContextMenuConfig } from "./extension";
+export type { TypixContextMenuItem } from "./types";

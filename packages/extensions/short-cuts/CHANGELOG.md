@@ -1,5 +1,12 @@
 # @typix-editor/extension-short-cuts
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Bundles the default keyboard shortcut set — block formatting (`⌘+Alt+1..6` for headings, `⌘+Shift+8/9` for lists, `⌘+Alt+0` for paragraph, `⌘+Shift+>` for quote, `⌘+Alt+C` for code block), text marks, indentation, alignment, font size, link insertion, and clear-formatting.
+- Each shortcut is overridable via the `bindings` option; pass an empty array to disable all defaults and ship your own.
+
 ## 4.0.0
 
 ### Minor Changes

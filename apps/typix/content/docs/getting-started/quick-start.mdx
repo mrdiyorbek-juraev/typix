@@ -1,115 +1,214 @@
 ---
 title: Quick Start
-description: Build a basic rich-text editor in 5 minutes
+description: A working Typix editor in three files
 ---
 
-This guide walks you through building a working editor with formatting controls.
+This guide gets you to a working editor with toolbar in under five minutes,
+using the v2 API.
+
+## What you'll build
+
+A React component that:
+
+- Mounts a Lexical-powered editor via `useTypixEditor`
+- Shares the editor instance through `TypixEditorContext.Provider`
+- Renders the editable surface with `<EditorContent>`
+- Uses shipped toolbar buttons vendored into `components/typix/main/`
+  via the CLI (no hand-rolled `editor.toggleBold()` wiring)
+
+<ComponentPreview name="quick-example" />
+
+## Prereqs
+
+- A React 18 or 19 project (Next.js, Vite, Remix, etc.)
+- Packages from [Installation](/docs/getting-started/installation)
+- Vendored design-system CSS imported in your `globals.css` (see Installation)
 
 <Steps>
 
-### Set up the editor root
+### Create the editor component
 
-Every Typix editor starts with `EditorRoot`. It initializes the Lexical composer, sets up providers, and manages editor state.
+```tsx title="components/editor.tsx"
+"use client";
 
-```tsx title="editor.tsx"
-import { EditorRoot, EditorContent } from '@typix-editor/react';
+import {
+  EditorContent,
+  TypixEditorContext,
+  defaultTheme,
+  useTypixEditor,
+} from "@typix-editor/react";
+import { StarterKit } from "@typix-editor/extension-starter-kit";
 
-export function MyEditor() {
+const extensions = [StarterKit()];
+
+export function Editor() {
+  const editor = useTypixEditor({
+    extensions,
+    theme: defaultTheme,
+    namespace: "my-editor",
+  });
+
   return (
-    <EditorRoot>
-      <EditorContent placeholder="Start writing..." />
-    </EditorRoot>
+    <TypixEditorContext.Provider value={{ editor }}>
+      <EditorContent
+        editor={editor}
+        placeholder="Start typing…"
+        className="prose max-w-none p-6"
+      />
+    </TypixEditorContext.Provider>
   );
 }
 ```
+
+<Callout type="info">
+  **`"use client"` is required.** `useTypixEditor` calls into Lexical
+  which needs the DOM. Server Components can't run it.
+</Callout>
+
+### Mount it on a page
+
+```tsx title="app/page.tsx"
+import { Editor } from "@/components/editor";
+
+export default function Page() {
+  return (
+    <main className="mx-auto max-w-3xl py-10">
+      <Editor />
+    </main>
+  );
+}
+```
+
+That's it — refresh your dev server and you have a working editor with
+text, headings, lists, links, and history (everything `StarterKit` ships).
 
 ### Add a toolbar
 
-Use the `useTypixEditor` hook to access the editor's fluent API. The `useActiveFormats` hook gives you reactive format state for button highlighting.
+The simplest toolbar uses shipped components vendored into
+`components/typix/main/`. They read editor state from context — no manual
+`editor.chain().toggleBold()` wiring needed.
 
-```tsx title="toolbar.tsx"
-import { useTypixEditor, useActiveFormats } from '@typix-editor/react';
+First vendor the buttons + toolbar primitive:
 
-function Toolbar() {
-  const editor = useTypixEditor();
-  const { isActive } = useActiveFormats();
+```bash
+npx typix ui add toolbar undo-redo-button heading-button blockquote-button \
+  code-block-button list-dropdown-menu mark-button
+```
 
+Then build the toolbar:
+
+```tsx title="components/toolbar.tsx"
+"use client";
+
+import {
+  Toolbar,
+  ToolbarGroup,
+  ToolbarSeparator,
+} from "@/components/typix/primitives/toolbar";
+import { UndoRedoButton } from "@/components/typix/main/undo-redo-button";
+import { HeadingButton } from "@/components/typix/main/heading-button";
+import { BlockquoteButton } from "@/components/typix/main/blockquote-button";
+import { CodeBlockButton } from "@/components/typix/main/code-block-button";
+import { ListDropdownMenu } from "@/components/typix/main/list-dropdown-menu";
+import { MarkButton } from "@/components/typix/main/mark-button";
+
+export function EditorToolbar() {
   return (
-    <div style={{ display: 'flex', gap: 4 }}>
-      <button
-        onClick={() => editor.toggleBold()}
-        style={{ fontWeight: isActive('bold') ? 'bold' : 'normal' }}
-      >
-        B
-      </button>
-      <button
-        onClick={() => editor.toggleItalic()}
-        style={{ fontStyle: isActive('italic') ? 'italic' : 'normal' }}
-      >
-        I
-      </button>
-      <button onClick={() => editor.toggleUnderline()}>U</button>
-      <button onClick={() => editor.toggleStrikethrough()}>S</button>
-    </div>
+    <Toolbar className="flex-wrap border-b px-2 py-1">
+      <ToolbarGroup>
+        <UndoRedoButton action="undo" />
+        <UndoRedoButton action="redo" />
+      </ToolbarGroup>
+      <ToolbarSeparator className="mx-1 h-5 w-px" />
+      <ToolbarGroup>
+        <HeadingButton level={1} />
+        <HeadingButton level={2} />
+        <BlockquoteButton />
+        <CodeBlockButton />
+      </ToolbarGroup>
+      <ToolbarSeparator className="mx-1 h-5 w-px" />
+      <ToolbarGroup>
+        <ListDropdownMenu />
+      </ToolbarGroup>
+      <ToolbarSeparator className="mx-1 h-5 w-px" />
+      <ToolbarGroup>
+        <MarkButton type="bold" />
+        <MarkButton type="italic" />
+        <MarkButton type="underline" />
+        <MarkButton type="strike" />
+        <MarkButton type="code" />
+      </ToolbarGroup>
+    </Toolbar>
   );
 }
 ```
 
-### Compose the full editor
+Drop it inside the provider:
 
-Place the toolbar inside `EditorRoot` so it has access to the editor context.
+```tsx title="components/editor.tsx" {3, 16}
+"use client";
 
-```tsx title="editor.tsx"
-import { EditorRoot, EditorContent } from '@typix-editor/react';
+import { EditorToolbar } from "./toolbar";
+// …imports as before
 
-export function MyEditor() {
+export function Editor() {
+  const editor = useTypixEditor({
+    extensions,
+    theme: defaultTheme,
+    namespace: "my-editor",
+  });
+
   return (
-    <EditorRoot>
-      <Toolbar />
-      <EditorContent placeholder="Start writing..." />
-    </EditorRoot>
+    <TypixEditorContext.Provider value={{ editor }}>
+      <EditorToolbar />
+      <EditorContent editor={editor} placeholder="Start typing…" />
+    </TypixEditorContext.Provider>
   );
 }
 ```
 
-### Save editor content
+### Save and load content
 
-Use `onContentChange` to receive serialized JSON whenever the content changes.
+`useTypixEditor` accepts an `onUpdate` callback that fires on every
+content change. Use `editor.getJSON()` or `editor.getHTML()` to serialize.
 
-```tsx title="editor.tsx"
-import { EditorRoot, EditorContent } from '@typix-editor/react';
-import type { SerializedEditorState } from 'lexical';
-
-export function MyEditor() {
-  const handleChange = (content: SerializedEditorState) => {
-    // Save to your backend, localStorage, etc.
-    console.log(content);
-  };
-
-  return (
-    <EditorRoot onContentChange={handleChange}>
-      <Toolbar />
-      <EditorContent placeholder="Start writing..." />
-    </EditorRoot>
-  );
-}
-```
-
-### Load saved content
-
-Pass a `content` prop to `EditorRoot` to restore previously saved state.
-
-```tsx
-<EditorRoot content={savedContent} onContentChange={handleChange}>
-  <Toolbar />
-  <EditorContent placeholder="Start writing..." />
-</EditorRoot>
+```tsx title="components/editor.tsx" {7-9, 14}
+const editor = useTypixEditor({
+  extensions,
+  theme: defaultTheme,
+  namespace: "my-editor",
+  // Load saved content (omit for empty editor)
+  content: loadFromStorage(),
+  // Save on every change
+  onUpdate: ({ editor }) => {
+    saveToStorage(editor.getJSON());
+  },
+});
 ```
 
 </Steps>
 
 ## Next steps
 
-- [Editor Setup](/docs/getting-started/editor-setup) — Learn about `createEditorConfig` and custom nodes
-- [Theming](/docs/getting-started/theming) — Customize the editor's appearance
-- [Building a Toolbar](/docs/guides/building-a-toolbar) — Full toolbar with all format controls
+<Cards>
+  <Card
+    title="Editor Setup"
+    href="/docs/getting-started/editor-setup"
+    description="All useTypixEditor options."
+  />
+  <Card
+    title="Add more extensions"
+    href="/docs/extensions/overview"
+    description="Mentions, code highlighting, tables, images, and more."
+  />
+  <Card
+    title="Vendor UI components"
+    href="/docs/getting-started/cli"
+    description="Floating menus, slash commands, customizable toolbars."
+  />
+  <Card
+    title="Theming"
+    href="/docs/getting-started/theming"
+    description="Override tokens, restyle nodes, dark mode."
+  />
+</Cards>

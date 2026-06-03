@@ -25,6 +25,11 @@ export const extensionRegistry: Record<string, ExtensionEntry> = {
     package: "@typix-editor/extension-code-highlight-shiki",
     description: "Syntax highlighting with Shiki",
   },
+  "character-limit": {
+    name: "character-limit",
+    package: "@typix-editor/extension-character-limit",
+    description: "Enforce character count limits with visual feedback",
+  },
   collapsible: {
     name: "collapsible",
     package: "@typix-editor/extension-collapsible",

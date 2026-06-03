@@ -1,0 +1,57 @@
+---
+title: DraggableBlock
+description: Drag handle that appears next to the hovered block, letting users reorder content with the mouse.
+---
+
+`DraggableBlock` pairs with the [`extension-draggable-block`](/docs/extensions/draggable-block)
+extension. It renders a grip icon in the left gutter of whichever block
+the cursor is hovering, and a target line where the block will drop.
+
+## Install
+
+```bash
+npx typix ui add draggable-block
+```
+
+The CLI also installs `@typix-editor/extension-draggable-block` if needed.
+
+## Import
+
+```tsx
+import { DraggableBlock } from "@/components/typix/main/draggable-block";
+// Also exported as `DraggableBlockUI`
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `classNames` | `{ menu?: string; targetLine?: string; icon?: string }` | — | Override the class on individual parts. |
+| `dragHandleIcon` | `ReactNode` | `<GripVertical />` | Custom drag handle icon (lucide-react by default). |
+
+## Usage
+
+Drop it once inside the editor provider:
+
+```tsx
+import { DraggableBlock } from "@/components/typix/main/draggable-block";
+
+<TypixEditorContext.Provider value={{ editor }}>
+  <EditorContent editor={editor} />
+  <DraggableBlock />
+</TypixEditorContext.Provider>
+```
+
+Custom icon:
+
+```tsx
+import { Move } from "lucide-react";
+
+<DraggableBlock dragHandleIcon={<Move size={14} />} />
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-draggable-block" href="/docs/extensions/draggable-block" description="The behavior extension this UI pairs with." />
+</Cards>

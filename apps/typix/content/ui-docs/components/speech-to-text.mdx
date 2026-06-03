@@ -1,0 +1,68 @@
+---
+title: SpeechToTextButton
+description: Browser speech-recognition toggle with idle / listening / unsupported visual states.
+---
+
+`SpeechToTextButton` is a single-button UI on top of the browser
+`SpeechRecognition` API. It pairs with [`extension-speech-to-text`](/docs/extensions/speech-to-text),
+which routes recognized text into the editor.
+
+## Install
+
+```bash
+npx typix ui add speech-to-text
+```
+
+The CLI also installs `@typix-editor/extension-speech-to-text` if needed.
+
+## Import
+
+```tsx
+import {
+  SpeechToTextButton,
+  useSpeechToText,
+} from "@/components/typix/main/speech-to-text";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `className` | `string` | — | Extra class on the button. |
+| `listeningContent` | `ReactNode` | pulsing mic icon | Shown while listening. |
+| `idleContent` | `ReactNode` | mic icon | Shown when idle. |
+| `unsupportedContent` | `ReactNode` | mic-off icon | Shown when the browser doesn't support speech recognition. |
+| `hideWhenUnsupported` | `boolean` | `false` | Hide the button entirely when unsupported. |
+| `onListeningChange` | `(isListening: boolean) => void` | — | Callback when listening state flips. |
+
+## Hook
+
+`useSpeechToText` returns the underlying state + actions:
+
+```tsx
+const {
+  isListening,
+  isSupported,
+  error,
+  lastTranscript,
+  start,
+  stop,
+  toggle,
+} = useSpeechToText({
+  onListeningChange: (on) => console.log("listening:", on),
+});
+```
+
+## Usage
+
+```tsx
+import { SpeechToTextButton } from "@/components/typix/main/speech-to-text";
+
+<SpeechToTextButton hideWhenUnsupported />
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-speech-to-text" href="/docs/extensions/speech-to-text" description="The behavior extension this UI pairs with." />
+</Cards>

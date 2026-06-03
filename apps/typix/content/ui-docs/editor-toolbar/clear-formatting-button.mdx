@@ -1,0 +1,28 @@
+---
+title: ClearFormattingButton
+description: Remove all inline formatting from the selected text.
+---
+
+<ComponentPreview name="ui-clear-formatting" />
+
+## Install
+
+```bash
+npx typix ui add clear-formatting-button
+```
+
+## Import
+
+```tsx
+import { ClearFormattingButton } from "@/components/typix/main/clear-formatting-button";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `text` | `string` | — | Override the button label. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when there is no formatting to clear. |
+| `showShortcut` | `boolean` | `true` | Show keyboard shortcut in tooltip. |
+| `onCleared` | `() => void` | — | Called after formatting is cleared. |
+| `className` | `string` | — | Additional CSS classes. |

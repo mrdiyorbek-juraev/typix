@@ -16,6 +16,12 @@ export default defineConfig({
         "**/*.config.{ts,js}",
         "**/index.ts",
       ],
+      thresholds: {
+        lines: 70,
+        functions: 70,
+        branches: 60,
+        statements: 70,
+      },
     },
     setupFiles: [path.resolve(__dirname, "vitest.setup.ts")],
     passWithNoTests: true,

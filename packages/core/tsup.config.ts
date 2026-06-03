@@ -1,0 +1,30 @@
+import { defineConfig, type Options } from "tsup";
+
+export default defineConfig((options: Options) => ({
+  entry: [
+    "src/index.ts",
+    "src/lexical/index.ts",
+    "src/lexical/code.ts",
+    "src/lexical/code-shiki.ts",
+    "src/lexical/extension.ts",
+    "src/lexical/hashtag.ts",
+    "src/lexical/headless.ts",
+    "src/lexical/history.ts",
+    "src/lexical/html.ts",
+    "src/lexical/link.ts",
+    "src/lexical/list.ts",
+    "src/lexical/mark.ts",
+    "src/lexical/markdown.ts",
+    "src/lexical/overflow.ts",
+    "src/lexical/rich-text.ts",
+    "src/lexical/selection.ts",
+    "src/lexical/table.ts",
+    "src/lexical/text.ts",
+    "src/lexical/utils.ts",
+  ],
+  format: ["cjs", "esm"],
+  dts: true,
+  clean: true,
+  external: ["lexical", /^@lexical\/.*/],
+  ...options,
+}));

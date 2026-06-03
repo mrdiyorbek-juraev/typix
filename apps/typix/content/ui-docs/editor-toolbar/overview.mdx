@@ -1,0 +1,61 @@
+---
+title: Editor Toolbar
+description: Pre-built formatting buttons that integrate with the Typix editor context.
+---
+
+All editor toolbar components:
+
+- Must be rendered inside a `TypixEditorContext.Provider`
+- Automatically reflect the current editor state (active/inactive/unavailable)
+- Show a tooltip with the action name and keyboard shortcut
+- Accept `hideWhenUnavailable` to hide when the action cannot be performed
+- Expose a companion hook (`useMark`, `useHeading`, etc.) for building custom UI
+
+## Install
+
+Toolbar buttons aren't an npm package — vendor the ones you want into
+your repo with the CLI:
+
+```bash
+npx typix ui add toolbar mark-button heading-button undo-redo-button
+```
+
+## Basic setup
+
+```tsx
+import {
+  EditorContent,
+  TypixEditorContext,
+  defaultTheme,
+  useTypixEditor,
+} from "@typix-editor/react";
+import { StarterKit } from "@typix-editor/extension-starter-kit";
+import { Toolbar, ToolbarGroup } from "@/components/typix/primitives/toolbar";
+import { MarkButton } from "@/components/typix/main/mark-button";
+import { HeadingButton } from "@/components/typix/main/heading-button";
+import { UndoRedoButton } from "@/components/typix/main/undo-redo-button";
+
+export function Editor() {
+  const editor = useTypixEditor({
+    extensions: [StarterKit()],
+    theme: defaultTheme,
+    namespace: "my-editor",
+  });
+
+  return (
+    <TypixEditorContext.Provider value={{ editor }}>
+      <Toolbar>
+        <ToolbarGroup>
+          <UndoRedoButton action="undo" />
+          <UndoRedoButton action="redo" />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <MarkButton type="bold" />
+          <MarkButton type="italic" />
+        </ToolbarGroup>
+      </Toolbar>
+      <EditorContent editor={editor} placeholder="Start typing..." />
+    </TypixEditorContext.Provider>
+  );
+}
+```

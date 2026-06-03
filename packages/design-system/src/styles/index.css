@@ -1,0 +1,32 @@
+/* =============================================================================
+   Typix — All Styles (convenience entry)
+   =============================================================================
+   ⚠️ TAILWIND v4 + TURBOPACK USERS: do NOT use this file.
+
+   When imported via a relative path from your app CSS, Turbopack does not
+   propagate the @theme inline block in tailwind.css through this extra layer
+   of @import indirection. The result is "Cannot apply unknown utility class
+   `border-border`" errors at build time.
+
+   Instead, import the three files directly from your app's CSS entry:
+
+     @import "tailwindcss";
+     @import "./components/typix/styles/tokens.css";
+     @import "./components/typix/styles/editor.css";
+     @import "./components/typix/styles/tailwind.css";
+
+   (The `typix ui add` command prints this exact snippet for you.)
+
+   This index.css is kept ONLY for non-Tailwind users who can collapse to a
+   single import (since they skip tailwind.css):
+
+     @import "./components/typix/styles/tokens.css";
+     @import "./components/typix/styles/editor.css";
+
+   And for the workspace-alias path `@import "@typix-editor/ui/styles"` which
+   Turbopack resolves through node_modules and DOES handle correctly.
+============================================================================= */
+
+@import "./tokens.css";
+@import "./editor.css";
+@import "./tailwind.css";

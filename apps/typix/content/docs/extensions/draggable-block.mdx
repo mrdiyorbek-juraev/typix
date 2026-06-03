@@ -1,59 +1,43 @@
 ---
 title: Draggable Block
-description: Drag-and-drop block reordering in the editor
+description: Drag handle that appears next to blocks for reordering
 ---
 
-The Draggable Block extension adds drag handles to editor blocks, allowing users to reorder content by dragging.
+Adds a grab handle to the left of each block on hover. Drag to reorder
+paragraphs, headings, lists, quotes, code blocks, anything block-level.
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-draggable-block
+```
+
+## Live demo
 
 <ComponentPreview name="draggable-block" />
 
-## Installation
-
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-draggable-block
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-draggable-block
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-draggable-block
-    ```
-  </Tab>
-</Tabs>
-
-## Setup
+## Custom class names
 
 ```tsx
-import { DraggableBlockExtension } from '@typix-editor/extension-draggable-block';
+import type { DraggableBlockClassNames } from "@typix-editor/extension-draggable-block";
 
-function MyEditor() {
-  return (
-    <EditorRoot>
-      <EditorContent />
-      <DraggableBlockExtension />
-    </EditorRoot>
-  );
-}
+const classNames: DraggableBlockClassNames = {
+  handle: "my-handle",
+  handleActive: "my-handle-active",
+  targetLine: "my-drop-line",
+};
+
+<DraggableBlock classNames={classNames} />
 ```
 
-## Exports
+## Vendor the UI
 
-| Export | Type | Description |
-| --- | --- | --- |
-| `DraggableBlockExtension` | Component | The draggable block plugin |
-| `DraggableBlockExtensionProps` | Type | Props type |
-| `DraggableBlockClassNames` | Type | CSS class names for customization |
+```bash
+npx typix ui add draggable-block
+```
 
-## Behavior
+## Related
 
-- Adds a drag handle that appears on hover near block elements
-- Users can drag blocks to reorder them within the editor
-- Works with paragraphs, headings, lists, quotes, and other block-level elements
+<Cards>
+  <Card title="Slash Command" href="/docs/extensions/slash-command" description="Discover what blocks you can insert." />
+</Cards>

@@ -1,0 +1,101 @@
+---
+title: Image
+description: Renderer, toolbar, caption, alignment popover, and context menu for image nodes — composable so you can swap any piece.
+---
+
+The image UI is the most modular of the Typix components. It ships a
+renderer (`imageRenderer`) you register with `extension-image`, plus a
+handful of subcomponents you can mix into your own renderer.
+
+## Install
+
+```bash
+npx typix ui add image
+```
+
+The CLI also installs `@typix-editor/extension-image` if needed.
+
+## Import
+
+```tsx
+import {
+  imageRenderer,
+  ImageComponent,
+  ImageResizer,
+  ImageToolbar,
+  ImageToolbarButton,
+  ImageCaption,
+  ImageContextMenu,
+  ImageAlignmentPopover,
+  type ImageAlignment,
+  type ImageFeatureFlags,
+} from "@/components/typix/main/image";
+```
+
+## Components
+
+| Export | Purpose |
+|---|---|
+| `imageRenderer` | The default renderer to plug into `extension-image`. |
+| `ImageComponent` | Top-level renderer with toolbar + caption + alignment composed. |
+| `ImageResizer` | Drag-to-resize handles. |
+| `ImageToolbar` | The hover toolbar (align / replace / download / caption / delete). |
+| `ImageToolbarButton` | One toolbar button, for custom toolbars. |
+| `ImageCaption` | The editable caption strip. |
+| `ImageContextMenu` | Right-click menu wrapper. |
+| `ImageAlignmentPopover` | Standalone alignment picker. |
+
+### ImageFeatureFlags
+
+Toggle which subcomponents render. All default to `true`:
+
+```ts
+interface ImageFeatureFlags {
+  contextMenu?: boolean;
+  toolbar?: boolean;
+  resizable?: boolean;
+  caption?: boolean;
+  alignment?: boolean;
+}
+```
+
+### ImageAlignment
+
+```ts
+type ImageAlignment = "left" | "center" | "right" | "full-width";
+```
+
+## Usage
+
+Plug the default renderer into the extension:
+
+```tsx
+import { ImageExtension } from "@typix-editor/extension-image";
+import { imageRenderer } from "@/components/typix/main/image";
+
+const extensions = [
+  StarterKit(),
+  ImageExtension({ renderer: imageRenderer }),
+];
+```
+
+Custom renderer using just the pieces you want:
+
+```tsx
+import { ImageComponent } from "@/components/typix/main/image";
+
+function MyImageRenderer(props) {
+  return (
+    <ImageComponent
+      {...props}
+      features={{ caption: false, resizable: true, toolbar: true }}
+    />
+  );
+}
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-image" href="/docs/extensions/image" description="The behavior extension this UI pairs with." />
+</Cards>

@@ -1,1 +1,1 @@
-export { LinkExtension, type LinkExtensionProps } from "./extension";
+export { LinkExtension, type LinkConfig } from "./extension";

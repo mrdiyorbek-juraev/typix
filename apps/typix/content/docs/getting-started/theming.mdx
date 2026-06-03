@@ -1,159 +1,162 @@
 ---
 title: Theming
-description: Customize the editor appearance with theme classes
+description: Customize Typix's appearance with CSS tokens, dark mode, and per-node overrides
 ---
 
-Typix uses Lexical's theming system — a mapping of editor elements to CSS class names. You provide CSS classes and Lexical applies them to the rendered DOM.
+Typix v2 ships a complete CSS layer that lands in
+`components/typix/styles/` the first time you run `typix ui add`. It uses
+plain CSS custom properties — no SCSS, no required preprocessor. Most
+theming is a few token overrides in your global stylesheet.
 
-## Default theme
+## The three token vocabularies
 
-Import the built-in theme:
+Typix splits its tokens by concern so you can override surgically.
 
-```tsx
-import { defaultTheme } from '@typix-editor/react';
+| Prefix | Owner | Examples |
+|---|---|---|
+| `--*` | shadcn-style theme tokens (consumed by primitives) | `--background`, `--popover`, `--ring`, `--radius` |
+| `--typix-*` | Editor node tokens (consumed by `.typix-*` rules) | `--typix-color-text`, `--typix-bg-code`, `--typix-color-link` |
+| `--typix-ui-*` | UI primitive tokens (Notion/Craft aesthetic) | `--typix-ui-color-fg`, `--typix-ui-space-2`, `--typix-ui-shadow-md` |
+
+All three live in `components/typix/styles/tokens.css` with light + dark
+overrides.
+
+## Override a token
+
+Add a `:root` (or `.dark`) block AFTER importing the design system:
+
+```css title="globals.css" {5-11}
+@import "tailwindcss";
+@import "./components/typix/styles/tokens.css";
+@import "./components/typix/styles/editor.css";
+@import "./components/typix/styles/tailwind.css";
+
+:root {
+  /* Brand the editor link color */
+  --typix-color-link: rgb(16, 185, 129);
+  /* Looser quote padding */
+  --typix-quote-radius: 8px;
+}
+
+.dark {
+  --typix-color-link: rgb(52, 211, 153);
+}
 ```
 
-The default theme provides `typix-*` prefixed class names for all editor elements. You write the CSS that targets these classes.
+That's it — the editor and every UI component instantly reflect the new
+values. No rebuild, no theme prop.
 
-## Theme class reference
+## Dark mode
 
-### Text formats
-
-| Key | Class | Element |
-| --- | --- | --- |
-| `text.bold` | `typix-text--bold` | Bold text |
-| `text.italic` | `typix-text--italic` | Italic text |
-| `text.underline` | `typix-text--underline` | Underlined text |
-| `text.strikethrough` | `typix-text--strikethrough` | Strikethrough text |
-| `text.code` | `typix-text--code` | Inline code |
-| `text.highlight` | `typix-text--highlight` | Highlighted text |
-| `text.subscript` | `typix-text--subscript` | Subscript text |
-| `text.superscript` | `typix-text--superscript` | Superscript text |
-
-### Block elements
-
-| Key | Class | Element |
-| --- | --- | --- |
-| `paragraph` | `typix-paragraph` | Paragraph |
-| `heading.h1`–`heading.h6` | `typix-heading--h1`–`typix-heading--h6` | Headings |
-| `quote` | `typix-quote` | Block quote |
-| `code` | `typix-code` | Code block |
-| `link` | `typix-link` | Link |
-
-### Lists
-
-| Key | Class | Element |
-| --- | --- | --- |
-| `list.ul` | `typix-list--ul` | Unordered list |
-| `list.checklist` | `typix-checklist` | Check list |
-| `list.listitem` | `typix-list__item` | List item |
-| `list.listitemChecked` | `typix-list__item--checked` | Checked item |
-| `list.listitemUnchecked` | `typix-list__item--unchecked` | Unchecked item |
-
-### Tables
-
-| Key | Class | Element |
-| --- | --- | --- |
-| `table` | `typix-table` | Table |
-| `tableCell` | `typix-table__cell` | Table cell |
-| `tableCellHeader` | `typix-table__cell--header` | Header cell |
-| `tableCellSelected` | `typix-table__cell--selected` | Selected cell |
-
-## Custom theme
-
-Create your own theme object or extend the default:
-
-```tsx
-import { defaultTheme, createEditorConfig } from '@typix-editor/react';
-
-const myTheme = {
-  ...defaultTheme,
-  paragraph: 'my-paragraph',
-  heading: {
-    h1: 'my-heading-1',
-    h2: 'my-heading-2',
-    h3: 'my-heading-3',
-    h4: 'my-heading-4',
-    h5: 'my-heading-5',
-    h6: 'my-heading-6',
-  },
-  text: {
-    ...defaultTheme.text,
-    bold: 'my-bold',
-  },
-};
-
-const config = createEditorConfig({
-  theme: myTheme,
-});
-```
-
-## CSS example
-
-Here's a minimal stylesheet targeting the default theme classes:
+Typix supports two dark-mode triggers out of the box:
 
 ```css
-.typix-text--bold {
-  font-weight: bold;
+.dark, [data-theme="dark"] {
+  /* dark token overrides */
+}
+```
+
+Use whichever your app uses. With `next-themes` (default in our templates),
+`.dark` lands on `<html>` automatically.
+
+## The four-file styles layout
+
+Inside `components/typix/styles/`:
+
+```
+tokens.css       All CSS custom properties + dark overrides + keyframes
+editor.css       All .typix-* node rules (paragraph, code, table, list…)
+tailwind.css     Tailwind v4 wiring (@source, @theme inline, animations)
+index.css        @import of the three above
+```
+
+Import the three files individually from your `globals.css`:
+
+```css
+@import "./components/typix/styles/tokens.css";
+@import "./components/typix/styles/editor.css";
+@import "./components/typix/styles/tailwind.css";
+```
+
+If you don't use Tailwind, import the two structural halves only:
+
+```css
+@import "./components/typix/styles/tokens.css";
+@import "./components/typix/styles/editor.css";
+```
+
+<Callout type="warn">
+  **Tailwind v4 + Turbopack quirk.** Do **not** import `index.css` through
+  a relative path — Turbopack misses the `@theme inline` block. Import the
+  three files individually as shown above. The `typix ui add` success
+  message prints this exact snippet.
+</Callout>
+
+## Per-node restyling
+
+If a token override isn't enough, target the editor node classes
+directly:
+
+```css title="globals.css"
+.typix-quote {
+  border-left-color: rgb(99, 102, 241);
+  background-color: rgba(99, 102, 241, 0.04);
 }
 
-.typix-text--italic {
-  font-style: italic;
-}
-
-.typix-text--underline {
-  text-decoration: underline;
-}
-
-.typix-text--strikethrough {
-  text-decoration: line-through;
-}
-
-.typix-text--code {
-  background: #f4f4f5;
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.9em;
+.typix-code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
 }
 
 .typix-heading--h1 {
-  font-size: 2em;
-  font-weight: bold;
-}
-
-.typix-heading--h2 {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.typix-quote {
-  border-left: 4px solid #e4e4e7;
-  padding-left: 1em;
-  color: #71717a;
+  font-family: "Inter Display", system-ui, sans-serif;
+  letter-spacing: -0.04em;
 }
 ```
 
-## Tailwind CSS
+A complete class list is in [`editor.css` source](https://github.com/mrdiyorbek-juraev/typix/blob/main/packages/design-system/src/styles/editor.css).
 
-If you use Tailwind, you can apply utility classes directly in the theme:
+## Theme prop
+
+The `theme` option on `useTypixEditor` controls which CSS class names
+Lexical emits per node. Most users pass `defaultTheme`:
 
 ```tsx
-const tailwindTheme = {
-  paragraph: 'mb-2',
-  heading: {
-    h1: 'text-4xl font-bold mb-4',
-    h2: 'text-3xl font-bold mb-3',
-    h3: 'text-2xl font-bold mb-2',
-  },
-  text: {
-    bold: 'font-bold',
-    italic: 'italic',
-    underline: 'underline',
-    strikethrough: 'line-through',
-    code: 'bg-zinc-100 px-1 rounded font-mono text-sm',
-  },
-  quote: 'border-l-4 border-zinc-300 pl-4 text-zinc-500',
-  link: 'text-blue-600 underline hover:text-blue-800',
-};
+import { defaultTheme, useTypixEditor } from "@typix-editor/react";
+
+const editor = useTypixEditor({
+  extensions,
+  theme: defaultTheme,
+});
 ```
+
+`defaultTheme` maps Lexical's internal node names to the `.typix-*`
+classes the design-system CSS targets. Override only if you're styling
+the editor from scratch.
+
+## When you vendor UI
+
+After `typix ui add <component>`, the design-system source lands in your
+repo at `components/typix/`. Edit the components themselves to change
+visuals beyond token overrides:
+
+```tsx title="components/typix/primitives/button/index.tsx"
+// Tweak the variant styles — these are your files now.
+const buttonVariants = cva(/* … */);
+```
+
+You own these files; nothing in `node_modules` cares.
+
+## Next
+
+<Cards>
+  <Card
+    title="CLI & UI Vendoring"
+    href="/docs/getting-started/cli"
+    description="typix ui add — pull components into your project."
+  />
+  <Card
+    title="Editor Setup"
+    href="/docs/getting-started/editor-setup"
+    description="All useTypixEditor options."
+  />
+</Cards>

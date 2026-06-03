@@ -3,74 +3,126 @@ title: Installation
 description: Install Typix and its peer dependencies
 ---
 
-## Prerequisites
-
-- **Node.js** 18 or later
-- **React** 18 or 19
-- A package manager: pnpm, npm, or yarn
-
-## Install the core package
-
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/react 
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/react
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/react
-    ```
-  </Tab>
-</Tabs>
-
 <Callout type="info">
-  `@typix-editor/react` requires Lexical **0.39+** and React **18.2+** (or React 19) as peer dependencies.
+  This page covers manual `pnpm`/`npm`/`yarn` install. For a guided
+  scaffold, see [`typix init`](/docs/getting-started/cli#init).
 </Callout>
 
-## Install extensions (optional)
+## Required packages
 
-Extensions are separate packages you add as needed. For example:
+Typix v2 ships as small, focused packages. The minimum to render an editor
+is **three** packages: the React adapter, the starter kit, and Lexical.
 
-<Tabs items={["pnpm", "npm", "yarn"]}>
+<Tabs items={["pnpm", "npm", "yarn", "bun"]}>
   <Tab value="pnpm">
     ```bash
-    pnpm add @typix-editor/extension-link @typix-editor/extension-short-cuts
+    pnpm add @typix-editor/react @typix-editor/extension-starter-kit \
+      lexical @lexical/react
     ```
   </Tab>
   <Tab value="npm">
     ```bash
-    npm install @typix-editor/extension-link @typix-editor/extension-short-cuts
+    npm install @typix-editor/react @typix-editor/extension-starter-kit \
+      lexical @lexical/react
     ```
   </Tab>
   <Tab value="yarn">
     ```bash
-    yarn add @typix-editor/extension-link @typix-editor/extension-short-cuts
+    yarn add @typix-editor/react @typix-editor/extension-starter-kit \
+      lexical @lexical/react
+    ```
+  </Tab>
+  <Tab value="bun">
+    ```bash
+    bun add @typix-editor/react @typix-editor/extension-starter-kit \
+      lexical @lexical/react
     ```
   </Tab>
 </Tabs>
 
-See the [Extensions overview](/docs/extensions/overview) for the full catalog.
+## Add UI components
 
-## Verify installation
+Toolbars, floating menus, mention pickers, and the slash-command palette
+ship as **vendorable** components — copied into your repo, not consumed
+from `node_modules`. This is the shadcn pattern: you own the source and
+can edit it freely.
 
-Create a minimal editor to confirm everything is working:
-
-```tsx
-import { EditorRoot, EditorContent } from '@typix-editor/react';
-
-export default function App() {
-  return (
-    <EditorRoot>
-      <EditorContent placeholder="Type something..." />
-    </EditorRoot>
-  );
-}
+```bash
+npx @typix-editor/cli init
+npx @typix-editor/cli ui add floating-link mention code-block
 ```
 
-If you see an editable text area, you're ready to go. Next, follow the [Quick Start](/docs/getting-started/quick-start) guide.
+After running, you'll have working source files at:
+
+```
+components/typix/
+├── lib/
+├── main/
+│   ├── floating-link/
+│   ├── mention/
+│   └── code-block/
+├── primitives/
+└── styles/
+```
+
+Imports in your code use the vendored paths:
+
+```tsx
+import { FloatingLinkUI } from "@/components/typix/main/floating-link";
+import { Toolbar } from "@/components/typix/primitives/toolbar";
+```
+
+[Full CLI flow →](/docs/getting-started/cli)
+
+## Add CSS
+
+The first `typix ui add` also copies the design-system CSS into
+`components/typix/styles/`. Import the three files from your global
+stylesheet:
+
+```css title="globals.css"
+@import "tailwindcss";
+
+@import "./components/typix/styles/tokens.css";
+@import "./components/typix/styles/editor.css";
+@import "./components/typix/styles/tailwind.css";
+```
+
+<Callout type="warn">
+  **Tailwind v4 + Turbopack only.** Import the three files individually —
+  do not import `index.css` through a relative path; Turbopack misses the
+  `@theme inline` block. If you hit
+  `Cannot apply unknown utility class "border-border"`, run a fresh
+  `next build` to verify your imports.
+</Callout>
+
+If you don't use Tailwind, import the two structural halves only:
+
+```css title="globals.css"
+@import "./components/typix/styles/tokens.css";
+@import "./components/typix/styles/editor.css";
+```
+
+## Add to your CSS source scan
+
+Tell Tailwind to scan your vendored components so it picks up the classes
+they use:
+
+```css title="globals.css"
+@source "./components/typix/**/*.{ts,tsx}";
+```
+
+## Next
+
+<Cards>
+  <Card
+    title="Quick Start"
+    href="/docs/getting-started/quick-start"
+    description="A working editor in three files."
+  />
+  <Card
+    title="CLI & UI Vendoring"
+    href="/docs/getting-started/cli"
+    description="Scaffold a project + vendor UI."
+  />
+</Cards>

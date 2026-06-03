@@ -1,0 +1,95 @@
+---
+title: Starter Kit
+description: Sensible defaults — rich text, history, lists, headings, marks
+---
+
+The bundled-defaults extension. Includes everything most editors need:
+paragraphs, headings, lists, basic marks (bold, italic, underline,
+strikethrough, code), history (undo/redo), links, and standard inline
+behavior.
+
+If you're not sure which extensions to install — start with this one.
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-starter-kit
+```
+
+## Live demo
+
+<ComponentPreview name="quick-example" />
+
+## Usage
+
+```tsx title="editor.tsx"
+import { useTypixEditor, TypixEditorContext, EditorContent, defaultTheme } from "@typix-editor/react";
+import { StarterKit } from "@typix-editor/extension-starter-kit";
+
+const extensions = [StarterKit()];
+
+export function Editor() {
+  const editor = useTypixEditor({
+    extensions,
+    theme: defaultTheme,
+    namespace: "my-editor",
+  });
+
+  return (
+    <TypixEditorContext.Provider value={{ editor }}>
+      <EditorContent editor={editor} placeholder="Start typing…" />
+    </TypixEditorContext.Provider>
+  );
+}
+```
+
+## What's inside
+
+`StarterKit()` registers these extensions as a single bundle:
+
+- `BoldExtension`, `ItalicExtension`, `UnderlineExtension`,
+  `StrikeExtension`, `CodeExtension` — inline marks
+- `HeadingExtension` — H1–H6
+- `ListExtension` — bullet, numbered, checklist
+- `LinkExtension` — link node + commands
+- `HistoryExtension` — undo/redo
+- Standard paragraph + plain-text + tab handling
+
+Individual extension exports are also available for granular config:
+
+```tsx
+import {
+  BoldExtension,
+  HeadingExtension,
+  ListExtension,
+  // ...
+} from "@typix-editor/extension-starter-kit";
+```
+
+## Skipping the bundle
+
+If you need a stripped-down editor (e.g., a one-line input that just
+allows inline formatting), import only the marks you need:
+
+```tsx
+import { BoldExtension, ItalicExtension } from "@typix-editor/extension-starter-kit";
+
+const extensions = [BoldExtension(), ItalicExtension()];
+```
+
+## Config
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `heading` | `Partial<HeadingConfig>` | — | Forwarded to HeadingExtension. |
+| `list` | `Partial<ListConfig>` | — | Forwarded to ListExtension. |
+| `history` | `Partial<HistoryConfig>` | — | Forwarded to HistoryExtension. |
+| `link` | `Partial<LinkConfig>` | — | Forwarded to LinkExtension. |
+| …per-mark configs | | | See `StarterKitOptions` type. |
+
+## Related
+
+<Cards>
+  <Card title="Extensions overview" href="/docs/extensions/overview" description="All 25 extensions grouped by category." />
+  <Card title="Quick Start" href="/docs/getting-started/quick-start" description="Build the full editor with StarterKit." />
+</Cards>

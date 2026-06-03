@@ -1,5 +1,12 @@
 # @typix-editor/extension-auto-link
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape — configure `urlRegExp`, `linkClass`, and `target` once and pass directly to `useTypixEditor`.
+- Detects URLs as the user types and wraps them in a Lexical `LinkNode`, with optional click-to-open behavior.
+
 ## 4.0.0
 
 ### Minor Changes

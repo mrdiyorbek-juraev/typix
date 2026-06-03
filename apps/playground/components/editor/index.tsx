@@ -1,50 +1,189 @@
 "use client";
-import {
-  createEditorConfig,
-  EditorContent,
-  EditorRoot,
-} from "@typix-editor/react";
-import { useMemo, useState } from "react";
-import { defaultValue } from "./lib/default-value";
-import { extensionNodes } from "./lib/extension-nodes";
-import { EditorTheme } from "./lib/theme";
-import { Toolbar } from "./components/toolbar";
-import { BubbleMenu } from "./components/bubble-menu";
-import { CommandMenu } from "./components/coommand-menu";
-import { slashCommands } from "./lib/slash-commands";
 
-const Editor = () => {
-  const [editorState, setEditorState] = useState<any>(defaultValue);
-  const config = useMemo(
-    () =>
-      createEditorConfig({
-        namespace: "typix-editor",
-        extensionNodes: extensionNodes,
-        editable: true,
-        editorState: null,
-        initialState: editorState,
-        theme: EditorTheme,
-      }),
-    []
+// ─── Core editor ────────────────────────────────────────────────────────────
+import type { SerializedContent } from "@typix-editor/core";
+import {
+  EditorContent,
+  TypixEditorContext,
+  defaultTheme,
+  useTypixEditor,
+} from "@typix-editor/react";
+
+// ─── Lexical ───────────────────────────────────────────────────────────────
+// IMPORTANT: every @typix-editor/extension-* must be imported ONCE here.
+// Importing the same extension via two paths (a tsconfig alias and the
+// real package name, for example) produces two distinct module instances
+// that share a `name` — Lexical's builder rejects that with error #298.
+import type { AnyLexicalExtensionArgument } from "lexical";
+import { configExtension } from "lexical";
+
+// ─── Extensions ─────────────────────────────────────────────────────────────
+import { StarterKit } from "@typix-editor/extension-starter-kit";
+import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
+import { ImageExtension } from "@typix-editor/extension-image";
+import { MentionExtension } from "@typix-editor/extension-mention";
+import { CodeBlockExtension } from "@typix-editor/extension-code-block";
+import { PrettierFormatterExtension } from "@typix-editor/extension-code-block-prettier";
+import { SpeechToTextExtension } from "@typix-editor/extension-speech-to-text";
+import { MarkdownShortcutsExtension } from "@typix-editor/extension-markdown-shortcuts";
+import { TabFocusExtension } from "@typix-editor/extension-tab-focus";
+import { TableExtension } from "@typix-editor/extension-table";
+
+// ─── UI components (from @typix-editor/ui — design-system workspace) ──────
+import {
+  CharacterLimit,
+  CodeBlockUI,
+  DraggableBlock,
+  EditorContextMenu,
+  FloatingLinkUI,
+  MentionUI,
+  SlashDropdownMenu,
+  TableUI,
+  imageRenderer,
+} from "@typix-editor/ui";
+
+// ─── Local ─────────────────────────────────────────────────────────────────
+import { searchMentions } from "@/mocks/users";
+import { defaultContent } from "@/lib/default-content";
+import { contextMenuItems } from "./context-menu-items";
+import { EditorToolbar } from "./toolbar";
+
+/**
+ * Extension list — module-scoped so the array reference is stable across
+ * Strict Mode double-invokes and ordinary re-renders. `configExtension(X, cfg)`
+ * returns a tuple `[X, cfg]`; the Lexical builder unpacks it. Do NOT index
+ * `[0]` — that would discard the config.
+ */
+const extensions: AnyLexicalExtensionArgument[] = [
+  StarterKit(),
+  FloatingLinkExtension,
+  configExtension(ImageExtension, { component: imageRenderer }),
+  configExtension(MentionExtension, { trigger: "@" }),
+  configExtension(PrettierFormatterExtension, {
+    printOptions: { tabWidth: 2, semi: true, singleQuote: true },
+  }),
+  SpeechToTextExtension,
+  // ⚠️ MarkdownShortcutsExtension and TabFocusExtension are FACTORY
+  // FUNCTIONS, not extension objects. Calling them returns the actual
+  // extension. Passing the bare function trips Lexical #298 in production
+  // because the JS Function.name gets minified to "" (or to the same
+  // mangled identifier as another bare function), and Lexical's de-dup
+  // check rejects two distinct objects sharing one name.
+  MarkdownShortcutsExtension(),
+  TabFocusExtension(),
+  TableExtension,
+  CodeBlockExtension,
+];
+
+// Pretty tagged logger so the console makes it obvious which option fired.
+const log = (tag: string, payload?: unknown) =>
+  // eslint-disable-next-line no-console
+  console.log(
+    `%c[useTypixEditor]%c ${tag}`,
+    "color:#fff;background:#7c3aed;padding:2px 6px;border-radius:3px;font-weight:600",
+    "color:#7c3aed;font-weight:600",
+    payload ?? ""
   );
+
+// Throttle transaction logs so typing doesn't flood the console.
+let txCount = 0;
+
+export function FullEditor() {
+  const editor = useTypixEditor({
+    // ── Core options ───────────────────────────────────
+    extensions,
+    namespace: "playground",
+    theme: defaultTheme,
+    content: defaultContent as unknown as SerializedContent,
+    editable: true,
+    immediatelyRender: false, // SSR-safe (Next.js App Router)
+    onError: (err) => log("onError", err),
+
+    // ── Lifecycle hooks ────────────────────────────────
+    onBeforeCreate: ({ options }) =>
+      log("onBeforeCreate", { extensionCount: options.extensions.length }),
+
+    onCreate: ({ editor }) => {
+      log("onCreate", {
+        id: editor.id,
+        namespace: editor.namespace,
+        isEditable: editor.isEditable(),
+        isEmpty: editor.isEmpty(),
+      });
+      // Expose to window for ad-hoc poking from the console.
+      (window as unknown as { typix: unknown }).typix = editor;
+      log(
+        "💡 tip",
+        "editor is on window.typix — try window.typix.chain().toggleBold().run()"
+      );
+    },
+
+    onUpdate: ({ editor }) =>
+      log("onUpdate", { length: editor.getText().length }),
+
+    onContentUpdate: ({ editor }) =>
+      log("onContentUpdate (nodes changed)", {
+        empty: editor.isEmpty(),
+        textLen: editor.getText().length,
+      }),
+
+    onSelectionUpdate: () => log("onSelectionUpdate (selection moved only)"),
+
+    onTransaction: ({ dirtyElements, dirtyLeaves, tags }) => {
+      txCount += 1;
+      // First 5 + every 25th to avoid console spam on heavy typing.
+      if (txCount <= 5 || txCount % 25 === 0) {
+        log(`onTransaction #${txCount}`, {
+          dirtyElements: dirtyElements.size,
+          dirtyLeaves: dirtyLeaves.size,
+          tags: [...tags],
+        });
+      }
+    },
+
+    onFocus: () => log("onFocus"),
+    onBlur: () => log("onBlur"),
+
+    onEditableChange: ({ editable }) => log("onEditableChange", { editable }),
+
+    onDestroy: () => log("onDestroy"),
+  });
+
+  if (!editor) return null;
+
   return (
-    <div>
-      <EditorRoot
-        config={config}
-        content={editorState}
-        onContentChange={setEditorState}
-      >
-        <Toolbar />
-        <EditorContent
-          className="min-h-[400px] rounded-lg border border-border bg-background p-4"
-          placeholder="Start typing... Use / for commands, @ for mentions"
-        >
-          <BubbleMenu />
-          <CommandMenu commands={slashCommands} />
-        </EditorContent>
-      </EditorRoot>
+    <div className="mt-[30px]">
+      <TypixEditorContext.Provider value={{ editor }}>
+        <div className="fixed top-[45px] z-40 w-full bg-background">
+          <EditorToolbar />
+        </div>
+        <EditorContextMenu items={contextMenuItems}>
+          {/* pb-24 = 96px, comfortably clears the fixed CharacterLimit footer
+              (~40px) so the last paragraph never slips behind it. */}
+          <div className="mx-auto max-w-[1200px] pb-24">
+            <EditorContent
+              editor={editor}
+              autoFocus="end"
+              placeholder="Start typing… or type / for commands"
+              className="bg-background p-4 font-sans"
+              classNames={{
+                scroller: "resize-none! overflow-visible!",
+                contentEditable: "[&>*+*]:mt-5!",
+              }}
+            >
+              <FloatingLinkUI />
+              <DraggableBlock />
+              <SlashDropdownMenu />
+              <CodeBlockUI />
+              <TableUI />
+              <MentionUI onSearch={searchMentions} />
+            </EditorContent>
+          </div>
+        </EditorContextMenu>
+        <div className="fixed bottom-0 right-0 left-0  bg-white shadow-md dark:bg-muted-foreground/10 border-t">
+          <CharacterLimit maxLength={10000} />
+        </div>
+      </TypixEditorContext.Provider>
     </div>
   );
-};
-
-export default Editor;
+}

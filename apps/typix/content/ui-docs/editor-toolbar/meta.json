@@ -1,0 +1,17 @@
+{
+  "title": "Editor Toolbar",
+  "pages": [
+    "overview",
+    "mark-button",
+    "heading-button",
+    "blockquote-code-block-button",
+    "list-dropdown-menu",
+    "text-align-button",
+    "undo-redo-button",
+    "clear-formatting-button",
+    "color-text-button",
+    "color-highlight-button",
+    "font-size-input",
+    "font-family-dropdown-menu"
+  ]
+}

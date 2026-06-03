@@ -1,5 +1,12 @@
 # @typix-editor/extension-collapsible
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Adds three new nodes — `CollapsibleContainerNode`, `CollapsibleTitleNode`, and `CollapsibleContentNode` — for expandable/collapsible blocks (FAQ entries, spoilers, foldable sections).
+- Open/close state persists in serialized JSON, so collapsed sections round-trip through `editor.getJSON()` / `setContent()` without losing state.
+
 ## 4.0.0
 
 ### Minor Changes

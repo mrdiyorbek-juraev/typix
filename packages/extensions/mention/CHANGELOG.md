@@ -1,5 +1,13 @@
 # @typix-editor/extension-mention
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Provides the `MentionNode` plus the trigger-detection plumbing the `MentionUI` component reads from.
+- Async/sync `onSearch`, configurable `triggerConfig` (`@` by default, customizable), `includeTrigger`, `debounceMs`, and `maxSuggestions` options.
+- Headless: the extension only manages state. Render the picker with `MentionUI` (vendor via `typix ui add mention`) or your own UI via the exposed render-prop API.
+
 ## 4.0.0
 
 ### Minor Changes

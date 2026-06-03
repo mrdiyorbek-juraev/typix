@@ -1,82 +1,148 @@
 ---
-title: Core Overview
-description: Architecture overview of the @typix-editor/react package
+title: Overview
+description: The v2 surface — useTypixEditor, EditorContent, TypixEditorContext, and the editor instance
 ---
 
-The `@typix-editor/react` package provides the foundation for building editors with Typix. It exports components, hooks, providers, utilities, and the `TypixEditor` class.
-
-## Component hierarchy
-
-A Typix editor follows this structure:
-
-```
-EditorRoot
-├── TypixEditorProvider (automatic)
-├── SharedHistoryContext (automatic)
-├── Toolbar (your component, uses useTypixEditor)
-├── EditorContent
-│   └── RichTextExtension (automatic)
-├── EditorBubbleMenu (optional)
-└── EditorCommand (optional)
-```
-
-`EditorRoot` sets up the Lexical composer and all required context providers. Everything inside it has access to the editor.
-
-## Key concepts
-
-### TypixEditor class
-
-The `TypixEditor` class wraps the Lexical editor instance with a clean, fluent API. You access it via `useTypixEditor()`.
+The Typix v2 core is a small surface — one hook, one context, one
+content component, and the `TypixEditor` instance they give you. Everything
+else ships as **vendorable components** you copy into your repo with
+`typix ui add` — toolbar buttons, floating menus, mention pickers, slash
+command palette, and more.
 
 ```tsx
-const editor = useTypixEditor();
-editor.toggleBold().toggleItalic(); // chainable
+import {
+  EditorContent,
+  TypixEditorContext,
+  defaultTheme,
+  useTypixEditor,
+} from "@typix-editor/react";
 ```
 
-See [TypixEditor API](/docs/core/typix-editor) for the full reference.
+## The four public APIs
 
-### Extensions
+<Cards>
+  <Card
+    title="useTypixEditor"
+    href="/docs/core/typix-editor"
+    description="Hook that creates the editor instance from extensions + options."
+  />
+  <Card
+    title="TypixEditorContext.Provider"
+    href="/docs/core/providers/typix-editor-provider"
+    description="Shares the editor instance with descendant components."
+  />
+  <Card
+    title="EditorContent"
+    href="/docs/core/components/editor-content"
+    description="Renders the editable Lexical surface."
+  />
+  <Card
+    title="defaultTheme"
+    href="/docs/getting-started/theming"
+    description="Maps Lexical node types to .typix-* CSS classes."
+  />
+</Cards>
 
-Extensions are React components (plugins) that add features to the editor. They're rendered as children of `EditorRoot`:
+## Canonical structure
+
+Every Typix editor follows this same shape:
 
 ```tsx
-<EditorRoot>
-  <EditorContent />
-  <LinkExtension />
-  <ShortCutsExtension />
-  <MaxLengthExtension maxLength={1000} />
-</EditorRoot>
+"use client";
+
+const extensions = [StarterKit(), /* …more extensions */];
+
+export function Editor() {
+  const editor = useTypixEditor({
+    extensions,
+    theme: defaultTheme,
+    namespace: "my-editor",
+  });
+
+  return (
+    <TypixEditorContext.Provider value={{ editor }}>
+      <Toolbar />          {/* uses useCurrentTypixEditor via context */}
+      <EditorContent editor={editor} placeholder="…" />
+      <FloatingLinkUI />   {/* optional UI overlay */}
+    </TypixEditorContext.Provider>
+  );
+}
 ```
 
-Each extension may also provide custom Lexical nodes that need to be registered via `createEditorConfig`.
+## The `TypixEditor` instance
 
-### Hooks
+`useTypixEditor` returns a `TypixEditor` — a thin, typed wrapper around
+Lexical. The most useful members:
 
-Hooks provide reactive access to editor state:
+| Method | Returns | Notes |
+|---|---|---|
+| `editor.chain()` | `ChainBuilder<R>` | Fluent command builder. Each extension augments the type. |
+| `editor.can()` | `CanChainBuilder<R>` | `editor.can().toggleBold()` — check before executing. |
+| `editor.lexical` | `LexicalEditor` | Direct access for raw Lexical commands. |
+| `editor.getJSON()` | `SerializedContent` | Serializable content state. |
+| `editor.getHTML()` | `string` | Rendered HTML. |
+| `editor.getText()` | `string` | Plain text. |
+| `editor.setContent(state)` | `void` | Load serialized content. |
+| `editor.isEmpty()` | `boolean` | True for empty editor. |
+| `editor.isEditable()` | `boolean` | Current read/write state. |
+| `editor.setEditable(v)` | `void` | Toggle read/write. |
+| `editor.emitter` | `TypixEventEmitter` | Subscribe to events (`contentChange`, `selectionChange`, etc.). |
+| `editor.namespace` | `string` | The namespace from options. |
+| `editor.id` | `string` | Auto-generated unique id. |
+
+[Full API →](/docs/core/typix-editor)
+
+## Hooks shipped from `@typix-editor/react`
 
 | Hook | Purpose |
-| --- | --- |
-| [`useTypixEditor`](/docs/core/hooks/use-typix-editor) | Access the TypixEditor instance |
-| [`useEditorState`](/docs/core/hooks/use-editor-state) | Reactive editor state (isEmpty) |
-| [`useActiveFormats`](/docs/core/hooks/use-active-formats) | Reactive text format state |
-| [`useRange`](/docs/core/hooks/use-range) | Current selection range |
-| [`useMouseListener`](/docs/core/hooks/use-mouse-listener) | Mouse up/down events |
+|---|---|
+| `useTypixEditor(options)` | Create + manage the editor (top-level only). |
+| `useCurrentTypixEditor()` | Get the editor from context (descendant components). |
+| `useTypixEditorState()` | Subscribe to Typix-managed state. |
+| `useEditorState(selector)` | Subscribe to a Lexical selector; re-renders only when value changes. |
+| `useSelectionStyle()` | Selection-aware styling info. |
+| `useSignal(signal)` | Subscribe to a Typix signal primitive. |
+| `useRange()` | Current selection's `DOMRange`. |
+| `useMouseListener(handler)` | Listen for editor mouse events. |
 
-## Package exports
+## Floating UI primitives
 
-```tsx
-// Components
-import { EditorRoot, EditorContent, EditorBubbleMenu, EditorCommand } from '@typix-editor/react';
+Shipped for building bubble menus, slash menus, mention pickers:
 
-// Hooks
-import { useTypixEditor, useEditorState, useActiveFormats, useRange } from '@typix-editor/react';
+| Export | Purpose |
+|---|---|
+| `<EditorBubbleMenu>` / `<EditorBubbleItem>` | Selection-triggered floating menu. |
+| `<EditorCommand>` / `<EditorCommandItem>` / `<EditorCommandList>` / `<EditorCommandEmpty>` | Command-palette pattern. |
+| `<SuggestionMenu>` + `useSuggestionItems` + `filterSuggestionItems` | Typeahead pattern (mentions, @-pickers). |
+| `<FloatingElement>` + `useFloatingElement` | Generic floating UI helper. |
+| `<RootContext>` + `useRootContext` | Floating-anchor element registry. |
 
-// Configuration
-import { createEditorConfig, defaultExtensionNodes, defaultTheme } from '@typix-editor/react';
+## What v2 dropped from v1
 
-// Editor class
-import { TypixEditor } from '@typix-editor/react';
+If you're porting from v1, the following symbols are gone — search and
+replace:
 
-// Utilities
-import { cn, sanitizeUrl, validateUrl, getSelectedNode } from '@typix-editor/react';
-```
+| v1 | v2 |
+|---|---|
+| `<EditorRoot extension={ext}>` | `useTypixEditor({ extensions })` + `<TypixEditorContext.Provider>` |
+| `useTypixEditor()` (no args, from context) | `useCurrentTypixEditor()` |
+| `useActiveFormats({ formats })` | `useEditorState((state) => …)` + `editor.chain().can().toggleBold()` |
+| `useBlockType()` | `useEditorState((state) => state.blockType)` |
+| `editor.toggleBold()` | `editor.chain().toggleBold().run()` |
+| `defineExtension(...)` from `@typix-editor/react` | `defineExtension(...)` from `lexical` (or build via `@typix-editor/core` helpers) |
+| `defaultExtensionNodes` | (removed — extensions register their own nodes) |
+
+## Next
+
+<Cards>
+  <Card
+    title="useTypixEditor"
+    href="/docs/core/typix-editor"
+    description="Options, lifecycle, and return value."
+  />
+  <Card
+    title="Extensions"
+    href="/docs/extensions/overview"
+    description="The 25 things you can plug in."
+  />
+</Cards>

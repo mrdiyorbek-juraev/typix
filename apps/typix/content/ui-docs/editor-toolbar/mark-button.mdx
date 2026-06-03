@@ -1,0 +1,61 @@
+---
+title: MarkButton
+description: Toggle inline text formatting marks — bold, italic, underline, strikethrough, inline code, superscript, and subscript.
+---
+
+<ComponentPreview name="ui-mark-button" />
+
+## Install
+
+```bash
+npx typix ui add mark-button
+```
+
+## Import
+
+```tsx
+import { MarkButton } from "@/components/typix/main/mark-button";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `MarkType` | — | The mark to toggle. Required. |
+| `text` | `string` | — | Override the button label. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide the button when the mark can't be applied. |
+| `showShortcut` | `boolean` | `true` | Show keyboard shortcut in tooltip. |
+| `onToggled` | `(isActive: boolean) => void` | — | Called after the mark is toggled. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### MarkType
+
+```ts
+type MarkType =
+  | "bold"
+  | "italic"
+  | "underline"
+  | "strike"
+  | "code"
+  | "superscript"
+  | "subscript";
+```
+
+## Hook
+
+Use `useMark` to build a custom button:
+
+```tsx
+import { useMark } from "@/components/typix/main/mark-button";
+
+function MyBoldButton() {
+  const { isActive, canToggle, handleToggle, label, Icon } = useMark({ type: "bold" });
+
+  return (
+    <button onClick={handleToggle} disabled={!canToggle} aria-pressed={isActive}>
+      <Icon size={14} />
+      {label}
+    </button>
+  );
+}
+```

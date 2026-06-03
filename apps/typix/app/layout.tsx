@@ -1,5 +1,4 @@
 import "./global.css";
-import "@typix-editor/react/src/styles/main.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Provider } from "./provider";
 import { baseUrl, createMetadata } from "@/lib/metadata";

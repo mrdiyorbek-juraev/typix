@@ -1,44 +1,62 @@
 # @typix-editor/extension-keywords
 
-Keyword detection and highlighting for Typix editors. Automatically detects congratulation keywords in multiple languages and applies special styling.
+Detect and highlight keywords in text. Ships with a built-in list of congratulatory words in 30+ languages; supply your own list to override.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-keywords
+# or
+pnpm add @typix-editor/extension-keywords
 ```
 
 ## Usage
 
-```tsx
-import { KeywordsExtension, KeywordNode } from "@typix-editor/extension-keywords";
+```ts
+import { KeywordsExtension } from "@typix-editor/extension-keywords"
+import { createTypix } from "@typix-editor/core"
 
-const config = createEditorConfig({
-  namespace: "MyEditor",
-  extensionNodes: [...defaultExtensionNodes, KeywordNode],
-});
+// Use built-in congratulatory word list
+const editor = createTypix({
+  extensions: [
+    KeywordsExtension(),
+  ],
+})
 
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <KeywordsExtension />
-</EditorRoot>
+// Or supply custom keywords
+const editor2 = createTypix({
+  extensions: [
+    KeywordsExtension({
+      keywords: ["URGENT", "TODO", "FIXME"],
+      caseSensitive: true,
+    }),
+  ],
+})
 ```
 
-No configuration needed. Detected keywords are wrapped in `KeywordNode` for custom styling.
+## Configuration
 
-## Exports
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable keyword detection |
+| `keywords` | `string[]` | Built-in list | Custom keywords to highlight (replaces built-in list) |
+| `caseSensitive` | `boolean` | `false` | Case-sensitive matching (only applies with custom keywords) |
 
-| Export | Description |
-|--------|-------------|
-| `KeywordsExtension` | Main extension component |
-| `KeywordNode` | Custom Lexical node for keywords |
-| `$createKeywordNode` | Node factory function |
-| `$isKeywordNode` | Type guard |
+## Nodes
 
-## Documentation
+- **`KeywordNode`** -- Extends `TextNode`. Renders with CSS class `keyword` and `cursor: default`. Non-editable text entity (cannot insert text before or after).
 
-[typix.com/docs/extensions/keywords](https://typix.com/docs/extensions/keywords)
+## API
 
-## License
+### Exported Types
 
-MIT
+- **`KeywordsConfig`** -- Extension configuration interface.
+
+### Constants
+
+- **`KEYWORDS_REGEX`** -- The built-in regex matching congratulatory words in 30+ languages.
+
+### Functions
+
+- **`$createKeywordNode(keyword)`** -- Create a new `KeywordNode`.
+- **`$isKeywordNode(node)`** -- Type guard for `KeywordNode`.

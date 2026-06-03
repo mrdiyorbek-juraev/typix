@@ -15,8 +15,8 @@ This roadmap outlines planned features, improvements, and areas where contributo
 
 | Extension | Description | Difficulty | Status |
 |-----------|-------------|------------|--------|
-| `extension-table` | Table with rows, columns, cell merging, resize handles | advanced | open |
-| `extension-image` | Block image with resize, alignment, caption, alt text | intermediate | open |
+| `extension-table` | Table with rows, columns, cell merging, resize handles | advanced | **done** |
+| `extension-image` | Block image with resize, alignment, caption, alt text | intermediate | **done** |
 | `extension-horizontal-rule` | Horizontal divider block (`---`) | beginner | open |
 | `extension-page-break` | Page break for print/export layouts | beginner | open |
 | `extension-emoji` | Emoji picker with search and skin tone support | intermediate | open |
@@ -29,7 +29,7 @@ This roadmap outlines planned features, improvements, and areas where contributo
 | `extension-find-replace` | Find & replace across editor content | intermediate | open |
 | `extension-layout` | Multi-column layout blocks (2-col, 3-col) | advanced | open |
 | `extension-inline-image` | Inline images within text flow | intermediate | open |
-| `extension-undo-redo` | Visual undo/redo toolbar buttons with history UI | beginner | open |
+| Undo/Redo toolbar UI | Shipped as `UndoRedoButton` in `@typix-editor/ui` instead of a standalone extension. Use `typix ui add undo-redo-button`. | — | **done** |
 
 ### Embeds (Lower Priority)
 
@@ -76,7 +76,6 @@ Currently no explicit ARIA attributes in the codebase. This is a critical gap.
 
 | Task | Description | Difficulty | Status |
 |------|-------------|------------|--------|
-| Extension starter template | `pnpm create typix-extension` scaffolding CLI | intermediate | open |
 | Storybook stories | Visual stories for each extension | beginner | open |
 | Playground examples | Add demo for each extension in playground app | beginner | open |
 | Performance benchmarks | Benchmark large documents, rapid typing | intermediate | open |
@@ -84,14 +83,53 @@ Currently no explicit ARIA attributes in the codebase. This is a critical gap.
 
 ---
 
-## 5. Core Improvements
+## 5. CLI (`@typix-editor/cli`)
+
+Shipped:
+
+| Command | Description | Status |
+|---------|-------------|--------|
+| `typix init` | Interactive `typix.json` setup | **done** |
+| `typix add [extensions...]` | Install editor extensions as npm packages | **done** |
+| `typix remove [extensions...]` | Uninstall extensions | **done** |
+| `typix upgrade [extensions...]` | Bump installed extensions | **done** |
+| `typix list` | Catalog of available extension packages | **done** |
+| `typix ui list` | Catalog of `@typix-editor/ui` components, mark which are vendored | **done** |
+| `typix ui add [components...]` | Vendor source into `./components/typix/` (shadcn-style) | **done** |
+| `typix ui remove [components...]` | Remove vendored components, orphan-aware (preserves shared deps) | **done** |
+
+Planned:
+
+| Command | Description | Difficulty | Status |
+|---------|-------------|------------|--------|
+| `typix doctor` | Diagnose common project issues (deps, CSS imports, source globs) | intermediate | open |
+| `typix env` | Print env / installed-package report for issue triage | beginner | open |
+| `typix generate node <name>` | Scaffold a custom Lexical node | intermediate | open |
+| `typix generate extension <name>` | Scaffold a new extension package (monorepo) | intermediate | open |
+| `typix agents-md` | Auto-generate `AGENTS.md` for AI coding assistants | intermediate | open |
+
+---
+
+## 6. Framework Adapters
+
+| Adapter | Description | Difficulty | Status |
+|---------|-------------|------------|--------|
+| `@typix-editor/react` | React 18/19 adapter — hooks, components, context | — | **done** |
+| `@typix-editor/svelte` | Svelte 5 adapter with runes (skill exists at `.claude/skills/svelte-adapter/`, package not started) | advanced | open |
+| `@typix-editor/vue` | Vue 3 adapter with composables (skill exists at `.claude/skills/vue-adapter/`, package not started) | advanced | open |
+| `@typix-editor/solid` | Solid.js adapter | advanced | open |
+
+---
+
+## 7. Core Improvements
 
 | Task | Description | Difficulty | Status |
 |------|-------------|------------|--------|
-| SSR support | Ensure all components work with Next.js App Router SSR | intermediate | open |
+| SSR support | Ensure all components work with Next.js App Router SSR (`immediatelyRender: false` pattern) | intermediate | **done** |
+| Design system consolidation | Single `@typix-editor/ui` package owning tokens + primitives + main components + editor CSS (replaced standalone `@typix-editor/theme` package) | intermediate | **done** |
 | Collaboration (Yjs) | Real-time collaborative editing extension | advanced | open |
 | Content serialization | JSON, HTML, and Markdown import/export utilities | intermediate | open |
-| Theme system | Customizable theming beyond the default theme | intermediate | open |
+| Theme customization API | Override CSS tokens via JS at runtime (currently CSS-only) | intermediate | open |
 | Plugin lifecycle hooks | `onInit`, `onDestroy`, `onFocus`, `onBlur` for extensions | advanced | open |
 
 ---

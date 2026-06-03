@@ -1,34 +1,42 @@
 # @typix-editor/extension-code-highlight-shiki
 
-Shiki-based syntax highlighting for code blocks in Typix editors. Provides higher-quality highlighting than Prism using tree-sitter grammars.
+Syntax highlighting for code blocks using Shiki.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-code-highlight-shiki
+# or
+pnpm add @typix-editor/extension-code-highlight-shiki
 ```
 
 ## Usage
 
-```tsx
-import { CodeHighlightShikiExtension } from "@typix-editor/extension-code-highlight-shiki";
+```ts
+import { CodeBlockExtension } from "@typix-editor/extension-code-block"
+import { CodeHighlightShikiExtension } from "@typix-editor/extension-code-highlight-shiki"
+import { createTypix } from "@typix-editor/core"
 
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <CodeHighlightShikiExtension />
-</EditorRoot>
+const editor = createTypix({
+  extensions: [
+    CodeBlockExtension(),
+    CodeHighlightShikiExtension({
+      defaultLanguage: "typescript",
+    }),
+  ],
+})
 ```
 
-No configuration needed. Automatically highlights code blocks using Shiki.
+## Configuration
 
-## See Also
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable syntax highlighting |
+| `defaultLanguage` | `string` | - | Default language for new code blocks |
 
-For a lighter-weight alternative, use [`@typix-editor/extension-code-highlight-prism`](https://www.npmjs.com/package/@typix-editor/extension-code-highlight-prism).
+## API
 
-## Documentation
-
-[typix.com/docs/extensions/code-highlight-shiki](https://typix.com/docs/extensions/code-highlight-shiki)
-
-## License
-
-MIT
+| Export | Type | Description |
+|--------|------|-------------|
+| `CodeHighlightShikiExtension` | Function | Extension factory |
+| `CodeHighlightShikiConfig` | Type | Configuration interface |

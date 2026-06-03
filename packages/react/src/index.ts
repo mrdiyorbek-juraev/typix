@@ -1,84 +1,100 @@
-export {
-  type CommandConfig,
-  type CreateEditorConfigOptions,
-  createCommand,
-  createEditorConfig,
-} from "./config";
+// ─── @typix-editor/react — public API ─────────────────────────────────────────
 
+// Editor creation (hook)
 export {
-  type ContextShape,
-  type EditorCommandContextValue,
-  EditorCommandProvider,
-  RootContext,
-  type RootContextShape,
-  SharedHistoryContext,
+  useTypixEditor,
+  type UseTypixEditorOptions,
+} from "./hooks/use-typix-editor";
+
+// Editor context + reader
+export {
   TypixEditorContext,
   type TypixEditorContextValue,
-  TypixEditorProvider,
-  useEditorCommand,
-  useRootContext,
-  useSharedHistoryContext,
-  useTypixEditor,
-} from "./context";
+} from "./editor-context";
+export { useCurrentTypixEditor } from "./hooks/use-current-typix-editor";
 
+// Provider (convenience wrapper combining the hook + context)
 export {
-  type CommandMenuItemConfig,
-  type CommandMenuOption,
-  EditorBubbleItem,
-  type EditorBubbleItemProps,
+  TypixEditorProvider,
+  type TypixEditorProviderProps,
+} from "./editor-provider";
+
+// Editor content (renders the editable surface)
+export { EditorContent, type EditorContentProps } from "./editor-content";
+
+// Root context (for floating UI positioning)
+export {
+  RootContext,
+  type RootContextShape,
+  useRootContext,
+} from "./root-context";
+
+// Floating element
+export {
+  FloatingElement,
+  type FloatingElementProps,
+  useFloatingElement,
+  type UseFloatingElementOptions,
+} from "./floating-element";
+
+// Bubble menu
+export {
   EditorBubbleMenu,
   type EditorBubbleMenuProps,
+  EditorBubbleItem,
+  type EditorBubbleItemProps,
+} from "./bubble-menu";
+
+// Command menu
+export {
+  type CommandConfig,
+  type CommandMenuItemConfig,
+  type CommandMenuOption,
+  createCommand,
   EditorCommand,
-  EditorCommandEmpty,
-  type EditorCommandEmptyProps,
+  type EditorCommandProps,
   EditorCommandItem,
   type EditorCommandItemBaseProps,
   type EditorCommandItemRenderProps,
   EditorCommandList,
   type EditorCommandListProps,
-  type EditorCommandProps,
-  EditorContent,
-  type EditorContentProps,
-  EditorRoot,
-  type EditorRootProps,
-} from "./core";
+  EditorCommandEmpty,
+  type EditorCommandEmptyProps,
+  type EditorCommandContextValue,
+  EditorCommandProvider,
+  useEditorCommand,
+} from "./command-menu";
 
+// Suggestion menu
 export {
-  type BlockType,
-  DEFAULT_FONT_SIZE,
-  ELEMENT_ALIGNMENTS,
-  ELEMENT_FORMAT_OPTIONS,
-  type ElementAlignment,
-  type HeadingLevel,
-  MAX_FONT_SIZE,
-  MIN_FONT_SIZE,
-  TEXT_FORMAT_TYPES,
-  TypixEditor,
-} from "./editor";
+  SuggestionMenu,
+  useSuggestionItems,
+  filterSuggestionItems,
+  buildSuggestionTriggerFn,
+  type SuggestionItem,
+  type SuggestionMenuProps,
+  type SuggestionMenuRenderProps,
+  type SuggestionSelectProps,
+} from "./suggestion-menu";
 
-export {
-  useActiveFormats,
-  useBlockType,
-  useEditorState,
-  useMouseListener,
-  useRange,
-} from "./hooks";
+// Hooks
+export { useEditorState } from "./hooks/use-editor-state";
+export { useTypixEditorState } from "./hooks/use-typix-editor-state";
+export { useSelectionStyle } from "./hooks/use-selection-style";
+export { useSignal } from "./hooks/use-signal";
+export { useMouseListener } from "./hooks/use-mouse-listener";
+export { useRange } from "./hooks/use-range";
 
-export type { Klass, LexicalNode, LexicalNodeReplacement } from "./lib";
-export { defaultExtensionNodes } from "./shared";
+// Theme
 export { defaultTheme } from "./theme";
-// Re-export types for direct access
-export type { LexicalEditor, TextFormatType, TypixExtension } from "./types";
 
+// Lexical React plugin re-exports (for downstream consumers that need them)
+export { DraggableBlockPlugin_EXPERIMENTAL as DraggableBlockPlugin } from "@lexical/react/LexicalDraggableBlockPlugin";
 export {
-  addSwipeRightListener,
-  cn,
-  findFirstFocusableDescendant,
-  focusNearestDescendant,
-  isKeyboardInput,
-  sanitizeUrl,
-  validateUrl,
-  getSelectedNode,
-  setFloatingElemPositionForLinkEditor,
-  setFloatingElemPosition,
-} from "./utils";
+  LexicalTypeaheadMenuPlugin,
+  MenuOption,
+  type MenuTextMatch,
+} from "@lexical/react/LexicalTypeaheadMenuPlugin";
+
+// Lexical extension building blocks (for custom advanced bootstrap)
+export { buildEditorFromExtensions } from "@lexical/extension";

@@ -20,6 +20,15 @@ export const docs = defineDocs({
   },
 });
 
+export const uiDocs = defineDocs({
+  dir: "content/ui-docs",
+  docs: {
+    schema: frontmatterSchema,
+    postprocess: { includeProcessedMarkdown: true },
+  },
+  meta: { schema: metaSchema },
+});
+
 export default defineConfig({
   mdxOptions: {
     // MDX options

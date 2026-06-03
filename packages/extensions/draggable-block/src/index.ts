@@ -1,5 +1,5 @@
 export {
   DraggableBlockExtension,
-  type DraggableBlockClassNames,
-  type DraggableBlockExtensionProps,
-} from "./draggable-block";
+  type DraggableBlockConfig,
+} from "./extension";
+export type { DraggableBlockClassNames } from "./types";

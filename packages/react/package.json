@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/react",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "React adapter for Typix editor framework",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",
@@ -18,23 +18,6 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.cjs"
       }
-    },
-    "./lexical": {
-      "import": {
-        "types": "./dist/lexical.d.ts",
-        "default": "./dist/lexical.js"
-      },
-      "require": {
-        "types": "./dist/lexical.d.ts",
-        "default": "./dist/lexical.cjs"
-      }
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "lexical": [
-        "./dist/lexical.d.ts"
-      ]
     }
   },
   "repository": {
@@ -42,55 +25,40 @@
     "url": "https://github.com/mrdiyorbek-juraev/typix.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
     "build:fast": "tsup",
     "dev": "pnpm build:fast --watch",
-    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist",
+    "clean": "rm -rf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.1.6",
-    "@lexical/tailwind": "^0.40.0",
     "@radix-ui/react-slot": "^1.2.4",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.4.0"
+    "@typix-editor/utils": "workspace:*",
+    "@lexical/react": "catalog:",
+    "@lexical/extension": "catalog:",
+    "@lexical/text": "catalog:",
+    "@lexical/utils": "catalog:"
   },
   "peerDependencies": {
+    "@typix-editor/core": "workspace:*",
+    "lexical": "catalog:",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "devDependencies": {
-    "@lexical/code": "^0.40.0",
-    "@lexical/extension": "^0.40.0",
-    "@lexical/file": "^0.40.0",
-    "@lexical/hashtag": "^0.40.0",
-    "@lexical/headless": "^0.40.0",
-    "@lexical/html": "^0.40.0",
-    "@lexical/link": "^0.40.0",
-    "@lexical/list": "^0.40.0",
-    "@lexical/mark": "^0.40.0",
-    "@lexical/markdown": "^0.40.0",
-    "@lexical/overflow": "^0.40.0",
-    "@lexical/react": "^0.40.0",
-    "@lexical/rich-text": "^0.40.0",
-    "@lexical/selection": "^0.40.0",
-    "@lexical/table": "^0.40.0",
-    "@lexical/text": "^0.40.0",
-    "@lexical/utils": "^0.40.0",
-    "@lexical/yjs": "^0.40.0",
-    "@tailwindcss/postcss": "^4.1.17",
-    "@tailwindcss/typography": "^0.5.19",
+    "@typix-editor/core": "workspace:*",
+    "lexical": "catalog:",
+    "@lexical/headless": "catalog:",
+    "@lexical/mark": "catalog:",
     "@types/node": "^24.10.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.1",
-    "lexical": "^0.40.0",
-    "postcss": "^8.5.6",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
-    "tailwindcss": "^4.1.17",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0"
   },
@@ -105,5 +73,12 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "homepage": "https://typix.com",
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
   }
 }

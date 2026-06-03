@@ -1,0 +1,6 @@
+{
+  "root": true,
+  "title": "Typix UI",
+  "icon": "layout",
+  "pages": ["index"]
+}

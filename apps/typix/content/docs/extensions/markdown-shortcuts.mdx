@@ -1,0 +1,43 @@
+---
+title: Markdown Shortcuts
+description: Type markdown syntax to format as you go
+---
+
+Watches what you type and converts markdown syntax to actual editor
+formatting. Type `## ` and it becomes an H2. Type `> ` to start a quote.
+Type `` `code` `` and the backticks vanish into an inline code mark.
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-markdown-shortcuts
+```
+
+## Live demo
+
+<ComponentPreview name="markdown-shortcuts" />
+
+## Built-in transforms
+
+| Syntax | Becomes |
+|---|---|
+| `# ` … | H1 |
+| `## ` … | H2 |
+| `### ` … | H3 |
+| `> ` … | Blockquote |
+| `- ` or `* ` | Bullet list |
+| `1. ` | Numbered list |
+| `[ ] ` | Task list item |
+| `` ```js `` | Code block (js) |
+| `**bold**` | Bold |
+| `*italic*` | Italic |
+| `~~strike~~` | Strikethrough |
+| `` `code` `` | Inline code |
+| `[text](url)` | Link |
+
+## Related
+
+<Cards>
+  <Card title="Short Cuts" href="/docs/extensions/short-cuts" description="Keyboard shortcuts (⌘B, ⌘I, …)." />
+  <Card title="Slash Command" href="/docs/extensions/slash-command" description="Discovery menu via /." />
+</Cards>

@@ -1,65 +1,23 @@
 ---
 title: Auto Complete
-description: Word auto-completion suggestions as you type
+description: Inline ghost-text suggestions that appear as you type
 ---
 
-The Auto Complete extension provides inline word completion suggestions based on a dictionary or custom word list.
+Shows greyed-out suggestion text inline with the cursor. Press `→` or `Tab`
+to accept the suggestion, or just keep typing to dismiss.
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-auto-complete
+```
+
+## Live demo
 
 <ComponentPreview name="auto-complete" />
 
-## Installation
+## Notes
 
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-auto-complete
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-auto-complete
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-auto-complete
-    ```
-  </Tab>
-</Tabs>
-
-## Setup
-
-Register the `AutocompleteNode` in your editor config and add the extension component:
-
-```tsx
-import { createEditorConfig, defaultExtensionNodes } from '@typix-editor/react';
-import { AutocompleteExtension, AutocompleteNode } from '@typix-editor/extension-auto-complete';
-
-const config = createEditorConfig({
-  extensionNodes: [...defaultExtensionNodes, AutocompleteNode],
-});
-
-function MyEditor() {
-  return (
-    <EditorRoot config={config}>
-      <EditorContent />
-      <AutocompleteExtension />
-    </EditorRoot>
-  );
-}
-```
-
-## Exports
-
-| Export | Type | Description |
-| --- | --- | --- |
-| `AutocompleteExtension` | Component | The autocomplete plugin |
-| `AutocompleteNode` | Lexical Node | Custom node for autocomplete suggestions |
-
-## Nodes
-
-| Node | Description |
-| --- | --- |
-| `AutocompleteNode` | Renders inline completion text. Must be registered in editor config. |
+- The extension uses a simple word-list heuristic by default — extend or
+  swap the suggestion source via `configExtension(AutocompleteExtension, { ... })`.
+- Pairs naturally with an AI extension for LLM-driven completions.

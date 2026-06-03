@@ -1,5 +1,12 @@
 # @typix-editor/extension-code-highlight-shiki
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Provides Shiki-based syntax highlighting for fenced code blocks — accurate VS Code-style tokens with a configurable theme.
+- Lazy-loads grammars per language to keep the initial bundle small.
+
 ## 4.0.0
 
 ### Minor Changes

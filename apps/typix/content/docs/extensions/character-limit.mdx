@@ -1,0 +1,41 @@
+---
+title: Character Limit
+description: Live character counter with warning state — soft visual feedback
+---
+
+Shows a live character / word counter beneath the editor with a
+circular progress indicator. Enters warning state as the user approaches
+the limit. **Does not block input** — for a hard cap, use
+[Max Length](/docs/extensions/max-length).
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-character-limit
+```
+
+## Live demo
+
+<ComponentPreview name="character-limit" />
+
+## Config
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `limit` | `number` | required | Maximum character count. |
+| `charset` | `"UTF-8" \| "UTF-16"` | `"UTF-16"` | How to count multi-byte chars. |
+
+## Vendor the UI
+
+```bash
+npx typix ui add character-limit
+```
+
+Copies `<CharacterLimit>` + `<CharacterLimitCounter>` + `useCharacterCount`
+into `components/typix/main/character-limit/`.
+
+## Related
+
+<Cards>
+  <Card title="Max Length" href="/docs/extensions/max-length" description="Hard input cap (blocks typing)." />
+</Cards>

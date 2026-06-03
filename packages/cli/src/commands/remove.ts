@@ -114,7 +114,7 @@ export async function removeCommand(
   const s = spinner("Removing extensions...").start();
   try {
     removePackages(packages);
-    s.succeed(`Removed ${packages.length} extension(s).`);
+    s.succeed(`Removed ${packages.length} package(s).`);
     logger.break();
     for (const pkg of packages) {
       logger.success(chalk.gray(pkg));

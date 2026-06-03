@@ -1,5 +1,12 @@
 # @typix-editor/extension-speech-to-text
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Wraps the browser `SpeechRecognition` API and routes recognized text into the editor at the cursor.
+- Pairs with `SpeechToTextButton` from `@typix-editor/ui` for the start/stop control (vendor via `typix ui add speech-to-text`).
+
 ## 4.0.0
 
 ### Minor Changes

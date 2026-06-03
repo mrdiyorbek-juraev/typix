@@ -1,0 +1,46 @@
+---
+title: CodeBlockUI
+description: Per-block toolbar for code blocks — language picker, copy button, and theme controls wired into the code-block extension.
+---
+
+`CodeBlockUI` reads the active code block from the editor selection and
+renders a toolbar pinned to it. It pairs with [`extension-code-block`](/docs/extensions/code-block)
+and supports both Prism and Shiki highlighting backends.
+
+## Install
+
+```bash
+npx typix ui add code-block
+```
+
+The CLI also installs `@typix-editor/extension-code-block` if needed.
+
+## Import
+
+```tsx
+import { CodeBlockUI } from "@/components/typix/main/code-block";
+```
+
+## Props
+
+`CodeBlockUI` currently has no external props — it reads everything from
+editor state. Drop it inside the editor provider and it activates whenever
+the selection lands inside a code block.
+
+## Usage
+
+```tsx
+import { CodeBlockUI } from "@/components/typix/main/code-block";
+
+<TypixEditorContext.Provider value={{ editor }}>
+  <EditorContent editor={editor} />
+  <CodeBlockUI />
+</TypixEditorContext.Provider>
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-code-block" href="/docs/extensions/code-block" description="The behavior extension." />
+  <Card title="extension-code-highlight-shiki" href="/docs/extensions/code-highlight-shiki" description="Shiki syntax highlighting." />
+</Cards>

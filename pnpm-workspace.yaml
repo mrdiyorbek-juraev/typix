@@ -1,3 +1,75 @@
 packages:
   - "apps/*"
+  - "packages/*"
   - "packages/**/**"
+
+# Single source of truth for shared external versions. Reference these in
+# package.jsons via "lexical": "catalog:" (etc) so a bump only touches one
+# line here, never 25 package.json files.
+#
+# - lexical & @lexical/*: every Typix package uses the same Lexical drop.
+#   Both deps and peerDependencies can use catalog: since the value is a
+#   range (^0.45.0).
+# - react / react-dom / @types/react*: apps + library devDeps + root.
+#   Library peerDependencies for React stay multi-major
+#   ("^18.2.0 || ^19.0.0-0") and don't go through the catalog.
+catalog:
+  # Lexical
+  lexical: ^0.45.0
+  "@lexical/code": ^0.45.0
+  "@lexical/code-shiki": ^0.45.0
+  "@lexical/extension": ^0.45.0
+  "@lexical/hashtag": ^0.45.0
+  "@lexical/headless": ^0.45.0
+  "@lexical/history": ^0.45.0
+  "@lexical/html": ^0.45.0
+  "@lexical/link": ^0.45.0
+  "@lexical/list": ^0.45.0
+  "@lexical/mark": ^0.45.0
+  "@lexical/markdown": ^0.45.0
+  "@lexical/overflow": ^0.45.0
+  "@lexical/react": ^0.45.0
+  "@lexical/rich-text": ^0.45.0
+  "@lexical/selection": ^0.45.0
+  "@lexical/table": ^0.45.0
+  "@lexical/tailwind": ^0.45.0
+  "@lexical/text": ^0.45.0
+  "@lexical/utils": ^0.45.0
+
+  # React (canonical 19.2.x)
+  react: ^19.2.3
+  react-dom: ^19.2.3
+  "@types/react": ^19.2.7
+  "@types/react-dom": ^19.2.3
+
+overrides:
+  parse5: ^7.2.1
+  # Security overrides: each forces a transitive dep to a patched version.
+  # The lockfile already had the patched copy resolved for at least one
+  # consumer, so these overrides hoist that version everywhere rather than
+  # pulling a brand-new major into the graph — low regression risk.
+
+  # critical — fast-xml-parser CVE GHSA-fj3w-jwp8-x2g3, fumadocs-openapi
+  fast-xml-parser: ^4.5.4
+  # high — vite arbitrary file read advisories patched after 7.3.1
+  vite: ^7.3.2
+  # high — rollup arbitrary file write via path traversal
+  rollup: ^4.55.1
+  # high — fast-uri path traversal / host confusion, patched after 3.1.1
+  fast-uri: ^3.1.2
+  # high/moderate — picomatch ReDoS, patched in 4.0.4+
+  picomatch: ^4.0.4
+  # high/moderate — path-to-regexp ReDoS (multiple advisories)
+  path-to-regexp: ^8.3.0
+  # moderate — yaml prototype pollution / ReDoS
+  yaml: ^2.8.2
+  # moderate — postcss line-return parsing
+  postcss: ^8.5.6
+  # moderate — ajv prototype pollution
+  ajv: ^8.17.1
+  # moderate — brace-expansion ReDoS
+  brace-expansion: ^2.0.2
+  # high — immutable.js prototype pollution, patched in 5.1.5+
+  immutable: ^5.1.5
+  # moderate — uuid potential regex DoS in v9 line; v11 in lockfile
+  uuid: ^11.1.0

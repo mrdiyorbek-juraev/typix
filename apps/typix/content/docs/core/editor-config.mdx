@@ -1,79 +1,67 @@
 ---
-title: Editor Config
-description: createEditorConfig API reference and configuration options
+title: Editor Config (legacy)
+description: How v1's createEditorConfig maps to v2's useTypixEditor options
 ---
 
-`createEditorConfig` creates a Lexical-compatible config object with sensible defaults.
+<Callout type="warn">
+  **v1 page.** v2 doesn't have a `createEditorConfig` function — the
+  same fields are now passed directly as options to `useTypixEditor`.
+  This page exists for v1 → v2 migration.
+</Callout>
 
-## Usage
+## v1 → v2 mapping
+
+In v1:
 
 ```tsx
-import { createEditorConfig, defaultExtensionNodes, defaultTheme } from '@typix-editor/react';
-
 const config = createEditorConfig({
-  namespace: 'my-editor',
-  theme: defaultTheme,
   extensionNodes: defaultExtensionNodes,
-});
-```
-
-Pass the config to `EditorRoot`:
-
-```tsx
-<EditorRoot config={config}>
-  <EditorContent />
-</EditorRoot>
-```
-
-## Options
-
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `namespace` | `string` | `"typix-editor"` | Unique namespace. Important when using multiple editors on the same page. |
-| `theme` | `EditorThemeClasses` | `undefined` | CSS class mappings for editor elements. See [Theming](/docs/getting-started/theming). |
-| `extensionNodes` | `ReadonlyArray<Klass<LexicalNode> \| LexicalNodeReplacement>` | `[]` | Nodes to register with the editor. |
-| `editable` | `boolean` | `true` | Whether the editor starts in editable mode. |
-| `onError` | `(error: Error, editor: LexicalEditor) => void` | `console.error` | Custom error handler. |
-| `initialState` | `SerializedEditorState` | `undefined` | Initial content as serialized JSON. |
-| `editorState` | `InitialEditorStateType` | `undefined` | Direct Lexical editor state (advanced). |
-| `html` | `HTMLConfig` | `undefined` | HTML serialization configuration. |
-
-## Return value
-
-Returns a Lexical `InitialConfigType` object suitable for passing to `LexicalComposer` (or `EditorRoot`).
-
-## defaultExtensionNodes
-
-A pre-configured array of all built-in Lexical nodes:
-
-```tsx
-import { defaultExtensionNodes } from '@typix-editor/react';
-```
-
-Includes: `HeadingNode`, `ParagraphNode`, `TextNode`, `QuoteNode`, `ListNode`, `ListItemNode`, `LinkNode`, `AutoLinkNode`, `CodeNode`, `CodeHighlightNode`, `HashtagNode`, `OverflowNode`, `TableNode`, `TableRowNode`, `TableCellNode`.
-
-## Extending with custom nodes
-
-```tsx
-import { defaultExtensionNodes, createEditorConfig } from '@typix-editor/react';
-import { MentionNode } from '@typix-editor/extension-mention';
-
-const config = createEditorConfig({
-  extensionNodes: [...defaultExtensionNodes, MentionNode],
-});
-```
-
-## Without EditorRoot config
-
-If you don't pass a `config` prop to `EditorRoot`, it automatically calls `createEditorConfig` with:
-
-```tsx
-createEditorConfig({
-  namespace: 'typix-editor',
-  extensionNodes: defaultExtensionNodes,
-  editable: true,
-  editorState: null,
-  initialState: content, // from the content prop
   theme: defaultTheme,
+  namespace: "editor",
 });
+
+return <EditorRoot config={config}>{/* … */}</EditorRoot>;
 ```
+
+In v2:
+
+```tsx
+const editor = useTypixEditor({
+  extensions: [StarterKit()],
+  theme: defaultTheme,
+  namespace: "editor",
+});
+
+return (
+  <TypixEditorContext.Provider value={{ editor }}>
+    <EditorContent editor={editor} />
+  </TypixEditorContext.Provider>
+);
+```
+
+## Field-by-field
+
+| v1 (`createEditorConfig`) | v2 (`useTypixEditor` options) |
+|---|---|
+| `extensionNodes: defaultExtensionNodes` | `extensions: [StarterKit()]` |
+| `theme: defaultTheme` | `theme: defaultTheme` |
+| `namespace: "..."` | `namespace: "..."` |
+| `editable: true` | `editable: true` |
+| (passed via `<EditorRoot content={...}>`) | `content: serialized` |
+| (passed via `<EditorRoot onContentChange={...}>`) | `onUpdate: ({ editor }) => ...` |
+| (passed via `<EditorRoot onError={...}>`) | `onError: (err) => ...` |
+
+## Where to find more
+
+<Cards>
+  <Card
+    title="useTypixEditor reference"
+    href="/docs/core/typix-editor"
+    description="All options + the TypixEditor instance API."
+  />
+  <Card
+    title="Editor Setup"
+    href="/docs/getting-started/editor-setup"
+    description="Walkthrough of every option."
+  />
+</Cards>

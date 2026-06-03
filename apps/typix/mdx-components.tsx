@@ -5,7 +5,6 @@ import type { MDXComponents } from "mdx/types";
 import { ComponentPreview } from "@/components/preview/component-preview";
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
-  // @ts-expect-error
   return {
     ...defaultMdxComponents,
     Steps,

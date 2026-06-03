@@ -1,0 +1,297 @@
+{
+  "name": "@typix-editor/core",
+  "version": "5.0.0",
+  "description": "Headless editor API for Typix — framework-agnostic wrapper around Lexical",
+  "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./lexical": {
+      "import": {
+        "types": "./dist/lexical/index.d.ts",
+        "default": "./dist/lexical/index.js"
+      },
+      "require": {
+        "types": "./dist/lexical/index.d.cts",
+        "default": "./dist/lexical/index.cjs"
+      }
+    },
+    "./lexical/code": {
+      "import": {
+        "types": "./dist/lexical/code.d.ts",
+        "default": "./dist/lexical/code.js"
+      },
+      "require": {
+        "types": "./dist/lexical/code.d.cts",
+        "default": "./dist/lexical/code.cjs"
+      }
+    },
+    "./lexical/code-shiki": {
+      "import": {
+        "types": "./dist/lexical/code-shiki.d.ts",
+        "default": "./dist/lexical/code-shiki.js"
+      },
+      "require": {
+        "types": "./dist/lexical/code-shiki.d.cts",
+        "default": "./dist/lexical/code-shiki.cjs"
+      }
+    },
+    "./lexical/extension": {
+      "import": {
+        "types": "./dist/lexical/extension.d.ts",
+        "default": "./dist/lexical/extension.js"
+      },
+      "require": {
+        "types": "./dist/lexical/extension.d.cts",
+        "default": "./dist/lexical/extension.cjs"
+      }
+    },
+    "./lexical/hashtag": {
+      "import": {
+        "types": "./dist/lexical/hashtag.d.ts",
+        "default": "./dist/lexical/hashtag.js"
+      },
+      "require": {
+        "types": "./dist/lexical/hashtag.d.cts",
+        "default": "./dist/lexical/hashtag.cjs"
+      }
+    },
+    "./lexical/headless": {
+      "import": {
+        "types": "./dist/lexical/headless.d.ts",
+        "default": "./dist/lexical/headless.js"
+      },
+      "require": {
+        "types": "./dist/lexical/headless.d.cts",
+        "default": "./dist/lexical/headless.cjs"
+      }
+    },
+    "./lexical/history": {
+      "import": {
+        "types": "./dist/lexical/history.d.ts",
+        "default": "./dist/lexical/history.js"
+      },
+      "require": {
+        "types": "./dist/lexical/history.d.cts",
+        "default": "./dist/lexical/history.cjs"
+      }
+    },
+    "./lexical/html": {
+      "import": {
+        "types": "./dist/lexical/html.d.ts",
+        "default": "./dist/lexical/html.js"
+      },
+      "require": {
+        "types": "./dist/lexical/html.d.cts",
+        "default": "./dist/lexical/html.cjs"
+      }
+    },
+    "./lexical/link": {
+      "import": {
+        "types": "./dist/lexical/link.d.ts",
+        "default": "./dist/lexical/link.js"
+      },
+      "require": {
+        "types": "./dist/lexical/link.d.cts",
+        "default": "./dist/lexical/link.cjs"
+      }
+    },
+    "./lexical/list": {
+      "import": {
+        "types": "./dist/lexical/list.d.ts",
+        "default": "./dist/lexical/list.js"
+      },
+      "require": {
+        "types": "./dist/lexical/list.d.cts",
+        "default": "./dist/lexical/list.cjs"
+      }
+    },
+    "./lexical/mark": {
+      "import": {
+        "types": "./dist/lexical/mark.d.ts",
+        "default": "./dist/lexical/mark.js"
+      },
+      "require": {
+        "types": "./dist/lexical/mark.d.cts",
+        "default": "./dist/lexical/mark.cjs"
+      }
+    },
+    "./lexical/markdown": {
+      "import": {
+        "types": "./dist/lexical/markdown.d.ts",
+        "default": "./dist/lexical/markdown.js"
+      },
+      "require": {
+        "types": "./dist/lexical/markdown.d.cts",
+        "default": "./dist/lexical/markdown.cjs"
+      }
+    },
+    "./lexical/overflow": {
+      "import": {
+        "types": "./dist/lexical/overflow.d.ts",
+        "default": "./dist/lexical/overflow.js"
+      },
+      "require": {
+        "types": "./dist/lexical/overflow.d.cts",
+        "default": "./dist/lexical/overflow.cjs"
+      }
+    },
+    "./lexical/rich-text": {
+      "import": {
+        "types": "./dist/lexical/rich-text.d.ts",
+        "default": "./dist/lexical/rich-text.js"
+      },
+      "require": {
+        "types": "./dist/lexical/rich-text.d.cts",
+        "default": "./dist/lexical/rich-text.cjs"
+      }
+    },
+    "./lexical/selection": {
+      "import": {
+        "types": "./dist/lexical/selection.d.ts",
+        "default": "./dist/lexical/selection.js"
+      },
+      "require": {
+        "types": "./dist/lexical/selection.d.cts",
+        "default": "./dist/lexical/selection.cjs"
+      }
+    },
+    "./lexical/table": {
+      "import": {
+        "types": "./dist/lexical/table.d.ts",
+        "default": "./dist/lexical/table.js"
+      },
+      "require": {
+        "types": "./dist/lexical/table.d.cts",
+        "default": "./dist/lexical/table.cjs"
+      }
+    },
+    "./lexical/text": {
+      "import": {
+        "types": "./dist/lexical/text.d.ts",
+        "default": "./dist/lexical/text.js"
+      },
+      "require": {
+        "types": "./dist/lexical/text.d.cts",
+        "default": "./dist/lexical/text.cjs"
+      }
+    },
+    "./lexical/utils": {
+      "import": {
+        "types": "./dist/lexical/utils.d.ts",
+        "default": "./dist/lexical/utils.js"
+      },
+      "require": {
+        "types": "./dist/lexical/utils.d.cts",
+        "default": "./dist/lexical/utils.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "homepage": "https://typix.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdiyorbek-juraev/typix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrdiyorbek-juraev/typix/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:fast": "tsup",
+    "dev": "pnpm build:fast --watch",
+    "clean": "rm -rf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "peerDependencies": {
+    "lexical": "catalog:",
+    "@lexical/code": "catalog:",
+    "@lexical/code-shiki": "catalog:",
+    "@lexical/extension": "catalog:",
+    "@lexical/hashtag": "catalog:",
+    "@lexical/headless": "catalog:",
+    "@lexical/history": "catalog:",
+    "@lexical/html": "catalog:",
+    "@lexical/link": "catalog:",
+    "@lexical/list": "catalog:",
+    "@lexical/mark": "catalog:",
+    "@lexical/markdown": "catalog:",
+    "@lexical/overflow": "catalog:",
+    "@lexical/rich-text": "catalog:",
+    "@lexical/selection": "catalog:",
+    "@lexical/table": "catalog:",
+    "@lexical/text": "catalog:",
+    "@lexical/utils": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "@lexical/code-shiki": {
+      "optional": true
+    },
+    "@lexical/history": {
+      "optional": true
+    },
+    "@lexical/markdown": {
+      "optional": true
+    },
+    "@lexical/text": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@typix-editor/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "lexical": "catalog:",
+    "@lexical/code": "catalog:",
+    "@lexical/code-shiki": "catalog:",
+    "@lexical/extension": "catalog:",
+    "@lexical/hashtag": "catalog:",
+    "@lexical/headless": "catalog:",
+    "@lexical/history": "catalog:",
+    "@lexical/html": "catalog:",
+    "@lexical/link": "catalog:",
+    "@lexical/list": "catalog:",
+    "@lexical/mark": "catalog:",
+    "@lexical/markdown": "catalog:",
+    "@lexical/overflow": "catalog:",
+    "@lexical/rich-text": "catalog:",
+    "@lexical/selection": "catalog:",
+    "@lexical/table": "catalog:",
+    "@lexical/text": "catalog:",
+    "@lexical/utils": "catalog:",
+    "@types/node": "^25.1.0",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
+  },
+  "keywords": [
+    "typix",
+    "editor",
+    "rich-text",
+    "lexical",
+    "headless",
+    "wysiwyg"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

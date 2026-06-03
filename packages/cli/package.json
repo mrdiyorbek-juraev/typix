@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/cli",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "CLI for installing extensions in your Typix editor project",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",
@@ -10,12 +10,13 @@
   },
   "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "git clean -xdf .cache .turbo dist node_modules rm -rf dist"
+    "clean": "rm -rf .cache .turbo dist node_modules"
   },
   "dependencies": {
     "chalk": "^5.4.1",

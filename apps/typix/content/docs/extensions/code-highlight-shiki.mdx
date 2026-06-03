@@ -1,66 +1,37 @@
 ---
 title: Code Highlight (Shiki)
-description: Syntax highlighting for code blocks using Shiki
+description: Syntax highlighting for code blocks via Shiki (TextMate grammars)
 ---
 
-The Code Highlight Shiki extension adds syntax highlighting to code blocks using [Shiki](https://shiki.style/), which uses TextMate grammars for accurate highlighting.
+Adds Shiki-powered syntax highlighting to your code blocks. Same engine
+VS Code uses, so output matches your editor's theme. Requires the
+[Code Block](/docs/extensions/code-block) extension as the host
+container.
 
-## Demo
+## Install
+
+```bash
+pnpm add @typix-editor/extension-code-highlight-shiki
+```
+
+## Live demo
 
 <ComponentPreview name="code-highlight-shiki" />
 
-## Installation
+## Tradeoff vs Prism
 
-<Tabs items={["pnpm", "npm", "yarn"]}>
-  <Tab value="pnpm">
-    ```bash
-    pnpm add @typix-editor/extension-code-highlight-shiki
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    npm install @typix-editor/extension-code-highlight-shiki
-    ```
-  </Tab>
-  <Tab value="yarn">
-    ```bash
-    yarn add @typix-editor/extension-code-highlight-shiki
-    ```
-  </Tab>
-</Tabs>
+| | Prism | Shiki |
+|---|---|---|
+| Bundle size | small | larger (TextMate grammars + WASM) |
+| Theme fidelity | OK | matches VS Code exactly |
+| Lazy load | easy | already lazy |
+| Best for | general projects | code-heavy docs sites |
 
-## Setup
+Install one, not both.
 
-```tsx
-import { CodeHighlightShikiExtension } from '@typix-editor/extension-code-highlight-shiki';
+## Related
 
-function MyEditor() {
-  return (
-    <EditorRoot>
-      <EditorContent />
-      <CodeHighlightShikiExtension />
-    </EditorRoot>
-  );
-}
-```
-
-<Callout type="info">
-  `CodeNode` and `CodeHighlightNode` are included in `defaultExtensionNodes`.
-</Callout>
-
-## Exports
-
-| Export | Type | Description |
-| --- | --- | --- |
-| `CodeHighlightShikiExtension` | Component | Shiki-based syntax highlighter |
-
-## Prism vs Shiki
-
-| Feature | Prism | Shiki |
-| --- | --- | --- |
-| Grammar system | Custom | TextMate (VS Code) |
-| Accuracy | Good | Excellent |
-| Bundle size | Smaller | Larger (lazy-loaded) |
-| Theme support | CSS-based | Built-in themes |
-
-Use **Prism** for lighter bundles, **Shiki** for VS Code-accurate highlighting.
+<Cards>
+  <Card title="Code Block" href="/docs/extensions/code-block" description="Foundation extension." />
+  <Card title="Code Highlight (Prism)" href="/docs/extensions/code-highlight-prism" description="The Prism alternative." />
+</Cards>

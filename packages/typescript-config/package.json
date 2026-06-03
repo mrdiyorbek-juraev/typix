@@ -1,9 +1,9 @@
 {
   "name": "@typix-editor/typescript-config",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "clean": "rm -rf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   }
 }

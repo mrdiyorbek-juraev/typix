@@ -1,0 +1,35 @@
+---
+title: TextAlignButton
+description: Set text alignment to left, center, right, or justify.
+---
+
+<ComponentPreview name="ui-text-align" />
+
+## Install
+
+```bash
+npx typix ui add text-align-button
+```
+
+## Import
+
+```tsx
+import { TextAlignButton } from "@/components/typix/main/text-align-button";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `align` | `TextAlign` | — | The alignment to apply. Required. |
+| `text` | `string` | — | Override the button label. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when alignment can't be set. |
+| `showShortcut` | `boolean` | `true` | Show keyboard shortcut in tooltip. |
+| `onAligned` | `() => void` | — | Called after alignment is applied. |
+| `className` | `string` | — | Additional CSS classes. |
+
+### TextAlign
+
+```ts
+type TextAlign = "left" | "center" | "right" | "justify";
+```

@@ -1,1 +1,1 @@
-export { MaxLengthExtension, type MaxLengthExtensionProps } from "./max-length";
+export { MaxLengthExtension, type MaxLengthConfig } from "./extension";

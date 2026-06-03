@@ -1,0 +1,40 @@
+---
+title: HeadingButton
+description: Toggle heading levels H1–H6 in the editor.
+---
+
+<ComponentPreview name="ui-heading-button" />
+
+## Install
+
+```bash
+npx typix ui add heading-button
+```
+
+## Import
+
+```tsx
+import { HeadingButton } from "@/components/typix/main/heading-button";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | — | Heading level. Required. |
+| `text` | `string` | — | Override the button label. |
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when heading can't be applied. |
+| `showShortcut` | `boolean` | `true` | Show keyboard shortcut in tooltip. |
+| `onToggled` | `(isActive: boolean) => void` | — | Called after the heading is toggled. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Hook
+
+```tsx
+import { useHeading } from "@/components/typix/main/heading-button";
+
+function MyH1Button() {
+  const { isActive, handleToggle, label } = useHeading({ level: 1 });
+  return <button onClick={handleToggle} aria-pressed={isActive}>{label}</button>;
+}
+```

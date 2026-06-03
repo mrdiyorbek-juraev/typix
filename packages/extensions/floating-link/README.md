@@ -1,59 +1,57 @@
 # @typix-editor/extension-floating-link
 
-Floating link editor toolbar for Typix editors. Shows an inline UI for editing link URLs when a link is selected.
+Detect link selection and provide reactive signals for building a floating link toolbar.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-floating-link
+# or
+pnpm add @typix-editor/extension-floating-link
 ```
 
 ## Usage
 
-```tsx
-import { FloatingLinkExtension } from "@typix-editor/extension-floating-link";
+```ts
+import { FloatingLinkExtension, getFloatingLinkOutput } from "@typix-editor/extension-floating-link"
+import { createTypix } from "@typix-editor/core"
 
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <FloatingLinkExtension />
-</EditorRoot>
+const editor = createTypix({
+  extensions: [
+    FloatingLinkExtension({ openInNewTab: true }),
+  ],
+})
+
+// Read output signals in your framework component
+const output = getFloatingLinkOutput(editor.unwrap())
+// output.isLink.value   -- true when caret is inside a link
+// output.activeEditor   -- the (possibly nested) editor owning the selection
 ```
 
-### Custom Render
+## Configuration
 
-```tsx
-<FloatingLinkExtension verticalOffset={10}>
-  {({ isEditing, url, setUrl, saveLink, cancelEdit, editLink, removeLink }) => (
-    <div className="my-link-editor">
-      {isEditing ? (
-        <>
-          <input value={url} onChange={(e) => setUrl(e.target.value)} />
-          <button onClick={saveLink}>Save</button>
-          <button onClick={cancelEdit}>Cancel</button>
-        </>
-      ) : (
-        <>
-          <a href={url}>{url}</a>
-          <button onClick={editLink}>Edit</button>
-          <button onClick={removeLink}>Remove</button>
-        </>
-      )}
-    </div>
-  )}
-</FloatingLinkExtension>
-```
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable floating link detection |
+| `openInNewTab` | `boolean` | `true` | Open links in a new tab on Ctrl/Cmd+click |
 
-## Props
+## Output Signals
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `(props: FloatingLinkRenderProps) => ReactNode` | Built-in UI | Custom render function |
-| `verticalOffset` | `number` | `0` | Vertical offset for positioning |
+| Signal | Type | Description |
+|--------|------|-------------|
+| `disabled` | `Signal<boolean>` | Reactive mirror of the `disabled` config |
+| `isLink` | `Signal<boolean>` | `true` when the current selection is inside a link node |
+| `activeEditor` | `Signal<LexicalEditor>` | The active editor instance owning the current selection |
 
-## Documentation
+Access signals via `getFloatingLinkOutput(lexicalEditor)`.
 
-[typix.com/docs/extensions/floating-link](https://typix.com/docs/extensions/floating-link)
+## API
 
-## License
+### Exported Types
 
-MIT
+- **`FloatingLinkConfig`** -- Extension configuration interface.
+- **`FloatingLinkOutput`** -- Output signals interface.
+
+### Functions
+
+- **`getFloatingLinkOutput(editor: LexicalEditor)`** -- Returns the output signals for the given editor, or `undefined` if the extension is not registered on that editor.

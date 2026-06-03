@@ -1,5 +1,12 @@
 # @typix-editor/extension-keywords
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Detects configured keyword tokens as the user types and wraps them in a `KeywordNode` for styling (hashtags, brand terms, internal jargon).
+- Accepts a list of strings or a custom `matcher` for case-insensitive / fuzzy matching.
+
 ## 4.0.0
 
 ### Minor Changes

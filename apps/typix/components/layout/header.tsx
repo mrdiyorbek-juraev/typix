@@ -21,12 +21,12 @@ export const linkItems: LinkItemType[] = [
     icon: <Blocks />,
     active: "nested-url",
   },
-  {
-    text: "Pricing",
-    url: "/pricing",
-    icon: <DollarSign />,
-    active: "url",
-  },
+  // {
+  //   text: "Pricing",
+  //   url: "/pricing",
+  //   icon: <DollarSign />,
+  //   active: "url",
+  // },
   {
     text: "Docs",
     url: "/docs",

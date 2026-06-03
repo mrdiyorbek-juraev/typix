@@ -1,0 +1,70 @@
+---
+title: CharacterLimit
+description: Live character and word counter with a warning threshold — drop-in for blogs, comments, or any length-constrained input.
+---
+
+`CharacterLimit` reads the editor state, computes characters + words, and
+renders a counter that turns orange/red as the user approaches the limit.
+Pair it with [`extension-character-limit`](/docs/extensions/character-limit)
+to actually prevent typing past the cap.
+
+## Install
+
+```bash
+npx typix ui add character-limit
+```
+
+## Import
+
+```tsx
+import {
+  CharacterLimit,
+  CharacterLimitCounter,
+  useCharacterCount,
+} from "@/components/typix/main/character-limit";
+```
+
+## CharacterLimit props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `maxLength` | `number` | — | Maximum characters allowed. Required. |
+| `charset` | `"UTF-8" \| "UTF-16"` | `"UTF-16"` | How to count bytes. UTF-16 ≈ `string.length`. |
+| `warningThreshold` | `number` | `0.1` | Enter warning state when remaining < this fraction of `maxLength`. |
+
+## CharacterLimitCounter props
+
+Use the counter directly when you compute the count elsewhere:
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `count` | `number` | — | Current character count. Required. |
+| `maxLength` | `number` | — | Maximum allowed. Required. |
+| `words` | `number` | — | Word count (only shown when `showWords` is true). |
+| `warningThreshold` | `number` | `0.1` | Warning state threshold. |
+| `showWords` | `boolean` | `false` | Render word count alongside characters. |
+| `className` | `string` | — | Extra class on the counter. |
+
+## Hook
+
+`useCharacterCount` returns live stats — useful for custom UIs:
+
+```tsx
+const { characters, words } = useCharacterCount({ charset: "UTF-16" });
+```
+
+## Usage
+
+```tsx
+import { CharacterLimit } from "@/components/typix/main/character-limit";
+
+<div className="flex justify-end p-2">
+  <CharacterLimit maxLength={280} warningThreshold={0.15} />
+</div>
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-character-limit" href="/docs/extensions/character-limit" description="Hard-block typing past the cap." />
+</Cards>

@@ -1,4 +1,4 @@
-import { IS_CHROME } from "@lexical/utils";
+import { IS_CHROME } from "@typix-editor/core/lexical/utils";
 import {
   type DOMConversionMap,
   type DOMConversionOutput,

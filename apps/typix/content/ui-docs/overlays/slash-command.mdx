@@ -1,0 +1,101 @@
+---
+title: SlashDropdownMenu
+description: "`/`-trigger command palette for inserting headings, lists, quotes, code blocks, and custom items."
+---
+
+`SlashDropdownMenu` pairs with the [`extension-slash-command`](/docs/extensions/slash-command)
+extension. It ships with eight built-in items (text, H1–H3, bullet/ordered
+lists, quote, code block) and accepts custom items + group overrides.
+
+## Install
+
+```bash
+npx typix ui add slash-command
+```
+
+The CLI also installs `@typix-editor/extension-slash-command` if needed.
+
+## Import
+
+```tsx
+import {
+  SlashDropdownMenu,
+  useSlashDropdownMenu,
+} from "@/components/typix/main/slash-command";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `config` | `SlashMenuConfig` | — | Enabled items, groups, and custom items. |
+| `className` | `string` | — | Extra class on the dropdown container. |
+| `disabled` | `boolean` | `false` | Disable the menu. |
+| `onSelect` | `(item: SlashMenuItem) => void` | — | Called when an item is picked. |
+| `onOpen` | `() => void` | — | Called when the menu opens. |
+| `onClose` | `() => void` | — | Called when the menu closes. |
+| `emptyContent` | `ReactNode` | — | Shown when no items match the query. |
+
+### SlashMenuConfig
+
+| Field | Type | Description |
+|---|---|---|
+| `enabledItems` | `SlashMenuItemType[]` | Which built-ins to show. Defaults to all. |
+| `customItems` | `SlashMenuItem[]` | Extra items to append. |
+| `itemGroups` | `Record<string, string>` | Override the group label per item type. |
+| `showGroups` | `boolean` | Show group headings. Default `true`. |
+
+### SlashMenuItem
+
+```ts
+interface SlashMenuItem {
+  type: SlashMenuItemType | string;
+  title: string;
+  subtext?: string;
+  aliases?: string[];
+  badge?: ComponentType<{ className?: string; size?: number }>;
+  group?: string;
+  onSelect: (ctx: { editor: LexicalEditor }) => void;
+}
+```
+
+## Usage
+
+```tsx
+import { ImageIcon } from "lucide-react";
+import { $createParagraphNode } from "lexical";
+import { SlashDropdownMenu } from "@/components/typix/main/slash-command";
+
+<SlashDropdownMenu
+  config={{
+    enabledItems: ["text", "heading_1", "heading_2", "bullet_list", "code_block"],
+    customItems: [
+      {
+        type: "image",
+        title: "Image",
+        subtext: "Insert an image from your device",
+        badge: ImageIcon,
+        group: "Media",
+        onSelect: ({ editor }) => openImagePicker(editor),
+      },
+    ],
+  }}
+/>
+```
+
+## Hook
+
+`useSlashDropdownMenu` gives you the raw item list — useful for embedding
+the items in a custom UI (e.g. a sidebar command palette):
+
+```tsx
+const { getSlashMenuItems, getSuggestionItems } = useSlashDropdownMenu({
+  customItems: [...],
+});
+```
+
+## Related
+
+<Cards>
+  <Card title="extension-slash-command" href="/docs/extensions/slash-command" description="The behavior extension this UI pairs with." />
+</Cards>

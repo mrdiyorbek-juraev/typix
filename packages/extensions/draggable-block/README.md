@@ -1,49 +1,48 @@
 # @typix-editor/extension-draggable-block
 
-Drag-and-drop block reordering for Typix editors. Adds a drag handle to top-level blocks.
+Headless block reordering via drag-and-drop. Provides the extension config and class name contracts for framework-specific drag handle UI.
 
 ## Installation
 
 ```bash
 npm install @typix-editor/extension-draggable-block
+# or
+pnpm add @typix-editor/extension-draggable-block
 ```
 
 ## Usage
 
-```tsx
-import { DraggableBlockExtension } from "@typix-editor/extension-draggable-block";
+```ts
+import { DraggableBlockExtension } from "@typix-editor/extension-draggable-block"
+import { createTypix } from "@typix-editor/core"
 
-<EditorRoot editorConfig={config}>
-  <EditorContent />
-  <DraggableBlockExtension />
-</EditorRoot>
+const editor = createTypix({
+  extensions: [
+    DraggableBlockExtension(),
+  ],
+})
 ```
 
-### Custom Drag Handle
+## Configuration
 
-```tsx
-import { GripVertical } from "lucide-react";
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `disabled` | `boolean` | `false` | Temporarily disable draggable block behavior |
 
-<DraggableBlockExtension
-  dragHandleIcon={<GripVertical size={16} />}
-  classNames={{
-    wrapper: "my-drag-wrapper",
-    handle: "my-drag-handle",
-  }}
-/>
+## API
+
+### Exported Types
+
+- **`DraggableBlockConfig`** -- Extension configuration interface.
+- **`DraggableBlockClassNames`** -- CSS class name overrides for the drag UI:
+
+```ts
+interface DraggableBlockClassNames {
+  /** @default 'typix-draggable-menu' */
+  menu?: string;
+  /** @default 'typix-draggable__target-line' */
+  targetLine?: string;
+  /** @default 'typix-draggable-menu__icon' */
+  icon?: string;
+}
 ```
-
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `dragHandleIcon` | `React.ReactNode` | Default grip icon | Custom drag handle icon |
-| `classNames` | `DraggableBlockClassNames` | - | Custom CSS classes for wrapper and handle |
-
-## Documentation
-
-[typix.com/docs/extensions/draggable-block](https://typix.com/docs/extensions/draggable-block)
-
-## License
-
-MIT

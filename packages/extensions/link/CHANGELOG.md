@@ -1,5 +1,11 @@
 # @typix-editor/extension-link
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Provides `LinkNode` plus the `TOGGLE_LINK`, `INSERT_LINK`, and `REMOVE_LINK` commands — the foundation that `extension-auto-link`, `extension-floating-link`, and `FloatingLinkUI` build on.
+
 ## 4.0.0
 
 ### Minor Changes

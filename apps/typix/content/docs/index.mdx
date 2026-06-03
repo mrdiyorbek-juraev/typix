@@ -3,27 +3,84 @@ title: Typix Editor
 description: A modern, extensible rich-text editor framework built on Lexical
 ---
 
-Typix is a headless, extension-based rich-text editor framework for React. It wraps Meta's [Lexical](https://lexical.dev) with a clean, fluent API and a powerful extension system.
+<Callout type="info">
+  **Typix v2 — Docs refreshed for the new architecture.** The hook-based API
+  (`useTypixEditor`), the `TypixEditorContext.Provider`, the 25 extension
+  packages, and the shadcn-style `typix ui add` flow are documented here.
+  Any reference you see to `EditorRoot` or `useActiveFormats` is from v1 and
+  no longer applies.
+</Callout>
 
-## Why Typix?
+Typix is a headless, extension-based rich-text editor framework for React,
+built on Meta's [Lexical](https://lexical.dev). You install only the
+extensions you need, own the UI source via the CLI, and stay close to
+Lexical when you need to.
 
-- **Headless** — No forced UI. Full control over every rendered element.
-- **Extension-based** — Modular features you install only when needed.
-- **Fluent API** — Chain editor operations with a clean, discoverable interface.
-- **Type-safe** — First-class TypeScript support throughout.
-- **Built on Lexical** — Battle-tested foundation from Meta with direct access when you need it.
+## Why Typix
 
-## Quick Example
+- **Headless** — Editor logic and rendering are decoupled. Nothing forces
+  a particular look.
+- **Extension-based** — 25 first-party extensions for marks, blocks,
+  toolbars, mentions, code, tables, images, AI helpers, and more. Install
+  only what you use.
+- **You own the UI** — `typix ui add <component>` copies React components
+  into your repo (shadcn-style). Customize anything; nothing is locked
+  inside `node_modules`.
+- **Type-safe** — Extensions augment a global command interface; the
+  `editor.chain()` builder is typed per installed extension.
+- **Built on Lexical** — Battle-tested engine. Direct `editor.lexical`
+  access whenever you need a raw Lexical command.
+
+## Quick example
 
 <ComponentPreview name="quick-example" />
 
-## Explore
+## What's in v2
 
 <Cards>
-  <Card title="Installation" href="/docs/getting-started/installation" description="Install Typix and its dependencies" />
-  <Card title="Quick Start" href="/docs/getting-started/quick-start" description="Build your first editor in 5 minutes" />
-  <Card title="Core API" href="/docs/core/overview" description="Components, hooks, and the TypixEditor class" />
-  <Card title="Extensions" href="/docs/extensions/overview" description="Browse all 16 official extensions" />
-  <Card title="Guides" href="/docs/guides/building-a-toolbar" description="Step-by-step tutorials for common tasks" />
-  <Card title="Lexical Interop" href="/docs/guides/lexical-interop" description="Use the full Lexical API when you need it" />
+  <Card
+    title="useTypixEditor"
+    href="/docs/core/typix-editor"
+    description="Hook-based editor creation with explicit extension list, theme, and namespace."
+  />
+  <Card
+    title="TypixEditorContext.Provider"
+    href="/docs/core/overview"
+    description="The new provider pattern. Replaces v1's EditorRoot."
+  />
+  <Card
+    title="typix ui add"
+    href="/docs/getting-started/cli"
+    description="Vendor UI components (FloatingLinkUI, MentionUI, CodeBlockUI, …) into your project."
+  />
+  <Card
+    title="25 extensions"
+    href="/docs/extensions/overview"
+    description="Starter kit plus 24 individual extensions, each a separate npm package."
+  />
+</Cards>
+
+## Get going
+
+<Cards>
+  <Card
+    title="Installation"
+    href="/docs/getting-started/installation"
+    description="Install @typix-editor/react and your first extension."
+  />
+  <Card
+    title="Quick Start"
+    href="/docs/getting-started/quick-start"
+    description="A working editor in three files."
+  />
+  <Card
+    title="CLI & UI Vendoring"
+    href="/docs/getting-started/cli"
+    description="Scaffold a project, install extensions, vendor UI components."
+  />
+  <Card
+    title="Guides"
+    href="/docs/guides/building-a-toolbar"
+    description="Build a toolbar, serialize content, write custom extensions."
+  />
 </Cards>

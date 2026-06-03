@@ -1,0 +1,34 @@
+---
+title: FontSizeInput
+description: Increment or decrement the font size of the selected text.
+---
+
+<ComponentPreview name="ui-font-size" />
+
+## Install
+
+```bash
+npx typix ui add font-size-input
+```
+
+## Import
+
+```tsx
+import { FontSizeInput } from "@/components/typix/main/font-size-input";
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `hideWhenUnavailable` | `boolean` | `false` | Hide when font size can't be changed. |
+| `onChanged` | `(size: number) => void` | — | Called when the font size changes. |
+| `className` | `string` | — | Additional CSS classes. |
+
+## Hook
+
+```tsx
+import { useFontSize } from "@/components/typix/main/font-size-input";
+
+const { currentSize, canIncrease, canDecrease, handleIncrease, handleDecrease, handleSetSize } = useFontSize({});
+```

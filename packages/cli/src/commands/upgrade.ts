@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { logger, spinner } from "../utils/logger.js";
-import { getExtensionEntry, getAllExtensions } from "../utils/registry.js";
+import { getAllExtensions } from "../utils/registry.js";
 import {
   upgradePackages,
   getInstalledTypixExtensions,
@@ -73,10 +73,10 @@ export async function upgradeCommand(
   }
 
   logger.break();
-  logger.info(`Upgrading ${packages.length} extension(s)...`);
+  logger.info(`Upgrading ${packages.length} package(s)...`);
   logger.break();
 
-  const s = spinner("Upgrading extensions...").start();
+  const s = spinner("Upgrading packages...").start();
   try {
     upgradePackages(packages);
     s.succeed("Extensions upgraded successfully!");

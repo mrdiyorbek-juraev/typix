@@ -1,4 +1,6 @@
 export {
   DragDropPasteExtension,
-  type DragDropPasteExtensionProps,
-} from "./drag-drop-paste";
+  type DragDropPasteConfig,
+  INSERT_IMAGE_COMMAND,
+  type InsertImagePayload,
+} from "./extension";

@@ -3,18 +3,27 @@
 import {
   AtSign,
   Blocks,
+  ChevronsUpDown,
+  Clipboard,
   Code,
+  Gauge,
   GripVertical,
   Hash,
+  Highlighter,
+  ImageIcon,
   Keyboard,
+  Link,
   Link2,
-  ListChecks,
   Mic,
   MousePointerClick,
-  Paintbrush,
-  Palette,
+  Package,
   Scissors,
   Sparkles,
+  SquareSlash,
+  Table,
+  Type,
+  Wand2,
+  Wind,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
@@ -218,33 +227,44 @@ function HeadlessCard() {
 /*  Card B — Extension System (wide)                                   */
 /* ------------------------------------------------------------------ */
 
+// All 25 real packages under packages/extensions/. Update this list when
+// adding or removing extensions in the monorepo.
 const extensions = [
-  { name: "Rich Text", icon: Paintbrush },
-  { name: "Mentions", icon: AtSign },
-  { name: "Auto Link", icon: Link2 },
-  { name: "Drag & Drop", icon: GripVertical },
-  { name: "Code Highlight", icon: Code },
-  { name: "Keywords", icon: Hash },
-  { name: "Shortcuts", icon: Keyboard },
-  { name: "Collapsible", icon: ListChecks },
-  { name: "Context Menu", icon: MousePointerClick },
-  { name: "Speech to Text", icon: Mic },
-  { name: "Max Length", icon: Scissors },
-  { name: "Tab Focus", icon: Blocks },
+  { name: "Starter Kit", icon: Package },
   { name: "Auto Complete", icon: Sparkles },
-  { name: "Link", icon: Link2 },
+  { name: "Auto Link", icon: Link },
+  { name: "Character Limit", icon: Gauge },
+  { name: "Code Block", icon: Code },
+  { name: "Code Block Prettier", icon: Wand2 },
+  { name: "Code Highlight Prism", icon: Highlighter },
+  { name: "Code Highlight Shiki", icon: Highlighter },
+  { name: "Collapsible", icon: ChevronsUpDown },
+  { name: "Context Menu", icon: MousePointerClick },
+  { name: "Drag & Drop Paste", icon: Clipboard },
   { name: "Draggable Block", icon: GripVertical },
-  { name: "Themes", icon: Palette },
+  { name: "Floating Link", icon: Link2 },
+  { name: "Image", icon: ImageIcon },
+  { name: "Keywords", icon: Hash },
+  { name: "Link", icon: Link },
+  { name: "Markdown Shortcuts", icon: Type },
+  { name: "Max Length", icon: Scissors },
+  { name: "Mention", icon: AtSign },
+  { name: "Short Cuts", icon: Keyboard },
+  { name: "Slash Command", icon: SquareSlash },
+  { name: "Speech to Text", icon: Mic },
+  { name: "Tab Focus", icon: Blocks },
+  { name: "Table", icon: Table },
+  { name: "Tailwind", icon: Wind },
 ];
 
 function ExtensionsCard() {
   return (
     <BentoCard className="md:col-span-2">
       <h3 className="font-bold text-lg tracking-tight sm:text-xl">
-        16+ Extensions
+        25 Extensions
       </h3>
       <p className="mt-1 text-muted-foreground text-sm">
-        Modular architecture. Add only what you need.
+        Modular architecture. Install only what you need.
       </p>
 
       {/* Marquee */}
@@ -285,21 +305,27 @@ function TypeSafeCard() {
 
       <div className="mt-4 overflow-hidden rounded-lg border border-border/60 bg-neutral-950 p-3 font-mono text-[10px] leading-relaxed sm:text-xs dark:bg-neutral-900/60">
         <div>
-          <span className="text-purple-400">const</span>
+          <span className="text-emerald-400">const</span>
           <span className="text-neutral-300"> editor </span>
-          <span className="text-purple-400">=</span>
-          <span className="text-blue-400"> useEditorState</span>
-          <span className="text-neutral-400">{"<"}</span>
+          <span className="text-neutral-400">=</span>
+          <span className="text-sky-400"> useTypixEditor</span>
+          <span className="text-neutral-400">{"({"}</span>
         </div>
         <div className="pl-3">
-          <span className="text-sky-400">RichTextExtension</span>
-          <span className="text-neutral-400">,</span>
-        </div>
-        <div className="pl-3">
-          <span className="text-sky-400">LinkExtension</span>
+          <span className="text-neutral-300">extensions: [</span>
+          <span className="text-sky-400">StarterKit</span>
+          <span className="text-neutral-400">()],</span>
         </div>
         <div>
-          <span className="text-neutral-400">{">"}</span>
+          <span className="text-neutral-400">{"});"}</span>
+        </div>
+        <div className="mt-2">
+          <span className="text-neutral-300">editor.</span>
+          <span className="text-sky-400">chain</span>
+          <span className="text-neutral-400">().</span>
+          <span className="text-sky-400">toggleBold</span>
+          <span className="text-neutral-400">().</span>
+          <span className="text-sky-400">run</span>
           <span className="text-neutral-400">()</span>
           <motion.span
             animate={{ opacity: [1, 0] }}
@@ -311,7 +337,9 @@ function TypeSafeCard() {
             }}
           />
         </div>
-        <div className="mt-1 text-neutral-500">{"// ^ Full IntelliSense"}</div>
+        <div className="mt-1 text-neutral-500">
+          {"// ^ chain is typed per extension"}
+        </div>
       </div>
     </BentoCard>
   );
@@ -379,10 +407,10 @@ function PerformanceCard() {
           whileInView={{ opacity: 1 }}
         >
           <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text font-bold text-2xl text-transparent sm:text-3xl">
-            {"<1ms"}
+            60 fps
           </span>
           <p className="mt-0.5 text-[10px] text-muted-foreground sm:text-xs">
-            render time
+            consistent typing
           </p>
         </motion.div>
       </div>

@@ -1,0 +1,69 @@
+---
+title: Table
+description: Tables with rows, columns, merging, resizing, and frozen headers
+---
+
+Full table support: insert N×M tables, merge/split cells, resize columns
+with drag handles, freeze the header row, color rows/columns/cells, and
+duplicate/clear/delete via commands.
+
+## Install
+
+```bash
+pnpm add @typix-editor/extension-table
+```
+
+## Live demo
+
+<ComponentPreview name="table" />
+
+## Insert a table
+
+```tsx
+editor.chain().insertTable({ rows: 3, columns: 3, includeHeaders: true }).run();
+```
+
+## Commands
+
+The extension ships ~20 commands for table manipulation:
+
+| Command | Purpose |
+|---|---|
+| `TYPIX_INSERT_TABLE` | Insert a new table at the selection. |
+| `TYPIX_INSERT_ROW_ABOVE` / `_BELOW` | Add a row. |
+| `TYPIX_INSERT_COLUMN_LEFT` / `_RIGHT` | Add a column. |
+| `TYPIX_DELETE_ROW` / `_COLUMN` / `_TABLE` | Remove. |
+| `TYPIX_UNMERGE_CELLS` | Split previously-merged cells. |
+| `TYPIX_TOGGLE_HEADER_ROW` / `_COLUMN` | Toggle header on the first row/column. |
+| `TYPIX_CLEAR_CELL_CONTENTS` / `_ROW_` / `_COLUMN_` | Clear without deleting. |
+| `TYPIX_DUPLICATE_ROW` / `_COLUMN` | Duplicate. |
+| `TYPIX_SET_CELL_BACKGROUND_COLOR` | Color a single cell. |
+| `TYPIX_SET_ROW_BACKGROUND_COLOR` / `_COLUMN_` | Color a row or column. |
+
+All importable from `@typix-editor/extension-table`. Dispatch via
+`editor.lexical.dispatchCommand(CMD, payload)`.
+
+## Vendor the UI
+
+```bash
+npx typix ui add table
+```
+
+## Helpers
+
+```tsx
+import {
+  TableUI,
+  TableCellResizer,
+  type TableHoverInfo,
+} from "@/components/typix/main/table";
+```
+
+- `TableUI` — full table UI (cell menu, header buttons, color picker)
+- `TableCellResizer` — just the resize handles
+
+## Related
+
+<Cards>
+  <Card title="Slash Command" href="/docs/extensions/slash-command" description="Quick insert via /." />
+</Cards>

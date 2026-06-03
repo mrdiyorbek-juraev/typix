@@ -1092,4 +1092,300 @@ export const illustrationSvgs: Record<string, IllustrationFn> = {
         r(CX + CW - 34, CY + 124, 24, 22, { rx: 5, fill: a, opacity: 0.7 }),
       ].join("")
     ),
+
+  // ── 24. Image Extension ───────────────────────────────────────────────────
+  // Block-level image with floating align toolbar, resize handles, and caption.
+  image: (c, a) =>
+    svg(
+      [
+        chrome(c),
+        // floating toolbar above image — alignment buttons + delete
+        r(CX + 60, CY + 4, 156, 22, {
+          rx: 6,
+          fill: c,
+          fillOpacity: 0.06,
+          stroke: c,
+          strokeWidth: 1,
+          strokeOpacity: 0.18,
+        }),
+        // align-left (active)
+        r(CX + 68, CY + 9, 14, 12, { rx: 2, fill: a, opacity: 0.85 }),
+        // align-center
+        r(CX + 86, CY + 9, 14, 12, { rx: 2, fill: c, opacity: 0.28 }),
+        // align-right
+        r(CX + 104, CY + 9, 14, 12, { rx: 2, fill: c, opacity: 0.28 }),
+        line(CX + 124, CY + 9, CX + 124, CY + 21, c, 0.18),
+        // caption toggle
+        b(CX + 130, CY + 12, 26, c, 0.32),
+        line(CX + 162, CY + 9, CX + 162, CY + 21, c, 0.18),
+        // delete
+        r(CX + 168, CY + 9, 14, 12, { rx: 2, fill: c, opacity: 0.3 }),
+        // download
+        r(CX + 186, CY + 9, 14, 12, { rx: 2, fill: c, opacity: 0.3 }),
+        // image frame
+        r(CX + 30, CY + 36, CW - 60, 96, {
+          rx: 8,
+          stroke: c,
+          strokeWidth: 1.5,
+          strokeOpacity: 0.3,
+          fill: c,
+          fillOpacity: 0.03,
+        }),
+        // landscape inside
+        circle(CX + 58, CY + 60, 11, a, 0.3),
+        `<path d="M${CX + 30} ${CY + 116} L${CX + 80} ${CY + 70} L${CX + 120} ${CY + 92} L${CX + 160} ${CY + 56} L${CX + 224} ${CY + 116} L${CX + 244} ${CY + 116} Z" fill="${c}" fill-opacity="0.12" stroke="${c}" stroke-width="1" stroke-opacity="0.32"/>`,
+        // resize handles (4 corners)
+        ...[
+          [CX + 30, CY + 36],
+          [CX + CW - 30, CY + 36],
+          [CX + 30, CY + 132],
+          [CX + CW - 30, CY + 132],
+        ].map(([x, y]) =>
+          r(x - 3, y - 3, 6, 6, { rx: 1, fill: a, opacity: 0.9 })
+        ),
+        // caption row
+        b(CX + 78, CY + 142, 124, c, 0.3, 6, 3),
+      ].join("")
+    ),
+
+  // ── 25. Code Block ────────────────────────────────────────────────────────
+  // Multi-line code block with a language picker in the corner.
+  "code-block": (c, a) =>
+    svg(
+      [
+        chrome(c),
+        // outer code-block container
+        r(CX, CY + 8, CW, 130, {
+          rx: 8,
+          fill: c,
+          fillOpacity: 0.06,
+          stroke: c,
+          strokeWidth: 1,
+          strokeOpacity: 0.2,
+        }),
+        // language picker pill (top-right)
+        r(CX + CW - 70, CY + 16, 56, 18, {
+          rx: 9,
+          fill: c,
+          fillOpacity: 0.08,
+          stroke: c,
+          strokeWidth: 1,
+          strokeOpacity: 0.25,
+        }),
+        b(CX + CW - 62, CY + 23, 30, a, 0.6, 4, 2),
+        // chevron
+        `<path d="M${CX + CW - 28} ${CY + 23} L${CX + CW - 24} ${CY + 27} L${CX + CW - 20} ${CY + 23}" stroke="${c}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" fill="none"/>`,
+        // copy button (top-right corner of header)
+        r(CX + CW - 90, CY + 18, 14, 14, {
+          rx: 3,
+          fill: c,
+          opacity: 0.2,
+        }),
+        // code rows — varied widths to suggest indentation + tokens
+        ...[
+          { y: CY + 50, ind: 0, tokens: [40, 60, 90] },
+          { y: CY + 64, ind: 16, tokens: [50, 70] },
+          { y: CY + 78, ind: 32, tokens: [30, 50, 40] },
+          { y: CY + 92, ind: 16, tokens: [80, 60] },
+          { y: CY + 106, ind: 0, tokens: [40] },
+          { y: CY + 120, ind: 0, tokens: [16] },
+        ].flatMap(({ y, ind, tokens }, rowIdx) => {
+          const bars: string[] = [];
+          let x = CX + 16 + ind;
+          tokens.forEach((w, i) => {
+            // first token = keyword (accent), then varied tones
+            const color = i === 0 ? a : c;
+            const op = i === 0 ? 0.55 : 0.35 - i * 0.05;
+            bars.push(b(x, y, w, color, op, 6, 3));
+            x += w + 10;
+          });
+          // gutter dot for line number
+          bars.push(circle(CX + 10, y + 3, 1.5, c, rowIdx === 4 ? 0.6 : 0.25));
+          return bars;
+        }),
+      ].join("")
+    ),
+
+  // ── 26. Code Block + Prettier ─────────────────────────────────────────────
+  // Code block with a prominent "Format" button + a sparkle on the lines
+  // (suggesting the prettier reformat moment).
+  "code-block-prettier": (c, a) =>
+    svg(
+      [
+        chrome(c),
+        // outer code-block container
+        r(CX, CY + 8, CW, 130, {
+          rx: 8,
+          fill: c,
+          fillOpacity: 0.06,
+          stroke: c,
+          strokeWidth: 1,
+          strokeOpacity: 0.2,
+        }),
+        // language pill (left in header)
+        r(CX + 12, CY + 16, 50, 18, {
+          rx: 9,
+          fill: c,
+          fillOpacity: 0.08,
+          stroke: c,
+          strokeWidth: 1,
+          strokeOpacity: 0.25,
+        }),
+        b(CX + 20, CY + 23, 30, a, 0.5, 4, 2),
+        // Format button (accent, right side of header)
+        r(CX + CW - 78, CY + 14, 64, 22, {
+          rx: 6,
+          fill: a,
+          fillOpacity: 0.18,
+          stroke: a,
+          strokeWidth: 1,
+          strokeOpacity: 0.7,
+        }),
+        // sparkle icon
+        `<path d="M${CX + CW - 70} ${CY + 25} L${CX + CW - 68} ${CY + 21} L${CX + CW - 66} ${CY + 25} L${CX + CW - 62} ${CY + 27} L${CX + CW - 66} ${CY + 29} L${CX + CW - 68} ${CY + 33} L${CX + CW - 70} ${CY + 29} L${CX + CW - 74} ${CY + 27} Z" fill="${a}" opacity="0.9"/>`,
+        // "Format" text bar
+        b(CX + CW - 56, CY + 22, 36, a, 0.8, 6, 3),
+        // code rows — note the FIRST row is misaligned (pre-format) and the
+        // rest are tidy (post-format). The visual hint: the whole block
+        // gets prettier-formatted.
+        ...[
+          { y: CY + 54, ind: 0, tokens: [40, 60, 80] },
+          { y: CY + 68, ind: 16, tokens: [56, 70] },
+          { y: CY + 82, ind: 16, tokens: [40, 80] },
+          { y: CY + 96, ind: 32, tokens: [50, 60, 40] },
+          { y: CY + 110, ind: 16, tokens: [30, 70] },
+          { y: CY + 124, ind: 0, tokens: [16] },
+        ].flatMap(({ y, ind, tokens }) => {
+          const bars: string[] = [];
+          let x = CX + 16 + ind;
+          tokens.forEach((w, i) => {
+            const color = i === 0 ? a : c;
+            const op = i === 0 ? 0.55 : 0.32 - i * 0.04;
+            bars.push(b(x, y, w, color, op, 6, 3));
+            x += w + 10;
+          });
+          return bars;
+        }),
+      ].join("")
+    ),
+
+  // ── 27. Slash Command ─────────────────────────────────────────────────────
+  // Editor text with a "/" trigger and a dropdown of block-type options.
+  "slash-command": (c, a) =>
+    svg(
+      [
+        chrome(c),
+        toolbar(c, a, []),
+        // text lines above the trigger
+        b(CX, CY + TOOLBAR_H + 10, 180, c, 0.4, 8, 4),
+        b(CX, CY + TOOLBAR_H + 26, 240, c, 0.25),
+        b(CX, CY + TOOLBAR_H + 37, 200, c, 0.22),
+        // "/" trigger character (as text)
+        `<text x="${CX}" y="${CY + TOOLBAR_H + 56}" fill="${a}" font-size="16" font-family="monospace" font-weight="700" opacity="0.85">/</text>`,
+        // cursor right after "/"
+        r(CX + 10, CY + TOOLBAR_H + 44, 2, 14, {
+          rx: 1,
+          fill: a,
+          opacity: 0.8,
+        }),
+        // dropdown menu (below the trigger)
+        r(CX + 14, CY + TOOLBAR_H + 60, 168, 86, {
+          rx: 8,
+          fill: c,
+          fillOpacity: 0.06,
+          stroke: c,
+          strokeWidth: 1,
+          strokeOpacity: 0.28,
+        }),
+        // menu items — first is hovered (accent highlight)
+        ...[0, 1, 2, 3].map((i) => {
+          const y = CY + TOOLBAR_H + 66 + i * 20;
+          const hover = i === 0;
+          return [
+            hover
+              ? r(CX + 18, y - 3, 160, 18, {
+                  rx: 4,
+                  fill: a,
+                  fillOpacity: 0.14,
+                })
+              : "",
+            // icon square
+            r(CX + 24, y + 1, 12, 12, {
+              rx: 2,
+              fill: hover ? a : c,
+              opacity: hover ? 0.85 : 0.32,
+            }),
+            // item label
+            b(CX + 42, y + 4, 76 - i * 8, c, hover ? 0.55 : 0.35),
+            // shortcut hint
+            b(CX + 134, y + 4, 32, c, hover ? 0.4 : 0.18, 6, 3),
+          ].join("");
+        }),
+      ].join("")
+    ),
+
+  // ── 28. Tailwind Theme ────────────────────────────────────────────────────
+  // Editor lines with a hovering classname tooltip showing Tailwind utilities.
+  tailwind: (c, a) =>
+    svg(
+      [
+        chrome(c),
+        toolbar(c, a, []),
+        // text lines
+        b(CX, CY + TOOLBAR_H + 10, 200, c, 0.45, 8, 4),
+        b(CX, CY + TOOLBAR_H + 26, 240, c, 0.28),
+        b(CX, CY + TOOLBAR_H + 37, 210, c, 0.24),
+        b(CX, CY + TOOLBAR_H + 48, 180, c, 0.22),
+        b(CX, CY + TOOLBAR_H + 59, 220, c, 0.2),
+        // hovered word — accent highlighted underline
+        r(CX + 80, CY + TOOLBAR_H + 35, 64, 12, {
+          rx: 2,
+          fill: a,
+          fillOpacity: 0.18,
+          stroke: a,
+          strokeWidth: 1,
+          strokeOpacity: 0.5,
+        }),
+        // pointer line from underline down to the classname pill cluster
+        line(
+          CX + 112,
+          CY + TOOLBAR_H + 50,
+          CX + 112,
+          CY + TOOLBAR_H + 78,
+          a,
+          0.4,
+          1
+        ),
+        // tooltip / classname inspector
+        r(CX + 30, CY + TOOLBAR_H + 78, 220, 60, {
+          rx: 8,
+          fill: c,
+          fillOpacity: 0.07,
+          stroke: c,
+          strokeWidth: 1,
+          strokeOpacity: 0.25,
+        }),
+        // tooltip header — "className"
+        b(CX + 42, CY + TOOLBAR_H + 86, 60, a, 0.6, 6, 3),
+        // utility class pills — 6 small chips, mix of accent + neutral
+        ...[
+          { x: CX + 42, w: 38, accent: true }, // text-foreground
+          { x: CX + 86, w: 32, accent: false }, // text-sm
+          { x: CX + 124, w: 42, accent: true }, // font-semibold
+          { x: CX + 42, w: 30, accent: false }, // bg-muted
+          { x: CX + 78, w: 36, accent: true }, // rounded-md
+          { x: CX + 120, w: 42, accent: false }, // px-3 py-1.5
+        ].map(({ x, w, accent }, i) => {
+          const y = CY + TOOLBAR_H + 102 + Math.floor(i / 3) * 20;
+          return r(x, y, w, 14, {
+            rx: 7,
+            fill: accent ? a : c,
+            fillOpacity: accent ? 0.18 : 0.12,
+            stroke: accent ? a : c,
+            strokeWidth: 1,
+            strokeOpacity: accent ? 0.55 : 0.25,
+          });
+        }),
+      ].join("")
+    ),
 };

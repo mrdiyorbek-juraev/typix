@@ -1,0 +1,773 @@
+/* =============================================================================
+   Typix — Design Tokens
+   =============================================================================
+   All CSS custom properties used by Typix (editor + UI primitives + shadcn theme)
+   live here. Override any value by re-declaring it after this file imports.
+
+   Sections:
+     1. Keyframes
+     2. Editor tokens         (--typix-*)
+     3. UI primitive tokens   (--typix-ui-*)
+     4. shadcn theme tokens   (--background, --popover, etc.)
+     5. Dark mode overrides   (.dark, [data-theme="dark"])
+============================================================================= */
+
+/* ─── 1. Keyframes ─────────────────────────────────────────────────────────── */
+
+@keyframes typix-cursor-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes typix-table-controls {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes typix-image-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typix-image-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes typix-ui-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes typix-ui-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes typix-ui-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── 2. Editor tokens (light) ─────────────────────────────────────────────── */
+
+:root {
+  /* Typography */
+  --typix-font-family: inherit;
+  --typix-font-size: 15px;
+  --typix-line-height: 1.6;
+  --typix-letter-spacing: 0em;
+  --typix-font-size-code: 13px;
+  --typix-font-size-inline-code: 94%;
+  --typix-font-family-code: Menlo, Consolas, Monaco, monospace;
+  --typix-line-height-code: 1.53;
+
+  /* Headings */
+  --typix-heading-h1-size: 32px;
+  --typix-heading-h1-weight: 800;
+  --typix-heading-h1-color: #0a0a0a;
+  --typix-heading-h1-line-height: 1.15;
+  --typix-heading-h1-letter-spacing: -0.025em;
+  --typix-heading-h2-size: 24px;
+  --typix-heading-h2-weight: 700;
+  --typix-heading-h2-color: #0a0a0a;
+  --typix-heading-h2-line-height: 1.2;
+  --typix-heading-h2-letter-spacing: -0.02em;
+  --typix-heading-h3-size: 20px;
+  --typix-heading-h3-weight: 600;
+  --typix-heading-h3-color: #111;
+  --typix-heading-h3-line-height: 1.3;
+  --typix-heading-h3-letter-spacing: -0.01em;
+  --typix-heading-h4-size: 17px;
+  --typix-heading-h4-weight: 600;
+  --typix-heading-h4-color: #1a1a1a;
+  --typix-heading-h4-line-height: 1.4;
+  --typix-heading-h4-letter-spacing: 0em;
+  --typix-heading-h5-size: 15px;
+  --typix-heading-h5-weight: 600;
+  --typix-heading-h5-color: #374151;
+  --typix-heading-h5-line-height: 1.5;
+  --typix-heading-h5-letter-spacing: 0.01em;
+  --typix-heading-h6-size: 14px;
+  --typix-heading-h6-weight: 600;
+  --typix-heading-h6-color: #6b7280;
+  --typix-heading-h6-line-height: 1.5;
+  --typix-heading-h6-letter-spacing: 0.025em;
+
+  /* Foreground colors */
+  --typix-color-text: rgb(5, 5, 5);
+  --typix-color-text-muted: rgb(101, 103, 107);
+  --typix-color-placeholder: #999;
+  --typix-color-caret: #444;
+  --typix-color-link: rgb(33, 111, 219);
+  --typix-color-selection: rgb(60, 132, 244);
+  --typix-color-autocomplete: #ccc;
+
+  /* Hashtag */
+  --typix-color-hashtag-bg: rgba(88, 144, 255, 0.15);
+  --typix-color-hashtag-border: rgba(88, 144, 255, 0.3);
+
+  /* Keyword */
+  --typix-keyword-bg: rgba(251, 191, 36, 0.12);
+  --typix-keyword-color: inherit;
+  --typix-keyword-border: rgba(251, 191, 36, 0.35);
+  --typix-keyword-radius: 3px;
+  --typix-keyword-padding: 0.1em 0.35em;
+
+  /* Highlight + Mark */
+  --typix-color-highlight-bg: rgba(255, 212, 0, 0.14);
+  --typix-color-highlight-border: rgba(255, 212, 0, 0.3);
+  --typix-color-highlight-selected-bg: rgba(255, 212, 0, 0.5);
+  --typix-color-highlight-selected-border: rgb(255, 212, 0);
+  --typix-color-mark-bg: rgba(255, 212, 0, 0.14);
+  --typix-color-mark-border: rgba(255, 212, 0, 0.3);
+  --typix-color-mark-overlap-bg: rgba(255, 212, 0, 0.3);
+  --typix-color-mark-overlap-border: rgba(255, 212, 0, 0.7);
+  --typix-color-special-bg: yellow;
+
+  /* Character Limit */
+  --typix-color-character-limit: #ffbbbb;
+  --typix-character-limit-counter-color: #9ca3af;
+  --typix-character-limit-warning-color: #f59e0b;
+  --typix-character-limit-exceeded-color: #ef4444;
+
+  /* Backgrounds */
+  --typix-bg-code: rgb(240, 242, 245);
+  --typix-bg-code-gutter: #eee;
+  --typix-bg-white: #fff;
+
+  /* Inline code */
+  --typix-bg-inline-code: rgba(135, 131, 120, 0.1);
+  --typix-color-inline-code: inherit;
+  --typix-border-color-inline-code: rgba(135, 131, 120, 0.22);
+  --typix-radius-inline-code: 4px;
+  --typix-padding-inline-code: 0.15em 0.4em;
+
+  /* Borders */
+  --typix-border-color: #bbb;
+  --typix-border-color-light: #ddd;
+  --typix-border-color-code-gutter: #ccc;
+  --typix-color-code-gutter-text: #777;
+
+  /* Quote */
+  --typix-color-quote-text: rgb(101, 103, 107);
+  --typix-color-quote-border: rgb(206, 208, 212);
+  --typix-quote-bg: rgba(0, 0, 0, 0.03);
+  --typix-quote-border-width: 3px;
+  --typix-quote-radius: 0 6px 6px 0;
+
+  /* Misc structural */
+  --typix-hr-color: #ccc;
+  --typix-block-cursor-color: black;
+
+  /* Indent + spacing */
+  --typix-indent-base: 40px;
+  --typix-spacing-contenteditable-y: 15px;
+  --typix-spacing-contenteditable-x: 25px;
+  --typix-spacing-layout-gap: 10px;
+
+  /* List */
+  --typix-list-item-margin: 0 32px;
+  --typix-checklist-checkbox-color: #3d87f5;
+  --typix-checklist-checkbox-border: #999;
+  --typix-checklist-focus-shadow: 0 0 0 2px #a6cdfe;
+
+  /* Table */
+  --typix-table-cell-width: 75px;
+  --typix-table-cell-padding: 6px 8px;
+  --typix-table-cell-header-bg: #f2f3f5;
+  --typix-table-frozen-td-bg: #fff;
+  --typix-table-frozen-th-bg: #f2f3f5;
+  --typix-table-row-striping-bg: #f2f5fb;
+  --typix-table-add-btn-bg: #eee;
+  --typix-table-add-btn-hover-bg: #c9dbf0;
+  --typix-table-action-btn-hover-bg: #ddd;
+  --typix-table-action-btn-color: #222;
+  --typix-table-scroll-shadow: rgba(0, 0, 0, 0.15);
+
+  /* Table cell color palette (used by table color picker) */
+  --typix-table-color-gray: #f1f0ef;
+  --typix-table-color-brown: #f4eeee;
+  --typix-table-color-orange: #fdebd0;
+  --typix-table-color-yellow: #fdf6d1;
+  --typix-table-color-green: #ebf5eb;
+  --typix-table-color-blue: #e8f0fd;
+  --typix-table-color-purple: #f0eef8;
+  --typix-table-color-pink: #fce4ec;
+  --typix-table-color-red: #fdebeb;
+
+  /* Code tokens (Prism syntax colors) */
+  --typix-token-comment: slategray;
+  --typix-token-punctuation: #999;
+  --typix-token-property: #905;
+  --typix-token-selector: #690;
+  --typix-token-operator: #9a6e3a;
+  --typix-token-attr: #07a;
+  --typix-token-variable: #e90;
+  --typix-token-function: #dd4a68;
+  --typix-token-deleted-gradient: linear-gradient(
+    to right,
+    #ffcecb 50%,
+    #ffebe9 50%
+  );
+  --typix-token-inserted-gradient: linear-gradient(
+    to right,
+    #aceebb 50%,
+    #dafbe1 50%
+  );
+  --typix-token-unchanged-gradient: linear-gradient(
+    to right,
+    #ddd 50%,
+    rgb(240, 242, 245) 50%
+  );
+
+  /* Context menu */
+  --typix-context-menu-bg: #fff;
+  --typix-context-menu-border: #e5e7eb;
+  --typix-context-menu-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --typix-context-menu-radius: 10px;
+  --typix-context-menu-padding: 4px;
+  --typix-context-menu-min-width: 168px;
+  --typix-context-menu-item-color: #111;
+  --typix-context-menu-item-hover-bg: rgba(0, 0, 0, 0.06);
+  --typix-context-menu-item-open-bg: rgba(0, 0, 0, 0.08);
+  --typix-context-menu-item-disabled-color: #bbb;
+  --typix-context-menu-item-radius: 6px;
+  --typix-context-menu-item-height: 32px;
+  --typix-context-menu-item-font-size: 13px;
+  --typix-context-menu-item-icon-color: rgba(0, 0, 0, 0.45);
+  --typix-context-menu-separator-color: rgba(0, 0, 0, 0.07);
+  --typix-context-menu-separator-margin: 3px 0;
+
+  /* Mention */
+  --typix-mention-bg: rgba(24, 119, 232, 0.15);
+  --typix-mention-bg-hover: rgba(24, 119, 232, 0.25);
+  --typix-mention-color: #1877e8;
+  --typix-mention-menu-bg: white;
+  --typix-mention-menu-border: #ddd;
+  --typix-mention-menu-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --typix-mention-menu-radius: 8px;
+  --typix-mention-menu-item-hover-bg: #f0f0f0;
+  --typix-mention-menu-loading-color: #666;
+  --typix-mention-menu-empty-color: #999;
+  --typix-mention-menu-min-width: 220px;
+  --typix-mention-avatar-size: 32px;
+  --typix-mention-avatar-bg: rgba(24, 119, 232, 0.1);
+  --typix-mention-avatar-color: #1877e8;
+  --typix-mention-avatar-radius: 50%;
+  --typix-mention-avatar-font-size: 12px;
+  --typix-mention-avatar-font-weight: 600;
+  --typix-mention-item-subtitle-color: #999;
+  --typix-mention-item-subtitle-size: 12px;
+
+  /* Draggable block */
+  --typix-draggable-menu-hover-bg: rgba(0, 0, 0, 0.08);
+  --typix-draggable-icon-color: currentColor;
+  --typix-draggable-target-line-bg: #5742b3;
+
+  /* Collapsible */
+  --typix-collapsible-bg: #f9fafb;
+  --typix-collapsible-border: #e5e7eb;
+  --typix-collapsible-radius: 10px;
+  --typix-collapsible-title-hover-bg: rgba(0, 0, 0, 0.04);
+  --typix-collapsible-arrow-color: #9ca3af;
+  --typix-collapsible-content-border: #e5e7eb;
+}
+
+/* ─── 3. UI primitive tokens (--typix-ui-*) ────────────────────────────────── */
+
+:root {
+  /* Stone palette (raw reference values) */
+  --typix-ui-stone-50: #fafaf9;
+  --typix-ui-stone-100: #f5f5f4;
+  --typix-ui-stone-200: #e7e5e4;
+  --typix-ui-stone-300: #d6d3d1;
+  --typix-ui-stone-400: #a8a29e;
+  --typix-ui-stone-500: #78716c;
+  --typix-ui-stone-600: #57534e;
+  --typix-ui-stone-700: #44403c;
+  --typix-ui-stone-800: #292524;
+  --typix-ui-stone-900: #1c1917;
+  --typix-ui-stone-950: #0c0a09;
+
+  /* Semantic backgrounds */
+  --typix-ui-color-bg: #ffffff;
+  --typix-ui-color-surface: #ffffff;
+  --typix-ui-color-overlay: #ffffff;
+  --typix-ui-color-subtle: var(--typix-ui-stone-50);
+  --typix-ui-color-muted: var(--typix-ui-stone-100);
+
+  /* Foreground */
+  --typix-ui-color-fg: var(--typix-ui-stone-900);
+  --typix-ui-color-fg-muted: var(--typix-ui-stone-500);
+  --typix-ui-color-fg-subtle: var(--typix-ui-stone-400);
+  --typix-ui-color-placeholder: var(--typix-ui-stone-400);
+
+  /* Borders */
+  --typix-ui-color-border: var(--typix-ui-stone-200);
+  --typix-ui-color-border-strong: var(--typix-ui-stone-300);
+
+  /* Primary */
+  --typix-ui-color-primary: var(--typix-ui-stone-900);
+  --typix-ui-color-primary-fg: var(--typix-ui-stone-50);
+  --typix-ui-color-primary-hover: var(--typix-ui-stone-800);
+
+  /* Secondary */
+  --typix-ui-color-secondary: var(--typix-ui-stone-100);
+  --typix-ui-color-secondary-fg: var(--typix-ui-stone-800);
+  --typix-ui-color-secondary-hover: var(--typix-ui-stone-200);
+
+  /* Ghost */
+  --typix-ui-color-ghost-hover: rgba(0, 0, 0, 0.04);
+
+  /* Accent (Notion blue — focus rings, interactive highlights) */
+  --typix-ui-color-accent: #2383e2;
+  --typix-ui-color-accent-fg: #ffffff;
+
+  /* Destructive */
+  --typix-ui-color-destructive: #e03e3e;
+  --typix-ui-color-destructive-fg: #ffffff;
+  --typix-ui-color-destructive-hover: #c73333;
+  --typix-ui-color-destructive-muted: rgba(224, 62, 62, 0.08);
+  --typix-ui-color-destructive-muted-fg: #c73333;
+
+  /* Success */
+  --typix-ui-color-success: #0f7b6c;
+  --typix-ui-color-success-fg: #ffffff;
+  --typix-ui-color-success-muted: rgba(15, 123, 108, 0.08);
+  --typix-ui-color-success-muted-fg: #0a6358;
+
+  /* Warning */
+  --typix-ui-color-warning: #dfab01;
+  --typix-ui-color-warning-fg: #ffffff;
+  --typix-ui-color-warning-muted: rgba(223, 171, 1, 0.1);
+  --typix-ui-color-warning-muted-fg: #b38901;
+
+  /* Typography */
+  --typix-ui-font: "Inter", system-ui, -apple-system, sans-serif;
+  --typix-ui-font-mono: ui-monospace, "Cascadia Code", Menlo, monospace;
+  --typix-ui-font-weight-normal: 400;
+  --typix-ui-font-weight-medium: 500;
+  --typix-ui-font-weight-semibold: 600;
+  --typix-ui-text-2xs: 10px;
+  --typix-ui-text-xs: 11px;
+  --typix-ui-text-sm: 12px;
+  --typix-ui-text-base: 13px;
+  --typix-ui-text-md: 14px;
+  --typix-ui-text-lg: 16px;
+  --typix-ui-text-xl: 18px;
+  --typix-ui-leading-tight: 1.3;
+  --typix-ui-leading-normal: 1.5;
+  --typix-ui-leading-relaxed: 1.6;
+  --typix-ui-tracking-tight: -0.01em;
+  --typix-ui-tracking-normal: 0;
+  --typix-ui-tracking-wide: 0.02em;
+
+  /* Spacing (4px base) */
+  --typix-ui-space-0: 0;
+  --typix-ui-space-0-5: 2px;
+  --typix-ui-space-1: 4px;
+  --typix-ui-space-1-5: 6px;
+  --typix-ui-space-2: 8px;
+  --typix-ui-space-2-5: 10px;
+  --typix-ui-space-3: 12px;
+  --typix-ui-space-4: 16px;
+  --typix-ui-space-5: 20px;
+  --typix-ui-space-6: 24px;
+  --typix-ui-space-8: 32px;
+  --typix-ui-space-10: 40px;
+  --typix-ui-space-12: 48px;
+
+  /* Radius */
+  --typix-ui-radius-none: 0;
+  --typix-ui-radius-sm: 2px;
+  --typix-ui-radius-md: 4px;
+  --typix-ui-radius-lg: 6px;
+  --typix-ui-radius-xl: 8px;
+  --typix-ui-radius-2xl: 12px;
+  --typix-ui-radius-full: 9999px;
+
+  /* Shadows */
+  --typix-ui-shadow-none: none;
+  --typix-ui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --typix-ui-shadow-sm:
+    0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --typix-ui-shadow-md:
+    0 4px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --typix-ui-shadow-lg:
+    0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --typix-ui-shadow-popup:
+    0 12px 32px rgba(0, 0, 0, 0.09), 0 4px 12px rgba(0, 0, 0, 0.05), 0 0 0 1px
+    rgba(0, 0, 0, 0.06);
+
+  /* Interaction */
+  --typix-ui-transition-fast: 100ms ease;
+  --typix-ui-transition: 150ms ease;
+  --typix-ui-transition-slow: 250ms ease;
+  --typix-ui-focus-ring: 0 0 0 2px rgba(0, 111, 238, 0.4);
+  --typix-ui-focus-ring-offset:
+    0 0 0 2px #fff, 0 0 0 4px rgba(0, 111, 238, 0.4);
+
+  /* Semantic color palette — powers buttons, badges, switches. */
+  /* -rgb variants contain bare "r, g, b" for use inside rgba(). */
+
+  --typix-ui-c-default-rgb: 113, 113, 122;
+  --typix-ui-c-default: #71717a;
+  --typix-ui-c-default-h: #52525b;
+  --typix-ui-c-default-fg: #fafafa;
+  --typix-ui-c-default-text: #52525b;
+
+  --typix-ui-c-primary-rgb: 0, 111, 238;
+  --typix-ui-c-primary: #006fee;
+  --typix-ui-c-primary-h: #005bc4;
+  --typix-ui-c-primary-fg: #ffffff;
+  --typix-ui-c-primary-text: #006fee;
+
+  --typix-ui-c-secondary-rgb: 120, 40, 200;
+  --typix-ui-c-secondary: #7828c8;
+  --typix-ui-c-secondary-h: #6020a0;
+  --typix-ui-c-secondary-fg: #ffffff;
+  --typix-ui-c-secondary-text: #7828c8;
+
+  --typix-ui-c-success-rgb: 23, 201, 100;
+  --typix-ui-c-success: #17c964;
+  --typix-ui-c-success-h: #12a150;
+  --typix-ui-c-success-fg: #ffffff;
+  --typix-ui-c-success-text: #0e793c;
+
+  --typix-ui-c-warning-rgb: 245, 165, 36;
+  --typix-ui-c-warning: #f5a524;
+  --typix-ui-c-warning-h: #c48410;
+  --typix-ui-c-warning-fg: #ffffff;
+  --typix-ui-c-warning-text: #938316;
+
+  --typix-ui-c-danger-rgb: 243, 18, 96;
+  --typix-ui-c-danger: #f31260;
+  --typix-ui-c-danger-h: #c20e4d;
+  --typix-ui-c-danger-fg: #ffffff;
+  --typix-ui-c-danger-text: #c20e4d;
+}
+
+/* ─── 4. shadcn theme tokens ───────────────────────────────────────────────── */
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* ─── 5. Dark mode overrides ───────────────────────────────────────────────── */
+
+.dark,
+[data-theme="dark"] {
+  /* Editor — foreground colors */
+  --typix-color-text: rgb(235, 235, 235);
+  --typix-color-text-muted: rgb(160, 160, 160);
+  --typix-color-placeholder: #666;
+  --typix-color-caret: #4ade80;
+  --typix-color-link: rgb(100, 160, 255);
+  --typix-color-selection: rgba(151, 255, 124, 0.404);
+  --typix-color-autocomplete: #555;
+
+  /* Editor — hashtag */
+  --typix-color-hashtag-bg: rgba(70, 230, 131, 0.25);
+  --typix-color-hashtag-border: rgba(88, 144, 255, 0.4);
+
+  /* Editor — highlight + mark */
+  --typix-color-highlight-bg: rgba(150, 255, 124, 0.582);
+  --typix-color-highlight-border: rgba(255, 212, 0, 0.5);
+  --typix-color-highlight-selected-bg: rgba(255, 212, 0, 0.5);
+  --typix-color-highlight-selected-border: rgba(255, 212, 0, 0.8);
+  --typix-color-mark-bg: rgba(255, 212, 0, 0.2);
+  --typix-color-mark-border: rgba(255, 212, 0, 0.4);
+  --typix-color-mark-overlap-bg: rgba(255, 212, 0, 0.35);
+  --typix-color-mark-overlap-border: rgba(255, 212, 0, 0.6);
+  --typix-color-special-bg: rgb(200, 180, 0);
+
+  /* Editor — character limit */
+  --typix-color-character-limit: #884444;
+
+  /* Editor — backgrounds */
+  --typix-bg-code: rgb(30, 30, 30);
+  --typix-bg-code-gutter: #252525;
+  --typix-bg-white: #1a1a1a;
+  --typix-bg-inline-code: rgba(255, 255, 255, 0.08);
+  --typix-border-color-inline-code: rgba(255, 255, 255, 0.14);
+
+  /* Editor — borders */
+  --typix-border-color: #444;
+  --typix-border-color-light: #333;
+  --typix-border-color-code-gutter: #3a3a3a;
+  --typix-color-code-gutter-text: #888;
+
+  /* Editor — quote */
+  --typix-color-quote-text: rgb(160, 163, 168);
+  --typix-color-quote-border: rgb(80, 82, 86);
+  --typix-quote-bg: rgba(255, 255, 255, 0.04);
+
+  /* Editor — headings */
+  --typix-heading-h1-color: #f9fafb;
+  --typix-heading-h2-color: #f3f4f6;
+  --typix-heading-h3-color: #e5e7eb;
+  --typix-heading-h4-color: #d1d5db;
+  --typix-heading-h5-color: #9ca3af;
+  --typix-heading-h6-color: #6b7280;
+
+  /* Editor — checklist */
+  --typix-checklist-checkbox-color: #5a9ff5;
+  --typix-checklist-checkbox-border: #666;
+  --typix-checklist-focus-shadow: 0 0 0 2px #5a7fbf;
+
+  /* Editor — table */
+  --typix-table-cell-header-bg: #252525;
+  --typix-table-frozen-td-bg: #1a1a1a;
+  --typix-table-frozen-th-bg: #252525;
+  --typix-table-row-striping-bg: #222;
+  --typix-table-add-btn-bg: #2a2a2a;
+  --typix-table-add-btn-hover-bg: #3a3a3a;
+  --typix-table-action-btn-hover-bg: #333;
+  --typix-table-action-btn-color: #ddd;
+  --typix-table-scroll-shadow: rgba(0, 0, 0, 0.4);
+  --typix-table-color-gray: #2a2a2a;
+  --typix-table-color-brown: #2c2321;
+  --typix-table-color-orange: #2e2518;
+  --typix-table-color-yellow: #2c2a16;
+  --typix-table-color-green: #1c2a1c;
+  --typix-table-color-blue: #1a2333;
+  --typix-table-color-purple: #26213a;
+  --typix-table-color-pink: #2e1c24;
+  --typix-table-color-red: #2e1c1c;
+
+  /* Editor — code tokens */
+  --typix-token-comment: #7a9ab3;
+  --typix-token-punctuation: #999;
+  --typix-token-property: #ce9178;
+  --typix-token-selector: #4ec9b0;
+  --typix-token-operator: #d4a374;
+  --typix-token-attr: #9cdcfe;
+  --typix-token-variable: #dcdcaa;
+  --typix-token-function: #c586c0;
+  --typix-token-deleted-gradient: linear-gradient(
+    to right,
+    #5a2020 50%,
+    #3a1515 50%
+  );
+  --typix-token-inserted-gradient: linear-gradient(
+    to right,
+    #205a30 50%,
+    #153a20 50%
+  );
+  --typix-token-unchanged-gradient: linear-gradient(
+    to right,
+    #2a2a2a 50%,
+    rgb(30, 30, 30) 50%
+  );
+
+  /* Editor — keyword */
+  --typix-keyword-bg: rgba(251, 191, 36, 0.1);
+  --typix-keyword-border: rgba(251, 191, 36, 0.25);
+
+  /* Editor — misc structural */
+  --typix-hr-color: #444;
+  --typix-block-cursor-color: white;
+
+  /* Editor — context menu */
+  --typix-context-menu-bg: #1c1c1e;
+  --typix-context-menu-border: #2d2d30;
+  --typix-context-menu-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --typix-context-menu-item-color: #e5e5e5;
+  --typix-context-menu-item-hover-bg: rgba(255, 255, 255, 0.08);
+  --typix-context-menu-item-open-bg: rgba(255, 255, 255, 0.12);
+  --typix-context-menu-item-disabled-color: #444;
+  --typix-context-menu-item-icon-color: rgba(255, 255, 255, 0.4);
+  --typix-context-menu-separator-color: rgba(255, 255, 255, 0.08);
+
+  /* Editor — mention */
+  --typix-mention-bg: rgba(80, 140, 220, 0.25);
+  --typix-mention-bg-hover: rgba(80, 140, 220, 0.35);
+  --typix-mention-color: #64a0ff;
+  --typix-mention-menu-bg: #1c1c1e;
+  --typix-mention-menu-border: #2d2d30;
+  --typix-mention-menu-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --typix-mention-menu-item-hover-bg: rgba(255, 255, 255, 0.06);
+  --typix-mention-menu-loading-color: #999;
+  --typix-mention-menu-empty-color: #666;
+  --typix-mention-avatar-bg: rgba(24, 119, 232, 0.15);
+  --typix-mention-item-subtitle-color: #666;
+
+  /* Editor — draggable */
+  --typix-draggable-menu-hover-bg: rgba(255, 255, 255, 0.1);
+  --typix-draggable-target-line-bg: #4ade80;
+
+  /* Editor — collapsible */
+  --typix-collapsible-bg: #1c1c1e;
+  --typix-collapsible-border: #2d2d30;
+  --typix-collapsible-title-hover-bg: rgba(255, 255, 255, 0.05);
+  --typix-collapsible-arrow-color: #6b7280;
+  --typix-collapsible-content-border: #2d2d30;
+
+  /* UI primitives — backgrounds */
+  --typix-ui-color-bg: var(--typix-ui-stone-950);
+  --typix-ui-color-surface: var(--typix-ui-stone-900);
+  --typix-ui-color-overlay: var(--typix-ui-stone-800);
+  --typix-ui-color-subtle: var(--typix-ui-stone-800);
+  --typix-ui-color-muted: var(--typix-ui-stone-900);
+
+  /* UI primitives — foreground */
+  --typix-ui-color-fg: var(--typix-ui-stone-50);
+  --typix-ui-color-fg-muted: var(--typix-ui-stone-400);
+  --typix-ui-color-fg-subtle: var(--typix-ui-stone-500);
+  --typix-ui-color-placeholder: var(--typix-ui-stone-600);
+
+  /* UI primitives — borders */
+  --typix-ui-color-border: var(--typix-ui-stone-800);
+  --typix-ui-color-border-strong: var(--typix-ui-stone-700);
+
+  /* UI primitives — primary */
+  --typix-ui-color-primary: var(--typix-ui-stone-50);
+  --typix-ui-color-primary-fg: var(--typix-ui-stone-900);
+  --typix-ui-color-primary-hover: var(--typix-ui-stone-100);
+
+  /* UI primitives — secondary */
+  --typix-ui-color-secondary: var(--typix-ui-stone-800);
+  --typix-ui-color-secondary-fg: var(--typix-ui-stone-50);
+  --typix-ui-color-secondary-hover: var(--typix-ui-stone-700);
+
+  /* UI primitives — ghost */
+  --typix-ui-color-ghost-hover: rgba(255, 255, 255, 0.06);
+
+  /* UI primitives — destructive */
+  --typix-ui-color-destructive: #f06565;
+  --typix-ui-color-destructive-fg: #ffffff;
+  --typix-ui-color-destructive-hover: #e03e3e;
+  --typix-ui-color-destructive-muted: rgba(240, 101, 101, 0.15);
+  --typix-ui-color-destructive-muted-fg: #f87171;
+
+  /* UI primitives — success */
+  --typix-ui-color-success: #1aaa91;
+  --typix-ui-color-success-muted: rgba(26, 170, 145, 0.15);
+  --typix-ui-color-success-muted-fg: #34d399;
+
+  /* UI primitives — warning */
+  --typix-ui-color-warning: #f0c040;
+  --typix-ui-color-warning-muted: rgba(240, 192, 64, 0.15);
+  --typix-ui-color-warning-muted-fg: #fbbf24;
+
+  /* UI primitives — shadows */
+  --typix-ui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --typix-ui-shadow-sm:
+    0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --typix-ui-shadow-md:
+    0 4px 8px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --typix-ui-shadow-lg:
+    0 8px 24px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --typix-ui-shadow-popup:
+    0 12px 32px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px
+    rgba(255, 255, 255, 0.05);
+  --typix-ui-focus-ring-offset:
+    0 0 0 2px var(--typix-ui-stone-900), 0 0 0 4px rgba(0, 111, 238, 0.4);
+
+  /* UI primitives — semantic palette dark overrides */
+  --typix-ui-c-default: #3f3f46;
+  --typix-ui-c-default-h: #52525b;
+  --typix-ui-c-default-fg: #fafafa;
+  --typix-ui-c-default-text: #a1a1aa;
+  --typix-ui-c-success-text: #17c964;
+  --typix-ui-c-warning-text: #f5a524;
+
+  /* shadcn theme dark */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}

@@ -1,5 +1,12 @@
 # @typix-editor/extension-max-length
 
+## 5.0.0
+
+### Major Changes
+
+- Migrated to the v2 static `defineExtension` shape. Hard-blocks typing past the configured `maxLength`, with optional `charset: "UTF-8" | "UTF-16"` for accurate counting on non-ASCII content.
+- Pairs with `CharacterLimit` from `@typix-editor/ui` for the visual counter (vendor via `typix ui add character-limit`).
+
 ## 4.0.0
 
 ### Minor Changes
