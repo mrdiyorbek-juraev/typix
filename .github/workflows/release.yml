@@ -19,7 +19,6 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         node-version: [20]
-        pnpm-version: [latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: ⬇️ Checkout
@@ -39,7 +38,6 @@ jobs:
         id: setup-pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: ${{ matrix.pnpm-version }}
           run_install: false
 
       - name: 🎈 Get pnpm store directory
