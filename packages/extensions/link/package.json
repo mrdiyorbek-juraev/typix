@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-link",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Link extension for Typix",
   "keywords": [
     "typix",
@@ -53,7 +53,8 @@
   },
   "peerDependencies": {
     "@typix-editor/core": "^5.0.0",
-    "lexical": "catalog:"
+    "lexical": "catalog:",
+    "@lexical/link": "catalog:"
   },
   "devDependencies": {
     "@typix-editor/core": "workspace:*",
@@ -64,6 +65,9 @@
   },
   "peerDependenciesMeta": {
     "lexical": {
+      "optional": true
+    },
+    "@lexical/link": {
       "optional": true
     }
   }

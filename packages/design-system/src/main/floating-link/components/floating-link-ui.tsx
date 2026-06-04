@@ -1,9 +1,8 @@
 import type { JSX } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import type { LexicalEditor } from "lexical";
 import { useTypixEditorState } from "@typix-editor/react";
-import { getExtensionOutput } from "@typix-editor/core";
+import { getExtensionOutput, TypixEditor } from "@typix-editor/core";
 import {
   FloatingLinkExtension,
   type FloatingLinkOutput,
@@ -38,7 +37,7 @@ export function FloatingLinkUI({
   );
 
   const [isLink, setIsLink] = useState(() => output?.isLink.value ?? false);
-  const [activeEditor, setActiveEditor] = useState<LexicalEditor>(
+  const [activeEditor, setActiveEditor] = useState<TypixEditor['_lexical']>(
     () => output?.activeEditor.value ?? editor
   );
 

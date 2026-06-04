@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-tailwind",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Tailwind CSS theme extension for Typix",
   "keywords": [
     "typix",

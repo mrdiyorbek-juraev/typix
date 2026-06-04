@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-table",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Table extension for Typix — full-featured tables with cell merge, scroll shadow, and rich commands",
   "keywords": [
     "typix",

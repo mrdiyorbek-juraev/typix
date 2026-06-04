@@ -69,9 +69,6 @@
     "tailwind-merge": "^3.2.0"
   },
   "peerDependencies": {
-    "@lexical/link": "catalog:",
-    "@lexical/react": "catalog:",
-    "@lexical/utils": "catalog:",
     "@typix-editor/core": "workspace:*",
     "@typix-editor/extension-code-block": "workspace:*",
     "@typix-editor/extension-code-block-prettier": "workspace:*",
@@ -82,24 +79,17 @@
     "@typix-editor/extension-table": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/utils": "workspace:*",
-    "lexical": "catalog:",
     "react": "^18.2.0 || ^19.0.0-0",
     "react-dom": "^18.2.0 || ^19.0.0-0"
   },
   "peerDependenciesMeta": {
-    "@lexical/link": {
-      "optional": true
-    },
-    "@lexical/react": {
-      "optional": true
-    },
-    "@lexical/utils": {
-      "optional": true
-    },
     "@typix-editor/core": {
       "optional": true
     },
     "@typix-editor/extension-floating-link": {
+      "optional": true
+    },
+    "@typix-editor/extension-link": {
       "optional": true
     },
     "@typix-editor/extension-mention": {
@@ -125,15 +115,9 @@
     },
     "@typix-editor/utils": {
       "optional": true
-    },
-    "lexical": {
-      "optional": true
     }
   },
   "devDependencies": {
-    "@lexical/link": "catalog:",
-    "@lexical/react": "catalog:",
-    "@lexical/utils": "catalog:",
     "@typix-editor/core": "workspace:*",
     "@typix-editor/extension-code-block": "workspace:*",
     "@typix-editor/extension-code-block-prettier": "workspace:*",
@@ -142,12 +126,12 @@
     "@typix-editor/extension-speech-to-text": "workspace:*",
     "@typix-editor/extension-starter-kit": "workspace:*",
     "@typix-editor/extension-table": "workspace:*",
+    "@typix-editor/extension-link": "workspace:*",
     "@typix-editor/react": "workspace:*",
     "@typix-editor/utils": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@tailwindcss/cli": "^4.1.4",
-    "lexical": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "^4.1.4",

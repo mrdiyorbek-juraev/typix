@@ -1,10 +1,10 @@
+
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "React Library",
   "compilerOptions": {
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "alwaysStrict": false,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
@@ -14,7 +14,6 @@
     "declarationMap": false,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "downlevelIteration": true,
     "allowJs": true,
     "isolatedModules": true,
     "esModuleInterop": true,

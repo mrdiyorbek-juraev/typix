@@ -1,5 +1,11 @@
 # @typix-editor/extension-tab-focus
 
+## 5.0.1
+
+### Patch Changes
+
+- Patch release 5.0.1 — minor fixes across cli, core, react, utils, and extensions.
+
 ## 5.0.0
 
 ### Major Changes

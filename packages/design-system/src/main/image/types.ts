@@ -1,4 +1,4 @@
-import type { LexicalEditor, NodeKey } from "lexical";
+import type { NodeKey, TypixEditor } from "@typix-editor/core";
 
 export type ImageAlignment = "left" | "center" | "right" | "full-width";
 
@@ -39,7 +39,7 @@ export interface ImageComponentProps {
 }
 
 export interface ImageResizerProps {
-  editor: LexicalEditor;
+  editor: TypixEditor["_lexical"];
   imageRef: React.RefObject<HTMLImageElement | null>;
   maxWidth: number;
   onResizeEnd: (width: number | "inherit", height: number | "inherit") => void;
@@ -47,7 +47,7 @@ export interface ImageResizerProps {
 }
 
 export interface ImageToolbarProps {
-  editor: LexicalEditor;
+  editor: TypixEditor["_lexical"];
   nodeKey: NodeKey;
   src: string;
   alignment: ImageAlignment;

@@ -1,10 +1,5 @@
 import { useCallback, useMemo } from "react";
 import {
-  $createParagraphNode,
-  $getSelection,
-  $isRangeSelection,
-} from "lexical";
-import {
   $createHeadingNode,
   $createQuoteNode,
 } from "@typix-editor/core/lexical/rich-text";
@@ -14,7 +9,7 @@ import {
   $createListItemNode,
 } from "@typix-editor/core/lexical/list";
 import { $setBlocksType } from "@typix-editor/core/lexical/selection";
-import type { LexicalEditor } from "lexical";
+// import type { LexicalEditor } from "lexical";
 import type {
   SuggestionItem,
   SuggestionSelectProps,
@@ -35,6 +30,7 @@ import type {
   SlashMenuItemType,
   UseSlashDropdownMenuReturn,
 } from "../types";
+import { $createParagraphNode, $getSelection, $isRangeSelection, type TypixEditor } from "@typix-editor/core";
 
 // ─── Default group assignments ────────────────────────────────────────────────
 
@@ -65,7 +61,7 @@ function buildBuiltInItems(
       aliases: ["paragraph", "p", "plain"],
       badge: AlignLeft,
       group: group("text"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -81,7 +77,7 @@ function buildBuiltInItems(
       aliases: ["h1", "heading", "title"],
       badge: Heading1,
       group: group("heading_1"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -97,7 +93,7 @@ function buildBuiltInItems(
       aliases: ["h2", "heading", "subtitle"],
       badge: Heading2,
       group: group("heading_2"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -113,7 +109,7 @@ function buildBuiltInItems(
       aliases: ["h3", "heading"],
       badge: Heading3,
       group: group("heading_3"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -129,7 +125,7 @@ function buildBuiltInItems(
       aliases: ["ul", "unordered", "list", "bullet"],
       badge: List,
       group: group("bullet_list"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -149,7 +145,7 @@ function buildBuiltInItems(
       aliases: ["ol", "ordered", "numbered", "number"],
       badge: ListOrdered,
       group: group("ordered_list"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -169,7 +165,7 @@ function buildBuiltInItems(
       aliases: ["blockquote", "callout", ">"],
       badge: Quote,
       group: group("quote"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -185,7 +181,7 @@ function buildBuiltInItems(
       aliases: ["code", "pre", "```"],
       badge: Code2,
       group: group("code_block"),
-      onSelect: ({ editor }: { editor: LexicalEditor }) => {
+      onSelect: ({ editor }: { editor: TypixEditor["_lexical"] }) => {
         editor.update(() => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
@@ -240,7 +236,7 @@ export function useSlashDropdownMenu(
   const visibleBuiltIn = useMemo(() => {
     if (!enabledItems) return allBuiltIn;
     return allBuiltIn.filter((item) =>
-      enabledItems.includes(item.type as SlashMenuItemType)
+      enabledItems?.includes(item.type as SlashMenuItemType)
     );
   }, [allBuiltIn, enabledItems]);
 
@@ -266,7 +262,7 @@ export function useSlashDropdownMenu(
       query,
     }: {
       query: string;
-      editor: LexicalEditor;
+      editor: TypixEditor["_lexical"];
     }): SuggestionItem<SlashMenuItem>[] => {
       return getSlashMenuItems(query).map(toSuggestionItem);
     },

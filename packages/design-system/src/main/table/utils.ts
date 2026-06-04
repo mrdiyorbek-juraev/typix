@@ -1,5 +1,4 @@
-import { $getNodeByKey } from "lexical";
-import type { TypixEditor } from "@typix-editor/core";
+import { $getNodeByKey, type TypixEditor } from "@typix-editor/core";
 import {
   TableCellNode,
   $getTableNodeFromLexicalNodeOrThrow,

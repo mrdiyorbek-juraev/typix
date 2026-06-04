@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-character-limit",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Character limit extension for Typix — visual counter with overflow highlight and a useCharacterCount hook",
   "keywords": [
     "typix",

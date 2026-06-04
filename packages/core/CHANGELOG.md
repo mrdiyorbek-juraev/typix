@@ -1,5 +1,14 @@
 # @typix-editor/core
 
+## 5.0.1
+
+### Patch Changes
+
+- Patch release 5.0.1 — minor fixes across cli, core, react, utils, and extensions.
+
+- Updated dependencies []:
+  - @typix-editor/utils@5.0.1
+
 ## 5.0.0
 
 ### Major Changes

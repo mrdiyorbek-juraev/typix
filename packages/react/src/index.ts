@@ -84,6 +84,9 @@ export { useSelectionStyle } from "./hooks/use-selection-style";
 export { useSignal } from "./hooks/use-signal";
 export { useMouseListener } from "./hooks/use-mouse-listener";
 export { useRange } from "./hooks/use-range";
+export { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+export { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection";
+export { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
 // Theme
 export { defaultTheme } from "./theme";

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { $getNodeByKey } from "lexical";
 import { $isCodeNode } from "@typix-editor/core/lexical/code";
 import { useTypixEditorState, useSignal } from "@typix-editor/react";
 import { Copy, Trash2, Check, Wand2, AlertCircle } from "lucide-react";
@@ -12,7 +11,7 @@ import {
   PrettierFormatterExtension,
   type PrettierOutput,
 } from "@typix-editor/extension-code-block-prettier";
-import { getExtensionOutput, type TypixEditor } from "@typix-editor/core";
+import { $getNodeByKey, getExtensionOutput, type TypixEditor } from "@typix-editor/core";
 
 // ─── Prettier button ──────────────────────────────────────────────────────────
 

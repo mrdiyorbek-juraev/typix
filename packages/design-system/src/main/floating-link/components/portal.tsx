@@ -1,9 +1,9 @@
 import type { JSX, ReactNode } from "react";
-import type { LexicalEditor } from "lexical";
 import { cn } from "../../../lib/utils";
 import { useFloatingLinkEditor } from "../hooks/use-floating-link-editor";
 import type { FloatingLinkRenderProps } from "../types";
 import { DefaultFloatingLinkUI } from "./default-ui";
+import type { TypixEditor } from "@typix-editor/core";
 
 export function FloatingLinkEditorPortal({
   editor,
@@ -13,7 +13,7 @@ export function FloatingLinkEditorPortal({
   children,
   verticalOffset,
 }: {
-  editor: LexicalEditor;
+  editor: TypixEditor['_lexical'];
   anchorElem: HTMLElement;
   isLink: boolean;
   setIsLink: (val: boolean) => void;

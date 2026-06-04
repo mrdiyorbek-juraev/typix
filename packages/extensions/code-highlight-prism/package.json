@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-code-highlight-prism",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Code highlight prism extension for Typix",
   "keywords": [
     "typix",
