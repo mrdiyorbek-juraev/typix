@@ -405,163 +405,6 @@ importers:
         specifier: ^7.3.2
         version: 7.3.5(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.31.1)(sass@1.97.3)(yaml@2.9.0)
 
-  apps/test-app:
-    dependencies:
-      '@radix-ui/react-avatar':
-        specifier: ^1.1.10
-        version: 1.1.10(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@radix-ui/react-context-menu':
-        specifier: ^2.2.16
-        version: 2.2.16(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@radix-ui/react-dropdown-menu':
-        specifier: ^2.1.16
-        version: 2.1.16(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@radix-ui/react-popover':
-        specifier: ^1.1.15
-        version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@radix-ui/react-separator':
-        specifier: ^1.1.8
-        version: 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@radix-ui/react-slot':
-        specifier: ^1.2.4
-        version: 1.2.4(@types/react@19.2.8)(react@19.2.3)
-      '@radix-ui/react-toolbar':
-        specifier: ^1.1.11
-        version: 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@radix-ui/react-tooltip':
-        specifier: ^1.2.8
-        version: 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@typix-editor/cli':
-        specifier: workspace:*
-        version: link:../../packages/cli
-      '@typix-editor/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@typix-editor/extension-auto-complete':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-auto-link':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-character-limit':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-code-block':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-code-block-prettier':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(prettier@3.8.1)
-      '@typix-editor/extension-code-highlight-prism':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-code-highlight-shiki':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-collapsible':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-context-menu':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-drag-drop-paste':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-draggable-block':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-floating-link':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-image':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-keywords':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-link':
-        specifier: workspace:*
-        version: link:../../packages/extensions/link
-      '@typix-editor/extension-markdown-shortcuts':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-max-length':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-      '@typix-editor/extension-mention':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-short-cuts':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-speech-to-text':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-starter-kit':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-tab-focus':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/extension-table':
-        specifier: ^5.0.0
-        version: 5.0.0(@typix-editor/core@packages+core)
-      '@typix-editor/react':
-        specifier: workspace:*
-        version: link:../../packages/react
-      '@typix-editor/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
-      class-variance-authority:
-        specifier: ^0.7.1
-        version: 0.7.1
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      cmdk:
-        specifier: ^1.1.1
-        version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      lucide-react:
-        specifier: ^1.17.0
-        version: 1.17.0(react@19.2.3)
-      next:
-        specifier: ^16.2.5
-        version: 16.2.7(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.97.3)
-      next-themes:
-        specifier: ^0.4.6
-        version: 0.4.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      react:
-        specifier: 'catalog:'
-        version: 19.2.3
-      react-dom:
-        specifier: 'catalog:'
-        version: 19.2.3(react@19.2.3)
-      tailwind-merge:
-        specifier: ^3.4.0
-        version: 3.4.0
-    devDependencies:
-      '@tailwindcss/postcss':
-        specifier: ^4.1.18
-        version: 4.1.18
-      '@types/node':
-        specifier: ^20
-        version: 20.19.31
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.2.8
-      '@types/react-dom':
-        specifier: 'catalog:'
-        version: 19.2.3(@types/react@19.2.8)
-      tailwindcss:
-        specifier: ^4.2.1
-        version: 4.2.1
-      tw-animate-css:
-        specifier: ^1.4.0
-        version: 1.4.0
-      typescript:
-        specifier: ^5
-        version: 5.9.3
-
   apps/typix:
     dependencies:
       '@ai-sdk/openai-compatible':
@@ -4062,19 +3905,6 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@radix-ui/react-primitive@2.1.4':
-    resolution: {integrity: sha512-9hQc4+GNVtJAIEPEqlYqW5RiYdrr8ea5XQ0ZOnD6fgru+83kqT15mq2OCcbe8KnjRZl5vF3ks69AKz3kh1jrhg==}
-    peerDependencies:
-      '@types/react': '*'
-      '@types/react-dom': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-
   '@radix-ui/react-progress@1.1.7':
     resolution: {integrity: sha512-vPdg/tF6YC/ynuBIJlk1mm7Le0VgW6ub6J2UWnTQ7/D23KXcPI1qy+0vBkgKgd38RCMJavBXpB83HPNFMTb0Fg==}
     peerDependencies:
@@ -4142,19 +3972,6 @@ packages:
 
   '@radix-ui/react-separator@1.1.7':
     resolution: {integrity: sha512-0HEb8R9E8A+jZjvmFCy/J4xhbXy3TV+9XSnGJ3KvTtjlIUy/YQ/p6UYZvi7YbeoeXdyU9+Y3scizK6hkY37baA==}
-    peerDependencies:
-      '@types/react': '*'
-      '@types/react-dom': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-
-  '@radix-ui/react-separator@1.1.8':
-    resolution: {integrity: sha512-sDvqVY4itsKwwSMEe0jtKgfTh+72Sy3gPmQpjqcQneqQ4PFmr/1I0YA+2/puilhggCe2gJcx5EBAYFkWkdpa5g==}
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
@@ -5318,175 +5135,6 @@ packages:
     resolution: {integrity: sha512-hoBwJwcbKHmvd2QVebiytN1aELvpk9B74B4L1mFm/XT1Q/VOYAWl2vQ9AWRFtQq8zmz6enTpfTV8WRc4ATjW/g==}
     peerDependencies:
       typescript: '*'
-
-  '@typix-editor/extension-auto-complete@5.0.0':
-    resolution: {integrity: sha512-l/d3MJfYwes6Ynqf6EHWzV4MptwOHOByVwD8sCKr6HW6sP8hubldzcmnM7cM0IPGtZbgRAzy5ebsNgibXdRxcQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-auto-link@5.0.0':
-    resolution: {integrity: sha512-rzC2+nXvCwtQt7zxYaaEhSNpxr6XT4Wez3utXngKiCckd1Z2B7ytnwvVx87XmRG89XxorF7WAuz0YZk3dPI6cQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-character-limit@5.0.0':
-    resolution: {integrity: sha512-Z9Ebc6qHVtyXS7QKmYCdVHJauNUR62JilRqsfkaSpyd0Nb4F3X86axaeBI1GMOlOgrJhPBocdtFSRDJwkulS9g==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-code-block-prettier@5.0.0':
-    resolution: {integrity: sha512-KR25OrSZ0I5wArArn6Yqik9sw6K7C9JHgdUJx66kmBPHV7oFeqMun0oSEO6DzWUPNmUZzpPdkEU9KeQ9TqgnHQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      prettier: '>=3'
-
-  '@typix-editor/extension-code-block@5.0.0':
-    resolution: {integrity: sha512-Vp5rR7VXta5Jhze0G/bOrETHjj+m1PqdvrkRJZqVwKLddx5Cur18jma7zRiBhWgIQa4iIyHf8xNc9bNrxLE2RA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-code-highlight-prism@5.0.0':
-    resolution: {integrity: sha512-F/OQeUVVUH+CfXj57ROFth5mXUOExgqDgRavHRSlCprNkA5uPaEnLRhOd3kqilqz0bSWNbC0cgTlYAtq4wZ6sw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-code-highlight-shiki@5.0.0':
-    resolution: {integrity: sha512-jtXu76cVDcpUKw+vPsCtEOORL/mrVRAvz++K0AO2V3im2RyIiP+Cl5JXsH5RMJXgmkkQScHZdgcAzIvUGXdIxw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-collapsible@5.0.0':
-    resolution: {integrity: sha512-dAVDIPp2mPLXmaGE/ifnkOneoMvo5+u+q10ayL0/7OQ5fHr7i3Az38K+q3TloIdBb6IsylAA0bzV+s+sWtazlA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-context-menu@5.0.0':
-    resolution: {integrity: sha512-x6JEQl98/kOv3QnUgJMoPW6sNoUJdRgYbamt0Cv89DcMuBcSjG5N0Nl6cNhNZOEKevFoH0UE0jR875B7DCup7g==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-drag-drop-paste@5.0.0':
-    resolution: {integrity: sha512-lIWv1FZ+LvDNnlBADusmWGv5S68nJW3hKVTijBPsk1o1inI7KPXRQaFPMgHlDFB6lBKmkE7m14Vx+WTaFxlbNw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-draggable-block@5.0.0':
-    resolution: {integrity: sha512-cA31G1jfeGaoIUdeB0oDZz1xpU6M0Xe5C3Jwf+wfXuQP1xMaugouvd/xqG0qooWNX2dsnRJUbM/Kbz2a7Ia3hg==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-floating-link@5.0.0':
-    resolution: {integrity: sha512-HWexQcvKfcDEVXIKhWiR79qGsa4iPwbfFcuHMiMe3eL+I2uzwBD/IjDjmCSZHwC6yiiV1VFho5fFIZx4j4Hzag==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-image@5.0.0':
-    resolution: {integrity: sha512-veOX3mHOKODg4OqxC32y928Q0dpRLTj8EVs6fYLo2Swtbm+WHfurJBcI71EVuVEiN1P2ypXQ9QD90EFImdR2iQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-keywords@5.0.0':
-    resolution: {integrity: sha512-NBEpS0agfb7DgWgcmpgcY4kqmNnPkS8b+PsoJcIODVM/LS58JVvlRiMqaKI9dY8XF6UUTn9PwbpPS+uiv1qY+g==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-markdown-shortcuts@5.0.0':
-    resolution: {integrity: sha512-y/3SdRI99jTCO4rYmvh7tYFQqS/PewNFbQ7HaPFeMaCFwsPeGbUlHYKLgBfy0/G8NpvCSlwBpEAv7mqfsh9Abw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-max-length@5.0.0':
-    resolution: {integrity: sha512-VSQUztIOsExRgBX43zLhFD0C7irOe3GzvQEaKIt7GPx2IR0LCgLRzl+tPhuZP4ADzxodJe+dTTG1NNSJnYTg1Q==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-      lexical: ^0.45.0
-    peerDependenciesMeta:
-      lexical:
-        optional: true
-
-  '@typix-editor/extension-mention@5.0.0':
-    resolution: {integrity: sha512-1tiMj2d+VNmfsipbdkC7q6fysS+fTn3P1x6triAV6b4b5MWQWQCjfwhkVC9I2sOQiNEnQXaTxJf59X/7qwHvZQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-short-cuts@5.0.0':
-    resolution: {integrity: sha512-2NHlmJAg3WvRbCliSwsPfDVqqYH+UyUwiwcz8fwZv/NKK+f8J4V6UMyvwUhIR9VLwCPMhu3kd1oi1iuLtFv1Iw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-speech-to-text@5.0.0':
-    resolution: {integrity: sha512-+Xltosv6ofJW0FivEymPny83ScbWvlw96xNXNdmYYJygRZoX5U1MJXnY+3pEKUDuIM0twaOl7F5uHcGJJzXayw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-starter-kit@5.0.0':
-    resolution: {integrity: sha512-9PmxqzIrwrdgCoIqcio9fGP+zqrZQ4FYwoln2qNCjuovuvnVC8BljkcXAyuszg8Hal9GVljUUc7jkQkPMCzzLg==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-tab-focus@5.0.0':
-    resolution: {integrity: sha512-FSy9HIbwdK3jrcYdL+CsbRjFXKUH5W+v8zVrJrvZX7H/d1Yr9tlwemP29NEavvGNwWJqKwgoeRiumx7JrLJWKA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/extension-table@5.0.0':
-    resolution: {integrity: sha512-gg/lhfPzWQ8YLOjTDb52E3AdVunk0cxB/znB8ZHFW6vPp4Qyoa+QGx4cAp4aXFkM/qvu9hpDnu2B/4I5e1xhfQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@typix-editor/core': ^5.0.0
-
-  '@typix-editor/utils@5.0.0':
-    resolution: {integrity: sha512-XJ3fE60ZbFKR7UY8IlUnTtsEsgulMJNnWyls3pwo1wFhZmKSciDnyx5Djx/36r7k+kpR2PScWs31/2wFA1RvJw==}
-    engines: {node: '>=18.0.0'}
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
@@ -8723,11 +8371,6 @@ packages:
 
   lucide-react@0.563.0:
     resolution: {integrity: sha512-8dXPB2GI4dI8jV4MgUDGBeLdGk8ekfqVZ0BdLcrRzocGgG75ltNEmWS+gE7uokKF/0oSUuczNDT+g9hFJ23FkA==}
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
-  lucide-react@1.17.0:
-    resolution: {integrity: sha512-9FA9evdox/JQL5PT57fdA1x/yg8T7knJ98+zjTL3UfKza6pflQUUh3XtaQIHKvnsJw1lmsEyHVlt5jchYxOQ5w==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -14288,15 +13931,6 @@ snapshots:
       '@types/react': 19.2.8
       '@types/react-dom': 19.2.3(@types/react@19.2.8)
 
-  '@radix-ui/react-primitive@2.1.4(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
-    dependencies:
-      '@radix-ui/react-slot': 1.2.4(@types/react@19.2.8)(react@19.2.3)
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-    optionalDependencies:
-      '@types/react': 19.2.8
-      '@types/react-dom': 19.2.3(@types/react@19.2.8)
-
   '@radix-ui/react-progress@1.1.7(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@radix-ui/react-context': 1.1.2(@types/react@19.2.8)(react@19.2.3)
@@ -14391,15 +14025,6 @@ snapshots:
   '@radix-ui/react-separator@1.1.7(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@radix-ui/react-primitive': 2.1.3(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-    optionalDependencies:
-      '@types/react': 19.2.8
-      '@types/react-dom': 19.2.3(@types/react@19.2.8)
-
-  '@radix-ui/react-separator@1.1.8(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
-    dependencies:
-      '@radix-ui/react-primitive': 2.1.4(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
     optionalDependencies:
@@ -15599,130 +15224,6 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
-
-  '@typix-editor/extension-auto-complete@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-      '@typix-editor/utils': 5.0.0
-    optionalDependencies:
-      lexical: 0.45.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
-  '@typix-editor/extension-auto-link@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-    optionalDependencies:
-      lexical: 0.45.0
-
-  '@typix-editor/extension-character-limit@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-code-block-prettier@5.0.0(@typix-editor/core@packages+core)(prettier@3.8.1)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-      prettier: 3.8.1
-
-  '@typix-editor/extension-code-block@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-code-highlight-prism@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-    optionalDependencies:
-      lexical: 0.45.0
-
-  '@typix-editor/extension-code-highlight-shiki@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-    optionalDependencies:
-      lexical: 0.45.0
-
-  '@typix-editor/extension-collapsible@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-    optionalDependencies:
-      lexical: 0.45.0
-
-  '@typix-editor/extension-context-menu@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-drag-drop-paste@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-    optionalDependencies:
-      lexical: 0.45.0
-
-  '@typix-editor/extension-draggable-block@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-floating-link@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-image@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-      '@typix-editor/extension-drag-drop-paste': 5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)
-    transitivePeerDependencies:
-      - lexical
-
-  '@typix-editor/extension-keywords@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-    optionalDependencies:
-      lexical: 0.45.0
-
-  '@typix-editor/extension-markdown-shortcuts@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-max-length@5.0.0(@typix-editor/core@packages+core)(lexical@0.45.0)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-    optionalDependencies:
-      lexical: 0.45.0
-
-  '@typix-editor/extension-mention@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-short-cuts@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-speech-to-text@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-starter-kit@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-tab-focus@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/extension-table@5.0.0(@typix-editor/core@packages+core)':
-    dependencies:
-      '@typix-editor/core': link:packages/core
-
-  '@typix-editor/utils@5.0.0':
-    dependencies:
-      '@lexical/headless': 0.45.0
-      '@lexical/mark': 0.45.0
-      '@lexical/selection': 0.45.0
-      '@lexical/utils': 0.45.0
-      clsx: 2.1.1
-      tailwind-merge: 3.4.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -19296,10 +18797,6 @@ snapshots:
       react: 19.2.3
 
   lucide-react@0.563.0(react@19.2.3):
-    dependencies:
-      react: 19.2.3
-
-  lucide-react@1.17.0(react@19.2.3):
     dependencies:
       react: 19.2.3
 
