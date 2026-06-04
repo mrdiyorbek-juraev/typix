@@ -11,7 +11,11 @@ import {
   PrettierFormatterExtension,
   type PrettierOutput,
 } from "@typix-editor/extension-code-block-prettier";
-import { $getNodeByKey, getExtensionOutput, type TypixEditor } from "@typix-editor/core";
+import {
+  $getNodeByKey,
+  getExtensionOutput,
+  type TypixEditor,
+} from "@typix-editor/core";
 
 // ─── Prettier button ──────────────────────────────────────────────────────────
 

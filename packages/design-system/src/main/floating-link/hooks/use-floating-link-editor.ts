@@ -1,5 +1,3 @@
-
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import type * as React from "react";
 import {
@@ -12,11 +10,22 @@ import {
 } from "@typix-editor/utils";
 import type { FloatingLinkRenderProps } from "../types";
 import {
-  $isLinkNode, 
+  $isLinkNode,
   $createLinkNode,
   $isAutoLinkNode,
-  TOGGLE_LINK_COMMAND, } from "@typix-editor/extension-link";
-import { $getSelection, $isNodeSelection, $isRangeSelection, COMMAND_PRIORITY_LOW, getDOMSelection, SELECTION_CHANGE_COMMAND, type BaseSelection, type EditorState, type TypixEditor } from "@typix-editor/core";
+  TOGGLE_LINK_COMMAND,
+} from "@typix-editor/extension-link";
+import {
+  $getSelection,
+  $isNodeSelection,
+  $isRangeSelection,
+  COMMAND_PRIORITY_LOW,
+  getDOMSelection,
+  SELECTION_CHANGE_COMMAND,
+  type BaseSelection,
+  type EditorState,
+  type TypixEditor,
+} from "@typix-editor/core";
 
 export function useFloatingLinkEditor({
   editor,
@@ -25,7 +34,7 @@ export function useFloatingLinkEditor({
   setIsLink,
   verticalOffset,
 }: {
-  editor: TypixEditor['_lexical'];
+  editor: TypixEditor["_lexical"];
   anchorElem: HTMLElement;
   isLink: boolean;
   setIsLink: (val: boolean) => void;
@@ -156,11 +165,13 @@ export function useFloatingLinkEditor({
   // Editor state updates
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({ editorState }: { editorState: EditorState }) => {
-        editorState.read(() => {
-          $updateLinkEditor();
-        });
-      }),
+      editor.registerUpdateListener(
+        ({ editorState }: { editorState: EditorState }) => {
+          editorState.read(() => {
+            $updateLinkEditor();
+          });
+        }
+      ),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         () => {

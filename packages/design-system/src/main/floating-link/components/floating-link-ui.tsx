@@ -37,7 +37,7 @@ export function FloatingLinkUI({
   );
 
   const [isLink, setIsLink] = useState(() => output?.isLink.value ?? false);
-  const [activeEditor, setActiveEditor] = useState<TypixEditor['_lexical']>(
+  const [activeEditor, setActiveEditor] = useState<TypixEditor["_lexical"]>(
     () => output?.activeEditor.value ?? editor
   );
 

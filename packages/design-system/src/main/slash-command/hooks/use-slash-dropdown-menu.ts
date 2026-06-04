@@ -30,7 +30,12 @@ import type {
   SlashMenuItemType,
   UseSlashDropdownMenuReturn,
 } from "../types";
-import { $createParagraphNode, $getSelection, $isRangeSelection, type TypixEditor } from "@typix-editor/core";
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isRangeSelection,
+  type TypixEditor,
+} from "@typix-editor/core";
 
 // ─── Default group assignments ────────────────────────────────────────────────
 

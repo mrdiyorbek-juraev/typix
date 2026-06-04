@@ -19,6 +19,6 @@ export {
   validateEditorState,
 } from "./server/validation";
 
-export {$findMatchingParent, mergeRegister} from "./lexical/utils";
+export { $findMatchingParent, mergeRegister } from "./lexical/utils";
 export { getSelectedNode } from "./lexical/selected-node/index";
 export { getThemeSelector } from "./lexical/theme-selector/index";

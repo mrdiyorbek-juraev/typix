@@ -23,7 +23,11 @@ import { useMounted, useTablePositions } from "../hooks";
 import { CellMiniMenu } from "./cell-menu";
 import { ColumnMenu } from "./column-menu";
 import { RowMenu } from "./row-menu";
-import { $getNearestNodeFromDOMNode, $getNodeByKey, $getSelection } from "@typix-editor/core";
+import {
+  $getNearestNodeFromDOMNode,
+  $getNodeByKey,
+  $getSelection,
+} from "@typix-editor/core";
 
 export function TableUI() {
   // useCurrentTypixEditor (vs useTypixEditorState): identity-stable editor

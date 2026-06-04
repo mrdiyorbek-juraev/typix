@@ -13,7 +13,7 @@ export function FloatingLinkEditorPortal({
   children,
   verticalOffset,
 }: {
-  editor: TypixEditor['_lexical'];
+  editor: TypixEditor["_lexical"];
   anchorElem: HTMLElement;
   isLink: boolean;
   setIsLink: (val: boolean) => void;

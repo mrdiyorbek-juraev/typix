@@ -10,8 +10,22 @@ import { ImageContextMenu } from "./image-context-menu";
 import { ImageResizer } from "./image-resizer";
 import { ImageToolbar } from "./image-toolbar";
 import { mergeRegister } from "@typix-editor/utils";
-import { $applyNodeReplacement, $getNodeByKey, $getSelection, $isNodeSelection, CLICK_COMMAND, COMMAND_PRIORITY_LOW, KEY_BACKSPACE_COMMAND, KEY_DELETE_COMMAND, type LexicalNode } from "@typix-editor/core";
-import { useLexicalComposerContext, useLexicalEditable, useLexicalNodeSelection } from "@typix-editor/react";
+import {
+  $applyNodeReplacement,
+  $getNodeByKey,
+  $getSelection,
+  $isNodeSelection,
+  CLICK_COMMAND,
+  COMMAND_PRIORITY_LOW,
+  KEY_BACKSPACE_COMMAND,
+  KEY_DELETE_COMMAND,
+  type LexicalNode,
+} from "@typix-editor/core";
+import {
+  useLexicalComposerContext,
+  useLexicalEditable,
+  useLexicalNodeSelection,
+} from "@typix-editor/react";
 
 const defaultFeatures: Required<ImageFeatureFlags> = {
   contextMenu: true,
