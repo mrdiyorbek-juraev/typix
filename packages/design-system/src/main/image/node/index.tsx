@@ -1,3 +1,6 @@
+// React 19 dropped the ambient global JSX namespace — import it explicitly.
+import type { JSX } from "react";
+import { ImageComponent } from "../components/image-component";
 import {
   $applyNodeReplacement,
   DecoratorNode,
@@ -8,10 +11,7 @@ import {
   type NodeKey,
   type SerializedLexicalNode,
   type Spread,
-} from "lexical";
-// React 19 dropped the ambient global JSX namespace — import it explicitly.
-import type { JSX } from "react";
-import { ImageComponent } from "../components/image-component";
+} from "@typix-editor/core";
 
 export type ImageAlignment = "left" | "center" | "right" | "full-width";
 

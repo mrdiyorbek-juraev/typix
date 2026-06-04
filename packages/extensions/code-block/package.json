@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-code-block",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Code block extension for Typix",
   "keywords": [
     "typix",

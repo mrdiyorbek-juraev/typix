@@ -1,17 +1,3 @@
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-import { mergeRegister } from "@lexical/utils";
-import {
-  $applyNodeReplacement,
-  $getNodeByKey,
-  $getSelection,
-  $isNodeSelection,
-  CLICK_COMMAND,
-  COMMAND_PRIORITY_LOW,
-  KEY_BACKSPACE_COMMAND,
-  KEY_DELETE_COMMAND,
-} from "lexical";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../../../lib/utils";
 import type {
@@ -23,6 +9,23 @@ import { ImageCaption } from "./image-caption";
 import { ImageContextMenu } from "./image-context-menu";
 import { ImageResizer } from "./image-resizer";
 import { ImageToolbar } from "./image-toolbar";
+import { mergeRegister } from "@typix-editor/utils";
+import {
+  $applyNodeReplacement,
+  $getNodeByKey,
+  $getSelection,
+  $isNodeSelection,
+  CLICK_COMMAND,
+  COMMAND_PRIORITY_LOW,
+  KEY_BACKSPACE_COMMAND,
+  KEY_DELETE_COMMAND,
+  type LexicalNode,
+} from "@typix-editor/core";
+import {
+  useLexicalComposerContext,
+  useLexicalEditable,
+  useLexicalNodeSelection,
+} from "@typix-editor/react";
 
 const defaultFeatures: Required<ImageFeatureFlags> = {
   contextMenu: true,
@@ -102,7 +105,7 @@ export function ImageComponent({
 
   // --- Node update helpers ---
   const updateNode = useCallback(
-    (fn: (node: import("lexical").LexicalNode) => void) => {
+    (fn: (node: LexicalNode) => void) => {
       editor.update(() => {
         const node = $getNodeByKey(nodeKey);
         if (node) fn(node);

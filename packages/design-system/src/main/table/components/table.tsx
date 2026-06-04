@@ -2,11 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
-import {
-  $getNodeByKey,
-  $getNearestNodeFromDOMNode,
-  $getSelection,
-} from "lexical";
+
 import { useCurrentTypixEditor } from "@typix-editor/react";
 import {
   TableCellNode,
@@ -27,6 +23,11 @@ import { useMounted, useTablePositions } from "../hooks";
 import { CellMiniMenu } from "./cell-menu";
 import { ColumnMenu } from "./column-menu";
 import { RowMenu } from "./row-menu";
+import {
+  $getNearestNodeFromDOMNode,
+  $getNodeByKey,
+  $getSelection,
+} from "@typix-editor/core";
 
 export function TableUI() {
   // useCurrentTypixEditor (vs useTypixEditorState): identity-stable editor

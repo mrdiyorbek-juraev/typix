@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-code-highlight-shiki",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Code highlight shiki extension for Typix",
   "keywords": [
     "typix",

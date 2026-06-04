@@ -1,29 +1,31 @@
-import {
-  $createLinkNode,
-  $isAutoLinkNode,
-  $isLinkNode,
-  TOGGLE_LINK_COMMAND,
-} from "@lexical/link";
-import { $findMatchingParent, mergeRegister } from "@lexical/utils";
-import {
-  $getSelection,
-  $isNodeSelection,
-  $isRangeSelection,
-  type BaseSelection,
-  COMMAND_PRIORITY_LOW,
-  getDOMSelection,
-  type LexicalEditor,
-  SELECTION_CHANGE_COMMAND,
-} from "lexical";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type * as React from "react";
 import {
   sanitizeUrl,
   validateUrl,
   setFloatingElemPositionForLinkEditor,
+  $findMatchingParent,
+  getSelectedNode,
+  mergeRegister,
 } from "@typix-editor/utils";
-import { getSelectedNode } from "@typix-editor/utils/lexical";
 import type { FloatingLinkRenderProps } from "../types";
+import {
+  $isLinkNode,
+  $createLinkNode,
+  $isAutoLinkNode,
+  TOGGLE_LINK_COMMAND,
+} from "@typix-editor/extension-link";
+import {
+  $getSelection,
+  $isNodeSelection,
+  $isRangeSelection,
+  COMMAND_PRIORITY_LOW,
+  getDOMSelection,
+  SELECTION_CHANGE_COMMAND,
+  type BaseSelection,
+  type EditorState,
+  type TypixEditor,
+} from "@typix-editor/core";
 
 export function useFloatingLinkEditor({
   editor,
@@ -32,7 +34,7 @@ export function useFloatingLinkEditor({
   setIsLink,
   verticalOffset,
 }: {
-  editor: LexicalEditor;
+  editor: TypixEditor["_lexical"];
   anchorElem: HTMLElement;
   isLink: boolean;
   setIsLink: (val: boolean) => void;
@@ -163,11 +165,13 @@ export function useFloatingLinkEditor({
   // Editor state updates
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({ editorState }) => {
-        editorState.read(() => {
-          $updateLinkEditor();
-        });
-      }),
+      editor.registerUpdateListener(
+        ({ editorState }: { editorState: EditorState }) => {
+          editorState.read(() => {
+            $updateLinkEditor();
+          });
+        }
+      ),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         () => {

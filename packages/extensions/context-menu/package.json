@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-context-menu",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Context menu extension for Typix",
   "keywords": [
     "typix",

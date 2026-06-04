@@ -4,7 +4,6 @@ import { useEffect, useRef, useCallback } from "react";
 // AbortController is used to tear down the document-level drag listeners
 // in one call (and to clean up if the component unmounts mid-drag).
 import { createPortal } from "react-dom";
-import { $getNodeByKey, $getNearestNodeFromDOMNode } from "lexical";
 import { useCurrentTypixEditor } from "@typix-editor/react";
 import {
   TableCellNode,
@@ -17,6 +16,7 @@ import type { ResizeHandle, ResizeDragLine, ResizeDirection } from "../types";
 import { MIN_COL_WIDTH, MIN_ROW_HEIGHT, EDGE_ZONE } from "../constants";
 import { getColumnDOMCells } from "../utils";
 import { useMounted } from "../hooks";
+import { $getNearestNodeFromDOMNode, $getNodeByKey } from "@typix-editor/core";
 
 export function TableCellResizer() {
   // useCurrentTypixEditor (vs useTypixEditorState): identity-stable editor

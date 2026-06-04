@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
-import type { LexicalEditor } from "lexical";
 import type { SuggestionItem } from "@typix-editor/react";
+import type { TypixEditor } from "@typix-editor/core";
 
 // ─── Item types ───────────────────────────────────────────────────────────────
 
@@ -28,7 +28,7 @@ export interface SlashMenuItem {
   /** Group name for grouping display. */
   group?: string;
   /** Action to run when item is selected. */
-  onSelect: (ctx: { editor: LexicalEditor }) => void;
+  onSelect: (ctx: { editor: TypixEditor["_lexical"] }) => void;
 }
 
 // ─── Config ──────────────────────────────────────────────────────────────────
@@ -80,7 +80,7 @@ export interface UseSlashDropdownMenuReturn {
   /** Returns SuggestionItem-compatible items for use with SuggestionMenu. */
   getSuggestionItems: (props: {
     query: string;
-    editor: LexicalEditor;
+    editor: TypixEditor["_lexical"];
   }) => SuggestionItem<SlashMenuItem>[];
   /** The resolved config. */
   config: {

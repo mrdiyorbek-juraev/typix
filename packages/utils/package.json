@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/utils",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Shared utilities for the Typix editor framework",
   "author": "Diyorbek Juraev <mrdiyorbekjuraev@gmail.com>",
   "license": "MIT",

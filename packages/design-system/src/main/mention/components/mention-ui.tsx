@@ -1,7 +1,6 @@
-import type { JSX, ReactNode } from "react";
+import type { JSX } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as ReactDOM from "react-dom";
-import type { TextNode } from "lexical";
 import {
   useTypixEditorState,
   LexicalTypeaheadMenuPlugin,
@@ -22,6 +21,7 @@ import { Skeleton } from "../../../primitives/skeleton";
 import { useDebouncedSearch } from "../hooks/use-debounced-search";
 import { DefaultMenuItem } from "./default-menu-item";
 import type { MentionMenuProps, MentionUIProps } from "../types";
+import type { TextNode } from "@typix-editor/core";
 
 // Default values
 const DEFAULT_TRIGGER = "@";

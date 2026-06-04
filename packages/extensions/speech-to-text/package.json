@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-speech-to-text",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Speech to text extension for Typix",
   "keywords": [
     "typix",

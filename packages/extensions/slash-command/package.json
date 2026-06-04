@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-slash-command",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Slash command extension for Typix editor - adds / command palette functionality",
   "keywords": [
     "typix",

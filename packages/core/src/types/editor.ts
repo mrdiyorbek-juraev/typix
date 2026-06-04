@@ -4,6 +4,7 @@ import type {
     AnyLexicalExtension,
     AnyLexicalExtensionArgument,
     LexicalNode,
+    EditorState,
 } from 'lexical'
 import type { SerializedContent } from './content'
 import type { ChainBuilder, CanChainBuilder } from './commands'
@@ -149,4 +150,4 @@ export interface TypixEditorInstance {
 }
 
 // Re-export AnyLexicalExtension for downstream consumers.
-export type { AnyLexicalExtension }
+export type { AnyLexicalExtension, EditorState }

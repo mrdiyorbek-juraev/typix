@@ -1,7 +1,6 @@
 "use client";
 
-import { $parseSerializedNode } from "lexical";
-import { $createParagraphNode } from "@typix-editor/core";
+import { $createParagraphNode, $parseSerializedNode } from "@typix-editor/core";
 import type { TypixEditor } from "@typix-editor/core";
 import {
   TableCellNode,

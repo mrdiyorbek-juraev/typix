@@ -9,7 +9,7 @@ import {
   ContextMenuTrigger,
 } from "../../../primitives/context-menu";
 import { cn } from "../../../lib/utils";
-import type { EditorContextMenuProps, EditorContextMenuItem } from "../types";
+import type { EditorContextMenuProps } from "../types";
 import type { TypixEditor as TypixEditorType } from "@typix-editor/core";
 
 function resolveFlag(

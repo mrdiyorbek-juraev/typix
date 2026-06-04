@@ -1,1 +1,1 @@
-export * from "@lexical/utils";
+export { $findMatchingParent, mergeRegister } from "@lexical/utils";

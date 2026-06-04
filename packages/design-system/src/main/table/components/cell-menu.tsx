@@ -1,7 +1,6 @@
 "use client";
 
-import { $getSelection } from "lexical";
-import type { TypixEditor } from "@typix-editor/core";
+import { $getSelection, type TypixEditor } from "@typix-editor/core";
 import {
   TableCellNode,
   TableCellHeaderStates,

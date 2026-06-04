@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-tab-focus",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Tab focus extension for Typix",
   "keywords": [
     "typix",

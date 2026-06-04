@@ -277,3 +277,6 @@ packages/database/generated
 .contentlayer
 .content-collections
 .source
+
+# Local sandbox
+apps/test-app/

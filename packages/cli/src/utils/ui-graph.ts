@@ -43,6 +43,12 @@ const NPM_PEERS_EXACT = new Set([
   "cmdk",
   "lucide-react",
   "tailwind-merge",
+  // Typix runtime packages the vendored UI depends on. Installed for the
+  // consumer rather than reported as "already required", because a fresh
+  // project will not have them yet.
+  "@typix-editor/core",
+  "@typix-editor/react",
+  "@typix-editor/utils",
 ]);
 
 /**
@@ -212,28 +218,92 @@ function collectFiles(dir: string): string[] {
  * Ignores requires (we only target ESM).
  */
 export function extractImports(source: string): string[] {
+  // Strip comments first — the word "import" in JSDoc (e.g. "DOM import-export")
+  // would otherwise let the regex's lazy `[\s\S]*?` race across newlines to the
+  // next quote it finds (an apostrophe in prose, a quoted string in code below)
+  // and capture the whole intervening chunk as a fake specifier.
+  const clean = stripComments(source);
+
   const specs = new Set<string>();
 
   // import [...] from "X" / import "X" / import type [...] from "X"
   const importRe = /\bimport\b[\s\S]*?(?:from\s+)?["']([^"']+)["']\s*;?/g;
   let m: RegExpExecArray | null;
-  while ((m = importRe.exec(source)) !== null) {
+  while ((m = importRe.exec(clean)) !== null) {
     specs.add(m[1]!);
   }
 
   // export [type] [{...}] from "X"
   const exportFromRe = /\bexport\b[\s\S]*?from\s+["']([^"']+)["']\s*;?/g;
-  while ((m = exportFromRe.exec(source)) !== null) {
+  while ((m = exportFromRe.exec(clean)) !== null) {
     specs.add(m[1]!);
   }
 
   // dynamic import("X")
   const dynRe = /\bimport\s*\(\s*["']([^"']+)["']\s*\)/g;
-  while ((m = dynRe.exec(source)) !== null) {
+  while ((m = dynRe.exec(clean)) !== null) {
     specs.add(m[1]!);
   }
 
   return [...specs];
+}
+
+/**
+ * Strip line and block comments from TS/TSX source while preserving string
+ * and template literals (so `// inside a string` is kept). Newlines are
+ * preserved so line numbers don't drift.
+ */
+export function stripComments(source: string): string {
+  let out = "";
+  let i = 0;
+  const n = source.length;
+
+  while (i < n) {
+    const ch = source[i]!;
+    const next = i + 1 < n ? source[i + 1] : "";
+
+    if (ch === '"' || ch === "'" || ch === "`") {
+      const quote = ch;
+      out += ch;
+      i++;
+      while (i < n) {
+        const c = source[i]!;
+        if (c === "\\" && i + 1 < n) {
+          out += c + source[i + 1];
+          i += 2;
+          continue;
+        }
+        out += c;
+        i++;
+        if (c === quote) break;
+      }
+      continue;
+    }
+
+    if (ch === "/" && next === "/") {
+      i += 2;
+      while (i < n && source[i] !== "\n") i++;
+      continue;
+    }
+
+    if (ch === "/" && next === "*") {
+      i += 2;
+      while (i < n) {
+        if (source[i] === "*" && source[i + 1] === "/") {
+          i += 2;
+          break;
+        }
+        if (source[i] === "\n") out += "\n";
+        i++;
+      }
+      continue;
+    }
+
+    out += ch;
+    i++;
+  }
+
+  return out;
 }
 
 function classifyExternal(

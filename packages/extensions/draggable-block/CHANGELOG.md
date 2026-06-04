@@ -1,5 +1,11 @@
 # @typix-editor/extension-draggable-block
 
+## 5.0.1
+
+### Patch Changes
+
+- Patch release 5.0.1 — minor fixes across cli, core, react, utils, and extensions.
+
 ## 5.0.0
 
 ### Major Changes
@@ -43,7 +49,6 @@
 - [#32](https://github.com/mrdiyorbek-juraev/typix/pull/32) [`1208696`](https://github.com/mrdiyorbek-juraev/typix/commit/12086968c4cddd14aeedf88b422fb70bb425ac59) Thanks [@mrdiyorbek-juraev](https://github.com/mrdiyorbek-juraev)! - Add draggable block extension for block reordering
 
   **@typix-editor/extension-draggable-block (new package)**
-
   - DraggableBlockExtension component using Lexical's experimental DraggableBlockPlugin
   - Customizable classNames via `classNames` prop object (menu, targetLine, icon)
   - Built-in default grip icon with optional custom icon support via `dragHandleIcon` prop

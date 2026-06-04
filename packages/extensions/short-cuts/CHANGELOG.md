@@ -1,5 +1,11 @@
 # @typix-editor/extension-short-cuts
 
+## 5.0.1
+
+### Patch Changes
+
+- Patch release 5.0.1 — minor fixes across cli, core, react, utils, and extensions.
+
 ## 5.0.0
 
 ### Major Changes
@@ -34,7 +40,6 @@
 ### Major Changes
 
 - [#35](https://github.com/mrdiyorbek-juraev/typix/pull/35) [`3111db7`](https://github.com/mrdiyorbek-juraev/typix/commit/3111db78e30d1760192aa44a39163a1718e62b72) Thanks [@mrdiyorbek-juraev](https://github.com/mrdiyorbek-juraev)! - feat(short-cuts): add keyboard shortcuts extension
-
   - Add new keyboard shortcuts extension with support for:
     - Block formatting (paragraph, headings, lists, code, quote)
     - Text formatting (strikethrough, subscript, superscript, case transforms)
@@ -45,7 +50,6 @@
     - Clear formatting
 
   feat(react): add useActiveFormats hook and editor context improvements
-
   - Add useActiveFormats hook for tracking active text formats
   - Add editor context for better state management
   - Enhance bubble-menu component

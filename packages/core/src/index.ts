@@ -66,6 +66,7 @@ export type {
     SerializedNode,
     // Lexical interop
     AnyLexicalExtension,
+    EditorState,
     // Events
     TypixEventMap,
     TypixEventName,
@@ -79,22 +80,26 @@ export type {
     CommandFactoryMap,
     // Shortcuts
     TypixShortcut,
+    
 } from './types'
 
 // ─────────────────────────────────────────────────────
 // Lexical node types and primitives (for extensions)
 // ─────────────────────────────────────────────────────
 export {
-    defineExtension,
-    safeCast,
+    // LEXICAL COMMANDS
     FORMAT_TEXT_COMMAND,
-    $createParagraphNode,
-    $getSelection,
-    $isRangeSelection,
-    $setBlocksType,
-    $getSelectionStyleValueForProperty,
-    $patchStyleText,
-    $createHeadingNode,
+    SELECTION_CHANGE_COMMAND,
+    COMMAND_PRIORITY_LOW,
+    CLICK_COMMAND,
+    KEY_BACKSPACE_COMMAND,
+    KEY_DELETE_COMMAND,
+    // LEXICAL NODES
+
+
+
+    // LEXICAL DEFAULT NODES
+    DecoratorNode,
     HeadingNode,
     ParagraphNode,
     TextNode,
@@ -110,5 +115,21 @@ export {
     CodeNode,
     CodeHighlightNode,
     AutoLinkNode,
+    // LEXICAL UTILS
+    $createParagraphNode,
+    $getSelection,
+    $isRangeSelection,
+    $setBlocksType,
+    $getSelectionStyleValueForProperty,
+    $patchStyleText,
+    $createHeadingNode,
+    $getNodeByKey,
+    defineExtension,
+    safeCast,
+    getDOMSelection,
+    $isNodeSelection,
+    $applyNodeReplacement,
+    $getNearestNodeFromDOMNode,
+    $parseSerializedNode
 } from './lib/editor'
-export type { Klass, LexicalNode, LexicalNodeReplacement } from './lib/editor'
+export type { Klass, LexicalNode, LexicalNodeReplacement, BaseSelection, DOMConversionMap, DOMConversionOutput, DOMExportOutput, NodeKey, SerializedLexicalNode, Spread } from './lib/editor'

@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-code-block-prettier",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Prettier code formatter extension for Typix code blocks",
   "keywords": [
     "typix",

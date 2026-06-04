@@ -1,6 +1,6 @@
 {
   "name": "@typix-editor/extension-auto-link",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Auto link extension for Typix",
   "keywords": [
     "typix",
