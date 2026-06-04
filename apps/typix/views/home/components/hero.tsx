@@ -237,7 +237,9 @@ export function Hero() {
           </motion.div>
 
           {/* Right — Editor Preview */}
-          <EditorPreview />
+          <div className="hidden lg:block">
+            <EditorPreview />
+          </div>
         </div>
       </div>
     </section>

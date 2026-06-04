@@ -174,13 +174,13 @@ function CollabCursor({
       }}
     >
       <svg
+        aria-hidden="true"
         className="drop-shadow-sm"
         fill="none"
         height="16"
         viewBox="0 0 12 16"
         width="12"
       >
-        <title>{name}'s cursor</title>
         <path
           d="M0.5 0.5L11 8L5.5 8.5L3 15L0.5 0.5Z"
           fill={color}

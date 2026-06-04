@@ -3,14 +3,6 @@ title: Typix Editor
 description: A modern, extensible rich-text editor framework built on Lexical
 ---
 
-<Callout type="info">
-  **Typix v2 — Docs refreshed for the new architecture.** The hook-based API
-  (`useTypixEditor`), the `TypixEditorContext.Provider`, the 25 extension
-  packages, and the shadcn-style `typix ui add` flow are documented here.
-  Any reference you see to `EditorRoot` or `useActiveFormats` is from v1 and
-  no longer applies.
-</Callout>
-
 Typix is a headless, extension-based rich-text editor framework for React,
 built on Meta's [Lexical](https://lexical.dev). You install only the
 extensions you need, own the UI source via the CLI, and stay close to
@@ -23,13 +15,15 @@ Lexical when you need to.
 - **Extension-based** — 25 first-party extensions for marks, blocks,
   toolbars, mentions, code, tables, images, AI helpers, and more. Install
   only what you use.
-- **You own the UI** — `typix ui add <component>` copies React components
-  into your repo (shadcn-style). Customize anything; nothing is locked
-  inside `node_modules`.
+- **You own the UI** — [typix ui add](/docs/getting-started/cli) copies
+  React components into your repo (shadcn-style). Customize anything;
+  nothing is locked inside `node_modules`.
 - **Type-safe** — Extensions augment a global command interface; the
-  `editor.chain()` builder is typed per installed extension.
-- **Built on Lexical** — Battle-tested engine. Direct `editor.lexical`
-  access whenever you need a raw Lexical command.
+  [editor.chain()](/docs/core/typix-editor) builder is typed per installed
+  extension.
+- **Built on Lexical** — Battle-tested engine. Direct
+  [editor.lexical](/docs/guides/lexical-interop) access whenever you need
+  a raw Lexical command.
 
 ## Quick example
 
