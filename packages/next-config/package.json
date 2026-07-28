@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@typix-editor/typescript-config": "workspace:*",
-    "next": "^16.2.5"
+    "next": "^16.2.11"
   },
   "dependencies": {
     "@next/bundle-analyzer": "16.0.7",
